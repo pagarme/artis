@@ -1,0 +1,18 @@
+language: node_js
+
+node_js:
+  - "8"
+
+cache:
+  yarn: true
+  directories:
+    - app/node_modules
+
+before_script:
+  - cd app
+
+script:
+  - yarn
+  - test -z "$(git diff)"
+  - yarn build
+  - yarn test
