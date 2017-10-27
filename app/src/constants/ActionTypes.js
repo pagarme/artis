@@ -1,0 +1,1 @@
+export const INJECTED_VALUES = 'INJECTED_VALUES'
