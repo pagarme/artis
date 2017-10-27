@@ -12,6 +12,8 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const stylelintFormatter = require('./stylelintFormatter');
+const postcssUrlRebase = require('./postcssUrlRebase');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -129,6 +131,29 @@ module.exports = {
         include: paths.appSrc,
       },
       {
+        test: /\.css$/,
+        enforce: 'pre',
+        use: [
+          {
+            options: {
+              formatter: stylelintFormatter,
+              plugins: () => [
+                require('stylelint'),
+                require('postcss-sass-each'),
+                require('postcss-mixins'),
+                require('postcss-import'),
+                require('postcss-url')({
+                  url: postcssUrlRebase,
+                }),
+                require('postcss-cssnext'),
+              ],
+            },
+            loader: require.resolve('postcss-loader'),
+          },
+        ],
+        include: paths.appSrc,
+      },
+      {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall
         // back to the "file" loader at the end of the loader list.
@@ -198,6 +223,13 @@ module.exports = {
                             ],
                             flexbox: 'no-2009',
                           }),
+                          require('postcss-import'),
+                          require('postcss-sass-each'),
+                          // This is necessary because postcss-url doesn't add
+                          // a trailing ./ to rebased URLs, causing relative imports
+                          // to stop working.
+                          require('postcss-url')({ url: postcssUrlRebase }),
+                          require('postcss-cssnext'),
                         ],
                       },
                     },
