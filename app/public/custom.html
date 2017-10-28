@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Checkout | Custom Integration</title>
+  </head>
+  <body>
+    <div id="wrapper"></div>
+    <button id="pay-me">Pay me</button>
+  </body>
+  <script src="/static/js/bundle.js"></script>
+  <script>
+    const create = Checkout('some_key')
+
+    const checkout = create({
+      el: 'wrapper',
+      image: '',
+      locale: 'br',
+      theme: 'dark'
+    })
+
+    const open = checkout({
+      amount: 123,
+      paymentMethod: 'creditcard'
+    })
+
+    document.querySelector('#pay-me').addEventListener('click', open)
+  </script>
+</html>

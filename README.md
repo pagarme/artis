@@ -1,2 +1,1 @@
-# mercurio
-Novo checkout do grupo StoneCO
+# Mercurio Checkout
