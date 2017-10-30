@@ -18,12 +18,13 @@
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.2",
     "eslint": "4.4.1",
+    "eslint-config-pagarme-react": "^1.1.0",
     "eslint-config-react-app": "^2.0.1",
     "eslint-loader": "1.9.0",
     "eslint-plugin-flowtype": "2.35.0",
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
-    "eslint-plugin-react": "7.1.0",
+    "eslint-plugin-react": "7.4.0",
     "extract-text-webpack-plugin": "3.0.0",
     "file-loader": "0.11.2",
     "fs-extra": "3.0.1",
@@ -38,6 +39,7 @@
     "postcss-sass-each": "^0.1.0",
     "postcss-url": "^7.1.2",
     "promise": "8.0.1",
+    "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dev-utils": "^4.1.0",
     "react-dom": "^16.0.0",
@@ -47,6 +49,7 @@
     "redux-logger": "^3.0.6",
     "style-loader": "0.18.2",
     "stylelint": "^8.2.0",
+    "stylelint-config-pagarme-react": "^1.1.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.5.9",
     "webpack": "3.5.1",
@@ -57,6 +60,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "lint": "eslint './src/**/*.js' && stylelint './src/**/*.css'",
     "test": "node scripts/test.js --env=jsdom",
     "storybook": "start-storybook -p 6006"
   },
@@ -100,6 +104,28 @@
     ]
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "pagarme-react",
+    "env": {
+      "browser": true,
+      "jest": true
+    },
+    "rules": {
+      "react/jsx-filename-extension": 0
+    }
+  },
+  "stylelint": {
+    "extends": "stylelint-config-pagarme-react",
+    "rules": {
+      "at-rule-no-unknown": [
+        true,
+        {
+          "ignoreAtRules": [
+            "each",
+            "mixin",
+            "define-mixin"
+          ]
+        }
+      ]
+    }
   }
 }

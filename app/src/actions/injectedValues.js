@@ -1,6 +1,8 @@
-import { INJECTED_VALUES } from '../constants/ActionTypes'
+import INJECTED_VALUES from '../constants/ActionTypes'
 
-export const injectedValues = payload => ({
+const injectedValues = payload => ({
   type: INJECTED_VALUES,
-  payload
+  payload,
 })
+
+export default injectedValues
