@@ -1,9 +1,9 @@
-import { INJECTED_VALUES } from '../constants/ActionTypes'
+import INJECTED_VALUES from '../constants/ActionTypes'
 
 const defaultState = {
   key: '',
   configs: {},
-  params: {}
+  params: {},
 }
 
 const injectedValues = (state = defaultState, action = {}) => {

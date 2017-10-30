@@ -6,9 +6,7 @@ import App from '../App'
 import store from '../store'
 import injectedValues from '../actions'
 
-const updateModal = params => {
-  console.log('update modal...')
-}
+const updateModal = params => params
 
 const customIntegration = key => configs => params => () => {
   if (!key) throw new Error('The "key" parameter is required.')
@@ -26,7 +24,7 @@ const customIntegration = key => configs => params => () => {
     <Provider store={store}>
       <App />
     </Provider>,
-    document.getElementById(configs.el),
+    document.getElementById(configs.el)
   )
 }
 

@@ -9,6 +9,6 @@ export default createStore(
     ...reducers,
   }),
   compose(
-    applyMiddleware(logger),
-  ),
+    applyMiddleware(logger)
+  )
 )

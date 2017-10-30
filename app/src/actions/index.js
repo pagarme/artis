@@ -1,1 +1,3 @@
-export { injectedValues as default } from './injectedValues'
+import injectedValues from './injectedValues'
+
+export default injectedValues
