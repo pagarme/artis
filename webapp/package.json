@@ -1,9 +1,16 @@
 {
-  "name": "app",
+  "name": "mercurio-checkout",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mundipagg/mercurio-checkout.git"
+  },
+  "homepage": "https://github.com/mundipagg/mercurio-checkout",
+  "bugs": "https://github.com/mundipagg/mercurio-checkout/issues",
   "dependencies": {
-    "@storybook/react": "3.2.13",
+    "@storybook/react": "3.2.16",
     "autoprefixer": "7.1.2",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
@@ -11,26 +18,23 @@
     "babel-loader": "7.1.1",
     "babel-preset-react-app": "3.0.3",
     "babel-runtime": "6.26.0",
+    "caniuse-lite": "1.0.30000697",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
-    "chalk": "1.1.3",
     "css-loader": "0.28.4",
     "dotenv": "4.0.0",
     "enzyme": "3.1.0",
     "enzyme-adapter-react-16": "1.0.2",
-    "eslint": "4.4.1",
+    "eslint": "4.11.0",
     "eslint-config-pagarme-react": "1.1.0",
-    "eslint-config-react-app": "2.0.1",
     "eslint-loader": "1.9.0",
-    "eslint-plugin-flowtype": "2.35.0",
-    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-import": "2.8.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "7.4.0",
     "extract-text-webpack-plugin": "3.0.0",
     "file-loader": "0.11.2",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
-    "jest": "20.0.4",
-    "object-assign": "4.1.1",
+    "jest": "21.2.1",
     "postcss-cssnext": "3.0.2",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-import": "11.0.0",
@@ -38,7 +42,6 @@
     "postcss-mixins": "6.2.0",
     "postcss-sass-each": "0.1.0",
     "postcss-url": "7.1.2",
-    "promise": "8.0.1",
     "prop-types": "15.6.0",
     "react": "16.0.0",
     "react-dev-utils": "4.1.0",
@@ -52,16 +55,16 @@
     "stylelint-config-pagarme-react": "1.1.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.5.9",
-    "webpack": "3.5.1",
+    "webpack": "3.8.1",
     "webpack-dev-server": "2.8.2",
-    "webpack-manifest-plugin": "1.2.1",
-    "whatwg-fetch": "2.0.3"
+    "webpack-manifest-plugin": "1.2.1"
   },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "lint": "eslint './src/**/*.js' && stylelint './src/**/*.css'",
-    "test": "node scripts/test.js --env=jsdom",
+    "test": "jest --env=jsdom",
+    "test:watch": "jest --watch --env=jsdom",
     "storybook": "start-storybook -p 6006"
   },
   "jest": {
@@ -69,7 +72,6 @@
       "src/**/*.{js,jsx}"
     ],
     "setupFiles": [
-      "<rootDir>/config/polyfills.js",
       "<rootDir>/config/jest/setupTests.js"
     ],
     "testMatch": [
@@ -97,35 +99,5 @@
       "jsx",
       "node"
     ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "pagarme-react",
-    "env": {
-      "browser": true,
-      "jest": true
-    },
-    "rules": {
-      "react/jsx-filename-extension": 0
-    }
-  },
-  "stylelint": {
-    "extends": "stylelint-config-pagarme-react",
-    "rules": {
-      "at-rule-no-unknown": [
-        true,
-        {
-          "ignoreAtRules": [
-            "each",
-            "mixin",
-            "define-mixin"
-          ]
-        }
-      ]
-    }
   }
 }

@@ -12,7 +12,6 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
-const stylelintFormatter = require('./stylelintFormatter');
 const postcssUrlRebase = require('./postcssUrlRebase');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -57,8 +56,7 @@ module.exports = {
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
-  // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: [paths.appIndexJs],
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -136,7 +134,6 @@ module.exports = {
         use: [
           {
             options: {
-              formatter: stylelintFormatter,
               plugins: () => [
                 require('stylelint'),
                 require('postcss-sass-each'),

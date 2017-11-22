@@ -1,6 +1,5 @@
 const paths = require('./paths.js')
 const eslintFormatter = require('react-dev-utils/eslintFormatter')
-const stylelintFormatter = require('./stylelintFormatter')
 const postcssUrlRebase = require('./postcssUrlRebase')
 
 module.exports = {
@@ -26,22 +25,8 @@ module.exports = {
         use: [
           {
             options: {
-              formatter: stylelintFormatter,
               plugins: () => [
                 require('stylelint'),
-                require('postcss-sass-each'),
-                require('postcss-mixins'),
-                require('postcss-import'),
-                require('postcss-url')({
-                  url: postcssUrlRebase,
-                }),
-                require('postcss-cssnext')({
-                  features: {
-                    customProperties: {
-                      strict: false,
-                    },
-                  },
-                }),
               ],
             },
             loader: require.resolve('postcss-loader'),

@@ -1,0 +1,15 @@
+{
+  "extends": "stylelint-config-pagarme-react",
+  "rules": {
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "each",
+          "mixin",
+          "define-mixin"
+        ]
+      }
+    ]
+  }
+}
