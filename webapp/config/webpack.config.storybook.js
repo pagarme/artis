@@ -1,5 +1,4 @@
 const paths = require('./paths.js')
-const eslintFormatter = require('react-dev-utils/eslintFormatter')
 const postcssUrlRebase = require('./postcssUrlRebase')
 
 module.exports = {
@@ -11,7 +10,6 @@ module.exports = {
         use: [
           {
             options: {
-              formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
             },
             loader: require.resolve('eslint-loader'),
