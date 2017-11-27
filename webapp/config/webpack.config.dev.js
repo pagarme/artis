@@ -7,11 +7,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
-const stylelintFormatter = require('./stylelintFormatter');
 const postcssUrlRebase = require('./postcssUrlRebase');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -35,8 +33,6 @@ module.exports = {
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
   entry: [
-    // We ship a few polyfills by default:
-    require.resolve('./polyfills'),
     // Include an alternative client for WebpackDevServer. A client's job is to
     // connect to WebpackDevServer by a socket and get notified about changes.
     // When you save a file, the client will either apply hot updates (in case
@@ -117,7 +113,6 @@ module.exports = {
         use: [
           {
             options: {
-              formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
 
             },
@@ -132,16 +127,8 @@ module.exports = {
         use: [
           {
             options: {
-              formatter: stylelintFormatter,
               plugins: () => [
                 require('stylelint'),
-                require('postcss-sass-each'),
-                require('postcss-mixins'),
-                require('postcss-import'),
-                require('postcss-url')({
-                  url: postcssUrlRebase,
-                }),
-                require('postcss-cssnext'),
               ],
             },
             loader: require.resolve('postcss-loader'),
@@ -171,10 +158,6 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-
-              // This is a feature of `babel-loader` for webpack (not Babel itself).
-              // It enables caching results in ./node_modules/.cache/babel-loader/
-              // directory for faster rebuilds.
               cacheDirectory: true,
             },
           },
