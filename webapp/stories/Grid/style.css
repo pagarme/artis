@@ -1,0 +1,37 @@
+@import "../../src/styles/media.css";
+
+.background {
+  background-color: #eeeeee;
+}
+
+.background:before {
+  font-size: 50px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  opacity: 0.2;
+}
+
+@media (--media-tv) {
+  .background:before {
+    content: "tv";
+  }
+}
+
+@media (--media-desk) {
+  .background:before {
+    content: "desk";
+  }
+}
+
+@media (--media-tablet) {
+  .background:before {
+    content: "tablet";
+  }
+}
+
+@media (--media-palm) {
+  .background:before {
+    content: "palm";
+  }
+}

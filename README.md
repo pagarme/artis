@@ -6,4 +6,4 @@ Na pasta [webapp](webapp) você pode ver mais detalhes de como rodar o projeto e
 
 ## License
 
-Este projeto é licensiado sobre a [Licença MIT](./LICENSE)
+Este projeto é licenciado sobre a [Licença MIT](./LICENSE)

@@ -6,14 +6,13 @@ node_js:
 cache:
   yarn: true
   directories:
-    - app/node_modules
+    - webapp/node_modules
 
 before_script:
-  - cd app
+  - cd webapp
 
 script:
   - yarn
-  - test -z "$(git diff)"
   - yarn lint
-  - yarn build
   - yarn test
+  - yarn build
