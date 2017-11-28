@@ -1,0 +1,5 @@
+:root {
+  --grid-max-columns: 12;
+  --grid-column-spacing: 24px;
+  --grid-row-spacing: 24px;
+}
