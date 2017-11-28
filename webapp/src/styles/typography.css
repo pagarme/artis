@@ -1,0 +1,68 @@
+@import "./webfonts/avenir/index.css";
+@import "./spacing.css";
+
+:root {
+  --primary-font-family: "Avenir";
+  --title-font-weight: bold;
+  --title-font-style: normal;
+
+  --font-size-tiny: 12px;
+  --font-size-small: 14px;
+  --font-size-medium: 16px;
+  --font-size-large: 18px;
+  --font-size-xlarge: 24px;
+  --font-size-xxlarge: 28px;
+}
+
+.checkout {
+  font-family: var(--primary-font-family);
+  font-size: var(--font-size-medium);
+}
+
+.checkout h1,
+.checkout h2,
+.checkout h3,
+.checkout h4,
+.checkout h5,
+.checkout h6 {
+  font-family: var(--primary-font-family);
+  font-weight: var(--title-font-weight);
+  font-style: var(--font-size-medium);
+}
+
+.checkout h1 {
+  font-size: var(--font-size-xxlarge);
+  margin: var(--spacing-medium) 0;
+}
+
+.checkout h2 {
+  font-size: var(--font-size-xlarge);
+  margin: var(--spacing-medium) 0;
+}
+
+.checkout h3 {
+  font-size: var(--font-size-large);
+  margin: var(--spacing-small) 0;
+}
+
+.checkout p {
+  margin-bottom: var(--spacing-large);
+}
+
+.checkout a {
+  font-weight: bold;
+  text-decoration: unset;
+}
+
+.checkout a:hover {
+  text-decoration: underline;
+}
+
+.checkout ul,
+.checkout ol {
+  padding: 0 var(--spacing-medium);
+}
+
+.checkout li {
+  list-style-type: disc;
+}
