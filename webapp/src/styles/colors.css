@@ -1,0 +1,9 @@
+@import "./colors/light.css";
+@import "./colors/dark.css";
+
+:root {
+  --color-pink: #dc6860;
+  --color-orange: #ffa317;
+  --color-greenish: #8459b9;
+  --color-purple: #8459b9;
+}

@@ -1,7 +1,7 @@
+@import "./colors.css";
 @import "./spacing.css";
 @import "./typography.css";
 
-/* stylelint-disable */
 .checkout {
   margin: 0;
   padding: 0;
