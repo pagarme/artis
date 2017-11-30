@@ -1,6 +1,6 @@
 import React from 'react'
 
-import style from './CardSample.css'
+import style from './style.css'
 
 const CardSample = ({ children, bgColor }) => (
   <div
