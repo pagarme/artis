@@ -1,9 +1,10 @@
 import { Component } from 'react'
-import Raven from 'raven-js'
 import {
   node,
   element,
 } from 'prop-types'
+
+import report from '../../config/ErrorReport'
 
 export default class ErrorBoundary extends Component {
   constructor (props) {
@@ -11,14 +12,10 @@ export default class ErrorBoundary extends Component {
     this.state = {
       error: null,
     }
-
-    Raven
-      .config(process.env.SENTRY_URL)
-      .install()
   }
 
   componentDidCatch (error, errorInfo) {
-    Raven.captureException(error, { extra: errorInfo })
+    report(error, errorInfo)
     this.setState({
       error,
     })
