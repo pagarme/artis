@@ -12,6 +12,8 @@
   --font-size-large: 18px;
   --font-size-xlarge: 24px;
   --font-size-xxlarge: 28px;
+
+  --letter-spacing: 0.02em;
 }
 
 .checkout {

@@ -3,4 +3,7 @@
   --color-dark-grey-50: #9c9b9b;
   --color-dark-grey-75: #9c9b9b; /* ESSA COR ESTÁ ERRADA, PRECISAMOS CORRIGIR */
   --color-dark-grey-100: #ffffff;
+
+  --color-dark-error: #dc6860;
+  --color-dark-success: #7ad499;
 }
