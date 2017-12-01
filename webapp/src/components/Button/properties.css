@@ -1,0 +1,51 @@
+:root {
+  --button-font-family: var(--primary-font-family);
+  --button-font-weight: var(--title-font-weight);
+  --button-font-style: var(--title-font-style);
+
+  --button-font-size-extra-small: 12px;
+  --button-font-size-small: 14px;
+  --button-font-size-default: 14px;
+  --button-font-size-large: 14px;
+
+  --button-padding-extra-small: 8px;
+  --button-padding-small: 16px;
+  --button-padding-default: 24px;
+  --button-padding-large: 32px;
+
+  --button-height-extra-small: 26px;
+  --button-height-small: 26px;
+  --button-height-default: 28px;
+  --button-height-large: 28px;
+
+  --button-focus-box-shadow: inset 0 0 3px 3px;
+  --button-disabled-background-color: var(--color-light-grey-50);
+  --button-disabled-color: var(--color-light-grey-75);
+  --button-outline-disabled-border-color: var(--color-light-grey-50);
+  --button-outline-disabled-color: var(--color-light-grey-75);
+  --button-block-background: var(--color-light-grey-25);
+  --button-block-color: var(--color-light-grey-100);
+  --button-color: var(--color-white);
+  --button-dark-color: var(--color-light-grey-25);
+
+  --button-focus-animation-duration: 0.3s;
+  --button-focus-animation-start: inset -200px 0 3px 0;
+  --button-focus-animation-end: inset 0 0 3px 0;
+
+  --button-high-color: var(--color-dark-greenish-50);
+  --button-high-gradient: var(--color-dark-greenish-gradient);
+  --button-high-focus: var(--color-dark-greenish-50);
+  --button-high-hover: var(--color-greenish);
+  --button-high-active: var(--color-greenish);
+
+  --button-normal-color: var(--color-greenish);
+  --button-normal-focus: var(--color-greenish);
+  --button-normal-hover: var(--color-greenish);
+  --button-normal-active: var(--color-greenish);
+
+  --button-low-color: var(--color-light-grey-25);
+  --button-low-gradient: var(--color-light-grey-50);
+  --button-low-focus: var(--color-light-grey-50);
+  --button-low-hover: var(--color-light-grey-50);
+  --button-low-active: var(--color-light-grey-50);
+}
