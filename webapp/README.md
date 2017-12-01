@@ -2,7 +2,7 @@ Este projeto foi iniciado com [Create React App](https://github.com/facebookincu
 
 Os passos a seguir indicam alguns comandos atualmente disponíveis e para rodá-los lembre-se de navegar sempre para dentro da pasta `webapp`.
 
-## Instalação
+# Instalação
 
 Para instalar as dependências do projeto usando `yarn`:
 ```sh
@@ -14,23 +14,23 @@ Usando `npm`:
 $ `npm i`
 ```
 
-## Outos scripts disponíveis
+# Outos scripts disponíveis
 
-### `start`
+## `start`
 
 Este comando inicia o projeto em ambiente de desenvolvimento, você pode acessá-lo pela URL http://localhost:3000 em seu browser de preferência.
 
-- Yarn
+- *yarn*
 ```sh
 $ `yarn start`
 ```
 
-- npm
+- *npm*
 ```sh
 $ `npm start`
 ```
 
-### `storybook`
+## `storybook`
 
 O [Storybook](https://storybook.js.org/) é um ambiente de desenvolvimento para testes de UI. Utilizamos essa ferramenta para renderizar componentes e verificar seus comportamentos.
 
@@ -46,7 +46,7 @@ $ `yarn storybook`
 $ `npm run storybook`
 ```
 
-### `coverage`
+## `coverage`
 
 O script de `coverage` valida o código em `./webapp/src` e retorna tanto no próprio terminal quanto em uma página HTML (`./webapp/coverage/index.html`) um report final gerado pelo [Jest](https://facebook.github.io/jest/) em conjunto com o [nyc](https://www.npmjs.com/package/nyc)
 
@@ -60,7 +60,7 @@ $ `yarn coverage`
 $ `npm run coverage`
 ```
 
-### `test-coverage`
+## `test-coverage`
 
 Este comando está disponível caso você queira rodar somente o report de `coverage` no terminal, sem gerar o arquivo HTML.
 
@@ -74,7 +74,7 @@ $ `yarn test-coverage`
 $ `npm run test-coverage`
 ```
 
-### `test`
+## `test`
 
 O comando `test` usa o [Jest](https://facebook.github.io/jest/) para validar os testes definidos em arquivos `*.test.js` em modo _watch_ por padrão, ou seja, caso você altere o teste salve o arquivo, os testes serão revalidados automaticamente.
 
@@ -88,7 +88,7 @@ $ `yarn test`
 $ `npm t`
 ```
 
-### `lint`
+## `lint`
 
 Este comando usa o [estlint](https://eslint.org) para validar a sintaxe de arquivos `.js` e o [stylelint](https://github.com/stylelint/stylelint) para validar arquivos `.css` e mantermos os padrões definidos nos arquivos de configuração (_.eslintrc_ e _.stylelintrc_, respectivamente).
 
