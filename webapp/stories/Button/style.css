@@ -1,7 +1,42 @@
+@import "../../src/styles/index.css";
+
 .container {
-  margin: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  background-color: #a5a5a5;
 }
 
-.spacingAround > button {
+.themeDark {
+  background-color: #000000;
+  width: 100%;
+  margin-right: 10px;
+  padding: 10px;
+}
+
+.themeLight {
+  background-color: #ffffff;
+  width: 100%;
+  margin-left: 10px;
+  padding: 10px;
+}
+
+.themeDark h2 {
+  color: #ffffff;
+}
+
+.themeDark h2:first-child {
+  text-align: center;
+}
+
+.themeLight h2 {
+  color: #000000;
+}
+
+.themeLight h2:first-child {
+  text-align: center;
+}
+
+.spacing > button {
   margin: 3px;
 }
