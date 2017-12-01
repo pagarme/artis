@@ -1,3 +1,4 @@
+import './Button'
 import './Grid'
 import './ErrorBoundary'
 import './Typography'
