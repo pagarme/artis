@@ -10,6 +10,7 @@
   "homepage": "https://github.com/mundipagg/mercurio-checkout",
   "bugs": "https://github.com/mundipagg/mercurio-checkout/issues",
   "dependencies": {
+    "@storybook/addon-actions": "^3.2.16",
     "@storybook/react": "3.2.16",
     "@storybook/storybook-deployer": "2.0.0",
     "autoprefixer": "7.1.2",
@@ -53,6 +54,7 @@
     "react": "16.1.1",
     "react-dev-utils": "4.1.0",
     "react-dom": "16.1.1",
+    "react-icons": "2.2.7",
     "react-redux": "5.0.6",
     "react-test-renderer": "16.0.0",
     "redux": "3.7.2",
@@ -67,7 +69,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "lint": "eslint './src/**/*.js' && stylelint './src/**/*.css'",
+    "lint": "eslint './{src,stories}/**/*.js' && stylelint './src/**/*.css'",
     "test": "node scripts/test.js",
     "test-coverage": "node scripts/test.js --coverage",
     "coverage": "nyc --reporter=html --reporter=text --lines 300 npm run test-coverage",

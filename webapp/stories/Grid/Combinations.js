@@ -32,9 +32,9 @@ storiesOf('Grid', module)
               tablet={maxColumns - size}
               palm={maxColumns - size}
             >
-            <CardSample>
-              {`${maxColumns - size} column${maxColumns - size > 1 ? 's' : ''}`}
-            </CardSample>
+              <CardSample>
+                {`${maxColumns - size} column${maxColumns - size > 1 ? 's' : ''}`}
+              </CardSample>
             </Col>
           </Row>
         ))}
