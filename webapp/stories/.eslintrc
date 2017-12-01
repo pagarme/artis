@@ -9,7 +9,14 @@
       "error",
       "always-multiline"
     ],
-    "import/no-extraneous-dependencies": [0],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": false,
+        "optionalDependencies": false,
+        "peerDependencies": false
+      }
+    ],
     "react/jsx-filename-extension": 0,
     "react/prop-types": [0],
     "react/jsx-no-bind": [
