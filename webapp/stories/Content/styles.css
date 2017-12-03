@@ -1,0 +1,20 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 200px;
+  margin-bottom: 30px;
+  color: #ffffff;
+  text-align: center;
+  background-color: #333333;
+  transform: translate(500%, 0);
+  animation: transition 0.3s ease both;
+}
+
+@keyframes transition {
+
+  to {
+    transform: translate(0, 0);
+  }
+}
