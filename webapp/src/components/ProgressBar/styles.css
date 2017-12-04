@@ -1,0 +1,11 @@
+.wrapper {
+  width: 100%;
+}
+
+.progressBar {
+  width: 0;
+  height: 3px;
+  background: #00eb95;
+  background: linear-gradient(to right, #00eb95 0%, #00d3b8 100%);
+  transition: all 0.25s ease-out;
+}
