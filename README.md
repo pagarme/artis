@@ -5,6 +5,8 @@ Este repositório está em fase de desenvolvimento, então muitas mudanças aind
 
 O desenvolvimento é *open source*, ou seja, todo o código fonte estará disponível para as pessoas que queiram conhecer, contribuir e melhorar este projeto.
 
+Veja online os componentes desenvolvidos no nosso [Storybook](https://mundipagg.github.io/mercurio-checkout)
+
 ## Roadmap
 
 Estamos utilizando [Issues](https://github.com/mundipagg/mercurio-checkout/issues) e [Projects](https://github.com/mundipagg/mercurio-checkout/projects/1) para gerenciar nossas tarefas, você pode acompanhar e fazer parte! :)
