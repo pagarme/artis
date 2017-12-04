@@ -8,10 +8,11 @@
 .wrapper > div > span:first-child {
   margin: 20px;
   font-size: 14px;
-  color: #AAA;
+  color: #aaaaaa;
 }
 
-hr {
-  border: 1px solid #EEE;
+
+hr { /* stylelint-disable-line */
+  border: 1px solid #eeeeee;
   margin: 30px 0;
 }
