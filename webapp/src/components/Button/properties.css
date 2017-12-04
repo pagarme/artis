@@ -42,15 +42,14 @@
   --button-focus-animation-duration: 0.4s;
   --button-focus-animation-start: inset -500px 0 3px 0;
   --button-focus-animation-end: inset 0 0 3px 0;
+  --button-animation-icon: scale(0.9);
 
   --button-dark-hight: var(--color-dark-greenish-50);
-  --button-high-gradient: var(--color-dark-greenish-50);
-  --button-high-focus: var(--color-dark-green-65);
-  --button-high-hover: var(--color-dark-greenish-60);
-  --button-high-active: var(--color-dark-greenish-65);
-  --button-high-icon: var(--color-dark-green-50);
+  --button-dark-high-gradient: var(--color-dark-greenish-50);
+  --button-dark-high-focus: var(--color-dark-green-65);
+  --button-dark-high-hover: var(--color-dark-greenish-60);
+  --button-dark-high-active: var(--color-dark-greenish-65);
+  --button-dark-high-icon: var(--color-dark-green-50);
 
   --button-normal-icon: var(--color-dark-grey-90);
-
-  --button-animation-icon: scale(0.9);
 }
