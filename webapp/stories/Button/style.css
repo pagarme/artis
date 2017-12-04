@@ -1,5 +1,14 @@
 @import "../../src/styles/index.css";
 
+:root {
+  --theme-container-width: 100%;
+  --theme-container-margin-right: 10px;
+  --theme-container-padding: 10px;
+  --theme-container-radius: 3px;
+  --theme-container-white: #ffffff;
+  --theme-container-black: #000000;
+}
+
 .container {
   padding: 20px;
   display: flex;
@@ -9,18 +18,18 @@
 
 .themeDark {
   background-color: #000000;
-  width: 100%;
-  margin-right: 10px;
-  padding: 10px;
-  border-radius: 3px;
+  width: var(--theme-container-width);
+  margin-right: var(--theme-container-margin-right);
+  padding: var(--theme-container-padding);
+  border-radius: var(--theme-container-radius);
 }
 
 .themeLight {
-  background-color: #ffffff;
-  width: 100%;
-  margin-left: 10px;
-  padding: 10px;
-  border-radius: 3px;
+  background-color: var(--theme-container-white);
+  width: var(--theme-container-width);
+  margin-right: var(--theme-container-margin-right);
+  padding: var(--theme-container-padding);
+  border-radius: var(--theme-container-radius);
 }
 
 h1, h2 {
@@ -35,7 +44,7 @@ h1, h2 {
 
 .themeDark h1,
 .themeDark h2 {
-  color: #ffffff;
+  color: var(--theme-container-white);
 }
 
 .themeLight h1 {
@@ -44,7 +53,7 @@ h1, h2 {
 
 .themeLight h1,
 .themeLight h2 {
-  color: #000000;
+  color: var(--theme-container-black);
 }
 
 .spacing > button {
