@@ -10,7 +10,7 @@ import {
 } from 'prop-types'
 import classNames from 'classnames'
 
-import stylesheet from './style.css'
+import style from './style.css'
 
 function Button ({
   disabled,
@@ -25,11 +25,11 @@ function Button ({
 }) {
   const buttonClasses = classNames(
     className,
-    stylesheet.button,
-    stylesheet[fill],
-    stylesheet[`${base}-${fill}`],
-    stylesheet[`${base}-${relevance}`],
-    stylesheet[size]
+    style.button,
+    style[fill],
+    style[`${base}-${fill}`],
+    style[`${base}-${relevance}`],
+    style[size]
   )
 
   return (
@@ -48,7 +48,7 @@ Button.propTypes = {
   type: oneOf(['button', 'submit', 'reset']),
   onClick: func,
   fill: oneOf([
-    'flat', 'gradient', 'clean',
+    'flat', 'gradient', 'outline', 'clean',
   ]),
   base: oneOf([
     'dark', 'light',

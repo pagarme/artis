@@ -2,11 +2,20 @@
   --color-dark-grey-25: #515151;
   --color-dark-grey-50: #9c9b9b;
   --color-dark-grey-75: #9c9b9b; /* ESSA COR ESTÁ ERRADA, PRECISAMOS CORRIGIR */
+  --color-dark-grey-90: #e3e3e3; /* PRECISAMOS VALIDAR ESTA COR */
   --color-dark-grey-100: #ffffff;
 
   --color-dark-error: #dc6860;
   --color-dark-success: #7ad499;
 
+  --color-dark-green-50: #39b684; /* PRECISAMOS VALIDAR ESTA COR */
+  --color-dark-green-65: #73dbb8; /* PRECISAMOS VALIDAR ESTA COR */
+
   --color-dark-greenish-50: #32d896; /* PRECISAMOS VALIDAR ESTA COR */
+  --color-dark-greenish-60: #22b379; /* PRECISAMOS VALIDAR ESTA COR */
+  --color-dark-greenish-65: #1e9e6b; /* PRECISAMOS VALIDAR ESTA COR */
+
   --color-dark-greenish-gradient-50: #46c8b7; /* PRECISAMOS VALIDAR ESTA COR */
+  --color-dark-greenish-gradient-60: #35989b; /* PRECISAMOS VALIDAR ESTA COR */
+  --color-dark-greenish-gradient-65: #2e8588; /* PRECISAMOS VALIDAR ESTA COR */
 }

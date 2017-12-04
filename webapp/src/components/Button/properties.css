@@ -1,4 +1,22 @@
 :root {
+  --color-greenish-gradient:
+    linear-gradient(
+      to right,
+      var(--color-dark-greenish-50),
+      var(--color-dark-greenish-gradient-50)
+    );
+  --color-greenish-gradient-hover:
+    linear-gradient(
+      to right,
+      var(--color-dark-greenish-60),
+      var(--color-dark-greenish-gradient-60)
+    );
+  --color-greenish-gradient-active:
+    linear-gradient(
+      to right,
+      var(--color-dark-greenish-65),
+      var(--color-dark-greenish-gradient-65)
+    );
   --button-font-family: var(--primary-font-family);
   --button-font-weight: var(--title-font-weight);
   --button-font-style: var(--title-font-style);
@@ -13,39 +31,26 @@
   --button-padding-default: 24px;
   --button-padding-large: 32px;
 
-  --button-height-extra-small: 26px;
-  --button-height-small: 26px;
-  --button-height-default: 28px;
-  --button-height-large: 28px;
+  --button-height-extra-small: 20px;
+  --button-height-small: 30px;
+  --button-height-default: 40px;
+  --button-height-large: 50px;
 
   --button-focus-box-shadow: inset 0 0 3px 3px;
-  --button-disabled-background-color: var(--color-light-grey-50);
-  --button-disabled-color: var(--color-light-grey-75);
-  --button-outline-disabled-border-color: var(--color-light-grey-50);
-  --button-outline-disabled-color: var(--color-light-grey-75);
-  --button-block-background: var(--color-light-grey-25);
-  --button-block-color: var(--color-light-grey-100);
   --button-color: var(--color-white);
-  --button-dark-color: var(--color-light-grey-25);
 
-  --button-focus-animation-duration: 0.3s;
-  --button-focus-animation-start: inset -200px 0 3px 0;
+  --button-focus-animation-duration: 0.4s;
+  --button-focus-animation-start: inset -500px 0 3px 0;
   --button-focus-animation-end: inset 0 0 3px 0;
 
-  --button-high-color: var(--color-dark-greenish-50);
-  --button-high-gradient: var(--color-dark-greenish-gradient);
-  --button-high-focus: var(--color-dark-greenish-50);
-  --button-high-hover: var(--color-greenish);
-  --button-high-active: var(--color-greenish);
+  --button-dark-hight: var(--color-dark-greenish-50);
+  --button-high-gradient: var(--color-dark-greenish-50);
+  --button-high-focus: var(--color-dark-green-65);
+  --button-high-hover: var(--color-dark-greenish-60);
+  --button-high-active: var(--color-dark-greenish-65);
+  --button-high-icon: var(--color-dark-green-50);
 
-  --button-normal-color: var(--color-greenish);
-  --button-normal-focus: var(--color-greenish);
-  --button-normal-hover: var(--color-greenish);
-  --button-normal-active: var(--color-greenish);
+  --button-normal-icon: var(--color-dark-grey-90);
 
-  --button-low-color: var(--color-light-grey-25);
-  --button-low-gradient: var(--color-light-grey-50);
-  --button-low-focus: var(--color-light-grey-50);
-  --button-low-hover: var(--color-light-grey-50);
-  --button-low-active: var(--color-light-grey-50);
+  --button-animation-icon: scale(0.9);
 }
