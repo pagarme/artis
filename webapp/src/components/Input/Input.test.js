@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import Input from './index'
 
 describe('Input', () => {
-  const value = 'Leonardo'
+  const value = 'Sheldon'
 
   describe('singleline', () => {
     it('should trigger onChange', () => {
@@ -48,28 +48,6 @@ describe('Input', () => {
       expect(onChange).not.toHaveBeenLastCalledWith(value)
     })
 
-    it('should mount with success', () => {
-      const onChange = jest.fn()
-
-      const component = shallow(
-        <Input
-          name="name"
-          label="Name"
-          onChange={onChange}
-          success="Success"
-        />
-      )
-
-      component
-        .find('input')
-        .first()
-        .simulate('change', value)
-
-      expect(onChange).toHaveBeenCalled()
-      expect(onChange).toHaveBeenLastCalledWith(value)
-      expect(component.find('p').first().text()).toBe('Success')
-    })
-
     it('should mount with error', () => {
       const onChange = jest.fn()
 
@@ -103,7 +81,6 @@ describe('Input', () => {
           value="hihihi"
           type="password"
           placeholder="Your name"
-          boxed
           hint="Hi"
           error="Error"
         />
@@ -163,29 +140,6 @@ describe('Input', () => {
       expect(onChange).not.toHaveBeenLastCalledWith(value)
     })
 
-    it('should mount with success', () => {
-      const onChange = jest.fn()
-
-      const component = shallow(
-        <Input
-          name="name"
-          label="Name"
-          onChange={onChange}
-          multiline
-          success="Success"
-        />
-      )
-
-      component
-        .find('textarea')
-        .first()
-        .simulate('change', value)
-
-      expect(onChange).toHaveBeenCalled()
-      expect(onChange).toHaveBeenLastCalledWith(value)
-      expect(component.find('p').first().text()).toBe('Success')
-    })
-
     it('should mount with error', () => {
       const onChange = jest.fn()
 
@@ -220,7 +174,6 @@ describe('Input', () => {
           value="hihihi"
           type="password"
           placeholder="Your name"
-          boxed
           hint="Hi"
           error="Error"
           multiline

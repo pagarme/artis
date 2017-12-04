@@ -49,14 +49,12 @@ class Input extends React.Component {
 
   render () {
     const {
-      boxed,
       disabled,
       error,
       hint,
       icon,
       label,
       multiline,
-      success,
       type,
       value,
       className,
@@ -64,15 +62,13 @@ class Input extends React.Component {
     } = this.props
 
     const inputContainer = classnames(style.inputContainer, {
-      [style.boxed]: boxed,
       [style.multiline]: multiline,
       [style.error]: error,
-      [style.success]: success,
     })
 
     const containerClasses = classnames(style.container, {
       [style.active]: !disabled && value !== '',
-      [style.disabled]: !boxed && disabled,
+      [style.disabled]: disabled,
     })
 
     const contentPresent = classnames({
@@ -90,7 +86,7 @@ class Input extends React.Component {
 
     return (
       <div className={containerClasses}>
-        {icon && !boxed &&
+        {icon &&
           <div className={style.icon}>{icon}</div>
         }
         <div className={style.boxContainer}>
@@ -130,9 +126,9 @@ class Input extends React.Component {
               </div>
             }
           </div>
-          {(hint || error || success) &&
+          {(hint || error) &&
             <p className={style.secondaryText}>
-              {success || error || hint}
+              {error || hint}
             </p>
           }
         </div>
@@ -149,23 +145,19 @@ Input.propTypes = {
   multiline: PropTypes.bool,
   type: PropTypes.oneOf(['text', 'password']),
   placeholder: PropTypes.string,
-  boxed: PropTypes.bool,
   hint: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.string,
-  success: PropTypes.string,
   icon: PropTypes.element,
   className: PropTypes.string,
 }
 
 Input.defaultProps = {
   type: 'text',
-  boxed: false,
   placeholder: '',
   hint: '',
   disabled: false,
   error: '',
-  success: '',
   multiline: false,
   icon: null,
   value: '',

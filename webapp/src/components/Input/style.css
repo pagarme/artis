@@ -144,12 +144,7 @@
   text-align: left;
   margin: 0;
   margin-top: 5px;
-  color: var(--input-label-color-default);
-}
-
-.boxed {
-  background-color: var(--input-container-boxed-background);
-  border-radius: var(--input-textarea-border-radius);
+  color: var(--input-secondary-text-color);
 }
 
 .multiline {
@@ -174,40 +169,6 @@
   word-break: break-word;
 }
 
-.boxed > textarea,
-.boxed > input {
-  padding-left: var(--input-boxed-padding-left);
-  padding-bottom: 6px;
-  background: none;
-}
-
-.disabled .boxed {
-  border: 1px dashed var(--input-color-disabled);
-  border-radius: var(--input-textarea-border-radius);
-}
-
-.boxed > label {
-  color: var(--input-container-boxed-label-color);
-  padding-left: var(--input-boxed-padding-left);
-  top: 14px;
-}
-
-.boxed > textarea:focus ~ label,
-.boxed > input:focus ~ label {
-  top: 4px;
-  font-size: 12px;
-  color: var(--input-container-boxed-label-focused-color);
-}
-
-.boxed > textarea:focus::placeholder,
-.boxed > input:focus::placeholder {
-  opacity: 1;
-}
-
-.boxed ~ .secondaryText {
-  padding-left: var(--input-boxed-padding-left);
-}
-
 .error > textarea:focus ~ label,
 .error > input:focus ~ label,
 .error ~ .secondaryText,
@@ -221,19 +182,4 @@
 .error > input:focus {
   border-bottom: 2px solid var(--color-light-error);
   caret-color: var(--color-light-error);
-}
-
-.success > textarea:focus ~ label,
-.success > input:focus ~ label,
-.success ~ .secondaryText,
-.success > .contentPresent {
-  color: var(--color-light-success);
-}
-
-.success > textarea,
-.success > input,
-.success > textarea:focus,
-.success > input:focus {
-  border-bottom: 2px solid var(--color-light-success);
-  caret-color: var(--color-light-success);
 }
