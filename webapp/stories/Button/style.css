@@ -12,6 +12,7 @@
   width: 100%;
   margin-right: 10px;
   padding: 10px;
+  border-radius: 3px;
 }
 
 .themeLight {
@@ -19,22 +20,31 @@
   width: 100%;
   margin-left: 10px;
   padding: 10px;
+  border-radius: 3px;
 }
 
+h1, h2 {
+  font-family: var(--primary-font-family);
+  font-weight: var(--title-font-weight);
+  font-style: var(--title-font-style); 
+}
+
+.themeDark h1 {
+  text-align: center;
+}
+
+.themeDark h1,
 .themeDark h2 {
   color: #ffffff;
 }
 
-.themeDark h2:first-child {
+.themeLight h1 {
   text-align: center;
 }
 
+.themeLight h1,
 .themeLight h2 {
   color: #000000;
-}
-
-.themeLight h2:first-child {
-  text-align: center;
 }
 
 .spacing > button {
