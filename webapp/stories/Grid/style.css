@@ -13,24 +13,28 @@
 }
 
 @media (--media-tv) {
+
   .background:before {
     content: "tv";
   }
 }
 
 @media (--media-desk) {
+
   .background:before {
     content: "desk";
   }
 }
 
 @media (--media-tablet) {
+
   .background:before {
     content: "tablet";
   }
 }
 
 @media (--media-palm) {
+
   .background:before {
     content: "palm";
   }
@@ -38,13 +42,13 @@
 
 .cardSample {
   display: flex;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   width: 100%;
   min-height: 100px;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: #AAAAAA;
+  color: #aaaaaa;
   font-family: sans-serif;
   overflow: hidden;
 }
