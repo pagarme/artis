@@ -34,7 +34,7 @@ class Input extends React.Component {
       return (
         <MdVisibilityOff
           className={style.displayPasswordIcon}
-          onClick={() => this.setState({ displayPassword: false })}
+          onClick={this.handleDisplayPassword.bind(this, false)}
         />
       )
     }
@@ -42,7 +42,7 @@ class Input extends React.Component {
     return (
       <MdVisibility
         className={style.displayPasswordIcon}
-        onClick={() => this.setState({ displayPassword: true })}
+        onClick={this.handleDisplayPassword.bind(this, true)}
       />
     )
   }
