@@ -24,14 +24,6 @@
   border-radius: var(--theme-container-radius);
 }
 
-.lightTheme {
-  background-color: var(--theme-container-white);
-  width: var(--theme-container-width);
-  margin-right: var(--theme-container-margin-right);
-  padding: var(--theme-container-padding);
-  border-radius: var(--theme-container-radius);
-}
-
 .darkTheme h1 {
   text-align: center;
 }
@@ -39,18 +31,6 @@
 .darkTheme h1,
 .darkTheme h2 {
   color: var(--theme-container-white);
-  font-family: var(--primary-font-family);
-  font-weight: var(--title-font-weight);
-  font-style: var(--title-font-style);
-}
-
-.lightTheme h1 {
-  text-align: center;
-}
-
-.lightTheme h1,
-.lightTheme h2 {
-  color: var(--theme-container-black);
   font-family: var(--primary-font-family);
   font-weight: var(--title-font-weight);
   font-style: var(--title-font-style);
