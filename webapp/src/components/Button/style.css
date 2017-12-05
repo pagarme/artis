@@ -68,23 +68,27 @@
   padding: 0 var(--button-padding-extra-small);
   font-size: var(--button-font-size-extra-small);
   height: var(--button-height-extra-small);
+  padding-top: var(--button-padding-top-extra-small);
 }
 
 .small {
   padding: 0 var(--button-padding-small);
   font-size: var(--button-font-size-small);
   height: var(--button-height-small);
+  padding-top: var(--button-padding-top-small);
 }
 
 .default {
   padding: 0 var(--button-padding-default);
   font-size: var(--button-font-size-default);
   height: var(--button-height-default);
+  padding-top: var(--button-padding-top-default);
 }
 
 .large {
   padding: 0 var(--button-padding-large);
   font-size: var(--button-font-size-large);
   height: var(--button-height-large);
+  padding-top: var(--button-padding-top-large);
 }
 

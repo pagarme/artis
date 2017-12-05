@@ -36,6 +36,11 @@
   --button-height-default: 40px;
   --button-height-large: 50px;
 
+  --button-padding-top-extra-small: calc(var(--button-height-extra-small) * 0.15);
+  --button-padding-top-small: calc(var(--button-height-small) * 0.15);
+  --button-padding-top-default: calc(var(--button-height-default) * 0.1);
+  --button-padding-top-large: calc(var(--button-height-large) * 0.05);
+
   --button-focus-box-shadow: inset 0 0 3px 3px;
   --button-color: var(--color-white);
 
