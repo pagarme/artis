@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 
 import style from './styles.css'
 
+const shouldUpdateActivePage = (newPage, firstPage, lastPage) =>
+  newPage >= firstPage && newPage <= lastPage
+
 class Content extends Component {
   constructor (props) {
     super(props)
@@ -13,19 +16,23 @@ class Content extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    let { activePage } = this.state
+    const { activePage } = this.state
     const { children, navigateTo } = nextProps
 
     const firstPage = 0
     const lastPage = children.length - 1
 
-    if (navigateTo === 'next') activePage += 1
-    if (navigateTo === 'prev') activePage -= 1
-    if (navigateTo === 'first') activePage = firstPage
-    if (navigateTo === 'last') activePage = lastPage
+    const pageNavigation = {
+      next: activePage + 1,
+      prev: activePage - 1,
+      first: firstPage,
+      last: lastPage,
+    }
 
-    if (activePage >= firstPage && activePage <= lastPage) {
-      this.setState({ activePage })
+    const newPage = pageNavigation[navigateTo]
+
+    if (shouldUpdateActivePage(newPage, firstPage, lastPage)) {
+      this.setState({ activePage: newPage })
     }
   }
 
