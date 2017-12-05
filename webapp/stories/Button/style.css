@@ -16,7 +16,7 @@
   background-color: #a5a5a5;
 }
 
-.themeDark {
+.darkTheme {
   background-color: #000000;
   width: var(--theme-container-width);
   margin-right: var(--theme-container-margin-right);
@@ -24,7 +24,7 @@
   border-radius: var(--theme-container-radius);
 }
 
-.themeLight {
+.lightTheme {
   background-color: var(--theme-container-white);
   width: var(--theme-container-width);
   margin-right: var(--theme-container-margin-right);
@@ -38,21 +38,21 @@ h1, h2 {
   font-style: var(--title-font-style); 
 }
 
-.themeDark h1 {
+.darkTheme h1 {
   text-align: center;
 }
 
-.themeDark h1,
-.themeDark h2 {
+.darkTheme h1,
+.darkTheme h2 {
   color: var(--theme-container-white);
 }
 
-.themeLight h1 {
+.lightTheme h1 {
   text-align: center;
 }
 
-.themeLight h1,
-.themeLight h2 {
+.lightTheme h1,
+.lightTheme h2 {
   color: var(--theme-container-black);
 }
 

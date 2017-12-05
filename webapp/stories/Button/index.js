@@ -11,8 +11,8 @@ import style from './style.css'
 storiesOf('Buttons', module)
   .add('All', () => (
     <div className={style.container}>
-      <div className={style.themeDark}>
-        <h1>Theme Dark</h1>
+      <div className={style.darkTheme}>
+        <h1>Dark Theme</h1>
         <h2>Default Button</h2>
 
         <div className={style.spacing}>
@@ -50,8 +50,8 @@ storiesOf('Buttons', module)
         </div>
       </div>
 
-      <div className={style.themeLight}>
-        <h1>Theme Light</h1>
+      <div className={style.lightTheme}>
+        <h1>Light Theme</h1>
         <h2>Default Button</h2>
 
         <div className={style.spacing}>

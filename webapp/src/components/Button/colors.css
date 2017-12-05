@@ -5,18 +5,18 @@
 @keyframes dark-high-focus {
 
   0% {
-    box-shadow: var(--button-focus-animation-start) var(--button-dark-hight);
+    box-shadow: var(--button-focus-animation-start) var(--button-dark-high);
   }
 
   100% {
-    box-shadow: var(--button-focus-animation-end) var(--button-dark-hight);
+    box-shadow: var(--button-focus-animation-end) var(--button-dark-high);
   }
 }
 
 .dark-high {
   animation: none;
   color: var(--button-color);
-  background-color: var(--button-dark-hight);
+  background-color: var(--button-dark-high);
   background-image: var(--color-greenish-gradient);
   border: none;
   will-change: box-shadow;

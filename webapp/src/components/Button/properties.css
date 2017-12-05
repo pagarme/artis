@@ -44,7 +44,7 @@
   --button-focus-animation-end: inset 0 0 3px 0;
   --button-animation-icon: scale(0.9);
 
-  --button-dark-hight: var(--color-dark-greenish-50);
+  --button-dark-high: var(--color-dark-greenish-50);
   --button-dark-high-gradient: var(--color-dark-greenish-50);
   --button-dark-high-focus: var(--color-dark-green-65);
   --button-dark-high-hover: var(--color-dark-greenish-60);
