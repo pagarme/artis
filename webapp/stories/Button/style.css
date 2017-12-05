@@ -32,12 +32,6 @@
   border-radius: var(--theme-container-radius);
 }
 
-h1, h2 {
-  font-family: var(--primary-font-family);
-  font-weight: var(--title-font-weight);
-  font-style: var(--title-font-style); 
-}
-
 .darkTheme h1 {
   text-align: center;
 }
@@ -45,6 +39,9 @@ h1, h2 {
 .darkTheme h1,
 .darkTheme h2 {
   color: var(--theme-container-white);
+  font-family: var(--primary-font-family);
+  font-weight: var(--title-font-weight);
+  font-style: var(--title-font-style);
 }
 
 .lightTheme h1 {
@@ -54,6 +51,9 @@ h1, h2 {
 .lightTheme h1,
 .lightTheme h2 {
   color: var(--theme-container-black);
+  font-family: var(--primary-font-family);
+  font-weight: var(--title-font-weight);
+  font-style: var(--title-font-style);
 }
 
 .spacing > button {
