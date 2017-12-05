@@ -1,4 +1,4 @@
-import './SomeButton'
+import './Button'
 import './Grid'
 import './ErrorBoundary'
 import './Typography'

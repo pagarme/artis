@@ -1,15 +1,15 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
-import SomeButton from './index'
+import Button from './index'
 
-describe('SomeButton', () => {
+describe('Button', () => {
   const onClick = jest.fn()
 
-  const component = shallow(
-    <SomeButton onClick={onClick}>
+  const component = mount(
+    <Button onClick={onClick}>
       Test
-    </SomeButton>
+    </Button>
   )
 
   it('should be clicked', () => {

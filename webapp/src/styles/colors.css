@@ -2,8 +2,9 @@
 @import "./colors/dark.css";
 
 :root {
+  --color-white: #ffffff;
   --color-pink: #dc6860;
   --color-orange: #ffa317;
-  --color-greenish: #8459b9;
+  --color-greenish: #7ad499;
   --color-purple: #8459b9;
 }

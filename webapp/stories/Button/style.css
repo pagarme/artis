@@ -1,0 +1,41 @@
+@import "../../src/styles/index.css";
+
+:root {
+  --theme-container-width: 100%;
+  --theme-container-margin-right: 10px;
+  --theme-container-padding: 10px;
+  --theme-container-radius: 3px;
+  --theme-container-white: #ffffff;
+  --theme-container-black: #000000;
+}
+
+.container {
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  background-color: #a5a5a5;
+}
+
+.darkTheme {
+  background-color: #000000;
+  width: var(--theme-container-width);
+  margin-right: var(--theme-container-margin-right);
+  padding: var(--theme-container-padding);
+  border-radius: var(--theme-container-radius);
+}
+
+.darkTheme h1 {
+  text-align: center;
+}
+
+.darkTheme h1,
+.darkTheme h2 {
+  color: var(--theme-container-white);
+  font-family: var(--primary-font-family);
+  font-weight: var(--title-font-weight);
+  font-style: var(--title-font-style);
+}
+
+.spacing > button {
+  margin: 3px;
+}
