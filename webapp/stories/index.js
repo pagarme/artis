@@ -1,6 +1,7 @@
 import './Button'
-import './Grid'
 import './ErrorBoundary'
+import './Grid'
+import './Header'
 import './Typography'
 import './FormFields'
 import './Content'

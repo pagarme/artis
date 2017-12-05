@@ -1,0 +1,12 @@
+@import "../../styles/colors.css";
+@import "../../styles/typography.css";
+@import "./properties.css";
+
+.close,
+.back {
+  font-size: var(--header-button-size);
+}
+
+.logo {
+  height: var(--logo-height);
+}
