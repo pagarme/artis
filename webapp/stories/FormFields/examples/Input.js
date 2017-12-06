@@ -12,6 +12,12 @@ class InputState extends React.Component {
     this.state = { email: 'Leo' }
   }
 
+  updateEmail (e) {
+    this.setState({
+      email: e.target.value,
+    })
+  }
+
   render () {
     const {
       error,
@@ -32,7 +38,7 @@ class InputState extends React.Component {
         label="Digite seu email"
         multiline={multiline}
         name="email"
-        onChange={e => this.setState({ email: e.target.value })}
+        onChange={this.updateEmail.bind(this)}
         placeholder="nome@email.com"
         type={type}
         value={email}
