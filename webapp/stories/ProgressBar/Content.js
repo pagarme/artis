@@ -16,21 +16,32 @@ class Wrapper extends React.Component {
 
     this.state = {
       navigateTo: null,
-      progress: 1,
+      progress: 0,
     }
   }
 
-  navigateTo (navigateTo) {
-    this.setState({
-      navigateTo,
-      progress: this.state.progress + 1,
-    })
+  navigateToNext () {
+    if (this.state.progress < 3) {
+      this.setState({
+        navigateTo: 'next',
+        progress: this.state.progress + 1,
+      })
+    }
+  }
+
+  navigateToPrev () {
+    if (this.state.progress > 0) {
+      this.setState({
+        navigateTo: 'prev',
+        progress: this.state.progress - 1,
+      })
+    }
   }
 
   render () {
     return (
       <Fragment>
-        <ProgressBar steps={4} progress={this.state.progress} />
+        <ProgressBar steps={3} progress={this.state.progress} />
         <br />
         <Content navigateTo={this.state.navigateTo}>
           <CustomerData />
@@ -38,7 +49,8 @@ class Wrapper extends React.Component {
           <PaymentData />
           <Success />
         </Content>
-        <button onClick={() => this.navigateTo('next')}>Next Page</button>
+        <button onClick={this.navigateToPrev.bind(this)}>Previous Page</button>
+        <button onClick={this.navigateToNext.bind(this)}>Next Page</button>
       </Fragment>
     )
   }

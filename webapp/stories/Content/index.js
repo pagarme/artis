@@ -31,10 +31,10 @@ class Wrapper extends React.Component {
           <PaymentData />
           <Success />
         </Content>
-        <button onClick={() => this.navigateTo('first')}>First</button>
-        <button onClick={() => this.navigateTo('prev')}>Previous</button>
-        <button onClick={() => this.navigateTo('next')}>Next</button>
-        <button onClick={() => this.navigateTo('last')}>Last</button>
+        <button onClick={this.navigateTo.bind(this, 'first')}>First</button>
+        <button onClick={this.navigateTo.bind(this, 'prev')}>Previous</button>
+        <button onClick={this.navigateTo.bind(this, 'next')}>Next</button>
+        <button onClick={this.navigateTo.bind(this, 'last')}>Last</button>
       </Fragment>
     )
   }

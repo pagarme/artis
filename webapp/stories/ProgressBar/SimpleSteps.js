@@ -12,8 +12,16 @@ class Wrapper extends React.Component {
     }
   }
 
-  updateProgress () {
-    this.setState({ progress: this.state.progress + 1 })
+  progressIncrese () {
+    if (this.state.progress < 3) {
+      this.setState({ progress: this.state.progress + 1 })
+    }
+  }
+
+  progressDecrease () {
+    if (this.state.progress > 0) {
+      this.setState({ progress: this.state.progress - 1 })
+    }
   }
 
   render () {
@@ -21,7 +29,8 @@ class Wrapper extends React.Component {
       <Fragment>
         <ProgressBar steps={3} progress={this.state.progress} />
         <br />
-        <button onClick={() => this.updateProgress()}>Forward</button>
+        <button onClick={this.progressDecrease.bind(this)}>Backward</button>
+        <button onClick={this.progressIncrese.bind(this)}>Forward</button>
       </Fragment>
     )
   }

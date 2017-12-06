@@ -19,7 +19,10 @@
     ],
     "react/jsx-filename-extension": 0,
     "react/jsx-no-bind": [
-      0
+      2, {
+        "ignoreRefs": true,
+        "allowBind": true
+      }
     ]
   }
 }
