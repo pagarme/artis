@@ -101,3 +101,33 @@ $ `yarn lint`
 ```sh
 $ `npm run lint`
 ```
+
+# Estrutura dos componentes
+
+Estamos usando o [Zeplin](https://zeplin.io/), em conjunto com o time de UX, para definir e seguir os layouts em desktop e mobile (somente pessoas com acesso conseguirão ver o conteúdo):
+
+- Layout Mobile: https://app.zeplin.io/project/59e66a2ad508e5fb822f1776/screen/59e75a8daa565b58180d071b
+- Layout Desktop: https://app.zeplin.io/project/59e66a2ad508e5fb822f1776/screen/59e75a07380b7f748505409e
+
+E a estrutura inicial definida segue a seguinte composição dos principais componentes (pode sofrer alterações):
+
+```js
+<Header>
+/*
+  Contém logo e botões de navegação
+*/
+</Header>
+
+<Content>
+/*
+  Será responsável por mostrar o contéudo em si de cada página
+  Também lida com progress bar
+*/
+</Content>
+
+<Footer>
+/*
+  Contém botão de navegação e valor total
+*/
+</Footer>
+```
