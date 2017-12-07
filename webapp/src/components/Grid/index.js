@@ -9,7 +9,16 @@ import classNames from 'classnames'
 
 import style from './style.css'
 
-const colClassNames = ({ className, desk, tv, tablet, palm, alignEnd }) =>
+const colClassNames = ({
+  className,
+  desk,
+  tv,
+  tablet,
+  palm,
+  alignStart,
+  alignCenter,
+  alignEnd,
+}) =>
   classNames(
     className,
     style.col,
@@ -18,6 +27,8 @@ const colClassNames = ({ className, desk, tv, tablet, palm, alignEnd }) =>
     style[`col-tablet-${tablet}`],
     style[`col-palm-${palm}`],
     {
+      [style.alignStart]: alignStart,
+      [style.alignCenter]: alignCenter,
       [style.alignEnd]: alignEnd,
     }
   )
@@ -56,6 +67,8 @@ export const Col = ({
   tv,
   tablet,
   palm,
+  alignStart,
+  alignCenter,
   alignEnd,
   className,
 }) => (
@@ -66,6 +79,8 @@ export const Col = ({
         tv,
         tablet,
         palm,
+        alignStart,
+        alignCenter,
         alignEnd,
         className,
       })
@@ -106,6 +121,8 @@ Col.propTypes = {
   tablet: number,
   palm: number,
   alignEnd: bool,
+  alignCenter: bool,
+  alignStart: bool,
   className: string,
 }
 
@@ -116,5 +133,7 @@ Col.defaultProps = {
   tablet: null,
   palm: null,
   alignEnd: false,
+  alignCenter: false,
+  alignStart: false,
   className: null,
 }

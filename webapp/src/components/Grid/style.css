@@ -40,6 +40,14 @@
   padding-bottom: var(--grid-row-spacing);
 }
 
+.alignStart {
+  justify-content: flex-start;
+}
+
+.alignCenter {
+  justify-content: center;
+}
+
 .alignEnd {
   justify-content: flex-end;
 }
