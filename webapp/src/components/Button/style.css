@@ -5,11 +5,11 @@
 
 .button {
   border: none;
-  border-radius: 2px;
+  border-radius: var(--button-radius);
   font-family: var(--button-font-family);
   font-weight: var(--button-font-weight);
   font-style: var(--button-font-style);
-  letter-spacing: var(--letter-spacing);
+  letter-spacing: 0.7px;
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -25,24 +25,6 @@
   background-image: none;
 }
 
-.flat,
-.flat:hover,
-.flat:active,
-.flat:focus,
-.gradient,
-.gradient:hover,
-.gradient:active,
-.gradient:focus,
-.clean:hover,
-.clean:active,
-.clean:focus {
-  color: var(--button-color);
-}
-
-/*
- * Transparent Backgrounds
- * */
-
 .clean,
 .clean:hover,
 .clean:active,
@@ -52,43 +34,36 @@
   animation: none;
 }
 
-/*
- * Icon Alignment
- * */
-
-.button svg {
-  margin: 0 8px 0 0;
-}
-
-/*
- * Button sizes
- * */
-
 .extra-small {
-  padding: 0 var(--button-padding-extra-small);
+  padding: var(--button-padding-extra-small);
+  padding-bottom: var(--button-padding-bottom-extra-small);
   font-size: var(--button-font-size-extra-small);
   height: var(--button-height-extra-small);
-  padding-top: var(--button-padding-top-extra-small);
+  text-transform: none;
 }
 
 .small {
-  padding: 0 var(--button-padding-small);
+  padding: var(--button-padding-small);
   font-size: var(--button-font-size-small);
   height: var(--button-height-small);
-  padding-top: var(--button-padding-top-small);
+  text-transform: none;
 }
 
 .default {
-  padding: 0 var(--button-padding-default);
+  padding: var(--button-padding-default);
   font-size: var(--button-font-size-default);
   height: var(--button-height-default);
-  padding-top: var(--button-padding-top-default);
+  line-height: var(--button-font-size-default);
 }
 
 .large {
-  padding: 0 var(--button-padding-large);
+  padding: var(--button-padding-large);
   font-size: var(--button-font-size-large);
   height: var(--button-height-large);
-  padding-top: var(--button-padding-top-large);
 }
 
+.extra-large {
+  padding: var(--button-padding-extra-large);
+  font-size: var(--button-font-size-extra-large);
+  height: var(--button-height-extra-large);
+}

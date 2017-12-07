@@ -14,21 +14,19 @@ import style from './style.css'
 
 function Button ({
   disabled,
-  onClick,
+  children,
+  className,
   fill,
-  base,
+  onClick,
   relevance,
   size,
-  children,
   type,
-  className,
 }) {
   const buttonClasses = classNames(
     className,
     style.button,
     style[fill],
-    style[`${base}-${fill}`],
-    style[`${base}-${relevance}`],
+    style[relevance],
     style[size]
   )
 
@@ -50,14 +48,11 @@ Button.propTypes = {
   fill: oneOf([
     'flat', 'gradient', 'outline', 'clean',
   ]),
-  base: oneOf([
-    'dark', 'light',
-  ]),
   relevance: oneOf([
     'high', 'normal', 'low',
   ]),
   size: oneOf([
-    'extra-small', 'small', 'default', 'large',
+    'extra-small', 'small', 'default', 'large', 'extra-large',
   ]),
   children: oneOfType([
     arrayOf(node),
@@ -71,7 +66,6 @@ Button.propTypes = {
 Button.defaultProps = {
   onClick: null,
   fill: 'flat',
-  base: 'light',
   relevance: 'normal',
   size: 'default',
   type: 'button',

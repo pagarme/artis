@@ -34,11 +34,11 @@ storiesOf('Buttons', module)
         <h2>Sizes</h2>
 
         <div className={style.spacing}>
-          <Button base="dark" size="extra-small" relevance="high">extra-small</Button>
+          <Button base="dark" size="extra-small" relevance="high">Extra-small</Button>
         </div>
 
         <div className={style.spacing}>
-          <Button base="dark" size="small" relevance="high">small</Button>
+          <Button base="dark" size="small" relevance="high">Small</Button>
         </div>
 
         <div className={style.spacing}>
@@ -46,7 +46,11 @@ storiesOf('Buttons', module)
         </div>
 
         <div className={style.spacing}>
-          <Button base="dark" size="large" relevance="high">Default</Button>
+          <Button base="dark" size="large" relevance="high">Large</Button>
+        </div>
+
+        <div className={style.spacing}>
+          <Button base="dark" size="extra-large" relevance="high">Extra-large</Button>
         </div>
       </div>
     </div>

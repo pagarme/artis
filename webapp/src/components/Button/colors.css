@@ -1,68 +1,58 @@
-/*
- * Dark High
- * */
-
-@keyframes dark-high-focus {
-
-  0% {
-    box-shadow: var(--button-focus-animation-start) var(--button-dark-high);
-  }
-
-  100% {
-    box-shadow: var(--button-focus-animation-end) var(--button-dark-high);
-  }
-}
-
-.dark-high {
+.high {
   animation: none;
   color: var(--button-color);
-  background-color: var(--button-dark-high);
+  background-color: var(--button-high);
   background-image: var(--color-greenish-gradient);
   border: none;
-  will-change: box-shadow;
+  transition: opacity 0.2s ease;
+  will-change: opacity;
 }
 
-.dark-high:focus {
-  animation-name: dark-high-focus;
+.high:hover {
+  opacity: 0.8;
+}
+
+.high:active {
+  opacity: 0.7;
+}
+
+.high:focus {
+  animation-name: high-focus;
   animation-duration: var(--button-focus-animation-duration);
-  background-color: var(--button-dark-high-focus);
-  background-image: none;
-  border: none;
 }
 
-.dark-high:hover {
-  animation: none;
-  background-color: var(--button-dark-high-hover);
-  background-image: var(--color-greenish-gradient-hover);
-  border-color: var(--button-dark-high-hover);
-  border: none;
-}
-
-.dark-high:active {
-  animation: none;
-  background-color: var(--button-dark-high-active);
-  background-image: var(--color-greenish-gradient-active);
-  border: none;
-}
-
-.dark-high svg {
-  color: var(--button-dark-high-icon);
+.high svg {
+  color: var(--button-high);
   will-change: transform;
 }
 
-.dark-high svg:active {
+.high svg:active {
   transform: var(--button-animation-icon);
 }
 
-/*
-* Dark Normal
-* */
+.normal {
+  animation: none;
+  color: var(--button-color);
+  background-color: var(--button-normal);
+  background-image: none;
+  border: none;
+  transition: opacity 0.2s ease;
+  will-change: opacity;
+}
 
-.dark-normal svg {
-  color: var(--button-normal-icon);
+.normal:hover {
+  opacity: 0.8;
+}
+
+.normal:active {
+  opacity: 0.7;
+}
+
+.normal svg {
+  color: var(--button-normal);
   will-change: transform;
 }
 
-.dark-normal svg:active {
+.normal svg:active {
   transform: var(--button-animation-icon);
 }
