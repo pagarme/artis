@@ -10,7 +10,7 @@ storiesOf('Footer', module)
       <Footer
         total={33000.15}
         buttonText={'Continuar'}
-        buttonClick={() => console.info('ok')}
+        buttonClick={console.info.bind(this, 'ok')}
         companyName={'Pagar.me'}
       />
     </div>
