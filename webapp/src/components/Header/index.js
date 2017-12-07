@@ -25,9 +25,8 @@ const Header = ({
 }) => (
   <header className={className}>
     <Grid>
-      <Row className={style.row}>
+      <Row>
         <Col
-          className={style.buttonContainer}
           tv="4"
           desk="4"
           tablet="4"
@@ -45,7 +44,6 @@ const Header = ({
           </Button>
         </Col>
         <Col
-          className={style.logoContainer}
           tv="4"
           desk="4"
           tablet="4"
@@ -55,7 +53,6 @@ const Header = ({
           <img className={style.logo} src={logoSrc} alt={logoAlt} />
         </Col>
         <Col
-          className={style.buttonContainer}
           tv="4"
           desk="4"
           tablet="4"
