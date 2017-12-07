@@ -10,18 +10,28 @@ import { Grid, Row, Col } from '../Grid'
 import Button from '../Button'
 import style from './style.css'
 
-const formatCurrency = value =>
-  (value).toLocaleString('pt-BR', {
+const formatCurrency = (value = 0) =>
+  value.toLocaleString('pt-BR', {
     style: 'currency',
     currency: 'BRL',
     minimumFractionDigits: 2,
   })
 
+const palmColSize = 12
+const valueColSize = 8
+const buttonColSize = 4
+const defaultColSize = 6
+
 const Footer = ({ total, buttonText, buttonClick, companyName }) => (
   <footer>
     <Grid>
       <Row>
-        <Col desk={8} tv={8} tablet={8} palm={12}>
+        <Col
+          desk={valueColSize}
+          tv={valueColSize}
+          tablet={valueColSize}
+          palm={palmColSize}
+        >
           <div className={style.total}>
             Valor a pagar:
             <span className={style.value}>
@@ -29,7 +39,12 @@ const Footer = ({ total, buttonText, buttonClick, companyName }) => (
             </span>
           </div>
         </Col>
-        <Col desk={4} tv={4} tablet={4} palm={12}>
+        <Col
+          desk={buttonColSize}
+          tv={buttonColSize}
+          tablet={buttonColSize}
+          palm={palmColSize}
+        >
           <Button
             base="dark"
             relevance="high"
@@ -42,20 +57,20 @@ const Footer = ({ total, buttonText, buttonClick, companyName }) => (
       </Row>
       <Row>
         <Col
-          desk={6}
-          tv={6}
-          tablet={6}
-          palm={12}
+          desk={defaultColSize}
+          tv={defaultColSize}
+          tablet={defaultColSize}
+          palm={palmColSize}
           className={style.safe}
         >
           <LockIcon />
           Ambiente Seguro
         </Col>
         <Col
-          desk={6}
-          tv={6}
-          tablet={6}
-          palm={12}
+          desk={defaultColSize}
+          tv={defaultColSize}
+          tablet={defaultColSize}
+          palm={palmColSize}
           className={style.powered}
         >
           Powered by { companyName }
