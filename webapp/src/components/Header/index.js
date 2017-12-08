@@ -33,7 +33,6 @@ const Header = ({
           desk={buttonColSize}
           tablet={buttonColSize}
           palm={buttonColSize}
-          alignStart
         >
           <Button
             className={style.back}
@@ -59,7 +58,6 @@ const Header = ({
           desk={buttonColSize}
           tablet={buttonColSize}
           palm={buttonColSize}
-          alignEnd
         >
           <Button
             base={base}
