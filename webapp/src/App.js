@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import classNames from 'classnames'
 
 import Content from './containers/Content'
 import Header from './components/Header'
@@ -16,6 +17,7 @@ class App extends Component {
 
     this.state = {
       navigateTo: null,
+      closingEffect: false,
     }
   }
 
@@ -26,14 +28,25 @@ class App extends Component {
   close () {
     const { target } = this.props
 
-    ReactDOM.unmountComponentAtNode(
-      document.getElementById(target)
-    )
+    this.setState({ closingEffect: true })
+
+    setTimeout(() => {
+      ReactDOM.unmountComponentAtNode(
+        document.getElementById(target)
+      )
+    }, 500)
   }
 
   render () {
     return (
-      <div className={style.checkout}>
+      <div
+        className={classNames(
+          style.checkout,
+          {
+            [style.closingEffect]: this.state.closingEffect,
+          },
+        )}
+      >
         <div className={style.wrapper}>
           <Header
             logoAlt="Pagar.me"
