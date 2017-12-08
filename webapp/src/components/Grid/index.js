@@ -33,13 +33,14 @@ const colClassNames = ({
     }
   )
 
-const rowClassNames = ({ flex, stretch, className }) =>
+const rowClassNames = ({ flex, stretch, alignCenter, className }) =>
   classNames(
     className,
     style.row,
     {
       [style.flex]: flex,
       [style.stretch]: stretch,
+      [style.alignItensCenter]: alignCenter,
     }
   )
 
@@ -55,8 +56,8 @@ export const Grid = ({ children, className }) => (
   </div>
 )
 
-export const Row = ({ children, flex, stretch, className }) => (
-  <div className={rowClassNames({ flex, stretch, className })}>
+export const Row = ({ children, flex, stretch, alignCenter, className }) => (
+  <div className={rowClassNames({ flex, stretch, alignCenter, className })}>
     {children}
   </div>
 )
@@ -101,6 +102,7 @@ Grid.defaultProps = {
 }
 
 Row.propTypes = {
+  alignCenter: bool,
   children: node,
   flex: bool,
   stretch: bool,
@@ -108,6 +110,7 @@ Row.propTypes = {
 }
 
 Row.defaultProps = {
+  alignCenter: false,
   children: null,
   flex: false,
   stretch: false,

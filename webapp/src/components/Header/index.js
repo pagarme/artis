@@ -30,7 +30,7 @@ const Header = ({
 }) => (
   <header className={style.header}>
     <Grid>
-      <Row>
+      <Row alignCenter>
         <Col
           tv={buttonColSize}
           desk={buttonColSize}
