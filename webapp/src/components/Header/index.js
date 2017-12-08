@@ -15,7 +15,8 @@ import {
 } from './../Grid'
 import style from './style.css'
 
-const defaultColSize = 4
+const buttonColSize = 1
+const imgColSize = 10
 
 const Header = ({
   base,
@@ -28,10 +29,10 @@ const Header = ({
     <Grid>
       <Row>
         <Col
-          tv={defaultColSize}
-          desk={defaultColSize}
-          tablet={defaultColSize}
-          palm={defaultColSize}
+          tv={buttonColSize}
+          desk={buttonColSize}
+          tablet={buttonColSize}
+          palm={buttonColSize}
           alignStart
         >
           <Button
@@ -45,19 +46,19 @@ const Header = ({
           </Button>
         </Col>
         <Col
-          tv={defaultColSize}
-          desk={defaultColSize}
-          tablet={defaultColSize}
-          palm={defaultColSize}
+          tv={imgColSize}
+          desk={imgColSize}
+          tablet={imgColSize}
+          palm={imgColSize}
           alignCenter
         >
           <img className={style.logo} src={logoSrc} alt={logoAlt} />
         </Col>
         <Col
-          tv={defaultColSize}
-          desk={defaultColSize}
-          tablet={defaultColSize}
-          palm={defaultColSize}
+          tv={buttonColSize}
+          desk={buttonColSize}
+          tablet={buttonColSize}
+          palm={buttonColSize}
           alignEnd
         >
           <Button
