@@ -1,0 +1,22 @@
+.checkout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #333333;
+  overflow: hidden;
+}
+
+.wrapper {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@keyframes transition {
+
+  to {
+    transform: translate(0, 0);
+  }
+}
