@@ -18,6 +18,9 @@ import style from './style.css'
 const buttonColSize = 1
 const imgColSize = 10
 
+const buttonPalmColSize = 3
+const imgPalmColSize = 6
+
 const Header = ({
   base,
   logoSrc,
@@ -32,7 +35,7 @@ const Header = ({
           tv={buttonColSize}
           desk={buttonColSize}
           tablet={buttonColSize}
-          palm={buttonColSize}
+          palm={buttonPalmColSize}
         >
           <Button
             className={style.back}
@@ -48,7 +51,7 @@ const Header = ({
           tv={imgColSize}
           desk={imgColSize}
           tablet={imgColSize}
-          palm={imgColSize}
+          palm={imgPalmColSize}
           alignCenter
         >
           <img className={style.logo} src={logoSrc} alt={logoAlt} />
@@ -57,7 +60,7 @@ const Header = ({
           tv={buttonColSize}
           desk={buttonColSize}
           tablet={buttonColSize}
-          palm={buttonColSize}
+          palm={buttonPalmColSize}
         >
           <Button
             base={base}
