@@ -4,6 +4,7 @@ import Content from './containers/Content'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
+import defaultLogo from './images/logo_pagarme.png'
 import style from './App.styles.css'
 
 class App extends Component {
@@ -24,6 +25,8 @@ class App extends Component {
       <div className={style.checkout}>
         <div className={style.wrapper}>
           <Header
+            logoAlt="Pagar.me"
+            logoSrc={defaultLogo}
             onPrev={this.navigateTo.bind(this, 'prev')}
           />
           <Content navigateTo={this.state.navigateTo} />

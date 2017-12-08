@@ -5,7 +5,11 @@
 .close,
 .back {
   font-size: var(--header-button-size);
-  padding-top: 0;
+  padding: 0;
+}
+
+.close {
+  justify-content: flex-end;
 }
 
 .logo {

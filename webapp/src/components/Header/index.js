@@ -61,6 +61,7 @@ const Header = ({
           desk={buttonColSize}
           tablet={buttonColSize}
           palm={buttonPalmColSize}
+          alignEnd
         >
           <Button
             base={base}
