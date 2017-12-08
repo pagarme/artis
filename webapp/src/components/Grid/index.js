@@ -9,7 +9,16 @@ import classNames from 'classnames'
 
 import style from './style.css'
 
-const colClassNames = ({ className, desk, tv, tablet, palm, alignEnd }) =>
+const colClassNames = ({
+  className,
+  desk,
+  tv,
+  tablet,
+  palm,
+  alignStart,
+  alignCenter,
+  alignEnd,
+}) =>
   classNames(
     className,
     style.col,
@@ -18,17 +27,20 @@ const colClassNames = ({ className, desk, tv, tablet, palm, alignEnd }) =>
     style[`col-tablet-${tablet}`],
     style[`col-palm-${palm}`],
     {
+      [style.alignStart]: alignStart,
+      [style.alignCenter]: alignCenter,
       [style.alignEnd]: alignEnd,
     }
   )
 
-const rowClassNames = ({ flex, stretch, className }) =>
+const rowClassNames = ({ flex, stretch, alignCenter, className }) =>
   classNames(
     className,
     style.row,
     {
       [style.flex]: flex,
       [style.stretch]: stretch,
+      [style.alignItensCenter]: alignCenter,
     }
   )
 
@@ -44,8 +56,8 @@ export const Grid = ({ children, className }) => (
   </div>
 )
 
-export const Row = ({ children, flex, stretch, className }) => (
-  <div className={rowClassNames({ flex, stretch, className })}>
+export const Row = ({ children, flex, stretch, alignCenter, className }) => (
+  <div className={rowClassNames({ flex, stretch, alignCenter, className })}>
     {children}
   </div>
 )
@@ -56,6 +68,8 @@ export const Col = ({
   tv,
   tablet,
   palm,
+  alignStart,
+  alignCenter,
   alignEnd,
   className,
 }) => (
@@ -66,6 +80,8 @@ export const Col = ({
         tv,
         tablet,
         palm,
+        alignStart,
+        alignCenter,
         alignEnd,
         className,
       })
@@ -86,6 +102,7 @@ Grid.defaultProps = {
 }
 
 Row.propTypes = {
+  alignCenter: bool,
   children: node,
   flex: bool,
   stretch: bool,
@@ -93,6 +110,7 @@ Row.propTypes = {
 }
 
 Row.defaultProps = {
+  alignCenter: false,
   children: null,
   flex: false,
   stretch: false,
@@ -106,6 +124,8 @@ Col.propTypes = {
   tablet: number,
   palm: number,
   alignEnd: bool,
+  alignCenter: bool,
+  alignStart: bool,
   className: string,
 }
 
@@ -116,5 +136,7 @@ Col.defaultProps = {
   tablet: null,
   palm: null,
   alignEnd: false,
+  alignCenter: false,
+  alignStart: false,
   className: null,
 }
