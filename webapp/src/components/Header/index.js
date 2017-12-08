@@ -15,22 +15,23 @@ import {
 } from './../Grid'
 import style from './style.css'
 
+const defaultColSize = 4
+
 const Header = ({
   base,
-  className,
   logoSrc,
   logoAlt,
   onPrev,
   onClose,
 }) => (
-  <header className={className}>
+  <header className={style.header}>
     <Grid>
       <Row>
         <Col
-          tv="4"
-          desk="4"
-          tablet="4"
-          palm="4"
+          tv={defaultColSize}
+          desk={defaultColSize}
+          tablet={defaultColSize}
+          palm={defaultColSize}
           alignStart
         >
           <Button
@@ -44,19 +45,19 @@ const Header = ({
           </Button>
         </Col>
         <Col
-          tv="4"
-          desk="4"
-          tablet="4"
-          palm="4"
+          tv={defaultColSize}
+          desk={defaultColSize}
+          tablet={defaultColSize}
+          palm={defaultColSize}
           alignCenter
         >
           <img className={style.logo} src={logoSrc} alt={logoAlt} />
         </Col>
         <Col
-          tv="4"
-          desk="4"
-          tablet="4"
-          palm="4"
+          tv={defaultColSize}
+          desk={defaultColSize}
+          tablet={defaultColSize}
+          palm={defaultColSize}
           alignEnd
         >
           <Button
@@ -78,7 +79,6 @@ Header.propTypes = {
   base: oneOf([
     'dark', 'light',
   ]),
-  className: string,
   logoSrc: string,
   logoAlt: string,
   onPrev: func,
@@ -87,7 +87,6 @@ Header.propTypes = {
 
 Header.defaultProps = {
   base: 'dark',
-  className: '',
   logoSrc: '',
   logoAlt: '',
   onPrev: null,
