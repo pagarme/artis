@@ -9,10 +9,8 @@ describe('Header', () => {
       <Header />
     )
 
-    expect(component.find('img').first()).toBeDefined()
-    expect(component.find('button').length).toBe(2)
-    expect(component.find('h1').first()).toBeDefined()
-    expect(component.find('img').first()).toBeDefined()
+    expect(component.find('img')).toHaveLength(1)
+    expect(component.find('button')).toHaveLength(2)
   })
 
   it('should be click in all buttons', () => {
