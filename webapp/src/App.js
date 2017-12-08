@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import Content from './containers/Content'
 import Header from './components/Header'
@@ -20,6 +23,14 @@ class App extends Component {
     this.setState({ navigateTo })
   }
 
+  close () {
+    const { elementId } = this.props
+
+    ReactDOM.unmountComponentAtNode(
+      document.getElementById(elementId)
+    )
+  }
+
   render () {
     return (
       <div className={style.checkout}>
@@ -28,6 +39,7 @@ class App extends Component {
             logoAlt="Pagar.me"
             logoSrc={defaultLogo}
             onPrev={this.navigateTo.bind(this, 'prev')}
+            onClose={this.close.bind(this)}
           />
           <Content navigateTo={this.state.navigateTo} />
           <Footer
@@ -42,4 +54,12 @@ class App extends Component {
   }
 }
 
-export default App
+const mapStateToProps = state => ({
+  elementId: state.injectedValues.configs.el,
+})
+
+App.propTypes = {
+  elementId: PropTypes.string.isRequired,
+}
+
+export default connect(mapStateToProps)(App)
