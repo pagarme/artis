@@ -1,4 +1,7 @@
 :root {
-  --logo-height: 50px;
+  --logo-max-height: 43px;
+  --padding-top: 24px;
+  --padding-bottom: 24px;
+  --logo-max-width: 400px;
   --header-button-size: 25px;
 }
