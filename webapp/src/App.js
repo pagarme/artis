@@ -24,10 +24,10 @@ class App extends Component {
   }
 
   close () {
-    const { elementId } = this.props
+    const { target } = this.props
 
     ReactDOM.unmountComponentAtNode(
-      document.getElementById(elementId)
+      document.getElementById(target)
     )
   }
 
@@ -55,11 +55,11 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  elementId: state.injectedValues.configs.el,
+  target: state.injectedValues.configs.target,
 })
 
 App.propTypes = {
-  elementId: PropTypes.string.isRequired,
+  target: PropTypes.string.isRequired,
 }
 
 export default connect(mapStateToProps)(App)

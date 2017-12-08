@@ -24,7 +24,7 @@ const customIntegration = key => configs => params => () => {
     <Provider store={store}>
       <App />
     </Provider>,
-    document.getElementById(configs.el)
+    document.getElementById(configs.target)
   )
 }
 
