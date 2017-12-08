@@ -1,40 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import style from './styles.css'
 
-class ProgressBar extends Component {
-  constructor (props) {
-    super(props)
+const ProgressBar = ({ steps, progress }) => {
+  const width = `${(100 / steps) * progress}%`
 
-    this.state = {
-      progress: 0,
-    }
-  }
-
-  componentWillReceiveProps (nextProps) {
-    const { progress, steps } = nextProps
-
-    if (progress <= steps) {
-      this.setState({ progress })
-    }
-  }
-
-  getStyle () {
-    const { progress } = this.state
-    const { steps } = this.props
-    const width = `${(100 / steps) * progress}%`
-
-    return { width }
-  }
-
-  render () {
-    return (
-      <div className={style.wrapper}>
-        <div className={style.progressBar} style={this.getStyle()} />
-      </div>
-    )
-  }
+  return (
+    <div className={style.wrapper}>
+      <div className={style.progressBar} style={{ width }} />
+    </div>
+  )
 }
 
 ProgressBar.propTypes = {

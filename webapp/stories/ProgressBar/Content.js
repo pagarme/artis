@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { storiesOf } from '@storybook/react'
 
 import ProgressBar from '../../src/components/ProgressBar'
-import Content from '../../src/containers/Content'
+import { Content } from '../../src/containers/Content'
 import style from '../Content/styles.css'
 
 const CustomerData = () => (<div className={style.page}>Customer Data</div>)
