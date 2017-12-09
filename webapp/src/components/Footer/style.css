@@ -4,14 +4,12 @@
 @import "../../styles/typography.css";
 
 .total {
-  width: 100%;
   margin-top: 3px;
   color: var(--color-dark-greenish-50);
   font-size: var(--font-size-small);
   font-family: var(--primary-font-family);
   letter-spacing: calc(var(--letter-spacing) + 0.08em);
   text-transform: uppercase;
-  text-align: right;
 }
 
 .total .value {
