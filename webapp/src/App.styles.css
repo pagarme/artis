@@ -1,3 +1,5 @@
+@import "./styles/animations.css";
+
 .checkout {
   position: absolute;
   top: 0;
@@ -19,15 +21,4 @@
   animation-name: fadeOut;
   animation-duration: 450ms;
   animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-@keyframes fadeOut {
-
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
 }
