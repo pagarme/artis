@@ -33,7 +33,7 @@ class InputState extends React.Component {
     return (
       <Input
         error={error}
-        hint="Texto secundario"
+        hint="Texto de apoio"
         icon={icon}
         label="Digite seu email"
         multiline={multiline}
@@ -65,7 +65,7 @@ const InputExamples = () => (
         name="email"
         label="Digite seu email"
         disabled
-        hint="Texto secundário"
+        hint="Texto de apoio"
         placeholder="eae"
         onChange={action('text changed')}
       />

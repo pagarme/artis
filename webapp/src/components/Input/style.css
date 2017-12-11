@@ -19,7 +19,7 @@
 }
 
 .disabled .inputContainer {
-  border-bottom: 1px dashed var(--input-color-disabled);
+  border-bottom: 1px solid var(--input-color-disabled);
   border-radius: var(--input-textarea-disabled-border-radius);
 }
 
@@ -43,7 +43,7 @@
   min-width: 100%;
   resize: none;
   border: none;
-  border-bottom: 2px solid var(--input-textarea-border-color);
+  border-bottom: 1px solid var(--input-textarea-border-color);
   border-radius: var(--input-textarea-border-radius);
   font-size: var(--input-font-size);
   padding-bottom: 6px;
@@ -99,7 +99,7 @@
 
 .inputContainer > textarea:focus,
 .inputContainer > input:focus {
-  border-bottom: 2px solid var(--input-textarea-focus-border-color);
+  border-bottom: 1px solid var(--input-textarea-focus-border-color);
   border-radius: var(--input-textarea-border-radius);
   transition: border-color var(--input-textarea-focus-transition-time) ease;
   outline: none;
@@ -169,10 +169,7 @@
   word-break: break-word;
 }
 
-.error > textarea:focus ~ label,
-.error > input:focus ~ label,
-.error ~ .secondaryText,
-.error > .contentPresent {
+.error ~ .secondaryText {
   color: var(--color-light-error);
 }
 
@@ -181,5 +178,4 @@
 .error > textarea:focus,
 .error > input:focus {
   border-bottom: 2px solid var(--color-light-error);
-  caret-color: var(--color-light-error);
 }

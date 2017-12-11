@@ -4,11 +4,11 @@
   --input-font-family: var(--primary-font-family);
   --input-font-size: 14px;
 
-  --input-textarea-border-color: rgba(var(--color-light-grey-50), 0.25);
+  --input-textarea-border-color: var(--color-light-grey-25);
   --input-textarea-border-radius: 0;
   --input-textarea-caret-default-color: var(--color-light-grey-75);
 
-  --input-textarea-focus-border-color: var(--color-light-grey-100);
+  --input-textarea-focus-border-color: var(--color-light-grey-25);
   --input-textarea-focus-transition-time: 100ms;
 
   --input-textarea-placeholder-opacity: 0;
@@ -26,7 +26,7 @@
   --input-label-transition-time: 0.1s;
   --input-label-font-size-default: var(--input-font-size);
   --input-label-font-size-focus: 12px;
-  --input-label-color-focus: var(--color-light-grey-25);
+  --input-label-color-focus: var(--color-light-grey-75);
 
   --input-textarea-height: calc(100% - 25px);
 
