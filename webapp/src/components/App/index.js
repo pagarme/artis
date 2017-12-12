@@ -7,9 +7,9 @@ import {
 } from 'prop-types'
 import classNames from 'classnames'
 
-import Content from '../../containers/Content'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
+import Content from '../Content'
+import Header from '../Header'
+import Footer from '../Footer'
 
 import defaultLogo from '../../images/logo_pagarme.png'
 import style from './style.css'
