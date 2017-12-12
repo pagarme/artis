@@ -5,7 +5,20 @@ import App from './'
 
 describe('Main App', () => {
   const component = shallow(
-    <App />
+    <App
+      apiValues={{
+        key: 'some_key',
+        configs: {
+          image: 'some_image',
+          theme: 'dark',
+          target: '#some-div',
+        },
+        params: {
+          amount: 123,
+          paymentMethod: 'creditcard',
+        },
+      }}
+    />
   )
 
   it('renders without crashing', () => {

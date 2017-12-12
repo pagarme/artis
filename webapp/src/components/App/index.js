@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
+import {
+  shape,
+  string,
+  number,
+} from 'prop-types'
 import classNames from 'classnames'
 
 import Content from '../../containers/Content'
@@ -25,13 +29,13 @@ class App extends Component {
   }
 
   close () {
-    const { target } = this.props
+    const { configs } = this.props.apiValues
 
     this.setState({ closingEffect: true })
 
     setTimeout(() => {
       ReactDOM.unmountComponentAtNode(
-        document.getElementById(target)
+        document.getElementById(configs.target)
       )
     }, 500)
   }
@@ -67,11 +71,27 @@ class App extends Component {
 }
 
 App.propTypes = {
-  target: PropTypes.string.isRequired,
+  apiValues: shape({
+    key: string.isRequired,
+    configs: shape({
+      image: string,
+      theme: string,
+      target: string.isRequired,
+    }).isRequired,
+    params: shape({
+      amount: number.isRequired,
+      paymentMethod: string.isRequired,
+    }),
+  }).isRequired,
 }
 
 App.defaultProps = {
-  target: 'app',
+  apiValues: {
+    configs: {
+      image: '',
+      theme: 'dark',
+    },
+  },
 }
 
 export default App
