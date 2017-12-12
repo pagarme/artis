@@ -15,6 +15,12 @@ Estamos utilizando [Issues](https://github.com/mundipagg/mercurio-checkout/issue
 
 Na pasta [webapp](webapp) você pode ver mais detalhes sobre como rodar o projeto.
 
+## Implementando o modal de checkout 
+
+O checkout renderizará em e-commerces um modal contendo os passos necessários para habilitar o pagamento de diversas formas (boleto, cartões com opção de parcelamento, etc). 
+
+Nos arquivos [custom.html](./webapp/public/custom.html) e [simple.html](./webapp/public/simple.html) você pode ver um exemplo de como ficaria a implementação em cada um dos casos, a intenção é que ambas possibilitem uma implementação fácil, sendo que uma delas permite um nível de customização maior. 
+
 ## Contribuindo
 
 Para mais informações sobre como contribuir, [clique aqui](./.github/CONTRIBUTING.md).
