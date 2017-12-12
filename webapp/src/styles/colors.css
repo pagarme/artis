@@ -4,10 +4,17 @@
 :root {
   --color-white: #ffffff;
   --color-black: #000000;
+
   --color-pink: #dc6860;
   --color-orange: #ffa317;
   --color-greenish: #7ad499;
   --color-purple: #8459b9;
-  --color-greenish-100: #54d895;
-  --color-bluish-100: #5cc8b7;
+
+  --color-grey-10: #e3e3e3;
+  --color-grey-20: #a8a8aa;
+  --color-grey-30: #9c9b9b;
+  --color-grey-40: #7d7c7c;
+  --color-grey-50: #797979;
+  --color-grey-60: #515151;
+  --color-grey-70: #1d1d26;
 }
