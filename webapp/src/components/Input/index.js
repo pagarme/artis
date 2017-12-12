@@ -146,7 +146,12 @@ Input.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   multiline: PropTypes.bool,
-  type: PropTypes.oneOf(['text', 'password']),
+  type: PropTypes.oneOf([
+    'text',
+    'email',
+    'number',
+    'password',
+  ]),
   placeholder: PropTypes.string,
   hint: PropTypes.string,
   disabled: PropTypes.bool,
