@@ -39,4 +39,6 @@
   --button-high: var(--color-greenish-100);
 
   --button-normal: var(--color-dark-grey-90);
+
+  --button-focus-animation-duration: 0.4s;
 }
