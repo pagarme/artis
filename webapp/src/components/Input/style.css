@@ -30,7 +30,6 @@
 
 .inputContainer {
   position: relative;
-  padding-top: 4px;
 }
 
 .inputContainer * {
@@ -48,7 +47,7 @@
   border-bottom: 1px solid var(--input-textarea-border-color);
   border-radius: var(--input-textarea-border-radius);
   font-size: var(--input-font-size);
-  padding-bottom: 6px;
+  color: var(--input-font-color);
   padding-top: var(--input-textarea-padding-top);
   caret-color: var(--input-textarea-caret-default-color);
   background: none;
@@ -94,7 +93,7 @@
   font-size: var(--input-label-font-size-default);
   white-space: nowrap;
   position: absolute;
-  top: 20px;
+  top: 14px;
   pointer-events: none;
   transition: var(--input-label-transition-time) ease all;
 }
@@ -109,14 +108,15 @@
 
 .inputContainer > textarea:focus ~ label,
 .inputContainer > input:focus ~ label {
-  top: 4px;
+  top: 2px;
   font-size: var(--input-label-font-size-focus);
   color: var(--input-label-color-focus);
 }
 
 .inputContainer .contentPresent {
-  top: 4px;
+  top: 2px;
   font-size: var(--input-label-font-size-focus);
+  color: var(--input-label-color-focus);
 }
 
 .icon {
@@ -142,6 +142,7 @@
 
 .secondaryText {
   width: 100%;
+  font-family: var(--input-font-family);
   font-size: var(--input-secondary-text-font-size);
   text-align: left;
   margin: 0;
@@ -172,12 +173,12 @@
 }
 
 .error ~ .secondaryText {
-  color: var(--color-light-error);
+  color: var(--color-pink);
 }
 
 .error > textarea,
 .error > input,
 .error > textarea:focus,
 .error > input:focus {
-  border-bottom: 2px solid var(--color-light-error);
+  border-bottom: 2px solid var(--color-pink);
 }

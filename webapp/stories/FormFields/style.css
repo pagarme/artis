@@ -1,10 +1,22 @@
 .container {
   padding: 15px;
-  background-color: #eeeeee;
+  background-color: rgb(245, 245, 245);
 }
 
 .container section {
+  width: 500px;
   margin: 12px 0;
   padding: 1px 12px 12px;
-  background-color: #ffffff;
+  background-color: #333333;
 }
+
+.container h2 {
+  font-family: sans-serif;
+  color: #333333;
+}
+
+.container h3 {
+  font-family: sans-serif;
+  color: #CCCCCC;
+}
+
