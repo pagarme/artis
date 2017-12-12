@@ -1,3 +1,0 @@
-const INJECTED_VALUES = 'INJECTED_VALUES'
-
-export default INJECTED_VALUES

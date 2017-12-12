@@ -1,0 +1,24 @@
+@import "../../styles/animations.css";
+
+.checkout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #333333;
+  overflow: hidden;
+}
+
+.wrapper {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.closingEffect {
+  opacity: 0;
+  animation-name: fadeOut;
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}

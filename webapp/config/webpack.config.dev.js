@@ -175,6 +175,7 @@ module.exports = {
                 options: {
                   importLoaders: 1,
                   modules: 1,
+                  localIdentName: '[folder]__[local]',
                 },
               },
               {

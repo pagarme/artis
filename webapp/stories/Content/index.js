@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { storiesOf } from '@storybook/react'
 
-import Content from '../../src/containers/Content'
+import Content from '../../src/components/Content'
 import style from './styles.css'
 
 const CustomerData = () => (<div className={style.page}>Customer Data</div>)

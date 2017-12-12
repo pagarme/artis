@@ -31,6 +31,7 @@ const Footer = ({ total, buttonText, buttonClick, companyName }) => (
           tv={valueColSize}
           tablet={valueColSize}
           palm={palmColSize}
+          alignEnd
         >
           <div className={style.total}>
             Valor a pagar:
