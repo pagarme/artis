@@ -59,6 +59,7 @@ class Input extends React.Component {
       value,
       className,
       onChange,
+      name,
     } = this.props
 
     const inputContainer = classnames(style.inputContainer, {
@@ -95,6 +96,7 @@ class Input extends React.Component {
               ? (
                 <textarea
                   rows="1"
+                  name={name}
                   className={className}
                   onChange={disabled ? null : onChange}
                   {...inputProps}
@@ -102,6 +104,7 @@ class Input extends React.Component {
               ) : (
                 <input
                   id={name}
+                  name={name}
                   type={inputType}
                   className={className}
                   onChange={disabled ? null : onChange}

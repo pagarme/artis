@@ -14,7 +14,7 @@ describe('Main App', () => {
           target: '#some-div',
         },
         params: {
-          amount: 123,
+          amount: 11341,
           paymentMethod: 'creditcard',
         },
       }}

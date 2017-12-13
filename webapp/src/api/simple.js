@@ -23,7 +23,7 @@ const simpleIntegration = (checkoutFormButtons) => {
     })
 
     const open = checkout({
-      amount: button.dataset.amount,
+      amount: parseInt(button.dataset.amount, 10),
       paymentMethod: button.dataset.paymentMethod,
     })
 
