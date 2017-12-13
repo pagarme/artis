@@ -1,0 +1,6 @@
+@import "../../styles/colors.css";
+
+:root {
+  --wrapper-background-color: var(--color-grey-60);
+  --progressbar-background-color: var(--color-greenish);
+}

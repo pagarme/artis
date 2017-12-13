@@ -11,7 +11,6 @@
   background-color: var(--button-background-color);
   font-family: var(--button-font-family);
   font-weight: var(--button-font-weight);
-  font-style: var(--button-font-style);
   letter-spacing: var(--letter-spacing);
   text-transform: uppercase;
   cursor: pointer;

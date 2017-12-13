@@ -1,14 +1,13 @@
-@import "../../styles/colors.css";
+@import "./properties.css";
 
 .wrapper {
   width: 100%;
-  background: var(--color-dark-grey-25);
+  background-color: var(--wrapper-background-color);
 }
 
 .progressBar {
   width: 0;
   height: 3px;
-  background: #00eb95;
-  background: linear-gradient(to right, #00eb95 0%, #00d3b8 100%);
+  background-color: var(--progressbar-background-color);
   transition: all 0.25s ease-out;
 }
