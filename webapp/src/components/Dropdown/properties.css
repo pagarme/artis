@@ -1,0 +1,28 @@
+@import "../../styles/colors.css";
+
+:root {
+  --dropdown-font-family: var(--primary-font-family);
+
+  --dropdown-input-border-color: var(--color-light-grey-25);
+  --dropdown-input-border-radius: 0;
+  --dropdown-input-font-size: 14px;
+  --dropdown-input-height: 37px;
+  --dropdown-input-line-height: 42px;
+  --dropdown-input-text-color: var(--color-light-grey-100);
+
+  --dropdown-color-disabled: var(--color-light-grey-25);
+
+  --dropdown-icon-size: 30px;
+
+  --dropdown-option-color: var(--color-light-grey-75);
+
+  --dropdown-disabled-option-opacity: 0.6;
+  --dropdown-disabled-option-background: none;
+
+  --dropdown-option-selected-color: var(--color-light-success);
+
+  --dropdown-label-color: var(--color-light-grey-100);
+  --dropdown-label-dropdown-font-size: 12px;
+
+  --dropdown-secondary-text-font-size: 12px;
+}
