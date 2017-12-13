@@ -1,0 +1,22 @@
+@import "../../styles/media.css";
+@import "../../styles/spacing.css";
+@import "../../styles/colors.css";
+@import "../../styles/typography.css";
+
+:root {
+  --total-color: var(--color-dark-greenish-100);
+  --total-font-size: var(--font-size-small);
+  --total-font-family: var(--primary-font-family);
+  --total-letter-spacing: var(--letter-spacing);
+
+  --safe-color: var(--color-white);
+  --safe-font-size: var(--font-size-tiny);
+  --safe-font-family: var(--primary-font-family);
+  --safe-padding-bottom: var(--spacing-tiny);
+
+  --powered-color: var(--color-grey-50);
+  --powered-font-size: var(--font-size-tiny);
+  --powered-font-family: var(--primary-font-family);
+  --powered-padding-bottom: var(--spacing-tiny);
+}
+
