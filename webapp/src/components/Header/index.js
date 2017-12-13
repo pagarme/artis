@@ -2,7 +2,6 @@ import React from 'react'
 import {
   string,
   func,
-  oneOf,
 } from 'prop-types'
 import CloseIcon from 'react-icons/lib/io/android-close'
 import BackIcon from 'react-icons/lib/io/android-arrow-back'
@@ -22,7 +21,6 @@ const buttonPalmColSize = 3
 const imgPalmColSize = 6
 
 const Header = ({
-  base,
   logoSrc,
   logoAlt,
   onPrev,
@@ -39,10 +37,9 @@ const Header = ({
         >
           <Button
             className={style.back}
-            base={base}
             fill="clean"
             onClick={onPrev}
-            relevance="normal"
+            relevance="low"
           >
             <BackIcon />
           </Button>
@@ -64,7 +61,6 @@ const Header = ({
           alignEnd
         >
           <Button
-            base={base}
             className={style.close}
             fill="clean"
             onClick={onClose}
@@ -79,9 +75,6 @@ const Header = ({
 )
 
 Header.propTypes = {
-  base: oneOf([
-    'dark', 'light',
-  ]),
   logoSrc: string,
   logoAlt: string,
   onPrev: func,
@@ -89,7 +82,6 @@ Header.propTypes = {
 }
 
 Header.defaultProps = {
-  base: 'dark',
   logoSrc: '',
   logoAlt: '',
   onPrev: null,

@@ -1,44 +1,41 @@
+@import "../../styles/colors.css";
+@import "../../styles/typography.css";
+
 :root {
-  --color-greenish-gradient:
-    linear-gradient(
-      to right,
-      var(--color-bluish-100),
-      var(--color-greenish-100)
-    );
-
-  --button-radius: 3px;
-
   --button-font-family: var(--primary-font-family);
-  --button-font-weight: var(--title-font-weight);
+  --button-font-weight: var(--title-font-normal);
   --button-font-style: var(--title-font-style);
 
-  --button-font-size-extra-small: 12px;
-  --button-font-size-small: 12px;
-  --button-font-size-default: 14px;
-  --button-font-size-large: 16px;
-  --button-font-size-extra-large: 16px;
+  --button-font-size-extra-small: var(--font-size-tiny);
+  --button-font-size-small: var(--font-size-small);
+  --button-font-size-default: var(--font-size-small);
+  --button-font-size-large: var(--font-size-medium);
+  --button-font-size-extra-large: var(--font-size-medium);
 
-  --button-padding-extra-small: 8px;
-  --button-padding-small: 8px;
-  --button-padding-default: 9px;
-  --button-padding-large: 9px;
-  --button-padding-extra-large: 17px;
+  --button-background-color: var(--color-dark-greenish-100);
+  --button-background-color-hover: var(--color-dark-greenish-80);
+  --button-background-color-active: var(--color-dark-greenish-70);
+  --button-background-color-focus: var(--color-dark-greenish-100);
+  --button-background-color-disabled: var(--color-grey-10);
 
-  --button-padding-bottom-extra-small: 9px;
+  --button-color-high: var(--button-background-color);
+  --button-color-low: var(--color-white);
 
-  --button-height-extra-small: 26px;
-  --button-height-small: 26px;
-  --button-height-default: 28px;
-  --button-height-large: 28px;
-  --button-height-extra-large: 46px;
+  --button-radius: 3px;
+  --button-animation-active: scale(0.95);
 
-  --button-color: var(--color-white);
+  --button-padding-top-default: 9px;
+  --button-padding-left-default: 9px;
 
-  --button-animation-icon: scale(0.9);
+  --button-padding-top-extra-small: 8px;
+  --button-padding-left-extra-small: 8px;
 
-  --button-high: var(--color-greenish-100);
+  --button-padding-top-small: 8px;
+  --button-padding-left-small: 8px;
 
-  --button-normal: var(--color-dark-grey-90);
+  --button-padding-top-large: 9px;
+  --button-padding-left-large: 9px;
 
-  --button-focus-animation-duration: 0.4s;
+  --button-padding-top-extra-large: 17px;
+  --button-padding-left-extra-large: 17px;
 }

@@ -43,16 +43,28 @@ function Button ({
 }
 
 Button.propTypes = {
-  type: oneOf(['button', 'submit', 'reset']),
+  type: oneOf([
+    'button',
+    'submit',
+    'reset',
+  ]),
   onClick: func,
   fill: oneOf([
-    'flat', 'gradient', 'outline', 'clean',
+    'flat',
+    'outline',
+    'clean',
   ]),
   relevance: oneOf([
-    'high', 'normal', 'low',
+    'high',
+    'low',
+    'normal',
   ]),
   size: oneOf([
-    'extra-small', 'small', 'default', 'large', 'extra-large',
+    'extra-small',
+    'small',
+    'default',
+    'large',
+    'extra-large',
   ]),
   children: oneOfType([
     arrayOf(node),
