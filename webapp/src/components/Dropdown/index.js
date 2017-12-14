@@ -1,7 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { string, bool, func, arrayOf, shape } from 'prop-types'
 import classnames from 'classnames'
-import MdArrowDropDown from 'react-icons/lib/md/arrow-drop-down'
+import ArrowIcon from 'react-icons/lib/md/arrow-drop-down'
 import {
   propEq,
   pipe,
@@ -16,13 +16,8 @@ class Dropdown extends React.Component {
   constructor (props) {
     super(props)
 
-    this.selectOption = this.selectOption.bind(this)
     this.findSelectedName = this.findSelectedName.bind(this)
     this.handleChange = this.handleChange.bind(this)
-  }
-
-  selectOption (value) {
-    this.props.onChange(value)
   }
 
   findSelectedName () {
@@ -43,17 +38,19 @@ class Dropdown extends React.Component {
 
   handleChange (e) {
     if (!this.props.disabled) {
-      this.selectOption(e.target.value)
+      this.props.onChange(e.target.value)
     }
   }
 
   render () {
+    const { disabled, error, options } = this.props
+
     const containerClass = classnames(style.container, {
-      [style.containerDisabled]: this.props.disabled,
-      [style.containerError]: this.props.error,
+      [style.containerDisabled]: disabled,
+      [style.containerError]: error,
     })
 
-    const dropdownOptions = this.props.options.map(({ value, name }) => {
+    const dropdownOptions = options.map(({ value, name }) => {
       const optionClasses = classnames(style.option, {
         [style.isSelected]: this.props.value === value,
       })
@@ -79,9 +76,11 @@ class Dropdown extends React.Component {
             {this.props.label}
           </label>
 
-          <MdArrowDropDown
-            className={style.arrow}
-            color={this.props.disabled ? '#d4d4d4' : '#000'}
+          <ArrowIcon
+            className={classnames(style.arrow, {
+              [style.arrowDisabledColor]: disabled,
+              [style.arrowEnabledColor]: !disabled,
+            })}
           />
 
           <div
@@ -91,25 +90,26 @@ class Dropdown extends React.Component {
 
             <select
               onChange={this.handleChange}
-              disabled={this.props.disabled}
+              disabled={disabled}
+              defaultValue="title"
             >
-              {this.props.title &&
-                <option
-                  disabled
-                  className={classnames(style.option, style.disabledOption)}
-                >
-                  {this.props.title}
-                </option>
-              }
+              <option
+                disabled
+                hidden
+                value="title"
+                className={classnames(style.option, style.disabledOption)}
+              >
+                {this.props.title}
+              </option>
               {dropdownOptions}
             </select>
           </div>
 
-          {this.props.error &&
+          {error &&
             <p
               className={style.secondaryText}
             >
-              {this.props.error}
+              {error}
             </p>
           }
         </div>
@@ -119,19 +119,19 @@ class Dropdown extends React.Component {
 }
 
 Dropdown.propTypes = {
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.string,
-      name: PropTypes.string,
+  name: string.isRequired,
+  label: string.isRequired,
+  options: arrayOf(
+    shape({
+      value: string,
+      name: string,
     })
   ).isRequired,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string,
-  disabled: PropTypes.bool,
-  title: PropTypes.string,
-  error: PropTypes.string,
+  onChange: func.isRequired,
+  value: string,
+  disabled: bool,
+  title: string,
+  error: string,
 }
 
 Dropdown.defaultProps = {

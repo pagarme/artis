@@ -1,11 +1,12 @@
 @import "../../styles/colors.css";
+@import "../../styles/typography.css";
 
 :root {
   --dropdown-font-family: var(--primary-font-family);
 
   --dropdown-input-border-color: var(--color-light-grey-25);
   --dropdown-input-border-radius: 0;
-  --dropdown-input-font-size: 14px;
+  --dropdown-input-font-size: var(--font-size-small);
   --dropdown-input-height: 37px;
   --dropdown-input-line-height: 42px;
   --dropdown-input-text-color: var(--color-light-grey-100);
@@ -22,7 +23,7 @@
   --dropdown-option-selected-color: var(--color-light-success);
 
   --dropdown-label-color: var(--color-light-grey-100);
-  --dropdown-label-dropdown-font-size: 12px;
+  --dropdown-label-dropdown-font-size: var(--font-size-tiny);
 
-  --dropdown-secondary-text-font-size: 12px;
+  --dropdown-secondary-text-font-size: var(--font-size-tiny);
 }
