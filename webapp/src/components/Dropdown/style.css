@@ -99,6 +99,14 @@
   height: var(--dropdown-icon-size);
 }
 
+.arrowDisabledColor {
+  color: #d4d4d4;
+}
+
+.arrowEnabledColor {
+  color: #000000;
+}
+
 .containerDisabled {
   cursor: not-allowed;
 }
