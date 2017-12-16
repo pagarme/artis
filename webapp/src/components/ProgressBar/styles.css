@@ -13,7 +13,7 @@
 }
 
 .steps {
-  margin-bottom: var(--steps-margin);
+  margin: var(--steps-margin);
 }
 
 .step {
