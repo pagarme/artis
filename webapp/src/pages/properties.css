@@ -3,7 +3,7 @@
 @import "../styles/spacing.css";
 
 :root {
-  --page-margin: var(--spacing-medium) var(--spacing-small) calc(var(--spacing-xlarge) * 2);
+  --page-margin: var(--spacing-medium) var(--spacing-small);
   --page-title-font-family: var(--primary-font-family);
   --page-title-font-size: var(--font-size-small);
   --page-title-color: var(--color-white);

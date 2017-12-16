@@ -55,8 +55,6 @@ const Footer = ({ total, buttonText, buttonClick, companyName }) => (
             {buttonText}
           </Button>
         </Col>
-      </Row>
-      <Row>
         <Col
           desk={defaultColSize}
           tv={defaultColSize}
