@@ -57,6 +57,14 @@ class AddressData extends Component {
             tablet={defaultColSize}
             palm={defaultColSize}
           >
+            { this.props.title }
+          </Col>
+          <Col
+            tv={defaultColSize}
+            desk={defaultColSize}
+            tablet={defaultColSize}
+            palm={defaultColSize}
+          >
             <Input
               name="cep"
               label="CEP"
@@ -167,6 +175,10 @@ class AddressData extends Component {
       </Grid>
     )
   }
+}
+
+AddressData.propTypes = {
+  title: string.isRequired,
 }
 
 export default AddressData

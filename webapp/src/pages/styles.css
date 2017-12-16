@@ -4,6 +4,15 @@
   margin: var(--page-margin);
 }
 
+.title {
+  margin: var(--page-title-margin);
+  font-family: var(--page-title-font-family);
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-color);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+
 .active {
   display: block;
   animation-name: transition;

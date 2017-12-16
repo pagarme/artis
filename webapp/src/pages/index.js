@@ -18,8 +18,7 @@ const pages = [
   {
     joinRule: 'onDesktop',
     component: <AddressData
-      title="Dados de Endereço"
-      stepTitle="Endereço"
+      title="Endereço de Cobrança"
     />,
   },
   {

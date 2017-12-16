@@ -44,6 +44,14 @@ class CustomerData extends Component {
             tablet={defaultColSize}
             palm={defaultColSize}
           >
+            { this.props.title }
+          </Col>
+          <Col
+            tv={defaultColSize}
+            desk={defaultColSize}
+            tablet={defaultColSize}
+            palm={defaultColSize}
+          >
             <Input
               name="name"
               label="Nome"
@@ -109,6 +117,10 @@ class CustomerData extends Component {
       </Grid>
     )
   }
+}
+
+CustomerData.propTypes = {
+  title: string.isRequired,
 }
 
 export default CustomerData
