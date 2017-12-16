@@ -1,0 +1,5 @@
+@import "../styles/spacing.css";
+
+:root {
+  --page-margin: var(--spacing-medium) var(--spacing-small) calc(var(--spacing-xlarge) * 2);
+}

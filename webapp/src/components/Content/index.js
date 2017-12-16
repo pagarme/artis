@@ -1,40 +1,60 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import {
+  arrayOf,
+  shape,
+  node,
+  string,
+} from 'prop-types'
 
-import ProgressBar from '../../components/ProgressBar'
-import renderDesktop from './renderDesktop'
-import renderPalm from './renderPalm'
+import ProgressBar from '../ProgressBar'
+import { preRender, render } from '../../pages'
 
 import style from './styles.css'
+
+const isDesktop = window.innerWidth > 640
 
 const shouldUpdateActivePage = (newPage, firstPage, lastPage) =>
   newPage >= firstPage && newPage <= lastPage
 
-const isDesktop = window.innerWidth > 640
+const getSteps = (pagesToJoin, normalPages) => {
+  if (!isDesktop) return []
+
+  return [
+    pagesToJoin[0].props.stepTitle,
+    ...normalPages.map(page => page.props.stepTitle),
+  ]
+}
 
 class Content extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
+      pages: [],
+      steps: [],
       activePage: 0,
-      steps: 0,
     }
   }
 
   componentWillMount () {
-    const pages = this.getPages()
-    const steps = pages.props.children.length - 1
+    const { pages } = this.props
+    const { pagesToJoin, normalPages } = preRender(pages)
 
-    this.setState({ steps })
+    const renderedPages = render(pagesToJoin, normalPages)
+    const steps = getSteps(pagesToJoin, normalPages)
+
+    this.setState({
+      pages: renderedPages,
+      steps,
+    })
   }
 
   componentWillReceiveProps (nextProps) {
     const { navigateTo } = nextProps
-    const { activePage } = this.state
+    const { pages, activePage } = this.state
 
     const firstPage = 0
-    const lastPage = this.state.steps
+    const lastPage = pages.length - 1
 
     const pageNavigation = {
       next: activePage + 1,
@@ -50,34 +70,27 @@ class Content extends Component {
     }
   }
 
-  getPages () {
-    const { activePage } = this.state
-
-    return !isDesktop
-      ? renderPalm(activePage)
-      : renderDesktop(activePage)
-  }
-
   render () {
+    const { steps, pages, activePage } = this.state
+
     return (
       <div className={style.content}>
         <ProgressBar
-          steps={this.state.steps}
-          progress={this.state.activePage}
+          steps={steps}
+          activePage={activePage}
         />
-        { this.getPages() }
+        { pages[activePage] }
       </div>
     )
   }
 }
 
 Content.propTypes = {
-  navigateTo: PropTypes.oneOf([
-    'next',
-    'prev',
-    'first',
-    'last',
-  ]).isRequired,
+  pages: arrayOf(shape({
+    join: string.required,
+    component: node.required,
+  })).isRequired,
+  navigateTo: string.isRequired,
 }
 
 export default Content

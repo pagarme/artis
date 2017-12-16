@@ -11,3 +11,20 @@
   background-color: var(--progressbar-background-color);
   transition: all 0.25s ease-out;
 }
+
+.steps {
+  margin-bottom: var(--steps-margin);
+}
+
+.step {
+  font-family: var(--step-font-family);
+  font-size: var(--step-font-size);
+  color: var(--step-color);
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  justify-content: center;
+}
+
+.active {
+  color: var(--step-color-active);
+}

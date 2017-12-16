@@ -1,0 +1,24 @@
+@import "./properties.css";
+
+.page {
+  margin: var(--page-margin);
+}
+
+.active {
+  display: block;
+  animation-name: transition;
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes transition {
+
+  from {
+    transform: translate(110%, 0);
+  }
+
+  to {
+    transform: translate(0, 0);
+  }
+}
+

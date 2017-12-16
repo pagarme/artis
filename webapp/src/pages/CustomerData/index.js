@@ -5,6 +5,8 @@ import UserIcon from 'react-icons/lib/fa/user'
 import { Grid, Row, Col } from '../../components/Grid'
 import Input from '../../components/Input'
 
+const defaultColSize = 12
+
 class CustomerData extends Component {
   constructor (props) {
     super(props)

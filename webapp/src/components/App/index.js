@@ -10,6 +10,7 @@ import classNames from 'classnames'
 import Content from '../Content'
 import Header from '../Header'
 import Footer from '../Footer'
+import { pages } from '../../pages'
 
 import defaultLogo from '../../images/logo_pagarme.png'
 import style from './style.css'
@@ -57,7 +58,10 @@ class App extends Component {
             onPrev={this.handleNavigation.bind(this, 'prev')}
             onClose={this.close.bind(this)}
           />
-          <Content navigateTo={this.state.navigateTo} />
+          <Content
+            pages={pages}
+            navigateTo={this.state.navigateTo}
+          />
           <Footer
             total={33000.15}
             buttonText={'Continuar'}
