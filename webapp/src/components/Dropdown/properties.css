@@ -4,26 +4,27 @@
 :root {
   --dropdown-font-family: var(--primary-font-family);
 
-  --dropdown-input-border-color: var(--color-light-grey-25);
+  --dropdown-input-border-color: var(--color-grey-60);
   --dropdown-input-border-radius: 0;
   --dropdown-input-font-size: var(--font-size-small);
   --dropdown-input-height: 37px;
   --dropdown-input-line-height: 42px;
-  --dropdown-input-text-color: var(--color-light-grey-100);
+  --dropdown-input-text-color: var(--color-grey-50);
 
-  --dropdown-color-disabled: var(--color-light-grey-25);
+  --dropdown-color-disabled: var(--color-grey-20);
 
   --dropdown-icon-size: 30px;
 
-  --dropdown-option-color: var(--color-light-grey-75);
+  --dropdown-option-color: var(--color-grey-70);
+  --dropdown-option-selected-color: var(--color-white);
 
   --dropdown-disabled-option-opacity: 0.6;
   --dropdown-disabled-option-background: none;
 
-  --dropdown-option-selected-color: var(--color-light-success);
-
-  --dropdown-label-color: var(--color-light-grey-100);
+  --dropdown-label-color: var(--color-white);
   --dropdown-label-dropdown-font-size: var(--font-size-tiny);
 
   --dropdown-secondary-text-font-size: var(--font-size-tiny);
+
+  --dropdown-error-color: var(--color-error);
 }

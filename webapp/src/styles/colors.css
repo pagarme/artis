@@ -17,4 +17,6 @@
   --color-grey-50: #797979;
   --color-grey-60: #515151;
   --color-grey-70: #1d1d26;
+
+  --color-error: var(--color-pink);
 }
