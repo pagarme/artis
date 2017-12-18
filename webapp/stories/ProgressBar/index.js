@@ -1,2 +1,1 @@
 import './SimpleSteps'
-import './Content'

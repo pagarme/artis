@@ -3,6 +3,12 @@ import { storiesOf } from '@storybook/react'
 
 import ProgressBar from '../../src/components/ProgressBar'
 
+const steps = [
+  'Identificação',
+  'Endereço de Cobrança',
+  'Forma de Pagamento',
+]
+
 class Wrapper extends React.Component {
   constructor (props) {
     super(props)
@@ -27,7 +33,7 @@ class Wrapper extends React.Component {
   render () {
     return (
       <Fragment>
-        <ProgressBar steps={3} progress={this.state.progress} />
+        <ProgressBar steps={steps} activePage={this.state.progress} />
         <br />
         <button onClick={this.progressDecrease.bind(this)}>Backward</button>
         <button onClick={this.progressIncrese.bind(this)}>Forward</button>
