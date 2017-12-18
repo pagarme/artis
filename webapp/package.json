@@ -1,14 +1,14 @@
 {
-  "name": "mercurio-checkout",
+  "name": "artis-checkout",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mundipagg/mercurio-checkout.git"
+    "url": "https://github.com/mundipagg/artis.git"
   },
-  "homepage": "https://github.com/mundipagg/mercurio-checkout",
-  "bugs": "https://github.com/mundipagg/mercurio-checkout/issues",
+  "homepage": "https://github.com/mundipagg/artis",
+  "bugs": "https://github.com/mundipagg/artis/issues",
   "dependencies": {
     "@storybook/addon-actions": "3.2.16",
     "@storybook/react": "3.2.16",
