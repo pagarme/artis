@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { string } from 'prop-types'
 
 import { Grid, Row, Col } from '../../components/Grid'
 import Input from '../../components/Input'
 import Dropdown from '../../components/Dropdown'
 
 import options from './states'
+import style from '../styles.css'
 
 const defaultColSize = 12
 const smallColSize = 4
@@ -56,6 +58,8 @@ class AddressData extends Component {
             desk={defaultColSize}
             tablet={defaultColSize}
             palm={defaultColSize}
+            className={style.title}
+            alignCenter
           >
             { this.props.title }
           </Col>

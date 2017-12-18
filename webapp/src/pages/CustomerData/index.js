@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
+import { string } from 'prop-types'
 
 import UserIcon from 'react-icons/lib/fa/user'
 
 import { Grid, Row, Col } from '../../components/Grid'
 import Input from '../../components/Input'
+
+import style from '../styles.css'
 
 const defaultColSize = 12
 
@@ -43,6 +46,8 @@ class CustomerData extends Component {
             desk={defaultColSize}
             tablet={defaultColSize}
             palm={defaultColSize}
+            className={style.title}
+            alignCenter
           >
             { this.props.title }
           </Col>
