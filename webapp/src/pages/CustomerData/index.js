@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { string } from 'prop-types'
 
-import UserIcon from 'react-icons/lib/fa/user'
-
 import { Grid, Row, Col } from '../../components/Grid'
 import Input from '../../components/Input'
 
@@ -63,7 +61,6 @@ class CustomerData extends Component {
               hint=""
               value={name}
               placeholder="Digite seu nome"
-              icon={<UserIcon size={20} />}
               onChange={this.handleInputChange}
             />
           </Col>
