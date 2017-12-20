@@ -2,6 +2,7 @@ import React from 'react'
 import {
   string,
   func,
+  bool,
 } from 'prop-types'
 import CloseIcon from 'react-icons/lib/io/android-close'
 import BackIcon from 'react-icons/lib/io/android-arrow-back'
@@ -25,6 +26,7 @@ const Header = ({
   logoAlt,
   onPrev,
   onClose,
+  prevButtonDisabled,
 }) => (
   <header className={style.header}>
     <Grid>
@@ -40,6 +42,7 @@ const Header = ({
             fill="clean"
             onClick={onPrev}
             relevance="low"
+            disabled={prevButtonDisabled}
           >
             <BackIcon />
           </Button>
@@ -79,6 +82,7 @@ Header.propTypes = {
   logoAlt: string,
   onPrev: func,
   onClose: func,
+  prevButtonDisabled: bool,
 }
 
 Header.defaultProps = {
@@ -86,6 +90,7 @@ Header.defaultProps = {
   logoAlt: '',
   onPrev: null,
   onClose: null,
+  prevButtonDisabled: false,
 }
 
 export default Header
