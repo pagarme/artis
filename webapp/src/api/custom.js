@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import App from '../components/App'
+import Checkout from '../components/Checkout'
 
 const customIntegration = key => configs => params => () => {
   if (!key) throw new Error('The "key" parameter is required.')
 
   ReactDOM.render(
-    <App
+    <Checkout
       apiValues={{
         key,
         configs,

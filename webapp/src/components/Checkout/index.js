@@ -15,7 +15,7 @@ import { pages } from '../../pages'
 import defaultLogo from '../../images/logo_pagarme.png'
 import style from './style.css'
 
-class App extends Component {
+class Checkout extends Component {
   constructor (props) {
     super(props)
 
@@ -74,7 +74,7 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
+Checkout.propTypes = {
   apiValues: shape({
     key: string.isRequired,
     configs: shape({
@@ -89,7 +89,7 @@ App.propTypes = {
   }).isRequired,
 }
 
-App.defaultProps = {
+Checkout.defaultProps = {
   apiValues: {
     configs: {
       image: '',
@@ -98,4 +98,4 @@ App.defaultProps = {
   },
 }
 
-export default App
+export default Checkout
