@@ -27,7 +27,7 @@ const getSteps = ({ pagesToJoin, normalPages }) => {
 }
 
 const shouldUpdateActivePage = (newPage, firstPage, lastPage) =>
-  newPage >= firstPage && newPage < lastPage
+  newPage >= firstPage && newPage <= lastPage
 
 class Checkout extends Component {
   constructor (props) {
@@ -39,11 +39,11 @@ class Checkout extends Component {
     }
   }
 
-  handleNavigation (navigateTo) {
+  handleNavigation (navigateTo, finalPages) {
     const { activePage: currentActivePage } = this.state
 
     const firstPage = 0
-    const lastPage = pages.length - 1
+    const lastPage = finalPages.length - 1
 
     const pageNavigation = {
       next: currentActivePage + 1,
@@ -93,8 +93,9 @@ class Checkout extends Component {
           <Header
             logoAlt="Pagar.me"
             logoSrc={configs.image || defaultLogo}
-            onPrev={this.handleNavigation.bind(this, 'prev')}
+            onPrev={this.handleNavigation.bind(this, 'prev', renderedPages)}
             onClose={this.close.bind(this)}
+            prevButtonDisabled={activePage === 0}
           />
           <div className={style.content}>
             <ProgressBar
@@ -106,8 +107,9 @@ class Checkout extends Component {
           <Footer
             total={params.amount}
             buttonText={'Continuar'}
-            buttonClick={this.handleNavigation.bind(this, 'next')}
+            buttonClick={this.handleNavigation.bind(this, 'next', renderedPages)}
             companyName={'Pagar.me'}
+            nextButtonDisabled={activePage === renderedPages.length - 1}
           />
         </div>
       </div>

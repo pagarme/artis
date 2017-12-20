@@ -43,6 +43,7 @@ const Header = ({
             onClick={onPrev}
             relevance="low"
             disabled={prevButtonDisabled}
+            hidden={prevButtonDisabled}
           >
             <BackIcon />
           </Button>

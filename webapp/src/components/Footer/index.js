@@ -3,6 +3,7 @@ import {
   number,
   string,
   func,
+  bool,
 } from 'prop-types'
 import LockIcon from 'react-icons/lib/md/lock-outline'
 
@@ -22,7 +23,7 @@ const valueColSize = 8
 const buttonColSize = 4
 const defaultColSize = 6
 
-const Footer = ({ total, buttonText, buttonClick, companyName }) => (
+const Footer = ({ total, buttonText, buttonClick, companyName, nextButtonDisabled }) => (
   <footer>
     <Grid>
       <Row>
@@ -47,6 +48,8 @@ const Footer = ({ total, buttonText, buttonClick, companyName }) => (
           palm={palmColSize}
         >
           <Button
+            hidden={nextButtonDisabled}
+            disabled={nextButtonDisabled}
             size="extra-large"
             relevance="normal"
             onClick={buttonClick}
@@ -84,6 +87,11 @@ Footer.propTypes = {
   buttonText: string.isRequired,
   buttonClick: func.isRequired,
   companyName: string.isRequired,
+  nextButtonDisabled: bool,
+}
+
+Footer.defaultProps = {
+  nextButtonDisabled: false,
 }
 
 export default Footer
