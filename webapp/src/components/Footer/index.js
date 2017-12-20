@@ -47,16 +47,14 @@ const Footer = ({ total, buttonText, buttonClick, companyName }) => (
           palm={palmColSize}
         >
           <Button
-            base="dark"
-            relevance="high"
+            size="extra-large"
+            relevance="normal"
             onClick={buttonClick}
             className={style.button}
           >
             {buttonText}
           </Button>
         </Col>
-      </Row>
-      <Row>
         <Col
           desk={defaultColSize}
           tv={defaultColSize}

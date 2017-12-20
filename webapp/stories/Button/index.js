@@ -11,44 +11,33 @@ import style from './style.css'
 storiesOf('Buttons', module)
   .add('All', () => (
     <div className={style.container}>
-      <h2>Default Button</h2>
-
-      <div className={style.spacing}>
-        <Button base="dark" relevance="high">High relevance</Button>
+      <div>
+        <h2>Default Button</h2>
+        <Button>Label</Button>
       </div>
 
-      <h2>Gradient</h2>
-      <div className={style.spacing}>
-        <Button base="dark" relevance="high" fill="gradient">Call to Action</Button>
+      <div>
+        <h2>Outline</h2>
+        <Button fill="outline">Label</Button>
       </div>
 
-      <h2>Clean buttons with icons</h2>
-
-      <div className={style.spacing}>
-        <Button base="dark" relevance="normal" fill="clean"><BackIcon size={30} /></Button>
-        <Button base="dark" relevance="high" fill="clean"><CloseIcon size={30} /></Button>
+      <div>
+        <h2>Disabled</h2>
+        <Button disabled>Label</Button>
       </div>
 
-      <h2>Sizes</h2>
-
-      <div className={style.spacing}>
-        <Button base="dark" size="extra-small" relevance="high">Extra-small</Button>
+      <div>
+        <h2>Sizes</h2>
+        <Button size="extra-small">Extra-small</Button>
+        <Button size="small">Small</Button>
+        <Button size="large">Large</Button>
+        <Button size="extra-large">Extra-large</Button>
       </div>
 
-      <div className={style.spacing}>
-        <Button base="dark" size="small" relevance="high">Small</Button>
-      </div>
-
-      <div className={style.spacing}>
-        <Button base="dark" relevance="high">Default</Button>
-      </div>
-
-      <div className={style.spacing}>
-        <Button base="dark" size="large" relevance="high">Large</Button>
-      </div>
-
-      <div className={style.spacing}>
-        <Button base="dark" size="extra-large" relevance="high">Extra-large</Button>
+      <div>
+        <h2>Clean buttons for icons</h2>
+        <Button fill="clean" relevance="low"><BackIcon size={30} /></Button>
+        <Button fill="clean" relevance="high"><CloseIcon size={30} /></Button>
       </div>
     </div>
   ))

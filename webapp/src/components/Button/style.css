@@ -1,29 +1,43 @@
-@import "../../styles/colors.css";
-@import "../../styles/typography.css";
 @import "./properties.css";
-@import "./colors.css";
+
+/*
+* Default
+*/
 
 .button {
+  position: relative;
   border: none;
   border-radius: var(--button-radius);
+  background-color: var(--button-background-color);
   font-family: var(--button-font-family);
   font-weight: var(--button-font-weight);
-  font-style: var(--button-font-style);
-  letter-spacing: 0.7px;
+  letter-spacing: var(--letter-spacing);
   text-transform: uppercase;
   cursor: pointer;
+  outline: none;
+  transition: all 0.1s ease;
+}
+
+.button:hover {
+  background-color: var(--button-background-color-hover);
+}
+
+.button:active {
+  transform: var(--button-animation-active);
+  background-color: var(--button-background-color-active);
 }
 
 .button:focus {
-  outline: none;
+  background-color: var(--button-background-color-focus);
 }
 
-.flat,
-.flat:hover,
-.flat:active,
-.flat:focus {
-  background-image: none;
+.button:disabled {
+  background-color: var(--button-background-color-disabled);
 }
+
+/*
+* Fill
+*/
 
 .clean,
 .clean:hover,
@@ -31,39 +45,58 @@
 .clean:focus {
   background-color: transparent;
   background-image: none;
-  animation: none;
 }
 
+.outline,
+.outline:hover,
+.outline:active,
+.outline:focus {
+  color: var(--color-dark-greenish-100);
+  border: 2px solid var(--color-dark-greenish-100);
+  background-color: transparent;
+  background-image: none;
+}
+
+/*
+* Sizes
+*/
+
 .extra-small {
-  padding: var(--button-padding-extra-small);
-  padding-bottom: var(--button-padding-bottom-extra-small);
+  padding: var(--button-padding-top-extra-small) var(--button-padding-left-extra-small);
   font-size: var(--button-font-size-extra-small);
-  height: var(--button-height-extra-small);
   text-transform: none;
 }
 
 .small {
-  padding: var(--button-padding-small);
+  padding: var(--button-padding-top-small) var(--button-padding-left-small);
   font-size: var(--button-font-size-small);
-  height: var(--button-height-small);
-  text-transform: none;
 }
 
 .default {
-  padding: var(--button-padding-default);
+  padding: var(--button-padding-top-default) var(--button-padding-left-default);
   font-size: var(--button-font-size-default);
-  height: var(--button-height-default);
   line-height: var(--button-font-size-default);
 }
 
 .large {
-  padding: var(--button-padding-large);
+  padding: var(--button-padding-top-large) var(--button-padding-left-large);
   font-size: var(--button-font-size-large);
-  height: var(--button-height-large);
 }
 
 .extra-large {
-  padding: var(--button-padding-extra-large);
+  padding: var(--button-padding-top-extra-large) var(--button-padding-left-extra-large);
   font-size: var(--button-font-size-extra-large);
-  height: var(--button-height-extra-large);
 }
+
+/*
+* Relevance
+*/
+
+.high {
+  color: var(--button-color-high);
+}
+
+.low {
+  color: var(--button-color-low);
+}
+

@@ -1,0 +1,14 @@
+@import "../../styles/colors.css";
+@import "../../styles/spacing.css";
+@import "../../styles/typography.css";
+
+:root {
+  --wrapper-background-color: var(--color-grey-60);
+  --progressbar-background-color: var(--color-greenish);
+
+  --steps-margin: 0 0 22px;
+  --step-font-family: var(--primary-font-family);
+  --step-font-size: var(--font-size-small);
+  --step-color: var(--color-grey-30);
+  --step-color-active: var(--color-greenish);
+}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 
 import Footer from '../../src/components/Footer'
 import style from './style.css'
@@ -10,7 +11,7 @@ storiesOf('Footer', module)
       <Footer
         total={33000.15}
         buttonText={'Continuar'}
-        buttonClick={console.info.bind(this, 'ok')}
+        buttonClick={action('Click')}
         companyName={'Pagar.me'}
       />
     </div>

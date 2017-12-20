@@ -6,13 +6,17 @@
 }
 
 .container h2 {
+  margin-top: 0;
   color: #ffffff;
   font-family: var(--primary-font-family);
   font-weight: var(--title-font-weight);
-  font-style: var(--title-font-style);
-  letter-spacing: 0.7px;
 }
 
-.spacing > button {
-  margin: 3px;
+.container > div {
+  padding: 20px 0;
+  border-bottom: 1px solid #666666;
+}
+
+.container button {
+  margin-right: 20px;
 }

@@ -1,0 +1,33 @@
+@import "./properties.css";
+
+.page {
+  margin: var(--page-margin);
+}
+
+.title {
+  margin: var(--page-title-margin);
+  font-family: var(--page-title-font-family);
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-color);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+
+.active {
+  display: block;
+  animation-name: transition;
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes transition {
+
+  from {
+    transform: translate(110%, 0);
+  }
+
+  to {
+    transform: translate(0, 0);
+  }
+}
+

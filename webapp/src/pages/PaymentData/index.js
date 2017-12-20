@@ -2,19 +2,32 @@ import React from 'react'
 import {
   string,
 } from 'prop-types'
-import classNames from 'classnames'
 
-const PaymentData = ({ className, active }) =>
-  (<div className={classNames(className, active)}>PaymentData</div>)
+import { Grid, Row, Col } from '../../components/Grid'
+
+import style from '../styles.css'
+
+const colSize = 12
+
+const PaymentData = ({ title }) => (
+  <Grid>
+    <Row>
+      <Col
+        tv={colSize}
+        desk={colSize}
+        tablet={colSize}
+        palm={colSize}
+        className={style.title}
+        alignCenter
+      >
+        {title}
+      </Col>
+    </Row>
+  </Grid>
+)
 
 PaymentData.propTypes = {
-  className: string,
-  active: string,
-}
-
-PaymentData.defaultProps = {
-  className: '',
-  active: '',
+  title: string.isRequired,
 }
 
 export default PaymentData

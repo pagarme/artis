@@ -4,10 +4,30 @@ import { storiesOf } from '@storybook/react'
 import Content from '../../src/components/Content'
 import style from './styles.css'
 
-const CustomerData = () => (<div className={style.page}>Customer Data</div>)
-const AddressData = () => (<div className={style.page}>Address Data</div>)
-const PaymentData = () => (<div className={style.page}>Payment Data</div>)
-const Success = () => (<div className={style.page}>Success!</div>)
+const pages = [
+  {
+    joinRule: 'onDesktop',
+    component: <div
+      className={style.page}
+      title="Dados Pessoais"
+      stepTitle="Identificação"
+    />,
+  },
+  {
+    joinRule: 'onDesktop',
+    component: <div
+      className={style.page}
+      title="Endereço de Cobrança"
+    />,
+  },
+  {
+    component: <div
+      className={style.page}
+      title="Dados de Pagamento"
+      stepTitle="Forma de Pagamento"
+    />,
+  },
+]
 
 class Wrapper extends React.Component {
   constructor (props) {
@@ -25,12 +45,10 @@ class Wrapper extends React.Component {
   render () {
     return (
       <Fragment>
-        <Content navigateTo={this.state.navigateTo}>
-          <CustomerData />
-          <AddressData />
-          <PaymentData />
-          <Success />
-        </Content>
+        <Content
+          pages={pages}
+          navigateTo={this.state.navigateTo}
+        />
         <button onClick={this.navigateTo.bind(this, 'first')}>First</button>
         <button onClick={this.navigateTo.bind(this, 'prev')}>Previous</button>
         <button onClick={this.navigateTo.bind(this, 'next')}>Next</button>

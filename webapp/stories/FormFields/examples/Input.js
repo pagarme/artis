@@ -1,7 +1,5 @@
 import React from 'react'
-
 import { action } from '@storybook/addon-actions'
-
 import FaAndroid from 'react-icons/lib/fa/android'
 
 import Input from '../../../src/components/Input'
@@ -9,12 +7,12 @@ import Input from '../../../src/components/Input'
 class InputState extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { email: 'Leo' }
+    this.state = { value: '' }
   }
 
-  updateEmail (e) {
+  updateValue (e) {
     this.setState({
-      email: e.target.value,
+      value: e.target.value,
     })
   }
 
@@ -24,24 +22,27 @@ class InputState extends React.Component {
       icon,
       multiline,
       type,
+      placeholder,
+      label,
+      hint,
     } = this.props
 
     const {
-      email,
+      value,
     } = this.state
 
     return (
       <Input
-        error={error}
-        hint="Texto de apoio"
-        icon={icon}
-        label="Digite seu email"
-        multiline={multiline}
         name="email"
-        onChange={this.updateEmail.bind(this)}
-        placeholder="nome@email.com"
         type={type}
-        value={email}
+        icon={icon}
+        label={label}
+        placeholder={placeholder}
+        hint={hint}
+        multiline={multiline}
+        value={value}
+        onChange={this.updateValue.bind(this)}
+        error={error}
       />
     )
   }
@@ -52,6 +53,9 @@ InputState.defaultProps = {
   icon: null,
   multiline: false,
   type: null,
+  placeholder: '',
+  label: '',
+  hint: '',
 }
 
 
@@ -60,115 +64,62 @@ const InputExamples = () => (
     <h2>Text Inputs</h2>
 
     <section>
-      <h3>Disabled</h3>
-      <Input
-        name="email"
-        label="Digite seu email"
-        disabled
-        hint="Texto de apoio"
-        placeholder="eae"
-        onChange={action('text changed')}
+      <h3>Default</h3>
+      <InputState
+        type="text"
+        label="Nome"
+        placeholder="Digite seu nome"
       />
     </section>
 
     <section>
-      <h3>Default</h3>
-      <InputState type="text" />
-    </section>
-
-    <section>
       <h3>Error</h3>
-      <InputState type="text" error="Email no formato errado" />
-    </section>
-
-    <section>
-      <h3>Multiline disabled</h3>
-      <Input
-        name="teste"
-        label="Fale tudo"
-        multiline
-        placeholder="eae"
-        disabled
-        onChange={action('text changed')}
+      <InputState
+        type="text"
+        label="E-mail"
+        placeholder="Digite seu e-mail"
+        error="Email no formato errado"
       />
     </section>
 
     <section>
       <h3>Multiline default</h3>
-      <InputState multiline placeholder="eae" />
-    </section>
-
-    <section>
-      <h3>Multiline error</h3>
-      <InputState multiline error="Erro!" />
-    </section>
-
-    <section>
-      <h3>Icon disabled</h3>
-      <Input
-        name="name"
-        label="Digite seu nome"
-        placeholder="eaee"
-        disabled
-        icon={<FaAndroid size={20} />}
-        onChange={action('text changed')}
+      <InputState
+        multiline
+        label="Mensagem"
+        placeholder="Tecle enter para saltar uma linha"
       />
     </section>
 
     <section>
       <h3>Icon default</h3>
-      <InputState type="text" icon={<FaAndroid size={20} />} />
-    </section>
-
-    <section>
-      <h3>Icon error</h3>
-      <InputState type="text" error="Erro!" icon={<FaAndroid size={20} />} />
-    </section>
-
-    <section>
-      <h3>Icon multiline disabled</h3>
-      <Input
-        name="teste"
-        label="Fale tudo"
-        placeholder="eae"
-        multiline
-        disabled
+      <InputState
+        type="text"
+        label="Com icone"
+        placeholder="It's so cool"
         icon={<FaAndroid size={20} />}
-        onChange={action('text changed')}
-      />
-    </section>
-
-    <section>
-      <h3>Icon multiline default</h3>
-      <InputState multiline icon={<FaAndroid size={20} />} />
-    </section>
-
-    <section>
-      <h3>Icon multiline error</h3>
-      <InputState multiline error="Erro!" icon={<FaAndroid size={20} />} />
-    </section>
-
-    <section>
-      <h3>Password disabled</h3>
-      <Input
-        type="password"
-        name="pass"
-        label="Digite sua senha"
-        disabled
-        placeholder="eae"
-        hint="Minimo de 12 pixels"
-        onChange={action('text changed')}
       />
     </section>
 
     <section>
       <h3>Password default</h3>
-      <InputState type="password" />
+      <InputState
+        type="password"
+        label="Senha"
+        placeholder="Digite sua senha"
+      />
     </section>
 
     <section>
-      <h3>Password error</h3>
-      <InputState type="password" error="Digite mais caracteres" />
+      <h3>Disabled</h3>
+      <Input
+        name="email"
+        label="Digite seu email"
+        hint="Texto de apoio"
+        placeholder="eae"
+        onChange={action('text changed')}
+        disabled
+      />
     </section>
   </div>
 )

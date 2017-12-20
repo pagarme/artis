@@ -1,29 +1,5 @@
 @import "../../styles/spacing.css";
 
 .content {
-  width: 100%;
-  overflow: hidden;
-}
-
-.page {
-  display: none;
-  margin: var(--spacing-medium) var(--spacing-small) calc(var(--spacing-xlarge) * 2);
-}
-
-.active {
-  display: block;
-  animation-name: transition;
-  animation-duration: 450ms;
-  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-@keyframes transition {
-
-  from {
-    transform: translate(110%, 0);
-  }
-
-  to {
-    transform: translate(0, 0);
-  }
+  flex: 1;
 }

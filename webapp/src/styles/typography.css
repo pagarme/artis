@@ -3,8 +3,8 @@
 
 :root {
   --primary-font-family: "Avenir";
-  --title-font-weight: bold;
-  --title-font-style: normal;
+  --title-font-bold: bold;
+  --title-font-normal: normal;
 
   --font-size-tiny: 12px;
   --font-size-small: 14px;
@@ -28,7 +28,7 @@
 .checkout h5,
 .checkout h6 {
   font-family: var(--primary-font-family);
-  font-weight: var(--title-font-weight);
+  font-weight: var(--title-font-bold);
   font-style: var(--font-size-medium);
 }
 

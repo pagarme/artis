@@ -1,14 +1,11 @@
-@import "../../styles/media.css";
-@import "../../styles/spacing.css";
-@import "../../styles/colors.css";
-@import "../../styles/typography.css";
+@import "./properties.css";
 
 .total {
   margin-top: 3px;
-  color: var(--color-dark-greenish-50);
-  font-size: var(--font-size-small);
-  font-family: var(--primary-font-family);
-  letter-spacing: calc(var(--letter-spacing) + 0.08em);
+  color: var(--total-color);
+  font-size: var(--total-font-size);
+  font-family: var(--total-font-family);
+  letter-spacing: calc(var(--total-letter-spacing) + 0.08em);
   text-transform: uppercase;
 }
 
@@ -24,11 +21,11 @@
 .safe {
   position: relative;
   justify-content: flex-end;
-  color: var(--color-white);
-  font-size: var(--font-size-tiny);
-  font-family: var(--primary-font-family);
+  color: var(--safe-color);
+  font-size: var(--safe-font-size);
+  font-family: var(--safe-font-family);
   text-transform: uppercase;
-  padding-bottom: var(--spacing-tiny);
+  padding-bottom: var(--safe-padding-bottom);
 }
 
 .safe svg {
@@ -45,15 +42,15 @@
   width: 1px;
   height: 12px;
   background-color: var(--color-black);
-  border-right: 1px solid var(--color-dark-grey-25);
+  border-right: 1px solid var(--color-grey-60);
 }
 
 .powered {
-  color: var(--color-dark-grey-50);
-  font-size: var(--font-size-tiny);
-  font-family: var(--primary-font-family);
+  color: var(--powered-color);
+  font-size: var(--powered-font-size);
+  font-family: var(--powered-font-family);
   text-transform: lowercase;
-  padding-bottom: var(--spacing-tiny);
+  padding-bottom: var(--powered-padding-bottom);
 }
 
 @media (--media-palm) {
