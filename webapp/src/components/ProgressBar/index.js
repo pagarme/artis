@@ -18,6 +18,7 @@ const renderSteps = (steps, activePage) => {
       <Row>
         { steps.map((step, index) => (
           <Col
+            key={`colKey-${index + 1}`}
             tv={colSize}
             desk={colSize}
             tablet={colSize}

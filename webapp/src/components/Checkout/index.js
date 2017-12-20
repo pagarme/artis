@@ -7,26 +7,56 @@ import {
 } from 'prop-types'
 import classNames from 'classnames'
 
-import Content from '../Content'
+import ProgressBar from '../ProgressBar'
 import Header from '../Header'
 import Footer from '../Footer'
-import { pages } from '../../pages'
+import { pages, preRender, render } from '../../pages'
 
 import defaultLogo from '../../images/logo_pagarme.png'
 import style from './style.css'
+
+const isDesktop = window.innerWidth > 640
+
+const getSteps = ({ pagesToJoin, normalPages }) => {
+  if (!isDesktop) return []
+
+  return [
+    pagesToJoin[0].props.stepTitle,
+    ...normalPages.map(page => page.props.stepTitle),
+  ]
+}
+
+const shouldUpdateActivePage = (newPage, firstPage, lastPage) =>
+  newPage >= firstPage && newPage < lastPage
 
 class Checkout extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      navigateTo: 'next',
       closingEffect: false,
+      activePage: 0,
     }
   }
 
   handleNavigation (navigateTo) {
-    this.setState({ navigateTo })
+    const { activePage: currentActivePage } = this.state
+
+    const firstPage = 0
+    const lastPage = pages.length - 1
+
+    const pageNavigation = {
+      next: currentActivePage + 1,
+      prev: currentActivePage - 1,
+      first: firstPage,
+      last: lastPage,
+    }
+
+    const activePage = pageNavigation[navigateTo]
+
+    if (shouldUpdateActivePage(activePage, firstPage, lastPage)) {
+      this.setState({ activePage })
+    }
   }
 
   close () {
@@ -42,6 +72,14 @@ class Checkout extends Component {
   }
 
   render () {
+    const { activePage } = this.state
+    const { params, configs } = this.props.apiValues
+
+    const preRendered = preRender(pages)
+
+    const renderedPages = render(preRendered)
+    const steps = getSteps(preRendered)
+
     return (
       <div
         className={classNames(
@@ -54,16 +92,19 @@ class Checkout extends Component {
         <div className={style.wrapper}>
           <Header
             logoAlt="Pagar.me"
-            logoSrc={defaultLogo}
+            logoSrc={configs.image || defaultLogo}
             onPrev={this.handleNavigation.bind(this, 'prev')}
             onClose={this.close.bind(this)}
           />
-          <Content
-            pages={pages}
-            navigateTo={this.state.navigateTo}
-          />
+          <div className={style.content}>
+            <ProgressBar
+              steps={steps}
+              activePage={activePage}
+            />
+            { renderedPages[activePage] }
+          </div>
           <Footer
-            total={33000.15}
+            total={params.amount}
             buttonText={'Continuar'}
             buttonClick={this.handleNavigation.bind(this, 'next')}
             companyName={'Pagar.me'}

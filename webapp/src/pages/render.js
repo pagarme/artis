@@ -1,7 +1,7 @@
 import renderNormalPages from './renderNormalPages'
 import renderJoinedPages from './renderJoinedPages'
 
-const render = (pagesToJoin, normalPages) => {
+const render = ({ pagesToJoin, normalPages }) => {
   const pages = []
 
   if (pagesToJoin.length > 0) {
