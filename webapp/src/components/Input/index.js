@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import MdVisibilityOff from 'react-icons/lib/md/visibility-off'
 import MdVisibility from 'react-icons/lib/md/visibility'
+import MaskedInput from 'react-maskedinput'
 
 import { pick } from 'ramda'
 
@@ -60,6 +61,7 @@ class Input extends React.Component {
       className,
       onChange,
       name,
+      mask,
     } = this.props
 
     const inputContainer = classnames(style.inputContainer, {
@@ -92,7 +94,7 @@ class Input extends React.Component {
         }
         <div className={style.boxContainer}>
           <div className={inputContainer}>
-            {multiline
+            {!mask && (multiline
               ? (
                 <textarea
                   rows="1"
@@ -111,6 +113,17 @@ class Input extends React.Component {
                   {...inputProps}
                 />
               )
+            )}
+
+            {mask &&
+              <MaskedInput
+                id={name}
+                name={name}
+                className={className}
+                onChange={disabled ? null : onChange}
+                {...inputProps}
+                mask={mask}
+              />
             }
 
             {this.renderPasswordVisibilityIcon()}
@@ -158,6 +171,7 @@ Input.propTypes = {
   error: PropTypes.string,
   icon: PropTypes.element,
   className: PropTypes.string,
+  mask: PropTypes.string,
 }
 
 Input.defaultProps = {
@@ -170,6 +184,7 @@ Input.defaultProps = {
   icon: null,
   value: '',
   className: '',
+  mask: '',
 }
 
 export default Input
