@@ -42,7 +42,7 @@ class Wrapper extends React.Component {
   }
 }
 
-storiesOf('Progress Bar')
+storiesOf('Progress Bar', module)
   .add('3 steps', () => (
     <Wrapper />
   ))

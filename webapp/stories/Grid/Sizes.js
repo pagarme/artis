@@ -8,7 +8,7 @@ import style from './style.css'
 
 const maxColumns = 12
 
-storiesOf('Grid')
+storiesOf('Grid', module)
   .add('Column sizes', () => (
     <div className={style.background}>
       <Grid>
