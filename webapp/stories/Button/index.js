@@ -6,10 +6,11 @@ import BackIcon from 'react-icons/lib/io/android-arrow-back'
 import { storiesOf } from '@storybook/react'
 
 import Button from '../../src/components/Button'
+
 import style from './style.css'
 
 storiesOf('Buttons', module)
-  .add('All', () => (
+  .add('defaultTheme', () => (
     <div className={style.container}>
       <div>
         <h2>Default Button</h2>
@@ -28,7 +29,7 @@ storiesOf('Buttons', module)
 
       <div>
         <h2>Sizes</h2>
-        <Button size="extra-small">Extra-small</Button>
+        <Button size="tiny">Tiny</Button>
         <Button size="small">Small</Button>
         <Button size="large">Large</Button>
         <Button size="extra-large">Extra-large</Button>

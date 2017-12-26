@@ -1,11 +1,11 @@
-@import "../../theme-pagarme/colors.css";
-@import "../../theme-pagarme/typography.css";
+@import "../colors.css";
+@import "../typography.css";
 
 :root {
   --button-font-family: var(--primary-font-family);
   --button-font-weight: var(--title-font-normal);
 
-  --button-font-size-extra-small: var(--font-size-tiny);
+  --button-font-size-tiny: var(--font-size-tiny);
   --button-font-size-small: var(--font-size-small);
   --button-font-size-default: var(--font-size-small);
   --button-font-size-large: var(--font-size-medium);
@@ -30,8 +30,8 @@
   --button-padding-top-default: 9px;
   --button-padding-left-default: 9px;
 
-  --button-padding-top-extra-small: 8px;
-  --button-padding-left-extra-small: 8px;
+  --button-padding-top-tiny: 8px;
+  --button-padding-left-tiny: 8px;
 
   --button-padding-top-small: 8px;
   --button-padding-left-small: 8px;
