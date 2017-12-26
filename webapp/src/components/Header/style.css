@@ -1,5 +1,5 @@
-@import "../../styles/colors.css";
-@import "../../styles/typography.css";
+@import "../../theme-pagarme/colors.css";
+@import "../../theme-pagarme/typography.css";
 @import "./properties.css";
 
 .close,

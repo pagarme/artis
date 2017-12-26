@@ -9,7 +9,7 @@ import { clamp } from 'ramda'
 
 import { Grid, Row, Col } from '../Grid'
 
-import style from './styles.css'
+import style from './style.css'
 
 const renderSteps = (steps, activePage) => {
   const colSize = 12 / steps.length

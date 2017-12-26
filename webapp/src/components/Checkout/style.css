@@ -1,5 +1,5 @@
-@import "../../styles/animations.css";
-@import "../../styles/colors.css";
+@import "../../theme-pagarme/animations.css";
+@import "../../theme-pagarme/colors.css";
 
 .checkout {
   position: absolute;

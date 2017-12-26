@@ -1,5 +1,5 @@
-@import "../../styles/colors.css";
-@import "../../styles/typography.css";
+@import "../../theme-pagarme/colors.css";
+@import "../../theme-pagarme/typography.css";
 
 :root {
   --dropdown-font-family: var(--primary-font-family);

@@ -53,6 +53,7 @@
     "ramda": "0.25.0",
     "raven-js": "3.21.0",
     "react": "16.2.0",
+    "react-css-themr": "2.1.2",
     "react-dev-utils": "4.2.1",
     "react-dom": "16.2.0",
     "react-icons": "2.2.7",

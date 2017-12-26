@@ -1,7 +1,7 @@
-@import "../../styles/media.css";
-@import "../../styles/spacing.css";
-@import "../../styles/colors.css";
-@import "../../styles/typography.css";
+@import "../../theme-pagarme/media.css";
+@import "../../theme-pagarme/spacing.css";
+@import "../../theme-pagarme/colors.css";
+@import "../../theme-pagarme/typography.css";
 
 :root {
   --total-color: var(--color-dark-greenish-100);

@@ -6,7 +6,7 @@ import Input from '../../components/Input'
 import Dropdown from '../../components/Dropdown'
 
 import options from './states'
-import style from '../styles.css'
+import style from '../style.css'
 
 const defaultColSize = 12
 const smallColSize = 4
