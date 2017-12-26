@@ -72,6 +72,7 @@ class AddressData extends Component {
             <Input
               name="cep"
               label="CEP"
+              mask="11111-111"
               value={cep}
               placeholder="Digite o CEP"
               onChange={this.handleInputChange}

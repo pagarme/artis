@@ -93,6 +93,7 @@ class CustomerData extends Component {
               name="documentNumber"
               label="CPF"
               hint=""
+              mask="111.111.111-11"
               value={documentNumber}
               placeholder="Digite seu CPF"
               onChange={this.handleInputChange}
@@ -110,6 +111,7 @@ class CustomerData extends Component {
               name="phoneNumber"
               label="DDD + Telefone"
               hint=""
+              mask="(11) 11111-1111"
               value={phoneNumber}
               placeholder="Digite seu telefone"
               onChange={this.handleInputChange}
