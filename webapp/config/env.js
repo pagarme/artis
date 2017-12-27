@@ -4,7 +4,8 @@ const paths = require('./paths')
 
 delete require.cache[require.resolve('./paths')]
 
-const NODE_ENV = process.env.NODE_ENV
+const { NODE_ENV } = process.env
+
 if (!NODE_ENV) {
   throw new Error(
     'The NODE_ENV environment variable is required but was not specified.'
@@ -16,7 +17,7 @@ const dotenvFiles = [
   `${paths.dotenv}.${NODE_ENV}`,
   NODE_ENV !== 'test' && `${paths.dotenv}.local`,
   paths.dotenv,
-].filter(Boolean);
+].filter(Boolean)
 
 dotenvFiles.forEach((dotenvFile) => {
   if (fs.existsSync(dotenvFile)) {
@@ -26,13 +27,13 @@ dotenvFiles.forEach((dotenvFile) => {
   }
 })
 
-const appDirectory = fs.realpathSync(process.cwd());
+const appDirectory = fs.realpathSync(process.cwd())
+
 process.env.NODE_PATH = (process.env.NODE_PATH || '')
   .split(path.delimiter)
   .filter(folder => folder && !path.isAbsolute(folder))
   .map(folder => path.resolve(appDirectory, folder))
-  .join(path.delimiter);
-
+  .join(path.delimiter)
 
 const REACT_APP = /^REACT_APP_/i
 
@@ -49,12 +50,14 @@ function getClientEnvironment (publicUrl) {
         SENTRY_URL: process.env.SENTRY_URL || 'https://3063173d7ec64ffdb5085bc507b64cb9@sentry.io/252228',
         PUBLIC_URL: publicUrl,
       }
-    );
+    )
+
   const stringified = {
-    'process.env': Object.keys(raw).reduce((env, key) => {
-      env[key] = JSON.stringify(raw[key])
-      return env
-    }, {}),
+    'process.env': Object.keys(raw)
+      .reduce((env, key) => {
+        env[key] = JSON.stringify(raw[key])
+        return env
+      }, {}),
   }
 
   return { raw, stringified }

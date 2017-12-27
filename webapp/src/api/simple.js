@@ -16,7 +16,7 @@ const simpleIntegration = (checkoutFormButtons) => {
     const create = Checkout(button.dataset.key)
 
     const checkout = create({
-      target: createWrapper('#checkout-wrapper'),
+      target: createWrapper('checkout-wrapper'),
       image: button.dataset.image,
       locale: button.dataset.locale,
       theme: button.dataset.theme,

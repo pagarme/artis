@@ -25,6 +25,7 @@ class InputState extends React.Component {
       placeholder,
       label,
       hint,
+      name,
     } = this.props
 
     const {
@@ -33,7 +34,7 @@ class InputState extends React.Component {
 
     return (
       <Input
-        name="email"
+        name={name}
         type={type}
         icon={icon}
         label={label}
@@ -56,6 +57,7 @@ InputState.defaultProps = {
   placeholder: '',
   label: '',
   hint: '',
+  name: '',
 }
 
 
@@ -66,6 +68,7 @@ const InputExamples = () => (
     <section>
       <h3>Default</h3>
       <InputState
+        name="default"
         type="text"
         label="Nome"
         placeholder="Digite seu nome"
@@ -75,6 +78,7 @@ const InputExamples = () => (
     <section>
       <h3>Error</h3>
       <InputState
+        name="error"
         type="text"
         label="E-mail"
         placeholder="Digite seu e-mail"
@@ -85,6 +89,7 @@ const InputExamples = () => (
     <section>
       <h3>Multiline default</h3>
       <InputState
+        name="multiline"
         multiline
         label="Mensagem"
         placeholder="Tecle enter para saltar uma linha"
@@ -94,6 +99,7 @@ const InputExamples = () => (
     <section>
       <h3>Icon default</h3>
       <InputState
+        name="icon"
         type="text"
         label="Com icone"
         placeholder="It's so cool"
@@ -104,6 +110,7 @@ const InputExamples = () => (
     <section>
       <h3>Password default</h3>
       <InputState
+        name="password"
         type="password"
         label="Senha"
         placeholder="Digite sua senha"
@@ -113,7 +120,7 @@ const InputExamples = () => (
     <section>
       <h3>Disabled</h3>
       <Input
-        name="email"
+        name="email_disabled"
         label="Digite seu email"
         hint="Texto de apoio"
         placeholder="eae"
