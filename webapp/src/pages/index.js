@@ -1,6 +1,6 @@
 import React from 'react'
 
-import CustomerData from './CustomerData'
+import Customer from './Customer'
 import Billing from './Billing'
 import PaymentData from './PaymentData'
 
@@ -10,7 +10,7 @@ import render from './render'
 const pages = [
   {
     joinRule: 'onDesktop',
-    component: <CustomerData
+    component: <Customer
       title="Dados Pessoais"
       stepTitle="Identificação"
     />,
