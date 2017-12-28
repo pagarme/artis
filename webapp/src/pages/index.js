@@ -2,7 +2,7 @@ import React from 'react'
 
 import Customer from './Customer'
 import Billing from './Billing'
-import PaymentData from './PaymentData'
+import Payment from './Payment'
 
 import preRender from './preRender'
 import render from './render'
@@ -22,7 +22,7 @@ const pages = [
     />,
   },
   {
-    component: <PaymentData
+    component: <Payment
       title="Dados de Pagamento"
       stepTitle="Forma de Pagamento"
     />,
