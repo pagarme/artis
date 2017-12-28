@@ -12,7 +12,7 @@ const defaultColSize = 12
 const smallColSize = 4
 const bigColSize = 8
 
-class AddressData extends Component {
+class Billing extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -182,8 +182,8 @@ class AddressData extends Component {
   }
 }
 
-AddressData.propTypes = {
+Billing.propTypes = {
   title: string.isRequired,
 }
 
-export default AddressData
+export default Billing

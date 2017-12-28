@@ -1,7 +1,7 @@
 import React from 'react'
 
 import CustomerData from './CustomerData'
-import AddressData from './AddressData'
+import Billing from './Billing'
 import PaymentData from './PaymentData'
 
 import preRender from './preRender'
@@ -17,7 +17,7 @@ const pages = [
   },
   {
     joinRule: 'onDesktop',
-    component: <AddressData
+    component: <Billing
       title="Endereço de Cobrança"
     />,
   },
