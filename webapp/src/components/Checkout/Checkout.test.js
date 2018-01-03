@@ -1,11 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import App from './'
+import Checkout from './'
 
 describe('Main App', () => {
   const component = shallow(
-    <App
+    <Checkout
       apiValues={{
         key: 'some_key',
         configs: {
@@ -18,6 +18,7 @@ describe('Main App', () => {
           paymentMethod: 'creditcard',
         },
       }}
+      targetElement={React.createElement('div')}
     />
   )
 

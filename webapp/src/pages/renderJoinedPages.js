@@ -4,8 +4,9 @@ import { Grid, Row, Col } from '../components/Grid'
 import style from './styles.css'
 
 const renderCols = (colSize, pages) =>
-  pages.map(page => (
+  pages.map((page, index) => (
     <Col
+      key={`renderedCol-${index + 1}`}
       tv={colSize}
       desk={colSize}
       tablet={colSize}

@@ -21,6 +21,7 @@ function Button ({
   relevance,
   size,
   type,
+  hidden,
 }) {
   const buttonClasses = classNames(
     className,
@@ -33,6 +34,7 @@ function Button ({
   return (
     <button
       disabled={disabled}
+      hidden={hidden}
       className={buttonClasses}
       onClick={onClick}
       type={type}
@@ -72,6 +74,7 @@ Button.propTypes = {
     node,
   ]).isRequired,
   disabled: bool,
+  hidden: bool,
   className: string,
 }
 
@@ -82,6 +85,7 @@ Button.defaultProps = {
   size: 'default',
   type: 'button',
   disabled: false,
+  hidden: false,
   className: '',
 }
 
