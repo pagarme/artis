@@ -4,6 +4,7 @@ import {
   shape,
   string,
   number,
+  element,
 } from 'prop-types'
 import classNames from 'classnames'
 
@@ -60,13 +61,13 @@ class Checkout extends Component {
   }
 
   close () {
-    const { configs } = this.props.apiValues
+    const { targetElement } = this.props
 
     this.setState({ closingEffect: true })
 
     setTimeout(() => {
       ReactDOM.unmountComponentAtNode(
-        document.getElementById(configs.target)
+        targetElement
       )
     }, 500)
   }
@@ -130,6 +131,7 @@ Checkout.propTypes = {
       paymentMethod: string.isRequired,
     }),
   }).isRequired,
+  targetElement: element.isRequired,
 }
 
 Checkout.defaultProps = {

@@ -18,6 +18,7 @@ describe('Main App', () => {
           paymentMethod: 'creditcard',
         },
       }}
+      targetElement={React.createElement('div')}
     />
   )
 
