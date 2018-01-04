@@ -15,8 +15,9 @@
       "browserName": "chrome",
       "browser_version": "55",
       "resolution": "1920x1080",
-      "url": "http://google.com",
-      "test": "./robrowser/makeATransaction.des.js"
+      "url": "http://localhost:3000",
+      "test": "./robrowser/makeATransaction.des.js",
+      "local": true
     },
     {
       "os": "windows",
@@ -24,8 +25,9 @@
       "browserName": "firefox",
       "browser_version": "38",
       "resolution": "1920x1080",
-      "url": "http://google.com",
-      "test": "./robrowser/makeATransaction.des.js"
+      "url": "http://localhost:3000",
+      "test": "./robrowser/makeATransaction.des.js",
+      "local": true
     },
     {
       "os": "windows",
@@ -33,8 +35,9 @@
       "browserName": "edge",
       "browser_version": "14",
       "resolution": "1920x1080",
-      "url": "http://google.com",
-      "test": "./robrowser/makeATransaction.des.js"
+      "url": "http://localhost:3000",
+      "test": "./robrowser/makeATransaction.des.js",
+      "local": true
     },
     {
       "os": "OS X",
@@ -42,8 +45,9 @@
       "browserName": "Safari",
       "browser_version": "9.1",
       "resolution": "1920x1080",
-      "url": "http://google.com",
-      "test": "./robrowser/makeATransaction.des.js"
+      "url": "http://localhost:3000",
+      "test": "./robrowser/makeATransaction.des.js",
+      "local": true
     },
     {
       "os": "windows",
@@ -51,16 +55,19 @@
       "browserName": "IE",
       "browser_version": "11",
       "resolution": "1920x1080",
-      "url": "http://google.com",
-      "test": "./robrowser/makeATransaction.des.js"
+      "url": "http://localhost:3000",
+      "test": "./robrowser/makeATransaction.des.js",
+      "local": true
     },
     {
       "browserName": "android",
       "device": "Google Nexus 9",
       "realMobile": "true",
       "os_version": "5.1",
-      "url": "http://google.com",
-      "test": "./robrowser/makeATransaction.mob.js"
+      "deviceOrientation": "portrait",
+      "url": "http://localhost:3000",
+      "test": "./robrowser/makeATransaction.mob.js",
+      "local": true
     },
     {
       "browserName": "android",
@@ -68,8 +75,9 @@
       "realMobile": "true",
       "os_version": "5.0",
       "deviceOrientation": "portrait",
-      "url": "http://google.com",
-      "test": "./robrowser/makeATransaction.mob.js"
+      "url": "http://localhost:3000",
+      "test": "./robrowser/makeATransaction.mob.js",
+      "local": true
     },
     {
       "browserName": "iPhone",
@@ -77,8 +85,9 @@
       "realMobile": "true",
       "os_version": "10.3",
       "deviceOrientation": "portrait",
-      "url": "http://google.com",
-      "test": "./robrowser/makeATransaction.mob.js"
+      "url": "http://localhost:3000",
+      "test": "./robrowser/makeATransaction.mob.js",
+      "local": true
     }
   ],
   "concurrency": 2

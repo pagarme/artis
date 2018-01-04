@@ -1,12 +1,19 @@
-module.exports = (browser, next) => {
+const findByTextRegex = text => `//*[contains(text(), '${text}')]`
+
+module.exports = (browser, next, catchError) => {
   browser
-    .waitForElementByName('q', 10000)
-    .elementByName('q')
-    .sendKeys('BrowserStack')
-    .waitForElementByName('btnG', 10000)
-    .elementByName('btnG')
+    .waitForElementByXPath(findByTextRegex('Simple'), 10000)
     .click()
-    .saveScreenshot('google_search.png')
+    .waitForElementByXPath(findByTextRegex('Pagar'), 10000)
+    .click()
+    .saveScreenshot('1_personaldata.png')
+    .waitForElementByXPath(findByTextRegex('Continuar'), 10000)
+    .click()
+    .saveScreenshot('2_billingaddress.png')
+    .waitForElementByXPath(findByTextRegex('Continuar'), 10000)
+    .click()
+    .saveScreenshot('3_paymentdata.png')
+    .fail(catchError)
     .fin(next)
     .done()
 }
