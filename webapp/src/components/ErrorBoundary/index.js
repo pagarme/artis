@@ -4,7 +4,7 @@ import {
   element,
 } from 'prop-types'
 
-import report from '../../config/ErrorReport'
+import report from '../../../config/ErrorReport'
 
 export default class ErrorBoundary extends Component {
   constructor (props) {
