@@ -7,6 +7,7 @@ import {
   element,
 } from 'prop-types'
 import classNames from 'classnames'
+import { ThemeProvider } from 'react-css-themr'
 
 import ProgressBar from '../ProgressBar'
 import Header from '../Header'
@@ -15,6 +16,9 @@ import { pages, preRender, render } from '../../pages'
 
 import defaultLogo from '../../images/logo_pagarme.png'
 import style from './style.css'
+
+
+import theme from '../../theme-pagarme'
 
 const isDesktop = window.innerWidth > 640
 
@@ -82,38 +86,40 @@ class Checkout extends Component {
     const steps = getSteps(preRendered)
 
     return (
-      <div
-        className={classNames(
-          style.checkout,
-          {
-            [style.closingEffect]: this.state.closingEffect,
-          },
-        )}
-      >
-        <div className={style.wrapper}>
-          <Header
-            logoAlt="Pagar.me"
-            logoSrc={configs.image || defaultLogo}
-            onPrev={this.handleNavigation.bind(this, 'prev', renderedPages)}
-            onClose={this.close.bind(this)}
-            prevButtonDisabled={activePage === 0}
-          />
-          <div className={style.content}>
-            <ProgressBar
-              steps={steps}
-              activePage={activePage}
+      <ThemeProvider theme={theme}>
+        <div
+          className={classNames(
+            style.checkout,
+            {
+              [style.closingEffect]: this.state.closingEffect,
+            },
+          )}
+        >
+          <div className={style.wrapper}>
+            <Header
+              logoAlt="Pagar.me"
+              logoSrc={configs.image || defaultLogo}
+              onPrev={this.handleNavigation.bind(this, 'prev', renderedPages)}
+              onClose={this.close.bind(this)}
+              prevButtonDisabled={activePage === 0}
             />
-            { renderedPages[activePage] }
+            <div className={style.content}>
+              <ProgressBar
+                steps={steps}
+                activePage={activePage}
+              />
+              { renderedPages[activePage] }
+            </div>
+            <Footer
+              total={params.amount}
+              buttonText={'Continuar'}
+              buttonClick={this.handleNavigation.bind(this, 'next', renderedPages)}
+              companyName={'Pagar.me'}
+              nextButtonDisabled={activePage === renderedPages.length - 1}
+            />
           </div>
-          <Footer
-            total={params.amount}
-            buttonText={'Continuar'}
-            buttonClick={this.handleNavigation.bind(this, 'next', renderedPages)}
-            companyName={'Pagar.me'}
-            nextButtonDisabled={activePage === renderedPages.length - 1}
-          />
         </div>
-      </div>
+      </ThemeProvider>
     )
   }
 }

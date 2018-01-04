@@ -72,7 +72,7 @@
 
 .inputContainer > textarea:disabled ~ label,
 .inputContainer > input:disabled ~ label {
-  color: var(--input-color-disabled);
+  color: var(--input-label-color);
   cursor: not-allowed;
 }
 
