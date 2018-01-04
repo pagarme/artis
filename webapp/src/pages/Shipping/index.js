@@ -7,8 +7,8 @@ import AddressForm from './AddressForm'
 import { Grid, Row, Col } from '../../components/Grid'
 import Button from '../../components/Button'
 
-import defaultStyle from '../styles.css'
-import style from './styles.css'
+import defaultStyle from '../style.css'
+import style from './style.css'
 
 const largeColSize = 12
 const mediumColSize = 6

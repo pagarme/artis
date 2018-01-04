@@ -1,5 +1,5 @@
 @import "./properties.css";
-@import "../../theme-pagarme/media.css";
+@import "../media.css";
 
 .grid,
 .row,

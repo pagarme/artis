@@ -18,7 +18,7 @@ const Footer = ({
   companyName,
   nextButtonDisabled,
   theme,
- }) => (
+}) => (
   <footer>
     <Grid>
       <Row>
