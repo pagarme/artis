@@ -16,8 +16,10 @@ function Button ({
   type,
   hidden,
   fill,
+  className,
 }) {
   const buttonClasses = classNames(
+    className,
     theme.button,
     theme[fill],
     theme[base],
