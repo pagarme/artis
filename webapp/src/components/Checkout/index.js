@@ -1,10 +1,11 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import {
   shape,
   string,
   number,
-  element,
+  object,
 } from 'prop-types'
 import classNames from 'classnames'
 import { ThemeProvider } from 'react-css-themr'
@@ -137,7 +138,7 @@ Checkout.propTypes = {
       paymentMethod: string.isRequired,
     }),
   }).isRequired,
-  targetElement: element.isRequired,
+  targetElement: object.isRequired,
 }
 
 Checkout.defaultProps = {
