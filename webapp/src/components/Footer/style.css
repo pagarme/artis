@@ -1,23 +1,5 @@
 @import "./properties.css";
 
-.total {
-  margin-top: 3px;
-  color: var(--total-color);
-  font-size: var(--total-font-size);
-  font-family: var(--total-font-family);
-  letter-spacing: calc(var(--total-letter-spacing) + 0.08em);
-  text-transform: uppercase;
-}
-
-.total .value {
-  display: block;
-}
-
-.button {
-  width: 100%;
-  max-width: 400px;
-}
-
 .safe {
   position: relative;
   justify-content: flex-end;
@@ -54,14 +36,6 @@
 }
 
 @media (--media-palm) {
-
-  .total {
-    text-align: center;
-  }
-
-  .total .value {
-    display: inline;
-  }
 
   .button {
     max-width: 100%;
