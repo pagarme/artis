@@ -57,6 +57,18 @@
   background-image: none;
 }
 
+.double,
+.double:hover,
+.double:active,
+.double:focus {
+  margin-top: 2px;
+  color: #ffffff;
+  border: 2px solid #333333;
+  outline: 2px solid #434343;
+  background-color: #434343;
+  text-transform: initial;
+}
+
 /*
 * Sizes
 */
