@@ -63,9 +63,9 @@
 .double:focus {
   margin-top: 2px;
   color: #ffffff;
-  border: 2px solid #333333;
-  outline: 2px solid #434343;
-  background-color: #434343;
+  border: 2px solid var(--button-double-border-color);
+  outline: 2px solid var(--button-double-outline-color);
+  background-color: var(--button-double-outline-color);
   text-transform: initial;
 }
 
