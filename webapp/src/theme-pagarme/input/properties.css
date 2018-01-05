@@ -1,4 +1,4 @@
-@import "../../theme-pagarme/colors.css";
+@import "../colors.css";
 
 :root {
   --input-font-family: var(--primary-font-family);

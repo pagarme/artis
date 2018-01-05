@@ -1,4 +1,5 @@
 import React from 'react'
+import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import MdVisibilityOff from 'react-icons/lib/md/visibility-off'
@@ -7,7 +8,7 @@ import MaskedInput from 'react-maskedinput'
 
 import { pick } from 'ramda'
 
-import style from './style.css'
+const applyThemr = themr('UIInput')
 
 class Input extends React.Component {
   constructor (props) {
@@ -25,7 +26,7 @@ class Input extends React.Component {
   }
 
   renderPasswordVisibilityIcon () {
-    const { value, type } = this.props
+    const { value, type, theme } = this.props
 
     if (value === '' || type !== 'password') {
       return null
@@ -34,7 +35,7 @@ class Input extends React.Component {
     if (this.state.displayPassword) {
       return (
         <MdVisibilityOff
-          className={style.displayPasswordIcon}
+          className={theme.displayPasswordIcon}
           onClick={this.handleDisplayPassword.bind(this, false)}
         />
       )
@@ -42,7 +43,7 @@ class Input extends React.Component {
 
     return (
       <MdVisibility
-        className={style.displayPasswordIcon}
+        className={theme.displayPasswordIcon}
         onClick={this.handleDisplayPassword.bind(this, true)}
       />
     )
@@ -62,20 +63,27 @@ class Input extends React.Component {
       onChange,
       name,
       mask,
+      theme,
     } = this.props
 
-    const inputContainer = classnames(style.inputContainer, {
-      [style.multiline]: multiline,
-      [style.error]: error,
-    })
+    const inputContainer = classnames(
+      theme.inputContainer,
+      {
+        [theme.multiline]: multiline,
+        [theme.error]: error,
+      }
+    )
 
-    const containerClasses = classnames(style.container, {
-      [style.active]: !disabled && value !== '',
-      [style.disabled]: disabled,
-    })
+    const containerClasses = classnames(
+      theme.container,
+      {
+        [theme.active]: !disabled && value !== '',
+        [theme.disabled]: disabled,
+      }
+    )
 
     const contentPresent = classnames({
-      [style.contentPresent]: value !== '',
+      [theme.contentPresent]: value !== '',
     })
 
     const inputProps = pick(
@@ -90,9 +98,9 @@ class Input extends React.Component {
     return (
       <div className={containerClasses}>
         {icon &&
-          <div className={style.icon}>{icon}</div>
+          <div className={theme.icon}>{icon}</div>
         }
-        <div className={style.boxContainer}>
+        <div className={theme.boxContainer}>
           <div className={inputContainer}>
             {!mask && (multiline
               ? (
@@ -136,14 +144,14 @@ class Input extends React.Component {
             </label>
 
             {multiline &&
-              <div className={style.expander}>
+              <div className={theme.expander}>
                 {value}
                 <br />
               </div>
             }
           </div>
           {(hint || error) &&
-            <p className={style.secondaryText}>
+            <p className={theme.secondaryText}>
               {error || hint}
             </p>
           }
@@ -154,6 +162,20 @@ class Input extends React.Component {
 }
 
 Input.propTypes = {
+  theme: PropTypes.shape({
+    active: PropTypes.string,
+    boxContainer: PropTypes.string,
+    container: PropTypes.string,
+    contentPresent: PropTypes.string,
+    disabled: PropTypes.string,
+    displayPasswordIcon: PropTypes.string,
+    error: PropTypes.string,
+    expander: PropTypes.string,
+    icon: PropTypes.string,
+    inputContainer: PropTypes.string,
+    multiline: PropTypes.string,
+    secondaryText: PropTypes.string,
+  }),
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -175,6 +197,7 @@ Input.propTypes = {
 }
 
 Input.defaultProps = {
+  theme: {},
   type: 'text',
   placeholder: '',
   hint: '',
@@ -187,4 +210,4 @@ Input.defaultProps = {
   mask: '',
 }
 
-export default Input
+export default applyThemr(Input)
