@@ -12,7 +12,7 @@ import { themr } from 'react-css-themr'
 
 import ProgressBar from '../ProgressBar'
 import Header from '../Header'
-import Footer from '../Footer'
+import FooterContainer from '../../containers/FooterContainer'
 import { pages, preRender, render } from '../../pages'
 
 import defaultLogo from '../../images/logo_pagarme.png'
@@ -109,7 +109,7 @@ class Checkout extends Component {
             />
             { renderedPages[activePage] }
           </div>
-          <Footer
+          <FooterContainer
             total={params.amount}
             buttonText={'Continuar'}
             buttonClick={this.handleNavigation.bind(this, 'next', renderedPages)}

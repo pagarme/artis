@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { bool } from 'prop-types'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { Grid, Row, Col } from '../../components/Grid'
@@ -214,6 +214,7 @@ class AddressForm extends Component {
                   fill="outline"
                   relevance="low"
                   className={style.cancelButton}
+                  onClick={this.props.handleClose.bind(this)}
                 >
                   Cancelar
                 </Button>
@@ -237,7 +238,8 @@ AddressForm.defaultProps = {
 }
 
 AddressForm.propTypes = {
-  visible: bool,
+  visible: PropTypes.bool,
+  handleClose: PropTypes.func.isRequired,
 }
 
 export default AddressForm

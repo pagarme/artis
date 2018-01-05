@@ -35,6 +35,10 @@
   padding-bottom: var(--powered-padding-bottom);
 }
 
+.hidden {
+  display: none;
+}
+
 @media (--media-palm) {
 
   .button {

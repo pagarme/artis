@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from 'react'
-import { string } from 'prop-types'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import PlusIcon from 'react-icons/lib/go/plus'
 
 import AddressForm from './AddressForm'
 import { Grid, Row, Col } from '../../components/Grid'
 import Button from '../../components/Button'
+import { footerButton } from '../../state/actions'
 
 import defaultStyle from '../style.css'
 import style from './style.css'
@@ -43,7 +45,7 @@ class Shipping extends Component {
 
     this.state = {
       selected: 0,
-      showAddressForm: false,
+      openAddressForm: false,
     }
   }
 
@@ -51,8 +53,11 @@ class Shipping extends Component {
     this.setState({ selected: option })
   }
 
-  handleAddNewAddress () {
-    this.setState({ showAddressForm: true })
+  toggleOpenAddressForm () {
+    const openAddressForm = !this.state.openAddressForm
+
+    this.props.footerButton({ visible: !openAddressForm })
+    this.setState({ openAddressForm })
   }
 
   renderAddresses () {
@@ -176,10 +181,15 @@ class Shipping extends Component {
     return (
       <Fragment>
         <AddressForm
-          visible={this.state.showAddressForm}
+          visible={this.state.openAddressForm}
+          handleClose={this.toggleOpenAddressForm.bind(this)}
         />
         <Grid
-          hidden={this.state.showAddressForm}
+          className={
+            classNames({
+              [style.hidden]: this.state.openAddressForm,
+            })
+          }
         >
           <Row>
             <Col
@@ -205,7 +215,7 @@ class Shipping extends Component {
                   fill="double"
                   relevance="low"
                   className={style.btnAddNewAddress}
-                  onClick={this.handleAddNewAddress.bind(this)}
+                  onClick={this.toggleOpenAddressForm.bind(this)}
                 >
                   <PlusIcon />
                   Cadastrar novo endereço de entrega
@@ -220,7 +230,12 @@ class Shipping extends Component {
 }
 
 Shipping.propTypes = {
-  title: string.isRequired,
+  title: PropTypes.string.isRequired,
+  footerButton: PropTypes.func.isRequired,
 }
 
-export default Shipping
+const mapDispatchToProps = dispatch => ({
+  footerButton: value => dispatch(footerButton(value)),
+})
+
+export default connect(null, mapDispatchToProps)(Shipping)

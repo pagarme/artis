@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import LockIcon from 'react-icons/lib/md/lock-outline'
 import { themr } from 'react-css-themr'
 
@@ -18,6 +19,7 @@ const Footer = ({
   companyName,
   nextButtonDisabled,
   theme,
+  buttonVisible,
 }) => (
   <footer>
     <Grid>
@@ -35,7 +37,9 @@ const Footer = ({
             size="extra-large"
             relevance="normal"
             onClick={buttonClick}
-            className={theme.button}
+            className={classNames(theme.button, {
+              [theme.hidden]: !buttonVisible,
+            })}
           >
             {buttonText}
           </Button>
@@ -66,6 +70,11 @@ const Footer = ({
   </footer>
 )
 
+Footer.defaultProps = {
+  theme: {},
+  nextButtonDisabled: false,
+}
+
 Footer.propTypes = {
   theme: PropTypes.shape({
     button: PropTypes.string,
@@ -78,11 +87,7 @@ Footer.propTypes = {
   buttonClick: PropTypes.func.isRequired,
   companyName: PropTypes.string.isRequired,
   nextButtonDisabled: PropTypes.bool,
-}
-
-Footer.defaultProps = {
-  theme: {},
-  nextButtonDisabled: false,
+  buttonVisible: PropTypes.bool.isRequired,
 }
 
 export default applyThemr(Footer)

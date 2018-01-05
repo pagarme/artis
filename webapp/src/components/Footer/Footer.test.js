@@ -11,6 +11,7 @@ describe('Footer', () => {
       buttonText={'Compre muito!'}
       buttonClick={onClick}
       companyName={'Tesla Motors'}
+      buttonVisible
     />
   )
 
