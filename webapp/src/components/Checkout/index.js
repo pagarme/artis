@@ -8,7 +8,7 @@ import {
   object,
 } from 'prop-types'
 import classNames from 'classnames'
-import { ThemeProvider } from 'react-css-themr'
+import { themr } from 'react-css-themr'
 
 import ProgressBar from '../ProgressBar'
 import Header from '../Header'
@@ -16,10 +16,8 @@ import Footer from '../Footer'
 import { pages, preRender, render } from '../../pages'
 
 import defaultLogo from '../../images/logo_pagarme.png'
-import style from './style.css'
 
-
-import theme from '../../theme-pagarme'
+const applyThemr = themr('UICheckout')
 
 const isDesktop = window.innerWidth > 640
 
@@ -79,7 +77,8 @@ class Checkout extends Component {
 
   render () {
     const { activePage } = this.state
-    const { params, configs } = this.props.apiValues
+    const { apiValues, theme } = this.props
+    const { params, configs } = apiValues
 
     const preRendered = preRender(pages)
 
@@ -87,45 +86,49 @@ class Checkout extends Component {
     const steps = getSteps(preRendered)
 
     return (
-      <ThemeProvider theme={theme}>
-        <div
-          className={classNames(
-            style.checkout,
-            {
-              [style.closingEffect]: this.state.closingEffect,
-            },
-          )}
-        >
-          <div className={style.wrapper}>
-            <Header
-              logoAlt="Pagar.me"
-              logoSrc={configs.image || defaultLogo}
-              onPrev={this.handleNavigation.bind(this, 'prev', renderedPages)}
-              onClose={this.close.bind(this)}
-              prevButtonDisabled={activePage === 0}
+      <div
+        className={classNames(
+          theme.checkout,
+          {
+            [theme.closingEffect]: this.state.closingEffect,
+          },
+        )}
+      >
+        <div className={theme.wrapper}>
+          <Header
+            logoAlt="Pagar.me"
+            logoSrc={configs.image || defaultLogo}
+            onPrev={this.handleNavigation.bind(this, 'prev', renderedPages)}
+            onClose={this.close.bind(this)}
+            prevButtonDisabled={activePage === 0}
+          />
+          <div className={theme.content}>
+            <ProgressBar
+              steps={steps}
+              activePage={activePage}
             />
-            <div className={style.content}>
-              <ProgressBar
-                steps={steps}
-                activePage={activePage}
-              />
-              { renderedPages[activePage] }
-            </div>
-            <Footer
-              total={params.amount}
-              buttonText={'Continuar'}
-              buttonClick={this.handleNavigation.bind(this, 'next', renderedPages)}
-              companyName={'Pagar.me'}
-              nextButtonDisabled={activePage === renderedPages.length - 1}
-            />
+            { renderedPages[activePage] }
           </div>
+          <Footer
+            total={params.amount}
+            buttonText={'Continuar'}
+            buttonClick={this.handleNavigation.bind(this, 'next', renderedPages)}
+            companyName={'Pagar.me'}
+            nextButtonDisabled={activePage === renderedPages.length - 1}
+          />
         </div>
-      </ThemeProvider>
+      </div>
     )
   }
 }
 
 Checkout.propTypes = {
+  theme: shape({
+    content: string,
+    wrapper: string,
+    closingEffect: string,
+    checkout: string,
+  }),
   apiValues: shape({
     key: string.isRequired,
     configs: shape({
@@ -142,6 +145,7 @@ Checkout.propTypes = {
 }
 
 Checkout.defaultProps = {
+  theme: {},
   apiValues: {
     configs: {
       image: '',
@@ -150,4 +154,4 @@ Checkout.defaultProps = {
   },
 }
 
-export default Checkout
+export default applyThemr(Checkout)

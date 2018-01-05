@@ -3,19 +3,21 @@ import {
   arrayOf,
   string,
   number,
+  shape,
 } from 'prop-types'
 import classNames from 'classnames'
 import { clamp } from 'ramda'
+import { themr } from 'react-css-themr'
 
 import { Grid, Row, Col } from '../Grid'
 
-import style from './style.css'
+const applyThemr = themr('UIProgressBar')
 
-const renderSteps = (steps, activePage) => {
+const renderSteps = (steps, activePage, theme) => {
   const colSize = 12 / steps.length
 
   return (
-    <Grid className={style.steps}>
+    <Grid className={theme.steps}>
       <Row>
         { steps.map((step, index) => (
           <Col
@@ -24,8 +26,8 @@ const renderSteps = (steps, activePage) => {
             desk={colSize}
             tablet={colSize}
             className={
-              classNames(style.step, {
-                [style.active]: index === activePage,
+              classNames(theme.step, {
+                [theme.active]: index === activePage,
               })
             }
           >
@@ -40,6 +42,7 @@ const renderSteps = (steps, activePage) => {
 const ProgressBar = ({
   steps,
   activePage,
+  theme,
 }) => {
   const totalSteps = steps.length
   const activeStep = activePage + 1
@@ -56,18 +59,28 @@ const ProgressBar = ({
   return (
     <Fragment>
       { shouldRenderSteps &&
-        renderSteps(steps, activePage)
+        renderSteps(steps, activePage, theme)
       }
-      <div className={style.wrapper}>
-        <div className={style.progressBar} style={{ width }} />
+      <div className={theme.wrapper}>
+        <div className={theme.progressBar} style={{ width }} />
       </div>
     </Fragment>
   )
 }
 
 ProgressBar.propTypes = {
+  theme: shape({
+    step: string,
+    steps: string,
+    wrapper: string,
+    progressBar: string,
+  }),
   steps: arrayOf(string).isRequired,
   activePage: number.isRequired,
 }
 
-export default ProgressBar
+ProgressBar.defaultProps = {
+  theme: {},
+}
+
+export default applyThemr(ProgressBar)

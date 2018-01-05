@@ -1,6 +1,6 @@
-@import "../../theme-pagarme/colors.css";
-@import "../../theme-pagarme/spacing.css";
-@import "../../theme-pagarme/typography.css";
+@import "../colors.css";
+@import "../spacing.css";
+@import "../typography.css";
 
 :root {
   --wrapper-background-color: var(--color-grey-60);
