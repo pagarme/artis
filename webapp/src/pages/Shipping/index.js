@@ -55,6 +55,122 @@ class Shipping extends Component {
     this.setState({ showAddressForm: true })
   }
 
+  renderAddresses () {
+    return addresses.map((address, index) => (
+      <Col
+        tv={mediumColSize}
+        desk={mediumColSize}
+        tablet={mediumColSize}
+        palm={largeColSize}
+      >
+        <div
+          role="button"
+          tabIndex={index}
+          onClick={this.onChangeAddress.bind(this, index)}
+          className={
+            classNames(
+              style.optionBox,
+              {
+                [style.selected]: this.state.selected === index,
+              }
+            )
+          }
+        >
+          <div className={style.addressName}>
+            {address.name}
+          </div>
+          <div className={style.addressData}>
+            <Grid>
+              <Row>
+                <Col
+                  tv={largeColSize}
+                  desk={largeColSize}
+                  tablet={largeColSize}
+                  palm={largeColSize}
+                >
+                  <div className={style.field}>Rua</div>
+                  <div className={style.value}>
+                    {address.street}
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col
+                  tv={smallColSize}
+                  desk={smallColSize}
+                  tablet={smallColSize}
+                  palm={smallColSize}
+                >
+                  <div className={style.field}>Nº</div>
+                  <div className={style.value}>
+                    {address.street_number}
+                  </div>
+                </Col>
+                <Col
+                  tv={smallColSize}
+                  desk={smallColSize}
+                  tablet={smallColSize}
+                  palm={smallColSize}
+                >
+                  <div className={style.field}>Complemento</div>
+                  <div className={style.value}>
+                    {address.complementary}
+                  </div>
+                </Col>
+                <Col
+                  tv={smallColSize}
+                  desk={smallColSize}
+                  tablet={smallColSize}
+                  palm={smallColSize}
+                >
+                  <div className={style.field}>Bairro</div>
+                  <div className={style.value}>
+                    {address.neighborhood}
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col
+                  tv={smallColSize}
+                  desk={smallColSize}
+                  tablet={smallColSize}
+                  palm={smallColSize}
+                >
+                  <div className={style.field}>CEP</div>
+                  <div className={style.value}>
+                    {address.zipcode}
+                  </div>
+                </Col>
+                <Col
+                  tv={smallColSize}
+                  desk={smallColSize}
+                  tablet={smallColSize}
+                  palm={smallColSize}
+                >
+                  <div className={style.field}>Cidade</div>
+                  <div className={style.value}>
+                    {address.city}
+                  </div>
+                </Col>
+                <Col
+                  tv={smallColSize}
+                  desk={smallColSize}
+                  tablet={smallColSize}
+                  palm={smallColSize}
+                >
+                  <div className={style.field}>UF</div>
+                  <div className={style.value}>
+                    {address.state}
+                  </div>
+                </Col>
+              </Row>
+            </Grid>
+          </div>
+        </div>
+      </Col>
+    ))
+  }
+
   render () {
     return (
       <Fragment>
@@ -79,119 +195,7 @@ class Shipping extends Component {
             >
               {this.props.title}
             </Col>
-            {addresses.map((address, index) => (
-              <Col
-                tv={mediumColSize}
-                desk={mediumColSize}
-                tablet={mediumColSize}
-                palm={largeColSize}
-              >
-                <div
-                  role="button"
-                  tabIndex={index}
-                  onClick={this.onChangeAddress.bind(this, index)}
-                  className={
-                    classNames(
-                      style.optionBox,
-                      {
-                        [style.selected]: this.state.selected === index,
-                      }
-                    )
-                  }
-                >
-                  <div className={style.addressName}>
-                    {address.name}
-                  </div>
-                  <div className={style.addressData}>
-                    <Grid>
-                      <Row>
-                        <Col
-                          tv={largeColSize}
-                          desk={largeColSize}
-                          tablet={largeColSize}
-                          palm={largeColSize}
-                        >
-                          <div className={style.field}>Rua</div>
-                          <div className={style.value}>
-                            {address.street}
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col
-                          tv={smallColSize}
-                          desk={smallColSize}
-                          tablet={smallColSize}
-                          palm={smallColSize}
-                        >
-                          <div className={style.field}>Nº</div>
-                          <div className={style.value}>
-                            {address.street_number}
-                          </div>
-                        </Col>
-                        <Col
-                          tv={smallColSize}
-                          desk={smallColSize}
-                          tablet={smallColSize}
-                          palm={smallColSize}
-                        >
-                          <div className={style.field}>Complemento</div>
-                          <div className={style.value}>
-                            {address.complementary}
-                          </div>
-                        </Col>
-                        <Col
-                          tv={smallColSize}
-                          desk={smallColSize}
-                          tablet={smallColSize}
-                          palm={smallColSize}
-                        >
-                          <div className={style.field}>Bairro</div>
-                          <div className={style.value}>
-                            {address.neighborhood}
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col
-                          tv={smallColSize}
-                          desk={smallColSize}
-                          tablet={smallColSize}
-                          palm={smallColSize}
-                        >
-                          <div className={style.field}>CEP</div>
-                          <div className={style.value}>
-                            {address.zipcode}
-                          </div>
-                        </Col>
-                        <Col
-                          tv={smallColSize}
-                          desk={smallColSize}
-                          tablet={smallColSize}
-                          palm={smallColSize}
-                        >
-                          <div className={style.field}>Cidade</div>
-                          <div className={style.value}>
-                            {address.city}
-                          </div>
-                        </Col>
-                        <Col
-                          tv={smallColSize}
-                          desk={smallColSize}
-                          tablet={smallColSize}
-                          palm={smallColSize}
-                        >
-                          <div className={style.field}>UF</div>
-                          <div className={style.value}>
-                            {address.state}
-                          </div>
-                        </Col>
-                      </Row>
-                    </Grid>
-                  </div>
-                </div>
-              </Col>
-            ))}
+            {this.renderAddresses()}
             <Row>
               <Col
                 tv={mediumColSize}
