@@ -9,7 +9,7 @@ import style from '../styles.css'
 
 const colSize = 12
 
-const PaymentData = ({ title }) => (
+const Payment = ({ title }) => (
   <Grid>
     <Row>
       <Col
@@ -26,8 +26,8 @@ const PaymentData = ({ title }) => (
   </Grid>
 )
 
-PaymentData.propTypes = {
+Payment.propTypes = {
   title: string.isRequired,
 }
 
-export default PaymentData
+export default Payment

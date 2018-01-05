@@ -55,6 +55,7 @@ Button.propTypes = {
     'flat',
     'outline',
     'clean',
+    'double',
   ]),
   relevance: oneOf([
     'high',

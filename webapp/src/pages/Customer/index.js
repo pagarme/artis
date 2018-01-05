@@ -8,7 +8,7 @@ import style from '../styles.css'
 
 const defaultColSize = 12
 
-class CustomerData extends Component {
+class Customer extends Component {
   constructor (props) {
     super(props)
 
@@ -123,8 +123,8 @@ class CustomerData extends Component {
   }
 }
 
-CustomerData.propTypes = {
+Customer.propTypes = {
   title: string.isRequired,
 }
 
-export default CustomerData
+export default Customer

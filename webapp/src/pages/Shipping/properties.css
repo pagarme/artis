@@ -1,0 +1,34 @@
+@import "../../styles/colors.css";
+@import "../../styles/typography.css";
+
+:root {
+  --shipping-font-family: var(--primary-font-family);
+
+  --optionBox-border-color: var(--color-grey-60);
+  --optionBox-shadow-color: var(--color-grey-80);
+  --optionBox-background-color: var(--color-grey-80);
+  --optionBox-selected-border-color: var(--color-greenish);
+  --optionBox-selected-shadow-color: var(--color-grey-60);
+
+  --addressName-margin-bottom: var(--spacing-medium);
+  --addressName-color: var(--color-grey-30);
+  --addressName-selected-color: var(--color-greenish);
+  --addressName-font-size: var(--font-size-medium);
+
+  --addressName-bullet-border-color: var(--color-grey-80);
+  --addressName-bullet-boxshadow-color: var(--color-grey-80);
+  --addressName-bullet-background-color: var(--color-grey-30);
+  --addressName-bullet-selected-border-color: var(--color-grey-80);
+  --addressName-bullet-selected-background-color: var(--color-greenish);
+  --addressName-bullet-selected-boxshadow-color: var(--color-greenish);
+
+  --field-color: var(--color-grey-30);
+  --field-font-size: var(--font-size-small);
+  --shippinng-field-margin-bottom: 4px;
+
+  --value-color: var(--color-white);
+  --value-font-size: var(--font-size-medium);
+
+  --addressForm-background-color: var(--color-grey-80);
+  --addressForm-border-color: var(--color-grey-60);
+}

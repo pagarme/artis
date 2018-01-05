@@ -57,6 +57,18 @@
   background-image: none;
 }
 
+.double,
+.double:hover,
+.double:active,
+.double:focus {
+  margin-top: 2px;
+  color: var(--button-double-main-color);
+  border: 2px solid var(--button-double-border-color);
+  outline: 2px solid var(--button-double-outline-color);
+  background-color: var(--button-double-outline-color);
+  text-transform: initial;
+}
+
 /*
 * Sizes
 */

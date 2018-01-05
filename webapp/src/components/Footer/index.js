@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  number,
   string,
   func,
   bool,
@@ -11,41 +10,20 @@ import { Grid, Row, Col } from '../Grid'
 import Button from '../Button'
 import style from './style.css'
 
-const formatCurrency = (value = 0) =>
-  value.toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    minimumFractionDigits: 2,
-  })
-
 const palmColSize = 12
-const valueColSize = 8
-const buttonColSize = 4
+const buttonColSize = 12
 const defaultColSize = 6
 
-const Footer = ({ total, buttonText, buttonClick, companyName, nextButtonDisabled }) => (
+const Footer = ({ buttonText, buttonClick, companyName, nextButtonDisabled }) => (
   <footer>
     <Grid>
       <Row>
-        <Col
-          desk={valueColSize}
-          tv={valueColSize}
-          tablet={valueColSize}
-          palm={palmColSize}
-          alignEnd
-        >
-          <div className={style.total}>
-            Valor a pagar:
-            <span className={style.value}>
-              {formatCurrency(total)}
-            </span>
-          </div>
-        </Col>
         <Col
           desk={buttonColSize}
           tv={buttonColSize}
           tablet={buttonColSize}
           palm={palmColSize}
+          alignEnd
         >
           <Button
             hidden={nextButtonDisabled}
@@ -58,6 +36,8 @@ const Footer = ({ total, buttonText, buttonClick, companyName, nextButtonDisable
             {buttonText}
           </Button>
         </Col>
+      </Row>
+      <Row>
         <Col
           desk={defaultColSize}
           tv={defaultColSize}
@@ -83,7 +63,6 @@ const Footer = ({ total, buttonText, buttonClick, companyName, nextButtonDisable
 )
 
 Footer.propTypes = {
-  total: number.isRequired,
   buttonText: string.isRequired,
   buttonClick: func.isRequired,
   companyName: string.isRequired,

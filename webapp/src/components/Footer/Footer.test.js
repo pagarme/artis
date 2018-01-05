@@ -8,19 +8,17 @@ describe('Footer', () => {
 
   const component = mount(
     <Footer
-      total={600}
       buttonText={'Compre muito!'}
       buttonClick={onClick}
-      companyName={'Lesla Motors'}
+      companyName={'Tesla Motors'}
     />
   )
 
-  it('should have correct value', () => {
-    const valueElement = component
-      .find('span')
-      .first()
+  it('should have correct button text value', () => {
+    const buttonText = component
+      .find('button')
       .text()
 
-    expect(valueElement).toContain('600.00')
+    expect(buttonText).toContain('Compre muito!')
   })
 })
