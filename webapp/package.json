@@ -57,7 +57,7 @@
     "react-icons": "2.2.7",
     "react-maskedinput": "4.0.0",
     "react-test-renderer": "16.2.0",
-    "robrowser": "https://github.com/pagarme/robrowser.git",
+    "robrowser": "0.1.0",
     "style-loader": "0.19.1",
     "stylelint": "8.4.0",
     "stylelint-config-pagarme-react": "1.1.0",
