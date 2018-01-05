@@ -62,6 +62,7 @@ class Shipping extends Component {
         desk={mediumColSize}
         tablet={mediumColSize}
         palm={largeColSize}
+        key={address.name}
       >
         <div
           role="button"
@@ -178,11 +179,7 @@ class Shipping extends Component {
           visible={this.state.showAddressForm}
         />
         <Grid
-          className={
-            classNames({
-              [style.hidden]: this.state.showAddressForm,
-            })
-          }
+          hidden={this.state.showAddressForm}
         >
           <Row>
             <Col

@@ -1,5 +1,5 @@
 @import "../animations.css";
-@import "../colors.css";
+@import "./properties.css";
 
 .checkout {
   position: absolute;
@@ -8,7 +8,7 @@
   width: 100vw;
   height: 100vh;
   overflow: auto;
-  background-color: var(--color-grey-90);
+  background-color: var(--checkout-background-color);
 }
 
 .wrapper {

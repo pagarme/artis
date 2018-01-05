@@ -5,14 +5,17 @@ import classNames from 'classnames'
 
 const applyThemr = themr('UIGrid')
 
-const classnames = ({ theme, className }) =>
+const classnames = ({ theme, className, hidden }) =>
   classNames(
+    {
+      [theme.hidden]: hidden,
+    },
     theme.grid,
     className
   )
 
-const Grid = ({ theme, children, className }) => (
-  <div className={classnames({ theme, className })}>
+const Grid = ({ theme, children, className, hidden }) => (
+  <div className={classnames({ theme, className, hidden })}>
     {children}
   </div>
 )
@@ -23,11 +26,13 @@ Grid.propTypes = {
   }).isRequired,
   children: PropTypes.node,
   className: PropTypes.string,
+  hidden: PropTypes.bool,
 }
 
 Grid.defaultProps = {
   children: null,
   className: null,
+  hidden: false,
 }
 
 export default applyThemr(Grid)

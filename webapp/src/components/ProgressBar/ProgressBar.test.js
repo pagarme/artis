@@ -27,7 +27,7 @@ describe('ProgressBar', () => {
         ]}
         activePage={0}
       />
-    )
+    ).dive()
 
     expect(component.find(Col).length).toEqual(4)
   })

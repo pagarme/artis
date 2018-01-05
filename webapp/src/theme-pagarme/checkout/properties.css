@@ -1,0 +1,5 @@
+@import "../colors.css";
+
+:root {
+  --checkout-background-color: var(--color-main-background);
+}
