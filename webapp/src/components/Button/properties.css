@@ -19,6 +19,7 @@
 
   --button-double-outline-color: var(--color-grey-60);
   --button-double-border-color: var(--color-grey-90);
+  --button-double-main-color: var(--color-white);
 
   --button-color-high: var(--button-background-color);
   --button-color-low: var(--color-white);
