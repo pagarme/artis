@@ -11,6 +11,7 @@
   "bugs": "https://github.com/mundipagg/artis/issues",
   "dependencies": {
     "@storybook/addon-actions": "3.2.18",
+    "@storybook/addons": "3.3.0",
     "@storybook/react": "3.2.18",
     "@storybook/storybook-deployer": "2.0.0",
     "babel-core": "6.26.0",
@@ -57,21 +58,23 @@
     "react-icons": "2.2.7",
     "react-maskedinput": "4.0.0",
     "react-test-renderer": "16.2.0",
+    "robrowser": "0.1.0",
     "style-loader": "0.19.1",
     "stylelint": "8.4.0",
-    "stylelint-config-pagarme-react": "1.1.0",
+    "stylelint-config-pagarme-react": "1.2.0",
     "url-loader": "0.6.2",
     "webpack": "3.10.0",
     "webpack-dev-server": "2.9.7"
   },
   "scripts": {
-    "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "lint": "eslint './{src,stories}/**/*.js' && stylelint './{src,stories}/**/*.css'",
-    "test": "node scripts/test.js",
-    "test-coverage": "node scripts/test.js --coverage",
     "coverage": "nyc --reporter=html --reporter=text --lines 300 npm run test-coverage",
+    "deploy-storybook": "storybook-to-ghpages",
+    "lint": "eslint './{src,stories}/**/*.js' && stylelint './{src,stories}/**/*.css'",
+    "robrowser": "robrowser start",
+    "start": "node scripts/start.js",
     "storybook": "start-storybook -p 6006",
-    "deploy-storybook": "storybook-to-ghpages"
+    "test": "node scripts/test.js",
+    "test-coverage": "node scripts/test.js --coverage"
   }
 }
