@@ -104,9 +104,9 @@ $ `npm run lint`
 
 ## `robrowser`
 
-Este comando usa o [robrowser](https://github.com/pagarme/robrowser) para validar a interface do artis nos mais diversos dispositivos em uso no mercado.
+Este comando usa o [Robrowser](https://github.com/pagarme/robrowser) para validar a interface do Artis nos mais diversos dispositivos em uso no mercado.
 
-Antes de executar o comando, certifique-se de iniciar o projeto em ambiente de desenvolvimento com `yarn start`, o robrowser vai acessá-lo.
+Antes de executar o comando, certifique-se de iniciar o projeto em ambiente de desenvolvimento com `yarn start` em uma aba separada do terminal, o Robrowser vai precisar acessá-lo.
 
 - **yarn**
 ```sh

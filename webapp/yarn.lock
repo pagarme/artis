@@ -44,6 +44,10 @@
     global "^4.3.2"
     prop-types "^15.5.10"
 
+"@storybook/addons@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-3.3.0.tgz#b99d0e14a03ceeee2807318aa597e919c03a2165"
+
 "@storybook/addons@^3.2.18":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-3.3.1.tgz#5be6114fd0c88e05788ad86ea0294cc5b9ee3598"
@@ -7798,7 +7802,7 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^2.0.0"
     inherits "^2.0.1"
 
-robrowser@^0.1.0:
+robrowser@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/robrowser/-/robrowser-0.1.0.tgz#fd15182a9abcf79a72a766688d6988626e62685b"
   dependencies:
@@ -8335,9 +8339,9 @@ style-search@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/style-search/-/style-search-0.1.0.tgz#7958c793e47e32e07d2b5cafe5c0bf8e12e77902"
 
-stylelint-config-pagarme-react@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/stylelint-config-pagarme-react/-/stylelint-config-pagarme-react-1.1.0.tgz#d4daf772493e7abd49022fc7405f4c70fe26273a"
+stylelint-config-pagarme-react@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/stylelint-config-pagarme-react/-/stylelint-config-pagarme-react-1.2.0.tgz#30eb00c4bcfd127b0ed1ceeed49ca605489cd087"
   dependencies:
     stylelint-config-standard "17.0.0"
 

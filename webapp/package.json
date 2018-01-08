@@ -11,6 +11,7 @@
   "bugs": "https://github.com/mundipagg/artis/issues",
   "dependencies": {
     "@storybook/addon-actions": "3.2.18",
+    "@storybook/addons": "3.3.0",
     "@storybook/react": "3.2.18",
     "@storybook/storybook-deployer": "2.0.0",
     "babel-core": "6.26.0",
@@ -60,7 +61,7 @@
     "robrowser": "0.1.0",
     "style-loader": "0.19.1",
     "stylelint": "8.4.0",
-    "stylelint-config-pagarme-react": "1.1.0",
+    "stylelint-config-pagarme-react": "1.2.0",
     "url-loader": "0.6.2",
     "webpack": "3.10.0",
     "webpack-dev-server": "2.9.7"
