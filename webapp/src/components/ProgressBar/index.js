@@ -5,6 +5,7 @@ import {
   number,
 } from 'prop-types'
 import classNames from 'classnames'
+import { clamp } from 'ramda'
 
 import { Grid, Row, Col } from '../Grid'
 
@@ -43,11 +44,20 @@ const ProgressBar = ({
   const totalSteps = steps.length
   const activeStep = activePage + 1
   const shouldRenderSteps = totalSteps > 0
-  const width = `${(100 / totalSteps) * activeStep}%`
+
+  const totalPercent = clamp(
+    0,
+    100,
+    (100 / totalSteps) * activeStep,
+  )
+
+  const width = `${totalPercent}%`
 
   return (
     <Fragment>
-      { shouldRenderSteps && renderSteps(steps, activePage) }
+      { shouldRenderSteps &&
+        renderSteps(steps, activePage)
+      }
       <div className={style.wrapper}>
         <div className={style.progressBar} style={{ width }} />
       </div>
