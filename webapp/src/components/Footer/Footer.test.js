@@ -21,4 +21,8 @@ describe('Footer', () => {
 
     expect(buttonText).toContain('Compre muito!')
   })
+
+  it('should render powered by company', () => {
+    expect(component.text()).toContain('Powered by Tesla Motors')
+  })
 })
