@@ -1,0 +1,30 @@
+@import "./properties.css";
+
+.page {
+  margin: var(--page-margin);
+}
+
+.title {
+  margin: var(--page-title-margin);
+  font-family: var(--page-title-font-family);
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-color);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+
+.confirmation {
+  text-align: center;
+}
+
+.success {
+  color: var(--confirmation-success);
+}
+
+.error {
+  color: var(--confirmation-error);
+}
+
+.info {
+  font-size: var(--confirmation-info);
+}

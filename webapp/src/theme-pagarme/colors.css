@@ -24,6 +24,7 @@
   --color-grey-85: #1d1d26;
 
   --color-error: var(--color-pink);
+  --color-success: var(--color-greenish);
 
   --color-dark-greenish-rgb: 0, 243, 133;
   --color-dark-downy-rgb: 92, 200, 183;
