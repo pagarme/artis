@@ -8,8 +8,8 @@ import Dropdown from '../../components/Dropdown'
 import options from '../Billing/states'
 import Button from '../../components/Button'
 
-import defaultStyle from '../styles.css'
-import style from './styles.css'
+import defaultStyle from '../style.css'
+import style from './style.css'
 
 const largeColSize = 12
 const mediumColSize = 6

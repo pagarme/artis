@@ -10,7 +10,7 @@
   padding-bottom: var(--safe-padding-bottom);
 }
 
-.safe svg {
+.safe > svg {
   margin-right: 5px;
   margin-bottom: 3px;
 }

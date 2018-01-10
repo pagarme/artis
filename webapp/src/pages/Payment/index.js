@@ -5,7 +5,7 @@ import {
 
 import { Grid, Row, Col } from '../../components/Grid'
 
-import style from '../styles.css'
+import style from '../style.css'
 
 const colSize = 12
 

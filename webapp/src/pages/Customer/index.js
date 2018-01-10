@@ -4,7 +4,7 @@ import { string } from 'prop-types'
 import { Grid, Row, Col } from '../../components/Grid'
 import Input from '../../components/Input'
 
-import style from '../styles.css'
+import style from '../style.css'
 
 const defaultColSize = 12
 

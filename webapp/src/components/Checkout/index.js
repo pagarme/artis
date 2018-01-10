@@ -1,12 +1,14 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import {
   shape,
   string,
   number,
-  element,
+  object,
 } from 'prop-types'
 import classNames from 'classnames'
+import { themr } from 'react-css-themr'
 
 import ProgressBar from '../ProgressBar'
 import Header from '../Header'
@@ -14,7 +16,8 @@ import Footer from '../Footer'
 import { pages, preRender, render } from '../../pages'
 
 import defaultLogo from '../../images/logo_pagarme.png'
-import style from './style.css'
+
+const applyThemr = themr('UICheckout')
 
 const isDesktop = window.innerWidth > 640
 
@@ -74,7 +77,8 @@ class Checkout extends Component {
 
   render () {
     const { activePage } = this.state
-    const { params, configs } = this.props.apiValues
+    const { apiValues, theme } = this.props
+    const { params, configs } = apiValues
 
     const preRendered = preRender(pages)
 
@@ -84,13 +88,13 @@ class Checkout extends Component {
     return (
       <div
         className={classNames(
-          style.checkout,
+          theme.checkout,
           {
-            [style.closingEffect]: this.state.closingEffect,
+            [theme.closingEffect]: this.state.closingEffect,
           },
         )}
       >
-        <div className={style.wrapper}>
+        <div className={theme.wrapper}>
           <Header
             logoAlt="Pagar.me"
             logoSrc={configs.image || defaultLogo}
@@ -98,7 +102,7 @@ class Checkout extends Component {
             onClose={this.close.bind(this)}
             prevButtonDisabled={activePage === 0}
           />
-          <div className={style.content}>
+          <div className={theme.content}>
             <ProgressBar
               steps={steps}
               activePage={activePage}
@@ -119,6 +123,12 @@ class Checkout extends Component {
 }
 
 Checkout.propTypes = {
+  theme: shape({
+    content: string,
+    wrapper: string,
+    closingEffect: string,
+    checkout: string,
+  }),
   apiValues: shape({
     key: string.isRequired,
     configs: shape({
@@ -131,10 +141,11 @@ Checkout.propTypes = {
       paymentMethod: string.isRequired,
     }),
   }).isRequired,
-  targetElement: element.isRequired,
+  targetElement: object.isRequired,
 }
 
 Checkout.defaultProps = {
+  theme: {},
   apiValues: {
     configs: {
       image: '',
@@ -143,4 +154,4 @@ Checkout.defaultProps = {
   },
 }
 
-export default Checkout
+export default applyThemr(Checkout)

@@ -1,7 +1,7 @@
-@import "../../styles/media.css";
-@import "../../styles/spacing.css";
-@import "../../styles/colors.css";
-@import "../../styles/typography.css";
+@import "../media.css";
+@import "../spacing.css";
+@import "../colors.css";
+@import "../typography.css";
 
 :root {
   --total-color: var(--color-dark-greenish-100);

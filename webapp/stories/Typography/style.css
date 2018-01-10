@@ -1,4 +1,4 @@
-@import "../../src/styles/index.css";
+@import "../../src/theme-pagarme/index.css";
 
 .wrapper > div {
   display: flex;

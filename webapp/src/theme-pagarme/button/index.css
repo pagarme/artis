@@ -73,9 +73,9 @@
 * Sizes
 */
 
-.extra-small {
-  padding: var(--button-padding-top-extra-small) var(--button-padding-left-extra-small);
-  font-size: var(--button-font-size-extra-small);
+.tiny {
+  padding: var(--button-padding-top-tiny) var(--button-padding-left-tiny);
+  font-size: var(--button-font-size-tiny);
   text-transform: none;
 }
 
@@ -104,11 +104,13 @@
 * Relevance
 */
 
-.high {
-  color: var(--button-color-high);
-}
+.dark {
 
-.low {
-  color: var(--button-color-low);
-}
+  &.highRelevance {
+    color: var(--button-color-high);
+  }
 
+  &.lowRelevance {
+    color: var(--button-color-low);
+  }
+}

@@ -1,9 +1,9 @@
-@import "./colors/light.css";
 @import "./colors/dark.css";
 
 :root {
   --color-white: #ffffff;
   --color-black: #000000;
+  --color-main-background: #333333;
 
   --color-pink: #dc6860;
   --color-orange: #ffa317;

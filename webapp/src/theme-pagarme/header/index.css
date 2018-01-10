@@ -1,5 +1,5 @@
-@import "../../styles/colors.css";
-@import "../../styles/typography.css";
+@import "../colors.css";
+@import "../typography.css";
 @import "./properties.css";
 
 .close,

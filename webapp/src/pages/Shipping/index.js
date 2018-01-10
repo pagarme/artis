@@ -7,8 +7,8 @@ import AddressForm from './AddressForm'
 import { Grid, Row, Col } from '../../components/Grid'
 import Button from '../../components/Button'
 
-import defaultStyle from '../styles.css'
-import style from './styles.css'
+import defaultStyle from '../style.css'
+import style from './style.css'
 
 const largeColSize = 12
 const mediumColSize = 6
@@ -62,6 +62,7 @@ class Shipping extends Component {
         desk={mediumColSize}
         tablet={mediumColSize}
         palm={largeColSize}
+        key={address.name}
       >
         <div
           role="button"
@@ -178,11 +179,7 @@ class Shipping extends Component {
           visible={this.state.showAddressForm}
         />
         <Grid
-          className={
-            classNames({
-              [style.hidden]: this.state.showAddressForm,
-            })
-          }
+          hidden={this.state.showAddressForm}
         >
           <Row>
             <Col

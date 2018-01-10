@@ -1,8 +1,8 @@
-@import "../../styles/colors.css";
+@import "../colors.css";
 
 :root {
   --input-font-family: var(--primary-font-family);
-  --input-font-size: var(--font-size-medium);
+  --input-font-size: var(--font-size-small);
   --input-font-color: var(--color-white);
 
   --input-textarea-border-color: var(--color-grey-60);
@@ -22,6 +22,7 @@
   --input-textarea-disabled-border-radius: 0;
 
   --input-color-disabled: var(--color-grey-20);
+  --input-label-color: var(--color-grey-50);
 
   --input-label-color-default: var(--color-white);
   --input-label-color-focus: var(--color-grey-50);

@@ -1,20 +1,24 @@
 import React from 'react'
-import {
-  string,
-  func,
-  bool,
-} from 'prop-types'
+import PropTypes from 'prop-types'
 import LockIcon from 'react-icons/lib/md/lock-outline'
+import { themr } from 'react-css-themr'
 
 import { Grid, Row, Col } from '../Grid'
 import Button from '../Button'
-import style from './style.css'
+
+const applyThemr = themr('UIFooter')
 
 const palmColSize = 12
 const buttonColSize = 12
 const defaultColSize = 6
 
-const Footer = ({ buttonText, buttonClick, companyName, nextButtonDisabled }) => (
+const Footer = ({
+  buttonText,
+  buttonClick,
+  companyName,
+  nextButtonDisabled,
+  theme,
+}) => (
   <footer>
     <Grid>
       <Row>
@@ -31,7 +35,7 @@ const Footer = ({ buttonText, buttonClick, companyName, nextButtonDisabled }) =>
             size="extra-large"
             relevance="normal"
             onClick={buttonClick}
-            className={style.button}
+            className={theme.button}
           >
             {buttonText}
           </Button>
@@ -43,7 +47,7 @@ const Footer = ({ buttonText, buttonClick, companyName, nextButtonDisabled }) =>
           tv={defaultColSize}
           tablet={defaultColSize}
           palm={palmColSize}
-          className={style.safe}
+          className={theme.safe}
         >
           <LockIcon />
           Ambiente Seguro
@@ -53,7 +57,7 @@ const Footer = ({ buttonText, buttonClick, companyName, nextButtonDisabled }) =>
           tv={defaultColSize}
           tablet={defaultColSize}
           palm={palmColSize}
-          className={style.powered}
+          className={theme.powered}
         >
           Powered by { companyName }
         </Col>
@@ -63,14 +67,22 @@ const Footer = ({ buttonText, buttonClick, companyName, nextButtonDisabled }) =>
 )
 
 Footer.propTypes = {
-  buttonText: string.isRequired,
-  buttonClick: func.isRequired,
-  companyName: string.isRequired,
-  nextButtonDisabled: bool,
+  theme: PropTypes.shape({
+    button: PropTypes.string,
+    powered: PropTypes.string,
+    safe: PropTypes.string,
+    total: PropTypes.string,
+    value: PropTypes.string,
+  }),
+  buttonText: PropTypes.string.isRequired,
+  buttonClick: PropTypes.func.isRequired,
+  companyName: PropTypes.string.isRequired,
+  nextButtonDisabled: PropTypes.bool,
 }
 
 Footer.defaultProps = {
+  theme: {},
   nextButtonDisabled: false,
 }
 
-export default Footer
+export default applyThemr(Footer)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Row, Col } from '../../components/Grid'
 
-import style from '../styles.css'
+import style from '../style.css'
 
 const renderCols = (colSize, pages) =>
   pages.map((page, index) => (

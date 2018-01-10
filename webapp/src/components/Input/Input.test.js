@@ -16,7 +16,7 @@ describe('Input', () => {
           label="Name"
           onChange={onChange}
         />
-      )
+      ).dive()
 
       component
         .find('input')
@@ -37,7 +37,7 @@ describe('Input', () => {
           onChange={onChange}
           disabled
         />
-      )
+      ).dive()
 
       component
         .find('input')
@@ -58,7 +58,7 @@ describe('Input', () => {
           onChange={onChange}
           error="Error"
         />
-      )
+      ).dive()
 
       component
         .find('input')
@@ -84,7 +84,7 @@ describe('Input', () => {
           hint="Hi"
           error="Error"
         />
-      )
+      ).dive()
 
       component
         .find('input')
@@ -107,7 +107,7 @@ describe('Input', () => {
           multiline
           onChange={onChange}
         />
-      )
+      ).dive()
 
       component
         .find('textarea')
@@ -129,7 +129,7 @@ describe('Input', () => {
           multiline
           disabled
         />
-      )
+      ).dive()
 
       component
         .find('textarea')
@@ -151,7 +151,7 @@ describe('Input', () => {
           multiline
           error="Error"
         />
-      )
+      ).dive()
 
       component
         .find('textarea')
@@ -178,7 +178,7 @@ describe('Input', () => {
           error="Error"
           multiline
         />
-      )
+      ).dive()
 
       component
         .find('textarea')
