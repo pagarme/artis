@@ -185,11 +185,7 @@ class Shipping extends Component {
           handleClose={this.toggleOpenAddressForm.bind(this)}
         />
         <Grid
-          className={
-            classNames({
-              [style.hidden]: this.state.openAddressForm,
-            })
-          }
+          hidden={this.state.openAddressForm}
         >
           <Row>
             <Col
