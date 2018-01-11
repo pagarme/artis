@@ -6,7 +6,7 @@ import {
 } from 'redux'
 import { createLogger } from 'redux-logger'
 
-import reducers from '../reducers'
+import reducers from './reducers'
 
 const logger = createLogger()
 

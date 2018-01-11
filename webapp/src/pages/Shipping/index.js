@@ -7,7 +7,7 @@ import PlusIcon from 'react-icons/lib/go/plus'
 import AddressForm from './AddressForm'
 import { Grid, Row, Col } from '../../components/Grid'
 import Button from '../../components/Button'
-import { footerButton } from '../../state/actions'
+import { footerButton } from '../../actions'
 
 import defaultStyle from '../style.css'
 import style from './style.css'

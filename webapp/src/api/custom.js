@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from 'react-css-themr'
 
 import Checkout from '../components/Checkout'
-import store from '../state/store'
+import store from '../store'
 
 import theme from '../theme-pagarme'
 
@@ -24,7 +24,7 @@ const customIntegration = key => configs => params => () => {
           }}
           targetElement={target}
         />
-      </ThemeProvider>,
+      </ThemeProvider>
     </Provider>,
     target
   )
