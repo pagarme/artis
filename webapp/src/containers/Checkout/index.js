@@ -14,6 +14,7 @@ import CustomerPage from '../../pages/Customer'
 import BillingPage from '../../pages/Billing'
 import ShippingPage from '../../pages/Shipping'
 import PaymentPage from '../../pages/Payment'
+import SuccessPage from '../SuccessPage'
 
 import defaultLogo from '../../images/logo_pagarme.png'
 
@@ -28,6 +29,7 @@ const statechart = {
     billing: 'Endereço de Cobrança',
     shipping: 'Endereço de Entrega',
     payment: 'Forma de Pagamento',
+    success: 'Confirmação',
   },
   states: {
     customer: {
@@ -152,6 +154,11 @@ class Checkout extends Component {
         <Action show="payment">
           <PaymentPage
             title="Dados de Pagamento"
+          />
+        </Action>
+        <Action show="success">
+          <SuccessPage
+            title="Confirmação"
           />
         </Action>
       </React.Fragment>
