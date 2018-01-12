@@ -1,4 +1,4 @@
-import { FOOTER_BUTTON } from '../constants/ActionTypes'
+import { TOOGLE_FOOTER_BUTTON } from '../constants/ActionTypes'
 
 const defaultState = {
   button: {
@@ -9,12 +9,14 @@ const defaultState = {
 
 const footerReducer = (state = defaultState, action = {}) => {
   switch (action.type) {
-    case FOOTER_BUTTON:
-      return Object.assign({}, {
+    case TOOGLE_FOOTER_BUTTON:
+      return {
+        ...state,
         button: {
-          ...action.payload,
+          ...state.button,
+          visible: !state.button.visible,
         },
-      })
+      }
 
     default:
       return state

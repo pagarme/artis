@@ -1,2 +1,2 @@
 /* eslint-disable import/prefer-default-export */
-export const FOOTER_BUTTON = 'FOOTER_BUTTON'
+export const TOOGLE_FOOTER_BUTTON = 'TOOGLE_FOOTER_BUTTON'
