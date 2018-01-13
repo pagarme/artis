@@ -8,14 +8,18 @@ import { createLogger } from 'redux-logger'
 
 import reducers from './reducers'
 
-const logger = createLogger()
+const middlewares = []
+
+if (process.env.NODE_ENV !== 'production') {
+  middlewares.push(createLogger())
+}
 
 const store = createStore(
   combineReducers({
     ...reducers,
   }),
   compose(
-    applyMiddleware(logger)
+    applyMiddleware(...middlewares)
   )
 )
 
