@@ -1,0 +1,25 @@
+@import "./properties.css";
+
+.addressForm {
+  background-color: var(--addressForm-background-color);
+  border: 2px dashed var(--addressForm-border-color);
+  padding: 33px 24px;
+  margin-top: 24px;
+}
+
+.hidden {
+  display: none;
+}
+
+.title {
+  margin: var(--page-title-margin);
+  font-family: var(--page-title-font-family);
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-color);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+
+.cancelButton {
+  margin-right: 26px;
+}

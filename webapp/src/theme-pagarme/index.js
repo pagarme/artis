@@ -6,6 +6,7 @@ import UIHeader from './header/index.css'
 import UIInput from './input/index.css'
 import UIProgressBar from './progress-bar/index.css'
 import UICheckout from './checkout/index.css'
+import UIAddressForm from './address-form/index.css'
 
 export default {
   UIButton,
@@ -16,4 +17,5 @@ export default {
   UIInput,
   UIProgressBar,
   UICheckout,
+  UIAddressForm,
 }
