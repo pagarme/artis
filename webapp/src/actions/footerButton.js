@@ -1,8 +1,7 @@
-import { FOOTER_BUTTON } from '../constants/ActionTypes'
+import { TOOGLE_FOOTER_BUTTON } from '../constants/ActionTypes'
 
-const footerButton = payload => ({
-  type: FOOTER_BUTTON,
-  payload,
+const footerButton = () => ({
+  type: TOOGLE_FOOTER_BUTTON,
 })
 
 export default footerButton

@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { themr } from 'react-css-themr'
 
 import { Grid, Row, Col } from '../../components/Grid'
 import Input from '../../components/Input'
 import Dropdown from '../../components/Dropdown'
-import options from '../Billing/states'
 import Button from '../../components/Button'
 
-import defaultStyle from '../style.css'
-import style from './style.css'
+const applyThemr = themr('UIAddressForm')
 
 const largeColSize = 12
 const mediumColSize = 6
@@ -57,11 +56,13 @@ class AddressForm extends Component {
       state,
     } = this.state
 
+    const { options, visible, handleClose, theme } = this.props
+
     return (
       <div
         className={
           classNames({
-            [style.hidden]: !this.props.visible,
+            [theme.hidden]: !visible,
           })
         }
       >
@@ -72,14 +73,14 @@ class AddressForm extends Component {
               desk={largeColSize}
               tablet={largeColSize}
               palm={largeColSize}
-              className={defaultStyle.title}
+              className={theme.title}
               alignLeft
             >
               Cadastrar novo endereço
             </Col>
           </Row>
         </Grid>
-        <div className={style.addressForm}>
+        <div className={theme.addressForm}>
           <Grid>
             <Row>
               <Col
@@ -213,8 +214,8 @@ class AddressForm extends Component {
                   size="small"
                   fill="outline"
                   relevance="low"
-                  className={style.cancelButton}
-                  onClick={this.props.handleClose.bind(this)}
+                  className={theme.cancelButton}
+                  onClick={handleClose.bind(this)}
                 >
                   Cancelar
                 </Button>
@@ -235,11 +236,20 @@ class AddressForm extends Component {
 
 AddressForm.defaultProps = {
   visible: false,
+  options: [],
+  theme: {},
 }
 
 AddressForm.propTypes = {
+  theme: PropTypes.shape({
+    hidden: PropTypes.string,
+    title: PropTypes.string,
+    addressForm: PropTypes.string,
+    cancelButton: PropTypes.string,
+  }),
   visible: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string),
 }
 
-export default AddressForm
+export default applyThemr(AddressForm)

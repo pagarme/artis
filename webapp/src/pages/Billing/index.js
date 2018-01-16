@@ -5,7 +5,7 @@ import { Grid, Row, Col } from '../../components/Grid'
 import Input from '../../components/Input'
 import Dropdown from '../../components/Dropdown'
 
-import options from './states'
+import options from '../helpers/states'
 import style from '../style.css'
 
 const defaultColSize = 12

@@ -5,10 +5,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mundipagg/artis.git"
+    "url": "https://github.com/pagarme/artis.git"
   },
-  "homepage": "https://github.com/mundipagg/artis",
-  "bugs": "https://github.com/mundipagg/artis/issues",
+  "homepage": "https://github.com/pagarme/artis",
+  "bugs": "https://github.com/pagarme/artis/issues",
   "dependencies": {
     "@storybook/addon-actions": "3.2.18",
     "@storybook/addon-links": "3.3.3",

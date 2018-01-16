@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import PlusIcon from 'react-icons/lib/go/plus'
 
-import AddressForm from './AddressForm'
+import AddressForm from '../../containers/AddressFormContainer'
+import options from '../helpers/states'
 import { Grid, Row, Col } from '../../components/Grid'
 import Button from '../../components/Button'
 import { footerButton } from '../../actions'
@@ -183,13 +184,10 @@ class Shipping extends Component {
         <AddressForm
           visible={this.state.openAddressForm}
           handleClose={this.toggleOpenAddressForm.bind(this)}
+          options={options}
         />
         <Grid
-          className={
-            classNames({
-              [style.hidden]: this.state.openAddressForm,
-            })
-          }
+          hidden={this.state.openAddressForm}
         >
           <Row>
             <Col

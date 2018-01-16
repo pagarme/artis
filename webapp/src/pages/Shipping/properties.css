@@ -28,7 +28,4 @@
 
   --value-color: var(--color-white);
   --value-font-size: var(--font-size-medium);
-
-  --addressForm-background-color: var(--color-grey-80);
-  --addressForm-border-color: var(--color-grey-60);
 }

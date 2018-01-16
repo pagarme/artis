@@ -78,7 +78,8 @@ class Checkout extends Component {
   render () {
     const { activePage } = this.state
     const { apiValues, theme } = this.props
-    const { params, configs } = apiValues
+
+    const { params = {}, configs = {} } = apiValues
 
     const preRendered = preRender(pages)
 
