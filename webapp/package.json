@@ -25,6 +25,7 @@
     "babel-runtime": "6.26.0",
     "caniuse-lite": "1.0.30000697",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
+    "cep-promise": "2.0.7",
     "chalk": "2.3.0",
     "classnames": "2.2.5",
     "css-loader": "0.28.7",
