@@ -61,7 +61,9 @@ class Input extends React.Component {
       value,
       className,
       onChange,
+      onBlur,
       name,
+      inputRef,
       mask,
       theme,
     } = this.props
@@ -109,15 +111,18 @@ class Input extends React.Component {
                   name={name}
                   className={className}
                   onChange={disabled ? null : onChange}
+                  onBlur={onBlur}
                   {...inputProps}
                 />
               ) : (
                 <input
+                  ref={inputRef}
                   id={name}
                   name={name}
                   type={inputType}
                   className={className}
                   onChange={disabled ? null : onChange}
+                  onBlur={onBlur}
                   {...inputProps}
                 />
               )
@@ -125,10 +130,10 @@ class Input extends React.Component {
 
             {mask &&
               <MaskedInput
-                id={name}
                 name={name}
                 className={className}
-                onChange={disabled ? null : onChange}
+                onChange={onChange}
+                onBlur={onBlur}
                 {...inputProps}
                 mask={mask}
               />
@@ -179,6 +184,7 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
   value: PropTypes.string.isRequired,
   multiline: PropTypes.bool,
   type: PropTypes.oneOf([
@@ -194,6 +200,7 @@ Input.propTypes = {
   icon: PropTypes.element,
   className: PropTypes.string,
   mask: PropTypes.string,
+  inputRef: PropTypes.func,
 }
 
 Input.defaultProps = {
@@ -208,6 +215,8 @@ Input.defaultProps = {
   value: '',
   className: '',
   mask: '',
+  inputRef: null,
+  onBlur: null,
 }
 
 export default applyThemr(Input)
