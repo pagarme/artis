@@ -8,12 +8,24 @@ import Input from '../../components/Input'
 import Dropdown from '../../components/Dropdown'
 import Button from '../../components/Button'
 
+import getAddress from '../../utils/getAddress'
+import removeZipcodeMask from '../../utils/removeZipcodeMask'
+
 const applyThemr = themr('UIAddressForm')
 
 const largeColSize = 12
 const mediumColSize = 6
 const smallColSize = 4
 const tinyColSize = 2
+
+const defaultAddress = {
+  street: '',
+  streetNumber: '',
+  streetComplement: '',
+  neighborhood: '',
+  city: '',
+  state: 'placeholder',
+}
 
 class AddressForm extends Component {
   constructor (props) {
@@ -22,16 +34,15 @@ class AddressForm extends Component {
     this.state = {
       name: '',
       zipcode: '',
-      street: '',
-      streetNumber: '',
-      complementary: '',
-      neighborhood: '',
-      city: '',
-      state: '',
+      zipcodeError: '',
+      ...defaultAddress,
     }
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleStateChange = this.handleStateChange.bind(this)
+    this.handleZipcodeChange = this.handleZipcodeChange.bind(this)
+    this.handleZipcodeBlur = this.handleZipcodeBlur.bind(this)
+    this.handleStreetNumberInputRef = this.handleStreetNumberInputRef.bind(this)
   }
 
   handleStateChange (value) {
@@ -44,6 +55,46 @@ class AddressForm extends Component {
     this.setState({ [name]: value })
   }
 
+  handleStreetNumberInputRef (input) {
+    this.streetNumberInput = input
+  }
+
+  handleZipcodeChange (e) {
+    const { value } = e.target
+    const zipcode = removeZipcodeMask(value)
+
+    if (zipcode.length === 8) {
+      this.autocompleteAddress(zipcode)
+    }
+
+    this.setState({ zipcode: value })
+  }
+
+  handleZipcodeBlur () {
+    this.setState({ zipcodeError: '' })
+  }
+
+  autocompleteAddress (zipcode) {
+    const updateAddress = (address) => {
+      this.setState({
+        ...address,
+        zipcodeError: '',
+      })
+
+      this.streetNumberInput.focus()
+    }
+
+    const handleError = error =>
+      this.setState({
+        ...defaultAddress,
+        zipcodeError: error.message,
+      })
+
+    getAddress(zipcode)
+      .then(updateAddress)
+      .catch(handleError)
+  }
+
   render () {
     const {
       name,
@@ -54,6 +105,7 @@ class AddressForm extends Component {
       neighborhood,
       city,
       state,
+      zipcodeError,
     } = this.state
 
     const { options, visible, onCancel, theme } = this.props
@@ -108,8 +160,10 @@ class AddressForm extends Component {
                   label="CEP"
                   value={zipcode}
                   mask="11111-111"
+                  error={zipcodeError}
                   placeholder="Digite o CEP"
-                  onChange={this.handleInputChange}
+                  onChange={this.handleZipcodeChange}
+                  onBlur={this.handleZipcodeBlur}
                 />
               </Col>
               <Col
@@ -134,6 +188,7 @@ class AddressForm extends Component {
                 palm={tinyColSize}
               >
                 <Input
+                  inputRef={this.handleStreetNumberInputRef}
                   name="streetNumber"
                   label="Nº"
                   value={streetNumber}

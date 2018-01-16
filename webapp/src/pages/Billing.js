@@ -8,18 +8,14 @@ import Input from '../components/Input'
 import Dropdown from '../components/Dropdown'
 
 import options from '../utils/states'
-import getAddress from '../helpers/getAddress'
+import getAddress from '../utils/getAddress'
+import removeZipcodeMask from '../utils/removeZipcodeMask'
 
 const applyThemr = themr('UIBillingPage')
 
 const defaultColSize = 12
 const smallColSize = 4
 const bigColSize = 8
-
-const removeMask = value =>
-  value
-    .replace(/-/g, '')
-    .replace(/_/g, '')
 
 const defaultAddress = {
   street: '',
@@ -30,7 +26,7 @@ const defaultAddress = {
   state: 'placeholder',
 }
 
-class Billing extends Component {
+class BillingPage extends Component {
   constructor (props) {
     super(props)
 
@@ -63,7 +59,7 @@ class Billing extends Component {
 
   handleZipcodeChange (e) {
     const { value } = e.target
-    const zipcode = removeMask(value)
+    const zipcode = removeZipcodeMask(value)
 
     if (zipcode.length === 8) {
       this.autocompleteAddress(zipcode)
@@ -250,7 +246,7 @@ class Billing extends Component {
   }
 }
 
-Billing.propTypes = {
+BillingPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
@@ -259,10 +255,10 @@ Billing.propTypes = {
   isDesktop: PropTypes.bool,
 }
 
-Billing.defaultProps = {
+BillingPage.defaultProps = {
   theme: {},
   isDesktop: false,
 }
 
-export default applyThemr(Billing)
+export default applyThemr(BillingPage)
 

@@ -46,6 +46,8 @@ class ShippingPage extends Component {
       selected: 0,
       openAddressForm: false,
     }
+
+    this.toggleOpenAddressForm = this.toggleOpenAddressForm.bind(this)
   }
 
   onChangeAddress (option) {
@@ -185,7 +187,7 @@ class ShippingPage extends Component {
       <div className={theme.page}>
         <AddressForm
           visible={this.state.openAddressForm}
-          onCancel={this.toggleOpenAddressForm.bind(this)}
+          onCancel={this.toggleOpenAddressForm}
           options={options}
         />
         <Grid
@@ -215,7 +217,7 @@ class ShippingPage extends Component {
                   fill="double"
                   relevance="low"
                   className={theme.btnAddNewAddress}
-                  onClick={this.toggleOpenAddressForm.bind(this)}
+                  onClick={this.toggleOpenAddressForm}
                 >
                   <PlusIcon />
                   Cadastrar novo endereço de entrega
