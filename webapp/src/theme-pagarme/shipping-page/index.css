@@ -1,5 +1,18 @@
 @import "./properties.css";
 
+.page {
+  margin: var(--page-margin);
+}
+
+.title {
+  margin: var(--page-title-margin);
+  font-family: var(--page-title-font-family);
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-color);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+
 .optionBox {
   padding: 26px;
   border: 2px solid var(--optionBox-border-color);

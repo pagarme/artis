@@ -1,7 +1,14 @@
-@import "../../theme-pagarme/colors.css";
-@import "../../theme-pagarme/typography.css";
+@import "../colors.css";
+@import "../typography.css";
+@import "../spacing.css";
 
 :root {
+  --page-margin: var(--spacing-medium) var(--spacing-small);
+  --page-title-font-family: var(--primary-font-family);
+  --page-title-font-size: var(--font-size-small);
+  --page-title-color: var(--color-white);
+  --page-title-margin: 6px 0;
+
   --shipping-font-family: var(--primary-font-family);
 
   --optionBox-border-color: var(--color-grey-60);

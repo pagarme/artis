@@ -7237,6 +7237,14 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-automata@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-automata/-/react-automata-0.5.0.tgz#518451ad2d21b2a9c978b9d3074a59755f04d6a9"
+  dependencies:
+    minimatch "^3.0.4"
+    prop-types "^15.6.0"
+    xstate "^1.2.1"
+
 react-css-themr@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/react-css-themr/-/react-css-themr-2.1.2.tgz#e017514e471c232f43a754a55b49d81faf5dafb8"
@@ -9328,6 +9336,10 @@ xml-char-classes@^1.0.0:
 xml-name-validator@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-2.0.1.tgz#4d8b8f1eccd3419aa362061becef515e1e559635"
+
+xstate@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-1.2.1.tgz#24189c9085098360dd1a75855552842ade01300d"
 
 xtend@^4.0.0, xtend@^4.0.1:
   version "4.0.1"
