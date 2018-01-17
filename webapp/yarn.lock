@@ -7237,6 +7237,15 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-automata@^1.0.0-3:
+  version "1.0.0-3"
+  resolved "https://registry.yarnpkg.com/react-automata/-/react-automata-1.0.0-3.tgz#f079a73a3a22a138a0232a20e8a2a0c537e21ef3"
+  dependencies:
+    minimatch "^3.0.4"
+    prop-types "^15.6.0"
+    react-test-renderer "^16.2.0"
+    xstate "^3.0.1"
+
 react-css-themr@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/react-css-themr/-/react-css-themr-2.1.2.tgz#e017514e471c232f43a754a55b49d81faf5dafb8"
@@ -7375,7 +7384,7 @@ react-style-proptype@^3.0.0:
   dependencies:
     prop-types "^15.5.4"
 
-react-test-renderer@16.2.0, react-test-renderer@^16.0.0-0:
+react-test-renderer@16.2.0, react-test-renderer@^16.0.0-0, react-test-renderer@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.2.0.tgz#bddf259a6b8fcd8555f012afc8eacc238872a211"
   dependencies:
@@ -9328,6 +9337,10 @@ xml-char-classes@^1.0.0:
 xml-name-validator@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-2.0.1.tgz#4d8b8f1eccd3419aa362061becef515e1e559635"
+
+xstate@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-3.0.1.tgz#dde36edc0f3a0cfda651cfe55988aa129575ea5b"
 
 xtend@^4.0.0, xtend@^4.0.1:
   version "4.0.1"

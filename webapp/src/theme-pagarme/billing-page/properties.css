@@ -1,6 +1,6 @@
-@import "../theme-pagarme/colors.css";
-@import "../theme-pagarme/typography.css";
-@import "../theme-pagarme/spacing.css";
+@import "../colors.css";
+@import "../typography.css";
+@import "../spacing.css";
 
 :root {
   --page-margin: var(--spacing-medium) var(--spacing-small);

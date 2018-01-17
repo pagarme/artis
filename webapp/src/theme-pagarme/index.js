@@ -7,6 +7,10 @@ import UIInput from './input/index.css'
 import UIProgressBar from './progress-bar/index.css'
 import UICheckout from './checkout/index.css'
 import UIAddressForm from './address-form/index.css'
+import UIBillingPage from './billing-page/index.css'
+import UIPaymentPage from './payment-page/index.css'
+import UICustomerPage from './customer-page/index.css'
+import UIShippingPage from './shipping-page/index.css'
 
 export default {
   UIButton,
@@ -18,4 +22,8 @@ export default {
   UIProgressBar,
   UICheckout,
   UIAddressForm,
+  UIBillingPage,
+  UIPaymentPage,
+  UICustomerPage,
+  UIShippingPage,
 }

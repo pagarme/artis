@@ -249,7 +249,10 @@ AddressForm.propTypes = {
   }),
   visible: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string),
+  options: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    value: PropTypes.string,
+  })),
 }
 
 export default applyThemr(AddressForm)

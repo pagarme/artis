@@ -1,21 +1,21 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import PlusIcon from 'react-icons/lib/go/plus'
+import { themr } from 'react-css-themr'
 
 import AddressForm from '../../containers/AddressFormContainer'
-import options from '../helpers/states'
+import options from '../../helpers/states'
 import { Grid, Row, Col } from '../../components/Grid'
 import Button from '../../components/Button'
 import { footerButton } from '../../actions'
 
-import defaultStyle from '../style.css'
-import style from './style.css'
-
 const largeColSize = 12
 const mediumColSize = 6
 const smallColSize = 4
+
+const applyThemr = themr('UIShippingPage')
 
 const addresses = [
   {
@@ -62,6 +62,8 @@ class Shipping extends Component {
   }
 
   renderAddresses () {
+    const { theme } = this.props
+
     return addresses.map((address, index) => (
       <Col
         tv={mediumColSize}
@@ -76,17 +78,17 @@ class Shipping extends Component {
           onClick={this.onChangeAddress.bind(this, index)}
           className={
             classNames(
-              style.optionBox,
+              theme.optionBox,
               {
-                [style.selected]: this.state.selected === index,
+                [theme.selected]: this.state.selected === index,
               }
             )
           }
         >
-          <div className={style.addressName}>
+          <div className={theme.addressName}>
             {address.name}
           </div>
-          <div className={style.addressData}>
+          <div className={theme.addressData}>
             <Grid>
               <Row>
                 <Col
@@ -95,8 +97,8 @@ class Shipping extends Component {
                   tablet={largeColSize}
                   palm={largeColSize}
                 >
-                  <div className={style.field}>Rua</div>
-                  <div className={style.value}>
+                  <div className={theme.field}>Rua</div>
+                  <div className={theme.value}>
                     {address.street}
                   </div>
                 </Col>
@@ -108,8 +110,8 @@ class Shipping extends Component {
                   tablet={smallColSize}
                   palm={smallColSize}
                 >
-                  <div className={style.field}>Nº</div>
-                  <div className={style.value}>
+                  <div className={theme.field}>Nº</div>
+                  <div className={theme.value}>
                     {address.street_number}
                   </div>
                 </Col>
@@ -119,8 +121,8 @@ class Shipping extends Component {
                   tablet={smallColSize}
                   palm={smallColSize}
                 >
-                  <div className={style.field}>Complemento</div>
-                  <div className={style.value}>
+                  <div className={theme.field}>Complemento</div>
+                  <div className={theme.value}>
                     {address.complementary}
                   </div>
                 </Col>
@@ -130,8 +132,8 @@ class Shipping extends Component {
                   tablet={smallColSize}
                   palm={smallColSize}
                 >
-                  <div className={style.field}>Bairro</div>
-                  <div className={style.value}>
+                  <div className={theme.field}>Bairro</div>
+                  <div className={theme.value}>
                     {address.neighborhood}
                   </div>
                 </Col>
@@ -143,8 +145,8 @@ class Shipping extends Component {
                   tablet={smallColSize}
                   palm={smallColSize}
                 >
-                  <div className={style.field}>CEP</div>
-                  <div className={style.value}>
+                  <div className={theme.field}>CEP</div>
+                  <div className={theme.value}>
                     {address.zipcode}
                   </div>
                 </Col>
@@ -154,8 +156,8 @@ class Shipping extends Component {
                   tablet={smallColSize}
                   palm={smallColSize}
                 >
-                  <div className={style.field}>Cidade</div>
-                  <div className={style.value}>
+                  <div className={theme.field}>Cidade</div>
+                  <div className={theme.value}>
                     {address.city}
                   </div>
                 </Col>
@@ -165,8 +167,8 @@ class Shipping extends Component {
                   tablet={smallColSize}
                   palm={smallColSize}
                 >
-                  <div className={style.field}>UF</div>
-                  <div className={style.value}>
+                  <div className={theme.field}>UF</div>
+                  <div className={theme.value}>
                     {address.state}
                   </div>
                 </Col>
@@ -179,8 +181,10 @@ class Shipping extends Component {
   }
 
   render () {
+    const { theme } = this.props
+
     return (
-      <Fragment>
+      <div className={theme.page}>
         <AddressForm
           visible={this.state.openAddressForm}
           handleClose={this.toggleOpenAddressForm.bind(this)}
@@ -195,7 +199,7 @@ class Shipping extends Component {
               desk={largeColSize}
               tablet={largeColSize}
               palm={largeColSize}
-              className={defaultStyle.title}
+              className={theme.title}
               alignLeft
             >
               {this.props.title}
@@ -206,13 +210,13 @@ class Shipping extends Component {
                 tv={mediumColSize}
                 desk={mediumColSize}
                 tablet={mediumColSize}
-                palm={mediumColSize}
+                palm={largeColSize}
               >
                 <Button
                   size="extra-large"
                   fill="double"
                   relevance="low"
-                  className={style.btnAddNewAddress}
+                  className={theme.btnAddNewAddress}
                   onClick={this.toggleOpenAddressForm.bind(this)}
                 >
                   <PlusIcon />
@@ -222,18 +226,33 @@ class Shipping extends Component {
             </Row>
           </Row>
         </Grid>
-      </Fragment>
+      </div>
     )
   }
 }
 
 Shipping.propTypes = {
+  theme: PropTypes.shape({
+    page: PropTypes.string,
+    title: PropTypes.string,
+    btnAddNewAddress: PropTypes.string,
+    field: PropTypes.string,
+    value: PropTypes.string,
+    addressData: PropTypes.string,
+    addressName: PropTypes.string,
+    selected: PropTypes.string,
+    optionBox: PropTypes.string,
+  }),
   title: PropTypes.string.isRequired,
   footerButton: PropTypes.func.isRequired,
+}
+
+Shipping.defaultProps = {
+  theme: {},
 }
 
 const mapDispatchToProps = dispatch => ({
   footerButton: value => dispatch(footerButton(value)),
 })
 
-export default connect(null, mapDispatchToProps)(Shipping)
+export default connect(null, mapDispatchToProps)(applyThemr(Shipping))

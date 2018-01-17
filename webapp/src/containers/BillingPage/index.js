@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
-import { string } from 'prop-types'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import { themr } from 'react-css-themr'
 
 import { Grid, Row, Col } from '../../components/Grid'
 import Input from '../../components/Input'
 import Dropdown from '../../components/Dropdown'
 
-import options from '../helpers/states'
-import style from '../style.css'
+import options from '../../helpers/states'
+
+const applyThemr = themr('UIBillingPage')
 
 const defaultColSize = 12
 const smallColSize = 4
@@ -50,15 +53,21 @@ class Billing extends Component {
       state,
     } = this.state
 
+    const { theme, isDesktop } = this.props
+
     return (
-      <Grid>
+      <Grid className={
+        classNames(theme.page, {
+          [theme.noMarginTop]: isDesktop,
+        })}
+      >
         <Row>
           <Col
             tv={defaultColSize}
             desk={defaultColSize}
             tablet={defaultColSize}
             palm={defaultColSize}
-            className={style.title}
+            className={theme.title}
             alignCenter
           >
             { this.props.title }
@@ -183,7 +192,17 @@ class Billing extends Component {
 }
 
 Billing.propTypes = {
-  title: string.isRequired,
+  theme: PropTypes.shape({
+    page: PropTypes.string,
+    title: PropTypes.string,
+  }),
+  title: PropTypes.string.isRequired,
+  isDesktop: PropTypes.string,
 }
 
-export default Billing
+Billing.defaultProps = {
+  theme: {},
+  isDesktop: false,
+}
+
+export default applyThemr(Billing)
