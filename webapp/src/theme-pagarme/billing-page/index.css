@@ -4,6 +4,10 @@
   margin: var(--page-margin);
 }
 
+.noMarginTop {
+  margin-top: 0;
+}
+
 .title {
   margin: var(--page-title-margin);
   font-family: var(--page-title-font-family);

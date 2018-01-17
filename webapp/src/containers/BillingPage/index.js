@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 
 import { Grid, Row, Col } from '../../components/Grid'
@@ -52,10 +53,14 @@ class Billing extends Component {
       state,
     } = this.state
 
-    const { theme } = this.props
+    const { theme, isDesktop } = this.props
 
     return (
-      <Grid className={theme.page}>
+      <Grid className={
+        classNames(theme.page, {
+          [theme.noMarginTop]: isDesktop,
+        })}
+      >
         <Row>
           <Col
             tv={defaultColSize}
@@ -192,10 +197,12 @@ Billing.propTypes = {
     title: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
+  isDesktop: PropTypes.string,
 }
 
 Billing.defaultProps = {
   theme: {},
+  isDesktop: false,
 }
 
 export default applyThemr(Billing)

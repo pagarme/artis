@@ -30,10 +30,6 @@ class Customer extends Component {
     this.setState({ [name]: value })
   }
 
-  renderBilling () { // eslint-disable-line
-    return <Billing title="Endereço de Cobrança" />
-  }
-
   render () {
     const {
       name,
@@ -138,7 +134,10 @@ class Customer extends Component {
             desk={mediumColSize}
             tablet={mediumColSize}
           >
-            {this.renderBilling()}
+            <Billing
+              title="Endereço de Cobrança"
+              isDesktop
+            />
           </Col>
         }
       </Grid>
