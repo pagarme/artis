@@ -9,7 +9,7 @@ import {
 } from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
-import { State, withStateMachine } from 'react-automata'
+import { Action, withStatechart } from 'react-automata'
 
 import ProgressBar from '../../components/ProgressBar'
 import Header from '../../components/Header'
@@ -37,20 +37,37 @@ const statechart = {
   states: {
     customer: {
       on: {
-        NEXT: checkDesktop ? 'shipping' : 'billing',
+        NEXT: {
+          billing: {
+            cond: extState => !extState.isDesktop,
+          },
+          shipping: {
+            cond: extState => extState.isDesktop,
+          },
+        },
       },
+      onEntry: 'customer',
     },
     billing: {
       on: {
         PREV: 'customer',
         NEXT: 'shipping',
       },
+      onEntry: 'billing',
     },
     shipping: {
       on: {
-        PREV: checkDesktop ? 'customer' : 'billing',
+        PREV: {
+          billing: {
+            cond: extState => !extState.isDesktop,
+          },
+          customer: {
+            cond: extState => extState.isDesktop,
+          },
+        },
         NEXT: 'payment',
       },
+      onEntry: 'shipping',
     },
     payment: {
       on: {
@@ -58,14 +75,16 @@ const statechart = {
         SUCCESS: 'success',
         ERROR: 'error',
       },
+      onEntry: 'payment',
     },
     success: {
-      onEntry: 'enterSuccess',
+      onEntry: 'success',
     },
     error: {
       on: {
-        NEXT: 'payment',
+        FETCH: 'payment',
       },
+      onEntry: 'error',
     },
   },
 }
@@ -81,7 +100,9 @@ class Checkout extends Component {
   }
 
   handleNavigation (transitionTo, pages, steps) {
-    this.props.transition(transitionTo)
+    this.props.transition(transitionTo, {
+      isDesktop: checkDesktop,
+    })
 
     const inc = transitionTo === 'NEXT' ? 1 : -1
 
@@ -107,27 +128,27 @@ class Checkout extends Component {
   renderPages () { // eslint-disable-line
     return (
       <React.Fragment>
-        <State name="customer">
+        <Action show="customer">
           <CustomerPage
             desktop={checkDesktop}
             title="Dados Pessoais"
           />
-        </State>
-        <State name="billing">
+        </Action>
+        <Action show="billing">
           <BillingPage
             title="Endereço de Cobrança"
           />
-        </State>
-        <State name="shipping">
+        </Action>
+        <Action show="shipping">
           <ShippingPage
             title="Selecione um endereço cadastrado"
           />
-        </State>
-        <State show="payment">
+        </Action>
+        <Action show="payment">
           <PaymentPage
             title="Dados de Pagamento"
           />
-        </State>
+        </Action>
       </React.Fragment>
     )
   }
@@ -159,7 +180,9 @@ class Checkout extends Component {
           <Header
             logoAlt="Pagar.me"
             logoSrc={configs.image || defaultLogo}
-            onPrev={this.handleNavigation.bind(this, 'PREV', pages, steps)}
+            onPrev={
+              this.handleNavigation.bind(this, 'PREV', pages, steps)
+            }
             onClose={this.close.bind(this)}
             prevButtonDisabled={activePage === 0}
           />
@@ -173,7 +196,9 @@ class Checkout extends Component {
           <FooterContainer
             total={params.amount}
             buttonText={'Continuar'}
-            buttonClick={this.handleNavigation.bind(this, 'NEXT', pages, steps)}
+            buttonClick={
+              this.handleNavigation.bind(this, 'NEXT', pages, steps)
+            }
             companyName={'Pagar.me'}
             nextButtonDisabled={activePage === steps.length - 1}
           />
@@ -215,4 +240,4 @@ Checkout.defaultProps = {
   },
 }
 
-export default applyThemr(withStateMachine(statechart)(Checkout))
+export default applyThemr(withStatechart(statechart)(Checkout))

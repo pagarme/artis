@@ -55,7 +55,7 @@
     "ramda": "0.25.0",
     "raven-js": "3.21.0",
     "react": "16.2.0",
-    "react-automata": "0.5.0",
+    "react-automata": "1.0.0-3",
     "react-css-themr": "2.1.2",
     "react-dev-utils": "4.2.1",
     "react-dom": "16.2.0",

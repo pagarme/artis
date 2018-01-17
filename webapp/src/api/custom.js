@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from 'react-css-themr'
 
-import Checkout from '../containers/Checkout'
+import Checkout from '../containers/CheckoutContainer'
 import store from '../store'
 
 import theme from '../theme-pagarme'

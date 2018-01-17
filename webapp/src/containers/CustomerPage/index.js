@@ -8,6 +8,7 @@ import Billing from '../BillingPage'
 
 const applyThemr = themr('UICustomerPage')
 const defaultColSize = 12
+const mediumColSize = 6
 
 class Customer extends Component {
   constructor (props) {
@@ -46,9 +47,9 @@ class Customer extends Component {
     return (
       <Grid className={theme.page}>
         <Col
-          tv={desktop ? 6 : 12}
-          desk={desktop ? 6 : 12}
-          tablet={desktop ? 6 : 12}
+          tv={desktop ? mediumColSize : defaultColSize}
+          desk={desktop ? mediumColSize : defaultColSize}
+          tablet={desktop ? mediumColSize : defaultColSize}
         >
           <Row>
             <Col
@@ -133,9 +134,9 @@ class Customer extends Component {
         </Col>
         {desktop &&
           <Col
-            tv={6}
-            desk={6}
-            tablet={6}
+            tv={mediumColSize}
+            desk={mediumColSize}
+            tablet={mediumColSize}
           >
             {this.renderBilling()}
           </Col>

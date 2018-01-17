@@ -210,7 +210,7 @@ class Shipping extends Component {
                 tv={mediumColSize}
                 desk={mediumColSize}
                 tablet={mediumColSize}
-                palm={mediumColSize}
+                palm={largeColSize}
               >
                 <Button
                   size="extra-large"
