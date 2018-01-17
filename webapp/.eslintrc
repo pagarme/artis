@@ -23,6 +23,12 @@
         "ignoreRefs": true,
         "allowBind": true
       }
+    ],
+    "react/prop-types": [
+      2,
+      {
+        "ignore": ["dispatch", "store"]
+      }
     ]
   }
 }

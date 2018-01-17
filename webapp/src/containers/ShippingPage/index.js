@@ -9,7 +9,7 @@ import AddressForm from '../../containers/AddressFormContainer'
 import options from '../../helpers/states'
 import { Grid, Row, Col } from '../../components/Grid'
 import Button from '../../components/Button'
-import { footerButton } from '../../actions'
+import { toogleFooterButton } from '../../actions'
 
 const largeColSize = 12
 const mediumColSize = 6
@@ -57,7 +57,7 @@ class Shipping extends Component {
   toggleOpenAddressForm () {
     const openAddressForm = !this.state.openAddressForm
 
-    this.props.footerButton({ visible: !openAddressForm })
+    this.props.dispatch(toogleFooterButton())
     this.setState({ openAddressForm })
   }
 
@@ -244,15 +244,10 @@ Shipping.propTypes = {
     optionBox: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
-  footerButton: PropTypes.func.isRequired,
 }
 
 Shipping.defaultProps = {
   theme: {},
 }
 
-const mapDispatchToProps = dispatch => ({
-  footerButton: value => dispatch(footerButton(value)),
-})
-
-export default connect(null, mapDispatchToProps)(applyThemr(Shipping))
+export default connect()(applyThemr(Shipping))
