@@ -6,7 +6,7 @@ import MdVisibilityOff from 'react-icons/lib/md/visibility-off'
 import MdVisibility from 'react-icons/lib/md/visibility'
 import MaskedInput from 'react-maskedinput'
 
-import { pick } from 'ramda'
+import { pick, merge } from 'ramda'
 
 const applyThemr = themr('UIInput')
 
@@ -72,6 +72,7 @@ class Input extends React.Component {
     if (disabled) {
       onChange = null
     }
+
     const inputContainer = classnames(
       theme.inputContainer,
       {
@@ -92,9 +93,16 @@ class Input extends React.Component {
       [theme.contentPresent]: value !== '',
     })
 
-    const inputProps = pick(
-      ['disabled', 'placeholder', 'value', 'onFocus', 'onBlur', 'onKeyPress'],
-      this.props
+    const inputProps = merge(
+      pick(
+        ['disabled', 'placeholder', 'value', 'onFocus', 'onBlur', 'onKeyPress'],
+        this.props
+      ),
+      {
+        ref: inputRef,
+        onBlur,
+        onChange,
+      }
     )
 
     const inputType = this.state.displayPassword

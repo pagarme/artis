@@ -360,6 +360,7 @@ class Payment extends Component {
             <Button
               textAlign="left"
               relevance="low"
+              fill="double"
               disabled={!barcode}
               full
               size="extra-large"
@@ -379,6 +380,7 @@ class Payment extends Component {
             <Button
               relevance="low"
               textAlign="left"
+              fill="double"
               disabled={!barcode}
               full
               size="extra-large"
@@ -399,6 +401,7 @@ class Payment extends Component {
             <Button
               relevance="low"
               textAlign="left"
+              fill="double"
               disabled={!barcode}
               full
               size="extra-large"

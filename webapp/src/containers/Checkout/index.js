@@ -1,12 +1,7 @@
 /* eslint-disable react/forbid-prop-types, react/prop-types */
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import {
-  shape,
-  string,
-  number,
-  object,
-} from 'prop-types'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { Action, withStatechart } from 'react-automata'
@@ -222,25 +217,25 @@ class Checkout extends Component {
 }
 
 Checkout.propTypes = {
-  theme: shape({
-    content: string,
-    wrapper: string,
-    closingEffect: string,
-    checkout: string,
+  theme: PropTypes.shape({
+    content: PropTypes.string,
+    wrapper: PropTypes.string,
+    closingEffect: PropTypes.string,
+    checkout: PropTypes.string,
   }),
-  apiValues: shape({
-    key: string.isRequired,
-    configs: shape({
-      image: string,
-      theme: string,
-      target: string.isRequired,
+  apiValues: PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    configs: PropTypes.shape({
+      image: PropTypes.string,
+      theme: PropTypes.string,
+      target: PropTypes.string.isRequired,
     }).isRequired,
-    params: shape({
-      amount: number.isRequired,
-      paymentMethod: string.isRequired,
+    params: PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      paymentMethod: PropTypes.string.isRequired,
     }),
   }).isRequired,
-  targetElement: object.isRequired,
+  targetElement: PropTypes.object.isRequired,
 }
 
 Checkout.defaultProps = {
