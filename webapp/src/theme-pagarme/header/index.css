@@ -20,6 +20,7 @@
 .header {
   padding-top: var(--padding-top);
   padding-bottom: var(--padding-bottom);
+  min-height: 26px;
   display: flex;
 }
 

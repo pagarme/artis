@@ -201,7 +201,7 @@ class Checkout extends Component {
           />
           <div className={theme.content}>
             <ProgressBar
-              steps={checkDesktop ? steps : []}
+              steps={steps}
               activePage={activePage}
             />
             {this.renderPages(checkDesktop)}
