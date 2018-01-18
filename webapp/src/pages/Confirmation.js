@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 
-import { Col } from '../../components/Grid'
+import { Col } from '../components/Grid'
 
-const applyThemr = themr('UISuccessPage')
+const applyThemr = themr('UIConfirmationPage')
 
 const defaultColSize = 12
 
-const Success = ({ success, theme }) => (
+const Confirmation = ({ success, theme }) => (
   <Col
     tv={defaultColSize}
     desk={defaultColSize}
@@ -38,7 +38,7 @@ const Success = ({ success, theme }) => (
   </Col>
 )
 
-Success.propTypes = {
+Confirmation.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
@@ -49,9 +49,9 @@ Success.propTypes = {
   success: PropTypes.bool,
 }
 
-Success.defaultProps = {
+Confirmation.defaultProps = {
   success: true,
   theme: {},
 }
 
-export default applyThemr(Success)
+export default applyThemr(Confirmation)

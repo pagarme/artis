@@ -13,7 +13,7 @@ import UICustomerPage from './customer-page/index.css'
 import UIShippingPage from './shipping-page/index.css'
 import UIAddressOptions from './address-options/index.css'
 import UISegmentedSwitch from './segmented-switch/index.css'
-import UISuccessPage from './success-page/index.css'
+import UIConfirmationPage from './confirmation-page/index.css'
 
 export default {
   UIButton,
@@ -31,5 +31,5 @@ export default {
   UIShippingPage,
   UIAddressOptions,
   UISegmentedSwitch,
-  UISuccessPage,
+  UIConfirmationPage,
 }
