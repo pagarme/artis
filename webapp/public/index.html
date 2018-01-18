@@ -3,12 +3,29 @@
   <head>
     <meta charset="utf-8">
     <title>Checkout | Custom Integration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <h1>Samples</h1>
-    <ul>
-      <li><a href="/simple.html">Simple</a></li>
-      <li><a href="/custom.html">Custom</a>
-    </ul>
+    <div id="wrapper"></div>
+    <a id="switch" href="/simple.html">Switch to simple</button>
   </body>
+  <script src="/static/js/bundle.js"></script>
+  <script>
+    const create = Checkout('some_key')
+
+    const checkout = create({
+      target: 'wrapper',
+      image: '',
+      locale: 'br',
+      theme: 'dark'
+    })
+
+    const open = checkout({
+      amount: 5513,
+      paymentMethod: 'creditcard'
+    })
+
+    open()
+  </script>
 </html>
