@@ -2,15 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 
-import { Grid, Row, Col } from '../../components/Grid'
-import Input from '../../components/Input'
-import Billing from '../BillingPage'
+import { Grid, Row, Col } from '../components/Grid'
+import Input from '../components/Input'
+import BillingPage from './Billing'
 
 const applyThemr = themr('UICustomerPage')
 const defaultColSize = 12
 const mediumColSize = 6
 
-class Customer extends Component {
+class CustomerPage extends Component {
   constructor (props) {
     super(props)
 
@@ -134,7 +134,7 @@ class Customer extends Component {
             desk={mediumColSize}
             tablet={mediumColSize}
           >
-            <Billing
+            <BillingPage
               title="Endereço de Cobrança"
               isDesktop
             />
@@ -145,7 +145,7 @@ class Customer extends Component {
   }
 }
 
-Customer.propTypes = {
+CustomerPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
@@ -154,8 +154,8 @@ Customer.propTypes = {
   desktop: PropTypes.bool.isRequired,
 }
 
-Customer.defaultProps = {
+CustomerPage.defaultProps = {
   theme: {},
 }
 
-export default applyThemr(Customer)
+export default applyThemr(CustomerPage)

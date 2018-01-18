@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { ThemeProvider } from 'react-css-themr'
 
-import Checkout from '../containers/CheckoutContainer'
+import Checkout from '../../containers/Checkout'
 
-import theme from '../theme-pagarme'
+import theme from '../../theme-pagarme'
 
 const customIntegration = key => configs => params => () => {
   if (!key) throw new Error('The "key" parameter is required.')

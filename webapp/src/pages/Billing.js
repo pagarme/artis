@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 
-import { Grid, Row, Col } from '../../components/Grid'
-import Input from '../../components/Input'
-import Dropdown from '../../components/Dropdown'
+import { Grid, Row, Col } from '../components/Grid'
+import Input from '../components/Input'
+import Dropdown from '../components/Dropdown'
 
-import options from '../../helpers/states'
+import options from '../utils/states'
 
 const applyThemr = themr('UIBillingPage')
 
@@ -15,7 +15,7 @@ const defaultColSize = 12
 const smallColSize = 4
 const bigColSize = 8
 
-class Billing extends Component {
+class BillingPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -191,7 +191,7 @@ class Billing extends Component {
   }
 }
 
-Billing.propTypes = {
+BillingPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
@@ -200,9 +200,9 @@ Billing.propTypes = {
   isDesktop: PropTypes.bool,
 }
 
-Billing.defaultProps = {
+BillingPage.defaultProps = {
   theme: {},
   isDesktop: false,
 }
 
-export default applyThemr(Billing)
+export default applyThemr(BillingPage)

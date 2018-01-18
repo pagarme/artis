@@ -1,4 +1,4 @@
-import { customIntegration, simpleIntegration } from './api'
+import { customIntegration, simpleIntegration } from './utils/api'
 
 const checkoutFormButtons = document.querySelectorAll('.checkout-button')
 const hasSimpleIntegration = checkoutFormButtons.length > 0
