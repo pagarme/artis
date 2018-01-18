@@ -1,0 +1,22 @@
+body {
+  font-family: sans-serif;
+  background: #333333;
+}
+
+#switch {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border: 0;
+  padding: 5px;
+  background: #111111;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  z-index: 999;
+}
+
+#switch:hover {
+  color: #333333;
+  background: #ffffff;
+}
