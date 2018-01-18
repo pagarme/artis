@@ -11,6 +11,7 @@ const classnames = ({
   stretch,
   alignCenter,
   className,
+  hidden,
 }) =>
   classNames(
     className,
@@ -19,6 +20,7 @@ const classnames = ({
       [theme.flex]: flex,
       [theme.stretch]: stretch,
       [theme.alignItensCenter]: alignCenter,
+      [theme.hidden]: hidden,
     }
   )
 
@@ -29,8 +31,9 @@ const Row = ({
   stretch,
   alignCenter,
   className,
+  hidden,
 }) => (
-  <div className={classnames({ theme, flex, stretch, alignCenter, className })}>
+  <div className={classnames({ theme, flex, stretch, alignCenter, className, hidden })}>
     {children}
   </div>
 )
@@ -41,11 +44,13 @@ Row.propTypes = {
     flex: PropTypes.string,
     stretch: PropTypes.string,
     alignItensCenter: PropTypes.string,
+    hidden: PropTypes.string,
   }).isRequired,
   alignCenter: PropTypes.bool,
   children: PropTypes.node,
   flex: PropTypes.bool,
   stretch: PropTypes.bool,
+  hidden: PropTypes.bool,
   className: PropTypes.string,
 }
 
@@ -54,6 +59,7 @@ Row.defaultProps = {
   children: null,
   flex: false,
   stretch: false,
+  hidden: false,
   className: null,
 }
 

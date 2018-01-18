@@ -15,6 +15,7 @@ const classnames = ({
   alignCenter,
   alignEnd,
   theme,
+  hidden,
 }) =>
   classNames(
     className,
@@ -24,6 +25,7 @@ const classnames = ({
     theme[`col-tablet-${tablet}`],
     theme[`col-palm-${palm}`],
     {
+      [theme.hidden]: hidden,
       [theme.alignStart]: alignStart,
       [theme.alignCenter]: alignCenter,
       [theme.alignEnd]: alignEnd,
@@ -41,6 +43,7 @@ const Col = ({
   alignEnd,
   className,
   theme,
+  hidden,
 }) => (
   <div
     className={
@@ -54,6 +57,7 @@ const Col = ({
         alignEnd,
         className,
         theme,
+        hidden,
       })
     }
   >
@@ -70,6 +74,7 @@ Col.propTypes = {
   }).isRequired,
   children: PropTypes.node,
   desk: PropTypes.number,
+  hidden: PropTypes.bool,
   tv: PropTypes.number,
   tablet: PropTypes.number,
   palm: PropTypes.number,
@@ -82,6 +87,7 @@ Col.propTypes = {
 Col.defaultProps = {
   children: null,
   desk: null,
+  hidden: false,
   tv: null,
   tablet: null,
   palm: null,
