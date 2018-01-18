@@ -75,6 +75,9 @@ const statechart = {
       onEntry: 'payment',
     },
     success: {
+      on: {
+        PREV: 'payment',
+      },
       onEntry: 'success',
     },
     error: {

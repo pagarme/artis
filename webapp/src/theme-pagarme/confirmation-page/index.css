@@ -2,6 +2,7 @@
 
 .page {
   margin: var(--page-margin);
+  background-color: var(--background-fill-color);
 }
 
 .title {
@@ -19,6 +20,23 @@
 
 .success {
   color: var(--confirmation-success);
+}
+
+.successIcon {
+  padding-top: 10px;
+}
+
+.errorIcon {
+  padding-top: 8px;
+  padding-left: 8px;
+}
+
+.confirmationIcon {
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  width: 80px;
+  height: 80px;
 }
 
 .error {

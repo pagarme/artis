@@ -2,40 +2,68 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 
-import { Col } from '../components/Grid'
+import { Grid, Row, Col } from '../components/Grid'
+import successIcon from '../images/success-icon.png'
+import errorIcon from '../images/error-icon.png'
 
 const applyThemr = themr('UIConfirmationPage')
 
 const defaultColSize = 12
 
 const Confirmation = ({ success, theme }) => (
-  <Col
-    tv={defaultColSize}
-    desk={defaultColSize}
-    tablet={defaultColSize}
-    palm={defaultColSize}
-    className={theme.title}
-    alignCenter
+  <Grid
+    className={theme.page}
   >
-    {success &&
-      <div className={theme.confirmation}>
-        <p className={theme.success}>
-          Seu pagamento foi concluído com sucesso
-        </p>
-      </div>
-    }
-    {!success &&
-      <div className={theme.confirmation}>
-        <p className={theme.error}>
-          Seu pagamento foi recusado
-        </p>
-        <p className={theme.info}>
-          Ocorreu um erro ao processar sua transação,
-          tente novamente mais tarde ou entre em contato com seu banco.
-        </p>
-      </div>
-    }
-  </Col>
+    <Row>
+      <Col
+        tv={4}
+        desk={4}
+        tablet={4}
+        className={theme.title}
+        alignCenter
+      >
+        <div className={theme.confirmationIcon}>
+          {success && <img
+            src={successIcon}
+            alt={'Ícone de sucesso'}
+            className={theme.successIcon}
+          />}
+
+          {!success && <img
+            src={errorIcon}
+            alt={'Ícone de erro'}
+            className={theme.errorIcon}
+          />}
+        </div>
+      </Col>
+      <Col
+        tv={8}
+        desk={8}
+        tablet={8}
+        palm={defaultColSize}
+        className={theme.title}
+      >
+        {success &&
+          <div>
+            <p className={theme.success}>
+              Seu pagamento foi concluído com sucesso
+            </p>
+          </div>
+        }
+        {!success &&
+          <div>
+            <p className={theme.error}>
+              Seu pagamento foi recusado
+            </p>
+            <p className={theme.info}>
+              Ocorreu um erro ao processar sua transação,
+              tente novamente mais tarde ou entre em contato com seu banco.
+            </p>
+          </div>
+        }
+      </Col>
+    </Row>
+  </Grid>
 )
 
 Confirmation.propTypes = {
@@ -45,6 +73,9 @@ Confirmation.propTypes = {
     info: PropTypes.string,
     error: PropTypes.string,
     confirmation: PropTypes.string,
+    successIcon: PropTypes.string,
+    errorIcon: PropTypes.string,
+    confirmationIcon: PropTypes.string,
   }),
   success: PropTypes.bool,
 }

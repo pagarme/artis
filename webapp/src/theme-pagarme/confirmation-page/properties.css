@@ -12,4 +12,5 @@
   --confirmation-success: var(--color-success);
   --confirmation-error: var(--color-error);
   --confirmation-info: var(--font-size-small);
+  --background-fill-color: var(--color-grey-80);
 }
