@@ -12,6 +12,7 @@ import UIPaymentPage from './payment-page/index.css'
 import UICustomerPage from './customer-page/index.css'
 import UIShippingPage from './shipping-page/index.css'
 import UIAddressOptions from './address-options/index.css'
+import UISegmentedSwitch from './segmented-switch/index.css'
 
 export default {
   UIButton,
@@ -28,4 +29,5 @@ export default {
   UICustomerPage,
   UIShippingPage,
   UIAddressOptions,
+  UISegmentedSwitch,
 }

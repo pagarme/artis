@@ -1,0 +1,111 @@
+@import "./properties.css";
+
+.segmentedSwitch {
+  display: inline-flex;
+  user-select: none;
+  width: 100%;
+}
+
+.item {
+  flex-grow: 1;
+  position: relative;
+  text-align: center;
+}
+
+.item > input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.label {
+  color: var(--context-switch-label-color);
+  background-color: var(--context-switch-label-backgound-color);
+  border: 1px solid var(--context-switch-label-border-color);
+  border-right: 1px solid var(--context-switch-label-border-right-color);
+  padding: 0;
+  cursor: pointer;
+  display: block;
+  letter-spacing: var(--context-switch-letter-spacing);
+  font-family: var(--primary-font-family);
+  font-size: var(--context-switch-label-font-size);
+  position: relative;
+  height: 100%;
+  z-index: 0;
+}
+
+.label > h1 {
+  font-size: var(--context-switch-label-font-size);
+  margin-top: 23px;
+  margin-bottom: 6px;
+  text-transform: var(--context-switch-text-transform);
+}
+
+.label > p {
+  font-size: var(--context-switch-label-subtitle-font-size);
+  margin-bottom: 19px;
+  color: var(--context-switch-label-subtitle-color);
+}
+
+.item input:checked + .label {
+  color: var(--context-switch-checked-label-color);
+  z-index: 1;
+}
+
+.item input:checked + .label > h1 {
+  color: var(--context-switch-checked-label-color);
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+.item input:checked + :before {
+  content: "";
+  position: absolute;
+  left: 36.75%;
+  bottom: 0;
+  height: 1px;
+  width: 26.5%;
+  border-bottom: 1px solid var(--context-switch-checked-label-color);
+}
+
+.item:last-child .label {
+  border-right: 1px solid var(--context-switch-label-border-color);
+}
+
+.item input:checked + .label:after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 8px);
+  bottom: -8px;
+  height: 0;
+  vertical-align: middle;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--context-switch-checked-label-color);
+}
+
+@media (--media-tablet) {
+
+  .item input:checked + :before {
+    left: 19%;
+    width: 62%;
+  }
+
+  .label > h1 {
+    font-size: var(--font-size-tiny);
+  }
+}
+
+@media (--media-palm) {
+
+  .item input:checked + :before {
+    left: 19%;
+    width: 62%;
+  }
+
+  .label > h1 {
+    font-size: var(--font-size-tiny);
+  }
+}
