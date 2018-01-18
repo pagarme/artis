@@ -98,6 +98,8 @@ class Checkout extends Component {
       closingEffect: false,
       footerButtonVisible: true,
     }
+
+    this.handleFooterButton = this.handleFooterButton.bind(this)
   }
 
   handleNavigation (transitionTo, pages, steps) {
@@ -106,11 +108,13 @@ class Checkout extends Component {
     })
 
     const inc = transitionTo === 'NEXT' ? 1 : -1
+    const activePage = steps.findIndex(page => (
+      page === pages[this.props.machineState]
+    )) + inc
 
     this.setState({
-      activePage: steps.findIndex(page => (
-        page === pages[this.props.machineState]
-      )) + inc,
+      activePage,
+      footerButtonVisible: !(activePage === steps.length - 1),
     })
   }
 
@@ -130,7 +134,7 @@ class Checkout extends Component {
     this.setState({ footerButtonVisible })
   }
 
-  renderPages () { // eslint-disable-line
+  renderPages () {
     return (
       <React.Fragment>
         <Action show="customer">
@@ -147,7 +151,7 @@ class Checkout extends Component {
         <Action show="shipping">
           <ShippingPage
             title="Selecione um endereço cadastrado"
-            footerButtonVisible={this.handleFooterButton.bind(this)}
+            footerButtonVisible={this.handleFooterButton}
           />
         </Action>
         <Action show="payment">

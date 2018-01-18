@@ -48,10 +48,6 @@ class Shipping extends Component {
     }
   }
 
-  componentWillUnmount () {
-    this.props.footerButtonVisible(true)
-  }
-
   onChangeAddress (option) {
     this.setState({ selected: option })
   }
