@@ -197,7 +197,7 @@ Billing.propTypes = {
     title: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
-  isDesktop: PropTypes.string,
+  isDesktop: PropTypes.bool,
 }
 
 Billing.defaultProps = {

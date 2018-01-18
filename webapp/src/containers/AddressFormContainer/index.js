@@ -56,7 +56,7 @@ class AddressForm extends Component {
       state,
     } = this.state
 
-    const { options, visible, handleClose, theme } = this.props
+    const { options, visible, onCancel, theme } = this.props
 
     return (
       <div
@@ -215,7 +215,7 @@ class AddressForm extends Component {
                   fill="outline"
                   relevance="low"
                   className={theme.cancelButton}
-                  onClick={handleClose.bind(this)}
+                  onClick={onCancel.bind(this)}
                 >
                   Cancelar
                 </Button>
@@ -248,7 +248,7 @@ AddressForm.propTypes = {
     cancelButton: PropTypes.string,
   }),
   visible: PropTypes.bool,
-  handleClose: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     value: PropTypes.string,

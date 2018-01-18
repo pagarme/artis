@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import PlusIcon from 'react-icons/lib/go/plus'
@@ -9,7 +8,6 @@ import AddressForm from '../../containers/AddressFormContainer'
 import options from '../../helpers/states'
 import { Grid, Row, Col } from '../../components/Grid'
 import Button from '../../components/Button'
-import { footerButton } from '../../actions'
 
 const largeColSize = 12
 const mediumColSize = 6
@@ -57,7 +55,7 @@ class Shipping extends Component {
   toggleOpenAddressForm () {
     const openAddressForm = !this.state.openAddressForm
 
-    this.props.footerButton({ visible: !openAddressForm })
+    this.props.footerButtonVisible(!openAddressForm)
     this.setState({ openAddressForm })
   }
 
@@ -187,7 +185,7 @@ class Shipping extends Component {
       <div className={theme.page}>
         <AddressForm
           visible={this.state.openAddressForm}
-          handleClose={this.toggleOpenAddressForm.bind(this)}
+          onCancel={this.toggleOpenAddressForm.bind(this)}
           options={options}
         />
         <Grid
@@ -244,15 +242,12 @@ Shipping.propTypes = {
     optionBox: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
-  footerButton: PropTypes.func.isRequired,
+  footerButtonVisible: PropTypes.func,
 }
 
 Shipping.defaultProps = {
   theme: {},
+  footerButtonVisible: null,
 }
 
-const mapDispatchToProps = dispatch => ({
-  footerButton: value => dispatch(footerButton(value)),
-})
-
-export default connect(null, mapDispatchToProps)(applyThemr(Shipping))
+export default applyThemr(Shipping)

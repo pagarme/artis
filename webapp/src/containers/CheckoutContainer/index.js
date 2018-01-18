@@ -13,8 +13,8 @@ import { Action, withStatechart } from 'react-automata'
 
 import ProgressBar from '../../components/ProgressBar'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 
-import FooterContainer from '../FooterContainer'
 import CustomerPage from '../CustomerPage'
 import BillingPage from '../BillingPage'
 import ShippingPage from '../ShippingPage'
@@ -94,9 +94,12 @@ class Checkout extends Component {
     super(props)
 
     this.state = {
-      closingEffect: false,
       activePage: 0,
+      closingEffect: false,
+      footerButtonVisible: true,
     }
+
+    this.handleFooterButton = this.handleFooterButton.bind(this)
   }
 
   handleNavigation (transitionTo, pages, steps) {
@@ -105,11 +108,13 @@ class Checkout extends Component {
     })
 
     const inc = transitionTo === 'NEXT' ? 1 : -1
+    const activePage = steps.findIndex(page => (
+      page === pages[this.props.machineState]
+    )) + inc
 
     this.setState({
-      activePage: steps.findIndex(page => (
-        page === pages[this.props.machineState]
-      )) + inc,
+      activePage,
+      footerButtonVisible: !(activePage === steps.length - 1),
     })
   }
 
@@ -125,7 +130,11 @@ class Checkout extends Component {
     }, 500)
   }
 
-  renderPages () { // eslint-disable-line
+  handleFooterButton (footerButtonVisible) {
+    this.setState({ footerButtonVisible })
+  }
+
+  renderPages () {
     return (
       <React.Fragment>
         <Action show="customer">
@@ -142,6 +151,7 @@ class Checkout extends Component {
         <Action show="shipping">
           <ShippingPage
             title="Selecione um endereço cadastrado"
+            footerButtonVisible={this.handleFooterButton}
           />
         </Action>
         <Action show="payment">
@@ -154,7 +164,10 @@ class Checkout extends Component {
   }
 
   render () {
-    const { activePage } = this.state
+    const {
+      activePage,
+      footerButtonVisible,
+    } = this.state
     const { apiValues, theme } = this.props
 
     const { params = {}, configs = {} } = apiValues
@@ -193,14 +206,14 @@ class Checkout extends Component {
             />
             {this.renderPages(checkDesktop)}
           </div>
-          <FooterContainer
+          <Footer
             total={params.amount}
             buttonText={'Continuar'}
             buttonClick={
               this.handleNavigation.bind(this, 'NEXT', pages, steps)
             }
             companyName={'Pagar.me'}
-            nextButtonDisabled={activePage === steps.length - 1}
+            buttonVisible={footerButtonVisible}
           />
         </div>
       </div>
