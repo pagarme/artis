@@ -11,18 +11,15 @@
   --button-font-size-large: var(--font-size-small);
   --button-font-size-extra-large: var(--font-size-medium);
 
-  --button-background-begin-color: var(--color-dark-greenish-100);
-  --button-background-end-color: var(--color-dark-downy-100);
-  --button-background-color-hover: var(--color-dark-greenish-80);
-  --button-background-color-active: var(--color-dark-greenish-70);
-  --button-background-color-focus: var(--color-dark-greenish-100);
-  --button-background-color-disabled: var(--color-grey-10);
+  --button-background-color: var(--color-greenish-100);
+  --button-background-color-disabled: var(--color-grey-11);
 
-  --button-double-outline-color: var(--color-grey-60);
-  --button-double-border-color: var(--color-grey-90);
+  --button-double-outline-color: var(--color-grey-68);
+  --button-double-border-color: var(--color-grey-80);
   --button-double-main-color: var(--color-white);
 
-  --button-color-high: var(--color-black);
+  --button-color-high: var(--color-greenish-100);
+  --button-color-normal: var(--color-black);
   --button-color-low: var(--color-white);
   --button-color-disabled: var(--color-grey-30);
 
