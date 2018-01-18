@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import PlusIcon from 'react-icons/lib/go/plus'
 import { themr } from 'react-css-themr'
 
@@ -8,10 +7,10 @@ import AddressForm from '../containers/AddressForm'
 import options from '../utils/states'
 import { Grid, Row, Col } from '../components/Grid'
 import Button from '../components/Button'
+import AddressOptions from '../components/AddressOptions'
 
 const largeColSize = 12
 const mediumColSize = 6
-const smallColSize = 4
 
 const applyThemr = themr('UIShippingPage')
 
@@ -43,15 +42,16 @@ class ShippingPage extends Component {
     super(props)
 
     this.state = {
-      selected: 0,
+      selectedAddress: {},
       openAddressForm: false,
     }
 
     this.toggleOpenAddressForm = this.toggleOpenAddressForm.bind(this)
+    this.onChangeAddress = this.onChangeAddress.bind(this)
   }
 
-  onChangeAddress (option) {
-    this.setState({ selected: option })
+  onChangeAddress (address) {
+    this.setState({ selectedAddress: address })
   }
 
   toggleOpenAddressForm () {
@@ -59,125 +59,6 @@ class ShippingPage extends Component {
 
     this.props.footerButtonVisible(!openAddressForm)
     this.setState({ openAddressForm })
-  }
-
-  renderAddresses () {
-    const { theme } = this.props
-
-    return addresses.map((address, index) => (
-      <Col
-        tv={mediumColSize}
-        desk={mediumColSize}
-        tablet={mediumColSize}
-        palm={largeColSize}
-        key={address.name}
-      >
-        <div
-          role="button"
-          tabIndex={index}
-          onClick={this.onChangeAddress.bind(this, index)}
-          className={
-            classNames(
-              theme.optionBox,
-              {
-                [theme.selected]: this.state.selected === index,
-              }
-            )
-          }
-        >
-          <div className={theme.addressName}>
-            {address.name}
-          </div>
-          <div className={theme.addressData}>
-            <Grid>
-              <Row>
-                <Col
-                  tv={largeColSize}
-                  desk={largeColSize}
-                  tablet={largeColSize}
-                  palm={largeColSize}
-                >
-                  <div className={theme.field}>Rua</div>
-                  <div className={theme.value}>
-                    {address.street}
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <div className={theme.field}>Nº</div>
-                  <div className={theme.value}>
-                    {address.street_number}
-                  </div>
-                </Col>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <div className={theme.field}>Complemento</div>
-                  <div className={theme.value}>
-                    {address.complementary}
-                  </div>
-                </Col>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <div className={theme.field}>Bairro</div>
-                  <div className={theme.value}>
-                    {address.neighborhood}
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <div className={theme.field}>CEP</div>
-                  <div className={theme.value}>
-                    {address.zipcode}
-                  </div>
-                </Col>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <div className={theme.field}>Cidade</div>
-                  <div className={theme.value}>
-                    {address.city}
-                  </div>
-                </Col>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <div className={theme.field}>UF</div>
-                  <div className={theme.value}>
-                    {address.state}
-                  </div>
-                </Col>
-              </Row>
-            </Grid>
-          </div>
-        </div>
-      </Col>
-    ))
   }
 
   render () {
@@ -204,7 +85,10 @@ class ShippingPage extends Component {
             >
               {this.props.title}
             </Col>
-            {this.renderAddresses()}
+            <AddressOptions
+              addresses={addresses}
+              onChange={this.onChangeAddress}
+            />
             <Row>
               <Col
                 tv={mediumColSize}
