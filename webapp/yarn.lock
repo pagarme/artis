@@ -7400,6 +7400,13 @@ react-modal@^3.1.10:
     prop-types "^15.5.10"
     warning "^3.0.0"
 
+react-payment-card-component@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-payment-card-component/-/react-payment-card-component-0.1.0.tgz#9870db6fa311b3c977bd380248511b49189e9c02"
+  dependencies:
+    classnames "2.2.5"
+    prop-types "15.6.0"
+
 react-reconciler@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.7.0.tgz#9614894103e5f138deeeb5eabaf3ee80eb1d026d"
