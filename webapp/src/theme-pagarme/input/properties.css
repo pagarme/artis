@@ -5,37 +5,37 @@
   --input-font-size: var(--font-size-small);
   --input-font-color: var(--color-white);
 
-  --input-textarea-border-color: var(--color-grey-60);
+  --input-textarea-border-color: var(--color-grey-68);
   --input-textarea-border-radius: 0;
 
-  --input-textarea-focus-border-color: var(--color-grey-60);
+  --input-textarea-focus-border-color: var(--color-grey-68);
   --input-textarea-focus-transition-time: 100ms;
   --input-textarea-focus-placeholder-opacity: 1;
-  --input-textarea-focus-placeholder-color: var(--color-grey-70);
+  --input-textarea-focus-placeholder-color: var(--color-grey-85);
 
-  --input-textarea-caret-default-color: var(--color-grey-70);
+  --input-textarea-caret-default-color: var(--color-grey-85);
   --input-textarea-placeholder-opacity: 0;
 
   --input-textarea-disabled-border: none;
-  --input-textarea-disabled-background: var(--color-grey-50);
+  --input-textarea-disabled-background: var(--color-grey-53);
 
   --input-textarea-disabled-border-radius: 0;
 
-  --input-color-disabled: var(--color-grey-20);
-  --input-label-color: var(--color-grey-50);
+  --input-color-disabled: var(--color-grey-34);
+  --input-label-color: var(--color-grey-53);
 
   --input-label-color-default: var(--color-white);
-  --input-label-color-focus: var(--color-grey-50);
+  --input-label-color-focus: var(--color-grey-53);
   --input-label-font-size-default: var(--input-font-size);
   --input-label-font-size-focus: 12px;
   --input-label-transition-time: 0.1s;
 
   --input-textarea-height: calc(100% - var(--spacing-medium));
 
-  --input-icon-active-color: var(--color-grey-70);
-  --input-icon-inactive-color: var(--color-grey-50);
+  --input-icon-active-color: var(--color-grey-85);
+  --input-icon-inactive-color: var(--color-grey-53);
 
-  --input-secondary-text-color: var(--color-grey-70);
+  --input-secondary-text-color: var(--color-grey-85);
   --input-secondary-text-font-size: 12px;
 
   --input-textarea-padding-top: var(--spacing-small);
