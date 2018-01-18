@@ -3,12 +3,12 @@
 @import "../typography.css";
 
 :root {
-  --wrapper-background-color: var(--color-grey-60);
+  --wrapper-background-color: var(--color-grey-68);
   --progressbar-background-color: var(--color-greenish);
 
   --steps-margin: 0 0 22px;
   --step-font-family: var(--primary-font-family);
   --step-font-size: var(--font-size-small);
-  --step-color: var(--color-grey-30);
+  --step-color: var(--color-grey-39);
   --step-color-active: var(--color-greenish);
 }
