@@ -6,7 +6,7 @@ import MdVisibilityOff from 'react-icons/lib/md/visibility-off'
 import MdVisibility from 'react-icons/lib/md/visibility'
 import MaskedInput from 'react-maskedinput'
 
-import { pick } from 'ramda'
+import { pick, merge } from 'ramda'
 
 const applyThemr = themr('UIInput')
 
@@ -60,7 +60,6 @@ class Input extends React.Component {
       type,
       value,
       className,
-      onChange,
       onBlur,
       name,
       inputRef,
@@ -68,6 +67,11 @@ class Input extends React.Component {
       theme,
     } = this.props
 
+    let { onChange } = this.props
+
+    if (disabled) {
+      onChange = null
+    }
     const inputContainer = classnames(
       theme.inputContainer,
       {
@@ -88,9 +92,16 @@ class Input extends React.Component {
       [theme.contentPresent]: value !== '',
     })
 
-    const inputProps = pick(
-      ['disabled', 'placeholder', 'value'],
-      this.props
+    const inputProps = merge(
+      pick(
+        ['disabled', 'placeholder', 'value'],
+        this.props
+      ),
+      {
+        ref: inputRef,
+        onBlur,
+        onChange,
+      }
     )
 
     const inputType = type === 'text' || this.state.displayPassword
@@ -110,19 +121,14 @@ class Input extends React.Component {
                   rows="1"
                   name={name}
                   className={className}
-                  onChange={disabled ? null : onChange}
-                  onBlur={onBlur}
                   {...inputProps}
                 />
               ) : (
                 <input
-                  ref={inputRef}
                   id={name}
                   name={name}
                   type={inputType}
                   className={className}
-                  onChange={disabled ? null : onChange}
-                  onBlur={onBlur}
                   {...inputProps}
                 />
               )
@@ -132,8 +138,6 @@ class Input extends React.Component {
               <MaskedInput
                 name={name}
                 className={className}
-                onChange={onChange}
-                onBlur={onBlur}
                 {...inputProps}
                 mask={mask}
               />
