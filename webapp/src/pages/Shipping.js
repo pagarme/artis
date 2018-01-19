@@ -4,10 +4,10 @@ import classNames from 'classnames'
 import PlusIcon from 'react-icons/lib/go/plus'
 import { themr } from 'react-css-themr'
 
-import AddressForm from '../../containers/AddressFormContainer'
-import options from '../../helpers/states'
-import { Grid, Row, Col } from '../../components/Grid'
-import Button from '../../components/Button'
+import AddressForm from '../containers/AddressForm'
+import options from '../utils/states'
+import { Grid, Row, Col } from '../components/Grid'
+import Button from '../components/Button'
 
 const largeColSize = 12
 const mediumColSize = 6
@@ -38,7 +38,7 @@ const addresses = [
   },
 ]
 
-class Shipping extends Component {
+class ShippingPage extends Component {
   constructor (props) {
     super(props)
 
@@ -229,7 +229,7 @@ class Shipping extends Component {
   }
 }
 
-Shipping.propTypes = {
+ShippingPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
@@ -245,9 +245,9 @@ Shipping.propTypes = {
   footerButtonVisible: PropTypes.func,
 }
 
-Shipping.defaultProps = {
+ShippingPage.defaultProps = {
   theme: {},
   footerButtonVisible: null,
 }
 
-export default applyThemr(Shipping)
+export default applyThemr(ShippingPage)

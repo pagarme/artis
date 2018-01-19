@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 
-import { Grid, Row, Col } from '../../components/Grid'
+import { Grid, Row, Col } from '../components/Grid'
 
 const applyThemr = themr('UIPaymentPage')
 
 const colSize = 12
 
-const Payment = ({ title, theme }) => (
+const PaymentPage = ({ title, theme }) => (
   <Grid className={theme.page}>
     <Row>
       <Col
@@ -25,7 +25,7 @@ const Payment = ({ title, theme }) => (
   </Grid>
 )
 
-Payment.propTypes = {
+PaymentPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
@@ -33,8 +33,8 @@ Payment.propTypes = {
   title: PropTypes.string.isRequired,
 }
 
-Payment.defaultProps = {
+PaymentPage.defaultProps = {
   theme: {},
 }
 
-export default applyThemr(Payment)
+export default applyThemr(PaymentPage)

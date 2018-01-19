@@ -15,10 +15,10 @@ import ProgressBar from '../../components/ProgressBar'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 
-import CustomerPage from '../CustomerPage'
-import BillingPage from '../BillingPage'
-import ShippingPage from '../ShippingPage'
-import PaymentPage from '../PaymentPage'
+import CustomerPage from '../../pages/Customer'
+import BillingPage from '../../pages/Billing'
+import ShippingPage from '../../pages/Shipping'
+import PaymentPage from '../../pages/Payment'
 
 import defaultLogo from '../../images/logo_pagarme.png'
 
