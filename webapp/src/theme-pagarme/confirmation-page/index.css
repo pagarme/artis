@@ -3,15 +3,17 @@
 .page {
   margin: var(--page-margin);
   background-color: var(--background-fill-color);
+  padding:
+    var(--spacing-xlarge)
+    var(--spacing-small)
+    var(--spacing-xlarge)
+    0;
 }
 
 .title {
-  margin: var(--page-title-margin);
-  font-family: var(--page-title-font-family);
+  font-family: var(--confirmation-font-family);
   font-size: var(--page-title-font-size);
   color: var(--page-title-color);
-  text-transform: uppercase;
-  letter-spacing: 1.4px;
 }
 
 .confirmation {
@@ -20,6 +22,7 @@
 
 .success {
   color: var(--confirmation-success);
+  margin: 0;
 }
 
 .successIcon {
@@ -32,6 +35,7 @@
 }
 
 .confirmationIcon {
+  align-self: center;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.4);
   padding: 20px;
@@ -41,8 +45,28 @@
 
 .error {
   color: var(--confirmation-error);
+  margin: 0;
 }
 
 .info {
   font-size: var(--confirmation-info);
+}
+
+.field,
+.value {
+  font-family: var(--confirmation-font-family);
+}
+
+.field {
+  color: var(--field-color);
+  font-size: var(--field-font-size);
+}
+
+.value {
+  color: var(--value-color);
+  font-size: var(--value-font-size);
+}
+
+.rightValue {
+  width: 80%;
 }

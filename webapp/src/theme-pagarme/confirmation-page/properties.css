@@ -4,13 +4,19 @@
 
 :root {
   --page-margin: var(--spacing-medium) var(--spacing-small);
-  --page-title-font-family: var(--primary-font-family);
-  --page-title-font-size: var(--font-size-small);
+  --page-title-font-size: var(--font-size-xlarge);
   --page-title-color: var(--color-white);
   --page-title-margin: 6px 0;
 
+  --confirmation-font-family: var(--primary-font-family);
   --confirmation-success: var(--color-success);
   --confirmation-error: var(--color-error);
   --confirmation-info: var(--font-size-small);
   --background-fill-color: var(--color-grey-80);
+
+  --field-color: var(--color-grey-30);
+  --field-font-size: var(--font-size-small);
+
+  --value-color: var(--color-white);
+  --value-font-size: var(--font-size-medium);
 }
