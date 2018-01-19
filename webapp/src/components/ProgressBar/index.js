@@ -11,6 +11,8 @@ import { themr } from 'react-css-themr'
 
 import { Grid, Row, Col } from '../Grid'
 
+const isDesktop = window.innerWidth > 640
+
 const applyThemr = themr('UIProgressBar')
 
 const renderSteps = (steps, activePage, theme) => {
@@ -46,7 +48,7 @@ const ProgressBar = ({
 }) => {
   const totalSteps = steps.length
   const activeStep = activePage + 1
-  const shouldRenderSteps = totalSteps > 0
+  const shouldRenderSteps = totalSteps > 0 && isDesktop
 
   const totalPercent = clamp(
     0,
