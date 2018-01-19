@@ -31,6 +31,7 @@ storiesOf('Buttons', module)
         <h2>Sizes</h2>
         <Button size="tiny">Tiny</Button>
         <Button size="small">Small</Button>
+        <Button>Default</Button>
         <Button size="large">Large</Button>
         <Button size="extra-large">Extra-large</Button>
       </div>

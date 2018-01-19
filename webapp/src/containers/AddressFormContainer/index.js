@@ -202,7 +202,7 @@ class AddressForm extends Component {
                 />
               </Col>
             </Row>
-            <Row>
+            <Row className={theme.buttonsWrapper}>
               <Col
                 tv={largeColSize}
                 desk={largeColSize}
@@ -211,17 +211,15 @@ class AddressForm extends Component {
                 alignEnd
               >
                 <Button
-                  size="small"
+                  size="extra-large"
                   fill="outline"
-                  relevance="low"
                   className={theme.cancelButton}
                   onClick={onCancel.bind(this)}
                 >
                   Cancelar
                 </Button>
                 <Button
-                  size="small"
-                  relevance="low"
+                  size="extra-large"
                 >
                   Cadastrar
                 </Button>

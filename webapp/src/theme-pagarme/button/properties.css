@@ -8,10 +8,11 @@
   --button-font-size-tiny: var(--font-size-tiny);
   --button-font-size-small: var(--font-size-small);
   --button-font-size-default: var(--font-size-small);
-  --button-font-size-large: var(--font-size-medium);
+  --button-font-size-large: var(--font-size-small);
   --button-font-size-extra-large: var(--font-size-medium);
 
-  --button-background-color: var(--color-dark-greenish-100);
+  --button-background-begin-color: var(--color-dark-greenish-100);
+  --button-background-end-color: var(--color-dark-downy-100);
   --button-background-color-hover: var(--color-dark-greenish-80);
   --button-background-color-active: var(--color-dark-greenish-70);
   --button-background-color-focus: var(--color-dark-greenish-100);
@@ -21,24 +22,25 @@
   --button-double-border-color: var(--color-grey-90);
   --button-double-main-color: var(--color-white);
 
-  --button-color-high: var(--button-background-color);
+  --button-color-high: var(--color-black);
   --button-color-low: var(--color-white);
+  --button-color-disabled: var(--color-grey-30);
 
   --button-radius: 3px;
   --button-animation-active: scale(0.95);
-
-  --button-padding-top-default: 9px;
-  --button-padding-left-default: 9px;
 
   --button-padding-top-tiny: 8px;
   --button-padding-left-tiny: 8px;
 
   --button-padding-top-small: 8px;
-  --button-padding-left-small: 8px;
+  --button-padding-left-small: 16px;
+
+  --button-padding-top-default: 9px;
+  --button-padding-left-default: 24px;
 
   --button-padding-top-large: 9px;
-  --button-padding-left-large: 9px;
+  --button-padding-left-large: 32px;
 
   --button-padding-top-extra-large: 17px;
-  --button-padding-left-extra-large: 17px;
+  --button-padding-left-extra-large: 48px;
 }

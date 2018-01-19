@@ -20,6 +20,10 @@
   letter-spacing: 1.4px;
 }
 
+.buttonsWrapper {
+  margin-top: 26px;
+}
+
 .cancelButton {
   margin-right: 26px;
 }
