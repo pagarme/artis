@@ -8,6 +8,8 @@ import Input from '../components/Input'
 import Dropdown from '../components/Dropdown'
 
 import options from '../utils/states'
+import getAddress from '../utils/getAddress'
+import removeZipcodeMask from '../utils/removeZipcodeMask'
 
 const applyThemr = themr('UIBillingPage')
 
@@ -15,21 +17,30 @@ const defaultColSize = 12
 const smallColSize = 4
 const bigColSize = 8
 
+const defaultAddress = {
+  street: '',
+  streetNumber: '',
+  streetComplement: '',
+  neighborhood: '',
+  city: '',
+  state: 'placeholder',
+}
+
 class BillingPage extends Component {
   constructor (props) {
     super(props)
+
     this.state = {
-      cep: '',
-      street: '',
-      streetNumber: '',
-      streetComplement: '',
-      neighborhood: '',
-      city: '',
-      state: '',
+      ...defaultAddress,
+      zipcode: '',
+      zipcodeError: '',
     }
 
-    this.handleInputChange = this.handleInputChange.bind(this)
     this.handleStateChange = this.handleStateChange.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleStreetNumberInputRef = this.handleStreetNumberInputRef.bind(this)
+    this.handleZipcodeChange = this.handleZipcodeChange.bind(this)
+    this.handleZipcodeBlur = this.handleZipcodeBlur.bind(this)
   }
 
   handleStateChange (value) {
@@ -42,9 +53,50 @@ class BillingPage extends Component {
     this.setState({ [name]: value })
   }
 
+  handleStreetNumberInputRef (input) {
+    this.streetNumberInput = input
+  }
+
+  handleZipcodeChange (e) {
+    const { value } = e.target
+    const zipcode = removeZipcodeMask(value)
+
+    if (zipcode.length === 8) {
+      this.autocompleteAddress(zipcode)
+    }
+
+    this.setState({ zipcode: value })
+  }
+
+  handleZipcodeBlur () {
+    this.setState({ zipcodeError: '' })
+  }
+
+  autocompleteAddress (zipcode) {
+    const updateAddress = (address) => {
+      this.setState({
+        ...address,
+        zipcodeError: '',
+      })
+
+      this.streetNumberInput.focus()
+    }
+
+    const handleError = error =>
+      this.setState({
+        ...defaultAddress,
+        zipcodeError: error.message,
+      })
+
+    getAddress(zipcode)
+      .then(updateAddress)
+      .catch(handleError)
+  }
+
   render () {
     const {
-      cep,
+      zipcode,
+      zipcodeError,
       street,
       streetNumber,
       streetComplement,
@@ -70,7 +122,7 @@ class BillingPage extends Component {
             className={theme.title}
             alignCenter
           >
-            { this.props.title }
+            {this.props.title}
           </Col>
           <Col
             tv={defaultColSize}
@@ -79,12 +131,14 @@ class BillingPage extends Component {
             palm={defaultColSize}
           >
             <Input
-              name="cep"
+              name="zipcode"
               label="CEP"
               mask="11111-111"
-              value={cep}
+              value={zipcode}
+              error={zipcodeError}
               placeholder="Digite o CEP"
-              onChange={this.handleInputChange}
+              onChange={this.handleZipcodeChange}
+              onBlur={this.handleZipcodeBlur}
             />
           </Col>
         </Row>
@@ -113,6 +167,7 @@ class BillingPage extends Component {
             palm={smallColSize}
           >
             <Input
+              inputRef={this.handleStreetNumberInputRef}
               name="streetNumber"
               label="Nº"
               hint=""
@@ -206,3 +261,4 @@ BillingPage.defaultProps = {
 }
 
 export default applyThemr(BillingPage)
+
