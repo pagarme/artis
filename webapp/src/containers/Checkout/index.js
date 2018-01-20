@@ -29,7 +29,7 @@ const statechart = {
     billing: 'Endereço de Cobrança',
     shipping: 'Endereço de Entrega',
     payment: 'Forma de Pagamento',
-    success: 'Confirmação',
+    confirmation: 'Confirmação',
   },
   states: {
     customer: {
@@ -69,16 +69,16 @@ const statechart = {
     payment: {
       on: {
         PREV: 'shipping',
-        NEXT: 'success',
+        NEXT: 'confirmation',
         ERROR: 'error',
       },
       onEntry: 'payment',
     },
-    success: {
+    confirmation: {
       on: {
         PREV: 'payment',
       },
-      onEntry: 'success',
+      onEntry: 'confirmation',
     },
     error: {
       on: {
@@ -159,7 +159,7 @@ class Checkout extends Component {
             title="Dados de Pagamento"
           />
         </Action>
-        <Action show="success">
+        <Action show="confirmation">
           <ConfirmationPage
             title="Confirmação"
             success

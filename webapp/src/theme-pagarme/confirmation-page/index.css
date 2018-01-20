@@ -16,7 +16,7 @@
   color: var(--page-title-color);
 }
 
-.confirmation {
+.textAligned {
   text-align: center;
 }
 
@@ -26,21 +26,24 @@
 }
 
 .successIcon {
-  padding-top: 10px;
+  padding-top: var(--success-icon-padding-top);
 }
 
 .errorIcon {
-  padding-top: 8px;
-  padding-left: 8px;
+  padding-top: var(--error-icon-default-padding);
+  padding-left: var(--error-icon-default-padding);
+}
+
+.alignSelfCenter {
+  align-self: center;
 }
 
 .confirmationIcon {
-  align-self: center;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.4);
-  padding: 20px;
-  width: 80px;
-  height: 80px;
+  padding: var(--confirmation-icon-default-padding);
+  width: var(--confirmation-icon-size);
+  height: var(--confirmation-icon-size);
 }
 
 .error {
@@ -59,6 +62,7 @@
 
 .field {
   color: var(--field-color);
+  margin-bottom: var(--field-margin-bottom);
   font-size: var(--field-font-size);
 }
 
@@ -67,6 +71,6 @@
   font-size: var(--value-font-size);
 }
 
-.rightValue {
+.mediumSize {
   width: 80%;
 }

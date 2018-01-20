@@ -9,9 +9,12 @@ import errorIcon from '../images/error-icon.png'
 
 const applyThemr = themr('UIConfirmationPage')
 
+const isDesktop = window.innerWidth > 640
+
 const iconColSize = 4
 const contentColSize = 8
 const mediumColSize = 6
+const defaultColSize = 12
 
 const paymentInfo = {
   name: 'Dan Abramov',
@@ -26,13 +29,20 @@ class Confirmation extends React.Component {
     const { theme } = this.props
 
     return (
-      <div>
+      <React.Fragment>
         <Row className={theme.title}>
-          <h4 className={theme.success}>
+          <h4 className={
+            classNames(
+              {
+                [theme.textAligned]: !isDesktop,
+              },
+              theme.success,
+            )}
+          >
             Seu pagamento foi concluído com sucesso
           </h4>
         </Row>
-        <Row>
+        {isDesktop && <Row>
           <Col
             tv={mediumColSize}
             desk={mediumColSize}
@@ -68,7 +78,7 @@ class Confirmation extends React.Component {
                 <div className={
                   classNames(
                     theme.value,
-                    theme.rightValue,
+                    theme.mediumSize,
                   )}
                 >{paymentInfo.address}</div>
               </div>
@@ -79,14 +89,14 @@ class Confirmation extends React.Component {
                 <div className={
                   classNames(
                     theme.value,
-                    theme.rightValue,
+                    theme.mediumSize,
                   )}
                 >{paymentInfo.payment}</div>
               </div>
             </Row>
           </Col>
-        </Row>
-      </div>
+        </Row>}
+      </React.Fragment>
     )
   }
 
@@ -94,12 +104,34 @@ class Confirmation extends React.Component {
     const { theme } = this.props
 
     return (
-      <div>
+      <div className={
+        classNames(
+          theme.alignSelfCenter,
+          {
+            [theme.mediumSize]: isDesktop,
+          },
+        )
+      }
+      >
         <Row className={theme.title}>
-          <p className={theme.error}>
+          <h4 className={
+            classNames(
+              {
+                [theme.textAligned]: !isDesktop,
+              },
+              theme.error,
+            )}
+          >
             Seu pagamento foi recusado
-          </p>
-          <p className={theme.info}>
+          </h4>
+          <p className={
+            classNames(
+              {
+                [theme.textAligned]: !isDesktop,
+              },
+              theme.info,
+            )}
+          >
             Ocorreu um erro ao processar sua transação,
             tente novamente mais tarde ou entre em contato com seu banco.
           </p>
@@ -122,11 +154,17 @@ class Confirmation extends React.Component {
             tv={iconColSize}
             desk={iconColSize}
             tablet={iconColSize}
-            palm={iconColSize}
+            palm={defaultColSize}
             className={theme.title}
             alignCenter
           >
-            <div className={theme.confirmationIcon}>
+            <div className={
+              classNames(
+                theme.alignSelfCenter,
+                theme.confirmationIcon,
+              )
+            }
+            >
               {success && <img
                 src={successIcon}
                 alt={'Ícone de sucesso'}
@@ -144,7 +182,7 @@ class Confirmation extends React.Component {
             tv={contentColSize}
             desk={contentColSize}
             tablet={contentColSize}
-            palm={contentColSize}
+            palm={defaultColSize}
           >
             {success &&
               this.renderSuccessInfo()
