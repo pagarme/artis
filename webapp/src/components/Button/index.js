@@ -15,16 +15,20 @@ function Button ({
   theme,
   type,
   hidden,
+  full,
   fill,
   className,
+  textAlign,
 }) {
   const buttonClasses = classNames(
     className,
     theme.button,
+    theme[textAlign],
     theme[fill],
     theme[base],
     theme[`${relevance}Relevance`],
-    theme[size]
+    theme[size],
+    { [theme.full]: full }
   )
 
   return (
@@ -58,11 +62,17 @@ Button.propTypes = {
     small: PropTypes.string,
     default: PropTypes.string,
     large: PropTypes.string,
+    full: PropTypes.string,
   }).isRequired,
   type: PropTypes.oneOf([
     'button',
     'submit',
     'reset',
+  ]),
+  textAlign: PropTypes.oneOf([
+    'center',
+    'left',
+    'right',
   ]),
   onClick: PropTypes.func,
   fill: PropTypes.oneOf([
@@ -94,6 +104,7 @@ Button.propTypes = {
   ]).isRequired,
   disabled: PropTypes.bool,
   hidden: PropTypes.bool,
+  full: PropTypes.bool,
   className: PropTypes.string,
 }
 
@@ -106,6 +117,8 @@ Button.defaultProps = {
   type: 'button',
   disabled: false,
   hidden: false,
+  textAlign: 'center',
+  full: false,
   className: '',
   onClick: null,
 }

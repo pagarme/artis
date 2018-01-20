@@ -188,5 +188,20 @@ describe('Input', () => {
       expect(onChange).toHaveBeenCalled()
       expect(onChange).toHaveBeenLastCalledWith(value)
     })
+
+    it('should mount input type number', () => {
+      const onChange = jest.fn()
+
+      const component = shallow(
+        <Input
+          name="name"
+          label="Label"
+          type="number"
+          onChange={onChange}
+        />
+      )
+
+      expect(component.html().indexOf('type="number"')).toBeGreaterThan(0)
+    })
   })
 })

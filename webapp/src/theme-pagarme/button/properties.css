@@ -16,15 +16,15 @@
   --button-background-color-hover: var(--color-dark-greenish-80);
   --button-background-color-active: var(--color-dark-greenish-70);
   --button-background-color-focus: var(--color-dark-greenish-100);
-  --button-background-color-disabled: var(--color-grey-10);
+  --button-background-color-disabled: var(--color-grey-11);
 
-  --button-double-outline-color: var(--color-grey-60);
-  --button-double-border-color: var(--color-grey-90);
+  --button-double-outline-color: var(--color-grey-68);
+  --button-double-border-color: var(--color-grey-83);
   --button-double-main-color: var(--color-white);
 
   --button-color-high: var(--color-black);
   --button-color-low: var(--color-white);
-  --button-color-disabled: var(--color-grey-30);
+  --button-color-disabled: var(--color-grey-39);
 
   --button-radius: 3px;
   --button-animation-active: scale(0.95);

@@ -4,7 +4,7 @@
 @import "../typography.css";
 
 :root {
-  --total-color: var(--color-dark-greenish-100);
+  --total-color: var(--color-greenish-100);
   --total-font-size: var(--font-size-small);
   --total-font-family: var(--primary-font-family);
   --total-letter-spacing: var(--letter-spacing);
@@ -14,7 +14,7 @@
   --safe-font-family: var(--primary-font-family);
   --safe-padding-bottom: var(--spacing-tiny);
 
-  --powered-color: var(--color-grey-50);
+  --powered-color: var(--color-grey-53);
   --powered-font-size: var(--font-size-tiny);
   --powered-font-family: var(--primary-font-family);
   --powered-padding-bottom: var(--spacing-tiny);

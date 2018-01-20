@@ -6,25 +6,25 @@
   --address-font-family: var(--primary-font-family);
   --address-field-margin-bottom: 4px;
 
-  --optionBox-border-color: var(--color-grey-60);
-  --optionBox-shadow-color: var(--color-grey-80);
-  --optionBox-background-color: var(--color-grey-80);
+  --optionBox-border-color: var(--color-grey-68);
+  --optionBox-shadow-color: var(--color-grey-83);
+  --optionBox-background-color: var(--color-grey-83);
   --optionBox-selected-border-color: var(--color-greenish);
-  --optionBox-selected-shadow-color: var(--color-grey-60);
+  --optionBox-selected-shadow-color: var(--color-grey-68);
 
   --addressName-margin-bottom: var(--spacing-medium);
-  --addressName-color: var(--color-grey-30);
+  --addressName-color: var(--color-grey-39);
   --addressName-selected-color: var(--color-greenish);
   --addressName-font-size: var(--font-size-medium);
 
-  --addressName-bullet-border-color: var(--color-grey-80);
-  --addressName-bullet-boxshadow-color: var(--color-grey-80);
-  --addressName-bullet-background-color: var(--color-grey-30);
-  --addressName-bullet-selected-border-color: var(--color-grey-80);
+  --addressName-bullet-border-color: var(--color-grey-83);
+  --addressName-bullet-boxshadow-color: var(--color-grey-83);
+  --addressName-bullet-background-color: var(--color-grey-39);
+  --addressName-bullet-selected-border-color: var(--color-grey-83);
   --addressName-bullet-selected-background-color: var(--color-greenish);
   --addressName-bullet-selected-boxshadow-color: var(--color-greenish);
 
-  --field-color: var(--color-grey-30);
+  --field-color: var(--color-grey-39);
   --field-font-size: var(--font-size-small);
 
   --value-color: var(--color-white);

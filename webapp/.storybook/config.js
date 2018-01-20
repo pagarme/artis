@@ -1,6 +1,5 @@
 import { configure } from '@storybook/react'
-
-import './themeDecorator'
+import './themeDecorator';
 
 function loadStories() {
   require('../stories')

@@ -23,6 +23,7 @@ const Grid = ({ theme, children, className, hidden }) => (
 Grid.propTypes = {
   theme: PropTypes.shape({
     grid: PropTypes.string,
+    hidden: PropTypes.string,
   }).isRequired,
   children: PropTypes.node,
   className: PropTypes.string,

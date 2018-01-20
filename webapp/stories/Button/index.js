@@ -25,6 +25,7 @@ storiesOf('Buttons', module)
       <div>
         <h2>Disabled</h2>
         <Button disabled>Label</Button>
+        <Button disabled relevance="low">Label</Button>
       </div>
 
       <div>
@@ -40,6 +41,25 @@ storiesOf('Buttons', module)
         <h2>Clean buttons for icons</h2>
         <Button fill="clean" relevance="low"><BackIcon size={30} /></Button>
         <Button fill="clean" relevance="high"><CloseIcon size={30} /></Button>
+      </div>
+
+      <div>
+        <h2>Full</h2>
+        <Button full>Full</Button>
+      </div>
+
+      <div>
+        <h2>Text align</h2>
+        <Button textAlign="center" className={style.textAlign}>Center</Button>
+        <Button textAlign="left" className={style.textAlign}>Left</Button>
+        <Button textAlign="right" className={style.textAlign}>Right</Button>
+      </div>
+
+      <div>
+        <h2>Relevance</h2>
+        <Button relevance="high">High</Button>
+        <Button relevance="normal">Normal</Button>
+        <Button relevance="low">Low</Button>
       </div>
     </div>
   ))

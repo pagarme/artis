@@ -2,8 +2,8 @@
 @import "../typography.css";
 
 :root {
-  --addressForm-background-color: var(--color-grey-80);
-  --addressForm-border-color: var(--color-grey-60);
+  --addressForm-background-color: var(--color-grey-83);
+  --addressForm-border-color: var(--color-grey-68);
   --page-title-font-family: var(--primary-font-family);
   --page-title-font-size: var(--font-size-small);
   --page-title-color: var(--color-white);

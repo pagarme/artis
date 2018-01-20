@@ -1,0 +1,12 @@
+@import "../../src/theme-pagarme/index.css";
+
+.container {
+  padding: 20px;
+  background-color: #333333;
+}
+
+.container h2 {
+  color: #ffffff;
+  font-family: var(--primary-font-family);
+  font-style: var(--title-font-bold);
+}

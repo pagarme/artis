@@ -12,3 +12,128 @@
   text-transform: uppercase;
   letter-spacing: 1.4px;
 }
+
+.grid {
+  width: 100%;
+}
+
+.cardContainer {
+  flex-direction: column;
+  margin-top: 27px;
+}
+
+.cardForm {
+  margin-top: 17px;
+}
+
+.cardContainer > div {
+  margin: auto;
+}
+
+.barcode {
+  font-family: var(--barcode-font-family);
+  font-weight: var(--barcode-font-weight);
+  color: var(--barcode-color);
+  width: 100%;
+  text-align: center;
+  margin-top: 33px;
+  font-size: var(--amount-font-size);
+}
+
+.barcodeImg {
+  width: 100%;
+  height: 49px;
+  margin-top: 34px;
+}
+
+.generateBoletoContainer {
+  background-color: var(--generate-background-color);
+  width: 100%;
+  margin-top: 27px;
+  margin-right: 24px;
+  margin-left: 24px;
+  padding-left: 30px;
+  padding-right: 30px;
+  opacity: 0.7;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.optionsContainer {
+  margin-top: 27px;
+}
+
+.boletoOption {
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
+.emailForm {
+  font-size: 16px;
+  width: 100%;
+  margin-right: 50px;
+  margin-left: 50px;
+  background-color: var(--email-form-background);
+  padding: 21px;
+  border: 2px solid var(--email-form-border-color);
+  box-shadow: inset 0 0 1px 1px var(--email-form-box-shadow-color);
+}
+
+.emailFormTitle {
+  font-family: var(--email-form-title-font-family);
+  font-weight: var(--email-form-title-font-weight);
+  color: var(--email-form-title-color);
+  margin-top: 1px;
+  margin-bottom: 24px;
+  font-size: 16px;
+}
+
+.generateBoleto {
+  margin: auto;
+  margin-top: 31px;
+}
+
+.boletoAmount {
+  margin-top: 29px;
+}
+
+.amount {
+  color: var(--amount-color);
+  letter-spacing: 1.6px;
+  font-family: var(--amount-font-family);
+  font-weight: var(--amount-font-weight);
+  font-size: var(--amount-font-size);
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+}
+
+@media (--media-palm) {
+
+  .generateBoletoContainer {
+    background-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .boletoOption {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .emailForm {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .generateBoleto {
+    width: 100%;
+  }
+
+  .cardForm {
+    margin-top: 0;
+  }
+}

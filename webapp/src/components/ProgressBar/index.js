@@ -53,7 +53,7 @@ const ProgressBar = ({
   const totalPercent = clamp(
     0,
     100,
-    (100 / totalSteps) * activeStep,
+    (100 / totalSteps) * activeStep
   )
 
   const width = `${totalPercent}%`

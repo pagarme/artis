@@ -72,6 +72,7 @@ class Input extends React.Component {
     if (disabled) {
       onChange = null
     }
+
     const inputContainer = classnames(
       theme.inputContainer,
       {
@@ -94,7 +95,7 @@ class Input extends React.Component {
 
     const inputProps = merge(
       pick(
-        ['disabled', 'placeholder', 'value'],
+        ['disabled', 'placeholder', 'value', 'onFocus', 'onBlur', 'onKeyPress'],
         this.props
       ),
       {
@@ -104,9 +105,10 @@ class Input extends React.Component {
       }
     )
 
-    const inputType = type === 'text' || this.state.displayPassword
+    const inputType = this.state.displayPassword
       ? 'text'
-      : 'password'
+      : type
+
 
     return (
       <div className={containerClasses}>
