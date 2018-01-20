@@ -51,6 +51,7 @@ class Payment extends Component {
       cvv: '',
       nameEmail: '',
       email: '',
+      installments: 'placeholder',
       amount: 100,
       flipped: false,
       barcode: '',
@@ -60,6 +61,7 @@ class Payment extends Component {
     this.flipCard = this.flipCard.bind(this)
     this.handleSwitchChange = this.handleSwitchChange.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleInstallmentsChange = this.handleInstallmentsChange.bind(this)
     this.generateBoleto = this.generateBoleto.bind(this)
     this.toggleSendByEmail = this.toggleSendByEmail.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
@@ -67,6 +69,10 @@ class Payment extends Component {
 
   handleSwitchChange (selected) {
     this.setState({ selected })
+  }
+
+  handleInstallmentsChange (value) {
+    this.setState({ installments: value })
   }
 
   handleInputChange (e) {
@@ -157,6 +163,7 @@ class Payment extends Component {
                 label="Número do cartão"
                 value={cardNumber}
                 type="number"
+                mask="1111 1111 1111 1111"
                 max="9999999999999999999"
                 onChange={this.handleInputChange}
               />
@@ -190,7 +197,7 @@ class Payment extends Component {
                 name="expiration"
                 label="Data de validade"
                 hint=""
-                mask=""
+                mask="11/11"
                 value={expiration}
                 placeholder=""
                 onChange={this.handleInputChange}
@@ -208,6 +215,7 @@ class Payment extends Component {
                 value={cvv}
                 type="number"
                 maxLength="3"
+                mask="111"
                 onChange={this.handleInputChange}
                 onFocus={this.flipCard}
                 onBlur={this.flipCard}
@@ -226,7 +234,7 @@ class Payment extends Component {
                 name="installments"
                 label="Quantidade de Parcelas"
                 value={installments}
-                onChange={this.handleInputChange}
+                onChange={this.handleInstallmentsChange}
                 title="Selecione"
               />
             </Col>
