@@ -36,42 +36,49 @@ const render = apiValues => () => {
   )
 }
 
-const renderSimpleIntegration = (button) => {
-  const key = button.dataset.key
+const integrations = {
+  simple: (buttons) => {
+    buttons.forEach((button) => {
+      const key = button.dataset.key
 
-  const configs = {
-    image: button.dataset.image,
-    locale: button.dataset.locale,
-    theme: button.dataset.theme,
-  }
+      const configs = {
+        image: button.dataset.image,
+        locale: button.dataset.locale,
+        theme: button.dataset.theme,
+      }
 
-  const params = {
-    amount: parseFloat(button.dataset.amount),
-    paymentMethod: button.dataset.paymentMethod,
-  }
-  const apiValues = { key, configs, params }
+      const params = {
+        amount: parseFloat(button.dataset.amount),
+        paymentMethod: button.dataset.paymentMethod,
+      }
+      const apiValues = { key, configs, params }
 
-  if (validateApiValues(apiValues)) {
-    const open = render({ key, configs, params })
+      if (validateApiValues(apiValues)) {
+        const open = render({ key, configs, params })
 
-    button.addEventListener('click', (e) => {
-      e.preventDefault()
-      open()
+        button.addEventListener('click', (e) => {
+          e.preventDefault()
+          open()
+        })
+      }
     })
-  }
+  },
+  custom: () => {
+    window.Checkout = key => configs => params => () => {
+      const apiValues = { key, configs, params }
+
+      if (validateApiValues(apiValues)) {
+        render(apiValues)()
+      }
+    }
+  },
 }
 
 const checkoutFormButtons = document.querySelectorAll('.checkout-button')
 const isSimpleIntegration = checkoutFormButtons.length
 
 if (isSimpleIntegration) {
-  checkoutFormButtons.forEach(renderSimpleIntegration)
+  integrations.simple(checkoutFormButtons)
 } else {
-  window.Checkout = key => configs => params => () => {
-    const apiValues = { key, configs, params }
-
-    if (validateApiValues(apiValues)) {
-      render(apiValues)()
-    }
-  }
+  integrations.custom()
 }
