@@ -1,0 +1,28 @@
+@import "../colors.css";
+@import "../typography.css";
+@import "../spacing.css";
+
+:root {
+  --page-margin: var(--spacing-medium) var(--spacing-small);
+  --page-title-font-size: var(--font-size-xxlarge);
+  --page-title-color: var(--color-white);
+  --page-title-margin: 6px 0;
+
+  --confirmation-font-family: var(--primary-font-family);
+  --confirmation-success: var(--color-success);
+  --confirmation-error: var(--color-error);
+  --confirmation-info: var(--font-size-large);
+  --background-fill-color: var(--color-grey-83);
+
+  --field-color: var(--color-grey-39);
+  --field-margin-bottom: var(--spacing-tiny);
+  --field-font-size: var(--font-size-small);
+
+  --value-color: var(--color-white);
+  --value-font-size: var(--font-size-medium);
+
+  --success-icon-padding-top: 10px;
+  --error-icon-default-padding: 8px;
+  --confirmation-icon-default-padding: 20px;
+  --confirmation-icon-size: 80px;
+}

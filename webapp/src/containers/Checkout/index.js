@@ -14,6 +14,7 @@ import CustomerPage from '../../pages/Customer'
 import BillingPage from '../../pages/Billing'
 import ShippingPage from '../../pages/Shipping'
 import PaymentPage from '../../pages/Payment'
+import ConfirmationPage from '../../pages/Confirmation'
 
 import defaultLogo from '../../images/logo_pagarme.png'
 
@@ -28,6 +29,7 @@ const statechart = {
     billing: 'Endereço de Cobrança',
     shipping: 'Endereço de Entrega',
     payment: 'Forma de Pagamento',
+    confirmation: 'Confirmação',
   },
   states: {
     customer: {
@@ -67,17 +69,20 @@ const statechart = {
     payment: {
       on: {
         PREV: 'shipping',
-        SUCCESS: 'success',
+        NEXT: 'confirmation',
         ERROR: 'error',
       },
       onEntry: 'payment',
     },
-    success: {
-      onEntry: 'success',
+    confirmation: {
+      on: {
+        PREV: 'payment',
+      },
+      onEntry: 'confirmation',
     },
     error: {
       on: {
-        FETCH: 'payment',
+        PREV: 'payment',
       },
       onEntry: 'error',
     },
@@ -152,6 +157,18 @@ class Checkout extends Component {
         <Action show="payment">
           <PaymentPage
             title="Dados de Pagamento"
+          />
+        </Action>
+        <Action show="confirmation">
+          <ConfirmationPage
+            title="Confirmação"
+            success
+          />
+        </Action>
+        <Action show="error">
+          <ConfirmationPage
+            title="Confirmação"
+            success={false}
           />
         </Action>
       </React.Fragment>
