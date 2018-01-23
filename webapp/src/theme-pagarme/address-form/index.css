@@ -3,7 +3,8 @@
 .addressForm {
   background-color: var(--addressForm-background-color);
   border: 2px dashed var(--addressForm-border-color);
-  padding: 33px 24px;
+  padding: 33px 24px 33px 0;
+  margin: auto;
 }
 
 .hidden {
@@ -17,6 +18,7 @@
   color: var(--page-title-color);
   text-transform: uppercase;
   letter-spacing: 1.4px;
+  padding-bottom: var(--page-title-padding-bottom);
 }
 
 .buttonsWrapper {
