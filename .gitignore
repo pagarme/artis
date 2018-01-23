@@ -2,3 +2,6 @@
 Thumbs.db
 .vs
 .nyc_output
+webapp/package-lock.json
+node_modules/
+package-lock.json

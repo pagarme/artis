@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
+import Form from '../components/Form'
 
 import { Grid, Row, Col } from '../components/Grid'
 import Input from '../components/Input'
@@ -10,6 +11,14 @@ import Dropdown from '../components/Dropdown'
 import options from '../utils/data/states'
 import getAddress from '../utils/helpers/getAddress'
 import removeZipcodeMask from '../utils/helpers/removeZipcodeMask'
+
+import {
+  requiredValidation,
+  numbersValidation,
+  maxLengthValidation,
+  lettersValidation,
+  minLengthValidation,
+} from '../utils/validators/'
 
 const applyThemr = themr('UIBillingPage')
 
@@ -106,103 +115,142 @@ class BillingPage extends Component {
           [theme.noMarginTop]: isBigScreen,
         })}
       >
-        <Row className={theme.title}>
-          {this.props.title}
-        </Row>
-        <Row>
-          <Input
-            name="zipcode"
-            label="CEP"
-            mask="11111-111"
-            value={zipcode}
-            error={zipcodeError}
-            placeholder="Digite o CEP"
-            onChange={this.handleZipcodeChange}
-            onBlur={this.handleZipcodeBlur}
-          />
-        </Row>
-        <Row>
-          <Input
-            name="street"
-            label="Rua"
-            value={street}
-            placeholder="Digite o endereço"
-            onChange={this.handleInputChange}
-          />
-        </Row>
-        <Row>
-          <Col
-            tv={smallColSize}
-            desk={smallColSize}
-            tablet={smallColSize}
-            palm={smallColSize}
-          >
+        <Form
+          validation={{
+            zipcode: [
+              requiredValidation,
+              minLengthValidation(8),
+              maxLengthValidation(8),
+            ],
+            street: [
+              requiredValidation,
+              maxLengthValidation(100),
+            ],
+            streetNumber: [
+              requiredValidation,
+              numbersValidation,
+              maxLengthValidation(5),
+            ],
+            streetComplement: [
+              maxLengthValidation(100),
+            ],
+            neighborhood: [
+              requiredValidation,
+              maxLengthValidation(100),
+            ],
+            city: [
+              requiredValidation,
+              maxLengthValidation(100),
+              lettersValidation,
+            ],
+            state: [
+              requiredValidation,
+              maxLengthValidation(100),
+              lettersValidation,
+            ],
+          }}
+        >
+          <Row className={theme.title}>
+            {this.props.title}
+          </Row>
+          <Row>
             <Input
-              inputRef={this.handleNumberInputRef}
-              name="number"
-              label="Nº"
+              name="zipcode"
+              label="CEP"
+              mask="11111-111"
+              value={zipcode}
+              error={zipcodeError}
+              placeholder="Digite o CEP"
+              onChange={this.handleZipcodeChange}
+              onBlur={this.handleZipcodeBlur}
+            />
+          </Row>
+          <Row>
+            <Input
+              name="street"
+              label="Endereço"
+              hint="Rua, Av, Praça ou Travessa"
+              value={street}
+              placeholder="Digite o endereço"
+              onChange={this.handleInputChange}
+            />
+          </Row>
+          <Row>
+            <Col
+              tv={smallColSize}
+              desk={smallColSize}
+              tablet={smallColSize}
+              palm={smallColSize}
+            >
+              <Input
+                inputRef={this.handleStreetNumberInputRef}
+                name="streetNumber"
+                label="Nº"
+                hint=""
+                value={streetNumber}
+                placeholder="Digite o número"
+                onChange={this.handleInputChange}
+              />
+            </Col>
+            <Col
+              tv={bigColSize}
+              desk={bigColSize}
+              tablet={bigColSize}
+              palm={bigColSize}
+            >
+              <Input
+                name="streetComplement"
+                label="Complemento"
+                hint=""
+                value={streetComplement}
+                placeholder="Digite o complemento do endereço"
+                onChange={this.handleInputChange}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Input
+              name="neighborhood"
+              label="Bairro"
               hint=""
-              value={number}
-              placeholder="Digite o número"
+              value={neighborhood}
+              placeholder="Digite o bairro"
               onChange={this.handleInputChange}
             />
-          </Col>
-          <Col
-            tv={bigColSize}
-            desk={bigColSize}
-            tablet={bigColSize}
-            palm={bigColSize}
-          >
-            <Input
-              name="complement"
-              label="Complemento"
-              hint=""
-              value={complement}
-              placeholder="Digite o complemento do endereço"
-              onChange={this.handleInputChange}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Input
-            name="neighborhood"
-            label="Bairro"
-            value={neighborhood}
-            placeholder="Digite o bairro"
-            onChange={this.handleInputChange}
-          />
-        </Row>
-        <Row overflowVisible>
-          <Col
-            tv={bigColSize}
-            desk={bigColSize}
-            tablet={bigColSize}
-            palm={bigColSize}
-          >
-            <Input
-              name="city"
-              label="Cidade"
-              value={city}
-              placeholder="Digite a cidade"
-              onChange={this.handleInputChange}
-            />
-          </Col>
-          <Col
-            tv={smallColSize}
-            desk={smallColSize}
-            tablet={smallColSize}
-            palm={smallColSize}
-            overflowVisible
-          >
-            <Dropdown
-              options={options}
-              id="state"
-              label="UF"
-              value={state}
-              onChange={this.handleStateChange}
-            />
-          </Col>
-        </Row>
+          </Row>
+          <Row>
+            <Col
+              tv={bigColSize}
+              desk={bigColSize}
+              tablet={bigColSize}
+              palm={bigColSize}
+            >
+              <Input
+                name="city"
+                label="Cidade"
+                hint=""
+                value={city}
+                placeholder="Digite a cidade"
+                onChange={this.handleInputChange}
+              />
+            </Col>
+            <Col
+              tv={smallColSize}
+              desk={smallColSize}
+              tablet={smallColSize}
+              palm={smallColSize}
+            >
+              <Dropdown
+                options={options}
+                name="state"
+                label="Estado"
+                value={state}
+                onChange={this.handleStateChange}
+                title="Selecione"
+              />
+            </Col>
+          </Row>
+        </Form>
       </Grid>
     )
   }

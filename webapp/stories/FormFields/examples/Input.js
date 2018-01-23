@@ -3,6 +3,15 @@ import { action } from '@storybook/addon-actions'
 import FaAndroid from 'react-icons/lib/fa/android'
 
 import Input from '../../../src/components/Input'
+import Form from '../../../src/components/Form'
+
+function letters (value) {
+  return (!/^[a-zA-Z]*$/g.test(value)) ? 'Esse campo só permite letras' : false
+}
+
+function required (value) {
+  return value ? false : 'Esse campo é obrigatório'
+}
 
 class InputState extends React.Component {
   constructor (props) {
@@ -127,6 +136,21 @@ const InputExamples = () => (
         onChange={action('text changed')}
         disabled
       />
+    </section>
+
+    <section>
+      <h3>Letters Validation</h3>
+      <Form validation={{
+        validationInput: [letters, required],
+      }}
+      >
+        <Input
+          name="validationInput"
+          type="text"
+          label="Seu nome"
+          placeholder="Digite seu nome"
+        />
+      </Form>
     </section>
   </div>
 )

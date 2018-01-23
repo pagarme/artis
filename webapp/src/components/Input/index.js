@@ -73,7 +73,6 @@ class Input extends React.Component {
     if (disabled) {
       onChange = null
     }
-
     const inputContainer = classnames(
       theme.inputContainer,
       {
