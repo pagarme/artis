@@ -104,12 +104,12 @@ class BillingPage extends Component {
       state,
     } = this.state
 
-    const { theme, isDesktop } = this.props
+    const { theme, isBigScreen } = this.props
 
     return (
       <Grid className={
         classNames(theme.page, {
-          [theme.noMarginTop]: isDesktop,
+          [theme.noMarginTop]: isBigScreen,
         })}
       >
         <Row className={theme.title}>
@@ -223,12 +223,12 @@ BillingPage.propTypes = {
     title: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
-  isDesktop: PropTypes.bool,
+  isBigScreen: PropTypes.bool,
 }
 
 BillingPage.defaultProps = {
   theme: {},
-  isDesktop: false,
+  isBigScreen: false,
 }
 
 export default applyThemr(BillingPage)

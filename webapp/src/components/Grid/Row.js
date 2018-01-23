@@ -12,6 +12,7 @@ const classnames = ({
   alignCenter,
   className,
   hidden,
+  alignEnd,
 }) =>
   classNames(
     className,
@@ -20,6 +21,7 @@ const classnames = ({
       [theme.flex]: flex,
       [theme.stretch]: stretch,
       [theme.alignItensCenter]: alignCenter,
+      [theme.alignEnd]: alignEnd,
       [theme.hidden]: hidden,
     }
   )
@@ -32,8 +34,9 @@ const Row = ({
   alignCenter,
   className,
   hidden,
+  alignEnd,
 }) => (
-  <div className={classnames({ theme, flex, stretch, alignCenter, className, hidden })}>
+  <div className={classnames({ theme, flex, stretch, alignCenter, className, hidden, alignEnd })}>
     {children}
   </div>
 )
@@ -46,6 +49,7 @@ Row.propTypes = {
     alignItensCenter: PropTypes.string,
     hidden: PropTypes.string,
   }).isRequired,
+  alignEnd: PropTypes.bool,
   alignCenter: PropTypes.bool,
   children: PropTypes.node,
   flex: PropTypes.bool,
@@ -55,6 +59,7 @@ Row.propTypes = {
 }
 
 Row.defaultProps = {
+  alignEnd: false,
   alignCenter: false,
   children: null,
   flex: false,

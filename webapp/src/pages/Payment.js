@@ -10,11 +10,10 @@ import Dropdown from './../components/Dropdown'
 import Button from './../components/Button'
 import { amountBRLParse } from './../utils/parsers'
 import installmentsData from './../utils/installments'
+import isBigScreen from './../utils/isBigScreen'
 import Barcode from './../images/barcode.svg'
 
 const applyThemr = themr('UIPaymentPage')
-
-const isDesktop = window.innerWidth > 640
 
 const isCreditCard = ({ value }) => (value === 'creditcard')
 
@@ -133,7 +132,7 @@ class Payment extends Component {
           palm={defaultColSize}
           alignCenter
           className={theme.cardContainer}
-          hidden={!isDesktop}
+          hidden={!isBigScreen}
         >
           <PaymentCard
             number={cardNumber || defaultCardNumber}
@@ -239,7 +238,7 @@ class Payment extends Component {
               />
             </Col>
           </Row>
-          <Row hidden={isDesktop}>
+          <Row hidden={isBigScreen}>
             <Col
               tv={defaultColSize}
               desk={defaultColSize}
@@ -440,7 +439,7 @@ class Payment extends Component {
         className={theme.optionsContainer}
       >
         { showEmailForm ? this.renderEmailForm() : this.renderOptions() }
-        <Row hidden={isDesktop} >
+        <Row hidden={isBigScreen} >
           <Col
             tv={defaultColSize}
             desk={defaultColSize}
@@ -450,7 +449,7 @@ class Payment extends Component {
             { this.renderAmount() }
           </Col>
         </Row>
-        <Row hidden={isDesktop} >
+        <Row hidden={isBigScreen} >
           <Col
             tv={defaultColSize}
             desk={defaultColSize}
@@ -478,11 +477,11 @@ class Payment extends Component {
       barcode,
     } = this.state
 
-    if (!isDesktop && !barcode) {
+    if (!isBigScreen && !barcode) {
       return this.renderGenerateBoleto()
     }
 
-    if (!isDesktop && barcode) {
+    if (!isBigScreen && barcode) {
       return this.renderBoletoOptions()
     }
 

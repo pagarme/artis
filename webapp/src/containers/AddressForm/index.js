@@ -10,12 +10,13 @@ import Button from '../../components/Button'
 
 import getAddress from '../../utils/getAddress'
 import removeZipcodeMask from '../../utils/removeZipcodeMask'
+import isBigScreen from '../../utils/isBigScreen'
 
 const applyThemr = themr('UIAddressForm')
 
-const largeColSize = 12
 const mediumColSize = 6
 const smallColSize = 4
+const oneQuarterColSize = 3
 const tinyColSize = 2
 
 const defaultAddress = {
@@ -244,24 +245,40 @@ class AddressForm extends Component {
               />
             </Col>
           </Row>
-          <Row className={theme.buttonsWrapper}>
+          <Row
+            className={theme.buttonsWrapper}
+            alignEnd
+          >
             <Col
-              tv={largeColSize}
-              desk={largeColSize}
-              tablet={largeColSize}
-              palm={largeColSize}
-              alignEnd
+              tv={oneQuarterColSize}
+              desk={oneQuarterColSize}
+              tablet={oneQuarterColSize}
+              palm={mediumColSize}
             >
               <Button
-                size="extra-large"
+                size={'extra-large'}
                 fill="outline"
-                className={theme.cancelButton}
+                className={classNames({
+                  [theme.actionButton]: !isBigScreen,
+                })}
+                full
                 onClick={onCancel.bind(this)}
               >
                 Cancelar
               </Button>
+            </Col>
+            <Col
+              tv={oneQuarterColSize}
+              desk={oneQuarterColSize}
+              tablet={oneQuarterColSize}
+              palm={mediumColSize}
+            >
               <Button
-                size="extra-large"
+                className={classNames({
+                  [theme.actionButton]: !isBigScreen,
+                })}
+                full
+                size={'extra-large'}
               >
                 Cadastrar
               </Button>

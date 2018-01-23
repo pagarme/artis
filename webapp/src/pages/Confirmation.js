@@ -6,10 +6,9 @@ import classNames from 'classnames'
 import { Grid, Row, Col } from '../components/Grid'
 import successIcon from '../images/success-icon.png'
 import errorIcon from '../images/error-icon.png'
+import isBigScreen from '../utils/isBigScreen'
 
 const applyThemr = themr('UIConfirmationPage')
-
-const isDesktop = window.innerWidth > 640
 
 const iconColSize = 4
 const contentColSize = 8
@@ -34,7 +33,7 @@ class Confirmation extends React.Component {
           <h4 className={
             classNames(
               {
-                [theme.textAligned]: !isDesktop,
+                [theme.textAligned]: !isBigScreen,
               },
               theme.success,
             )}
@@ -42,7 +41,7 @@ class Confirmation extends React.Component {
             Seu pagamento foi concluído com sucesso
           </h4>
         </Row>
-        {isDesktop && <Row>
+        {isBigScreen && <Row>
           <Col
             tv={mediumColSize}
             desk={mediumColSize}
@@ -108,7 +107,7 @@ class Confirmation extends React.Component {
         classNames(
           theme.alignSelfCenter,
           {
-            [theme.mediumSize]: isDesktop,
+            [theme.mediumSize]: isBigScreen,
           },
         )
       }
@@ -117,7 +116,7 @@ class Confirmation extends React.Component {
           <h4 className={
             classNames(
               {
-                [theme.textAligned]: !isDesktop,
+                [theme.textAligned]: !isBigScreen,
               },
               theme.error,
             )}
@@ -127,7 +126,7 @@ class Confirmation extends React.Component {
           <p className={
             classNames(
               {
-                [theme.textAligned]: !isDesktop,
+                [theme.textAligned]: !isBigScreen,
               },
               theme.info,
             )}

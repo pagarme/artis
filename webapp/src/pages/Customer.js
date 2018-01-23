@@ -6,6 +6,8 @@ import { Grid, Row, Col } from '../components/Grid'
 import Input from '../components/Input'
 import BillingPage from './Billing'
 
+import isBigScreen from '../utils/isBigScreen'
+
 const applyThemr = themr('UICustomerPage')
 const defaultColSize = 12
 const mediumColSize = 6
@@ -38,9 +40,11 @@ class CustomerPage extends Component {
       phoneNumber,
     } = this.state
 
-    const { desktop, theme } = this.props
+    const { theme } = this.props
 
-    const sizeWithDesktop = desktop ? mediumColSize : defaultColSize
+    const sizeWithDesktop = isBigScreen
+      ? mediumColSize
+      : defaultColSize
 
     return (
       <Grid className={theme.page}>
@@ -91,7 +95,7 @@ class CustomerPage extends Component {
             />
           </Row>
         </Col>
-        {desktop &&
+        {isBigScreen &&
           <Col
             tv={mediumColSize}
             desk={mediumColSize}
@@ -99,7 +103,7 @@ class CustomerPage extends Component {
           >
             <BillingPage
               title="Endereço de Cobrança"
-              isDesktop
+              isBigScreen
             />
           </Col>
         }
@@ -114,7 +118,6 @@ CustomerPage.propTypes = {
     title: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
-  desktop: PropTypes.bool.isRequired,
 }
 
 CustomerPage.defaultProps = {
