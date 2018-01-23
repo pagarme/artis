@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div id="wrapper"></div>
     <a id="switch" href="/simple.html">Switch to simple</button>
   </body>
   <script src="/static/js/bundle.js"></script>
@@ -15,8 +14,6 @@
     const create = Checkout('some_key')
 
     const checkout = create({
-      target: 'wrapper',
-      image: '',
       locale: 'br',
       theme: 'dark'
     })

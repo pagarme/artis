@@ -240,6 +240,9 @@ Checkout.propTypes = {
 
 Checkout.defaultProps = {
   theme: {},
+  configs: {
+    target: '',
+  },
   apiValues: {
     configs: {
       image: '',

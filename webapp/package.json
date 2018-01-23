@@ -44,6 +44,7 @@
     "gh-pages": "1.1.0",
     "html-webpack-plugin": "2.30.1",
     "jest": "22.0.4",
+    "joi-browser": "13.0.1",
     "nyc": "11.4.1",
     "postcss-cssnext": "3.0.2",
     "postcss-flexbugs-fixes": "3.2.0",
