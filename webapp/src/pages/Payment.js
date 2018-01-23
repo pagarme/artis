@@ -8,8 +8,8 @@ import SegmentedSwitch from './../components/SegmentedSwitch'
 import Input from './../components/Input'
 import Dropdown from './../components/Dropdown'
 import Button from './../components/Button'
-import { amountBRLParse } from './../helpers/parsers'
-import installmentsData from './../helpers/installments'
+import { amountBRLParse } from './../utils/parsers'
+import installmentsData from './../utils/installments'
 import Barcode from './../images/barcode.svg'
 
 const applyThemr = themr('UIPaymentPage')
