@@ -13,7 +13,6 @@ import removeZipcodeMask from '../utils/removeZipcodeMask'
 
 const applyThemr = themr('UIBillingPage')
 
-const defaultColSize = 12
 const smallColSize = 4
 const bigColSize = 8
 
@@ -113,51 +112,30 @@ class BillingPage extends Component {
           [theme.noMarginTop]: isDesktop,
         })}
       >
-        <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-            className={theme.title}
-            alignCenter
-          >
-            {this.props.title}
-          </Col>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Input
-              name="zipcode"
-              label="CEP"
-              mask="11111-111"
-              value={zipcode}
-              error={zipcodeError}
-              placeholder="Digite o CEP"
-              onChange={this.handleZipcodeChange}
-              onBlur={this.handleZipcodeBlur}
-            />
-          </Col>
+        <Row className={theme.title}>
+          {this.props.title}
         </Row>
         <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Input
-              name="street"
-              label="Logradouro"
-              hint="Rua, Av, Praça ou Travessa"
-              value={street}
-              placeholder="Digite o logradouro"
-              onChange={this.handleInputChange}
-            />
-          </Col>
+          <Input
+            name="zipcode"
+            label="CEP"
+            mask="11111-111"
+            value={zipcode}
+            error={zipcodeError}
+            placeholder="Digite o CEP"
+            onChange={this.handleZipcodeChange}
+            onBlur={this.handleZipcodeBlur}
+          />
+        </Row>
+        <Row>
+          <Input
+            name="street"
+            label="Logradouro"
+            hint="Rua, Av, Praça ou Travessa"
+            value={street}
+            placeholder="Digite o logradouro"
+            onChange={this.handleInputChange}
+          />
         </Row>
         <Row>
           <Col
@@ -193,21 +171,14 @@ class BillingPage extends Component {
           </Col>
         </Row>
         <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Input
-              name="neighborhood"
-              label="Bairro"
-              hint=""
-              value={neighborhood}
-              placeholder="Digite o bairro"
-              onChange={this.handleInputChange}
-            />
-          </Col>
+          <Input
+            name="neighborhood"
+            label="Bairro"
+            hint=""
+            value={neighborhood}
+            placeholder="Digite o bairro"
+            onChange={this.handleInputChange}
+          />
         </Row>
         <Row>
           <Col
