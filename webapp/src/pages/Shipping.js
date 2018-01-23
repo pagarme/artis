@@ -74,40 +74,33 @@ class ShippingPage extends Component {
         <Grid
           hidden={this.state.openAddressForm}
         >
+          <Row className={theme.title}>
+            {this.props.title}
+          </Row>
           <Row>
-            <Col
-              tv={largeColSize}
-              desk={largeColSize}
-              tablet={largeColSize}
-              palm={largeColSize}
-              className={theme.title}
-              alignLeft
-            >
-              {this.props.title}
-            </Col>
             <AddressOptions
               addresses={addresses}
               onChange={this.onChangeAddress}
             />
-            <Row>
-              <Col
-                tv={mediumColSize}
-                desk={mediumColSize}
-                tablet={mediumColSize}
-                palm={largeColSize}
+          </Row>
+          <Row>
+            <Col
+              tv={mediumColSize}
+              desk={mediumColSize}
+              tablet={mediumColSize}
+              palm={largeColSize}
+            >
+              <Button
+                size="extra-large"
+                fill="double"
+                relevance="low"
+                className={theme.btnAddNewAddress}
+                onClick={this.toggleOpenAddressForm}
               >
-                <Button
-                  size="extra-large"
-                  fill="double"
-                  relevance="low"
-                  className={theme.btnAddNewAddress}
-                  onClick={this.toggleOpenAddressForm}
-                >
-                  <PlusIcon />
-                  Cadastrar novo endereço de entrega
-                </Button>
-              </Col>
-            </Row>
+                <PlusIcon />
+                Cadastrar novo endereço de entrega
+              </Button>
+            </Col>
           </Row>
         </Grid>
       </div>
@@ -120,12 +113,6 @@ ShippingPage.propTypes = {
     page: PropTypes.string,
     title: PropTypes.string,
     btnAddNewAddress: PropTypes.string,
-    field: PropTypes.string,
-    value: PropTypes.string,
-    addressData: PropTypes.string,
-    addressName: PropTypes.string,
-    selected: PropTypes.string,
-    optionBox: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
   footerButtonVisible: PropTypes.func,
