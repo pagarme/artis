@@ -3,10 +3,20 @@ import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 
-import { Grid, Row, Col, Input } from '../components'
+import { Grid, Row, Col, Input, Form } from '../components'
 
 import BillingPage from './Billing'
 import { addPageInfo } from '../actions'
+
+import {
+  requiredValidation,
+  lettersValidation,
+  emailValidation,
+  cpfValidation,
+  phoneValidation,
+  maxLengthValidation,
+  minLengthValidation,
+} from '../utils/validators/'
 
 const applyThemr = themr('UICustomerPage')
 const defaultColSize = 12
@@ -54,47 +64,112 @@ class CustomerPage extends Component {
           desk={sizeWithDesktop}
           tablet={sizeWithDesktop}
         >
-          <Row className={theme.title} alignCenter>
-            { this.props.title }
-          </Row>
-          <Row>
-            <Input
-              name="name"
-              label="Nome"
-              value={name}
-              placeholder="Digite seu nome"
-              onChange={this.handleInputChange}
-            />
-          </Row>
-          <Row>
-            <Input
-              name="email"
-              label="E-mail"
-              value={email}
-              placeholder="Digite seu e-mail"
-              onChange={this.handleInputChange}
-            />
-          </Row>
-          <Row>
-            <Input
-              name="documentNumber"
-              label="CPF"
-              mask="111.111.111-11"
-              value={documentNumber}
-              placeholder="Digite seu CPF"
-              onChange={this.handleInputChange}
-            />
-          </Row>
-          <Row>
-            <Input
-              name="phoneNumber"
-              label="DDD + Telefone"
-              mask="(11) 11111-1111"
-              value={phoneNumber}
-              placeholder="Digite seu telefone"
-              onChange={this.handleInputChange}
-            />
-          </Row>
+          <Form
+            validation={{
+              name: [
+                requiredValidation,
+                lettersValidation,
+                maxLengthValidation(100),
+              ],
+              email: [
+                requiredValidation,
+                emailValidation,
+                maxLengthValidation(100),
+              ],
+              documentNumber: [
+                requiredValidation,
+                cpfValidation,
+                minLengthValidation(11),
+                maxLengthValidation(11),
+              ],
+              phoneNumber: [
+                requiredValidation,
+                phoneValidation,
+                maxLengthValidation(9),
+              ],
+            }}
+          >
+            <Row>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+                className={theme.title}
+                alignCenter
+              >
+                { this.props.title }
+              </Col>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                <Input
+                  name="name"
+                  label="Nome"
+                  hint=""
+                  value={name}
+                  placeholder="Digite seu nome"
+                  onChange={this.handleInputChange}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                <Input
+                  name="email"
+                  label="E-mail"
+                  hint=""
+                  value={email}
+                  placeholder="Digite seu e-mail"
+                  onChange={this.handleInputChange}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                <Input
+                  name="documentNumber"
+                  label="CPF"
+                  hint=""
+                  mask="111.111.111-11"
+                  value={documentNumber}
+                  placeholder="Digite seu CPF"
+                  onChange={this.handleInputChange}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                <Input
+                  name="phoneNumber"
+                  label="DDD + Telefone"
+                  hint=""
+                  mask="(11) 11111-1111"
+                  value={phoneNumber}
+                  placeholder="Digite seu telefone"
+                  onChange={this.handleInputChange}
+                />
+              </Col>
+            </Row>
+          </Form>
         </Col>
         {this.props.isBigScreen &&
           <Col
