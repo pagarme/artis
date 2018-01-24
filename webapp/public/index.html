@@ -11,17 +11,72 @@
   </body>
   <script src="/static/js/bundle.js"></script>
   <script>
-    const create = Checkout('some_key')
+  const key = 'SOME_KEY'
 
-    const checkout = create({
-      locale: 'br',
-      theme: 'dark'
-    })
+  const configs = {
+    image: './pagarme.png',
+    primaryColor: '323232',
+    secondaryColor: '323232',
+  }
 
-    const open = checkout({
-      amount: 5513,
-      paymentMethod: 'creditcard'
-    })
+  const params = {
+    amount: 5000,
+    softDescriptor: 'Pagar.me',
+    paymentMethods: [
+      'boleto',
+      'creditcard',
+    ],
+    postbackUrl: 'http://pagar.me',
+    boleto: {
+      instructions: 'Use this field to add instructions on boleto',
+      discountAmount: 1000,
+      discountPercentage: 25,
+      expirationAt: '2018-01-30',
+    },
+    creditcard: {
+      brands: [
+        'elo',
+        'amex',
+        'diners',
+        'jcb',
+        'visa',
+        'mastercard',
+      ],
+      maxInstallments: 12,
+      freeInstallment: 3,
+      defaultInstallment: 1,
+    },
+    customer: {
+      name: 'Dan Abramov',
+      documentNumber: '44455522299',
+      email: 'mercurio@pagar.me',
+      phoneNumber: '1130442277',
+    },
+    billing: {
+      street: 'Rua Fidêncio Ramos',
+      number: '308',
+      complement: 'Pagar.me',
+      neighborhood: 'Vila Olimpia',
+      city: 'São Paulo',
+      state: 'SP',
+      zipcode: '04551010',
+    },
+    items: [
+      {
+        id: 1,
+        title: 'Red pill',
+        unitPrice: 5000,
+        quantity: 1,
+        tangible: true,
+      },
+    ],
+  }
+
+    const create = Checkout(key)
+
+    const checkout = create(configs)
+
+    const open = checkout(params)
 
     open()
   </script>

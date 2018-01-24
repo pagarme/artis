@@ -16,30 +16,40 @@ const applyThemr = themr('UIBillingPage')
 const smallColSize = 4
 const bigColSize = 8
 
-const defaultAddress = {
-  street: '',
-  streetNumber: '',
-  streetComplement: '',
-  neighborhood: '',
-  city: '',
-  state: 'placeholder',
-}
-
 class BillingPage extends Component {
   constructor (props) {
     super(props)
 
+    const {
+      street,
+      number,
+      complement,
+      neighborhood,
+      city,
+      state,
+      zipcode,
+    } = this.props
+
     this.state = {
-      ...defaultAddress,
-      zipcode: '',
+      street,
+      number,
+      complement,
+      neighborhood,
+      city,
+      state,
+      zipcode,
       zipcodeError: '',
     }
 
     this.handleStateChange = this.handleStateChange.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleStreetNumberInputRef = this.handleStreetNumberInputRef.bind(this)
+    this.handleNumberInputRef = this.handleNumberInputRef.bind(this)
     this.handleZipcodeChange = this.handleZipcodeChange.bind(this)
     this.handleZipcodeBlur = this.handleZipcodeBlur.bind(this)
+  }
+
+  componentWillUnmount () {
+    this.props.handlePageChange(this.state, 'billing')
   }
 
   handleStateChange (value) {
@@ -52,8 +62,8 @@ class BillingPage extends Component {
     this.setState({ [name]: value })
   }
 
-  handleStreetNumberInputRef (input) {
-    this.streetNumberInput = input
+  handleNumberInputRef (input) {
+    this.NumberInput = input
   }
 
   handleZipcodeChange (e) {
@@ -78,14 +88,14 @@ class BillingPage extends Component {
         zipcodeError: '',
       })
 
-      this.streetNumberInput.focus()
+      this.NumberInput.focus()
     }
 
     const handleError = error =>
-      this.setState({
-        ...defaultAddress,
+      this.setState(prevState => ({
+        ...prevState,
         zipcodeError: error.message,
-      })
+      }))
 
     getAddress(zipcode)
       .then(updateAddress)
@@ -97,8 +107,8 @@ class BillingPage extends Component {
       zipcode,
       zipcodeError,
       street,
-      streetNumber,
-      streetComplement,
+      number,
+      complement,
       neighborhood,
       city,
       state,
@@ -145,11 +155,11 @@ class BillingPage extends Component {
             palm={smallColSize}
           >
             <Input
-              inputRef={this.handleStreetNumberInputRef}
-              name="streetNumber"
+              inputRef={this.handleNumberInputRef}
+              name="number"
               label="Nº"
               hint=""
-              value={streetNumber}
+              value={number}
               placeholder="Digite o número"
               onChange={this.handleInputChange}
             />
@@ -161,10 +171,10 @@ class BillingPage extends Component {
             palm={bigColSize}
           >
             <Input
-              name="streetComplement"
+              name="complement"
               label="Complemento"
               hint=""
-              value={streetComplement}
+              value={complement}
               placeholder="Digite o complemento do endereço"
               onChange={this.handleInputChange}
             />
@@ -224,11 +234,26 @@ BillingPage.propTypes = {
   }),
   title: PropTypes.string.isRequired,
   isBigScreen: PropTypes.bool,
+  handlePageChange: PropTypes.func.isRequired,
+  street: PropTypes.string,
+  number: PropTypes.string,
+  complement: PropTypes.string,
+  neighborhood: PropTypes.string,
+  city: PropTypes.string,
+  state: PropTypes.string,
+  zipcode: PropTypes.string,
 }
 
 BillingPage.defaultProps = {
   theme: {},
   isBigScreen: false,
+  street: '',
+  number: '',
+  complement: '',
+  neighborhood: '',
+  city: '',
+  state: 'placeholder',
+  zipcode: '',
 }
 
 export default applyThemr(BillingPage)

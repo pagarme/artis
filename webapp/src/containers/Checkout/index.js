@@ -93,14 +93,18 @@ class Checkout extends Component {
   constructor (props) {
     super(props)
 
+    const { params } = this.props.apiValues
+
     this.state = {
       activePage: 0,
       closingEffect: false,
       isBigScreen: true,
       footerButtonVisible: true,
+      checkoutData: params,
     }
 
     this.handleFooterButton = this.handleFooterButton.bind(this)
+    this.handlePageChange = this.handlePageChange.bind(this)
     this.updateDimensions = this.updateDimensions.bind(this)
   }
 
@@ -157,8 +161,22 @@ class Checkout extends Component {
     this.setState({ footerButtonVisible })
   }
 
+  handlePageChange (pageState, page) {
+    this.setState(prevState => ({
+      ...prevState,
+      checkoutData: {
+        ...prevState.checkoutData,
+        [page]: {
+          ...prevState.checkoutData[page],
+          ...pageState,
+        },
+      },
+    }))
+  }
+
   renderPages () {
     const { isBigScreen } = this.state
+    const { customer, billing } = this.state.checkoutData
 
     return (
       <React.Fragment>
@@ -166,11 +184,16 @@ class Checkout extends Component {
           <CustomerPage
             title="Dados Pessoais"
             isBigScreen={isBigScreen}
+            handlePageChange={this.handlePageChange}
+            {...customer}
+            billingData={billing}
           />
         </Action>
         <Action show="billing">
           <BillingPage
             title="Endereço de Cobrança"
+            handlePageChange={this.handlePageChange}
+            {...billing}
           />
         </Action>
         <Action show="shipping">
@@ -278,7 +301,9 @@ Checkout.propTypes = {
     }).isRequired,
     params: PropTypes.shape({
       amount: PropTypes.number.isRequired,
-      paymentMethod: PropTypes.string.isRequired,
+      paymentMethods: PropTypes.arrayOf(
+        PropTypes.string,
+      ).isRequired,
     }),
   }).isRequired,
   targetElement: PropTypes.object.isRequired,

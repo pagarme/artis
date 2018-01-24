@@ -14,14 +14,25 @@ class CustomerPage extends Component {
   constructor (props) {
     super(props)
 
+    const {
+      name,
+      email,
+      documentNumber,
+      phoneNumber,
+    } = this.props
+
     this.state = {
-      name: '',
-      email: '',
-      documentNumber: '',
-      phoneNumber: '',
+      name,
+      email,
+      documentNumber,
+      phoneNumber,
     }
 
     this.handleInputChange = this.handleInputChange.bind(this)
+  }
+
+  componentWillUnmount () {
+    this.props.handlePageChange(this.state, 'customer')
   }
 
   handleInputChange (e) {
@@ -38,7 +49,7 @@ class CustomerPage extends Component {
       phoneNumber,
     } = this.state
 
-    const { theme } = this.props
+    const { theme, billingData, handlePageChange } = this.props
 
     const sizeWithDesktop = this.props.isBigScreen
       ? mediumColSize
@@ -102,6 +113,8 @@ class CustomerPage extends Component {
             <BillingPage
               title="Endereço de Cobrança"
               isBigScreen
+              {...billingData}
+              handlePageChange={handlePageChange}
             />
           </Col>
         }
@@ -115,12 +128,23 @@ CustomerPage.propTypes = {
     page: PropTypes.string,
     title: PropTypes.string,
   }),
+  billingData: PropTypes.object, // eslint-disable-line
   title: PropTypes.string.isRequired,
   isBigScreen: PropTypes.bool.isRequired,
+  name: PropTypes.string,
+  email: PropTypes.string,
+  documentNumber: PropTypes.string,
+  phoneNumber: PropTypes.string,
+  handlePageChange: PropTypes.func.isRequired,
 }
 
 CustomerPage.defaultProps = {
   theme: {},
+  billingData: {},
+  name: '',
+  email: '',
+  documentNumber: '',
+  phoneNumber: '',
 }
 
 export default applyThemr(CustomerPage)
