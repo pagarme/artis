@@ -2,11 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
-import { Grid, Row, Col } from '../Grid'
+import { Col } from '../Grid'
 
 const largeColSize = 12
 const mediumColSize = 6
-const smallColSize = 4
 
 const applyThemr = themr('UIAddressOptions')
 
@@ -52,91 +51,21 @@ class AddressOptions extends React.Component {
             {address.name}
           </div>
           <div className={theme.addressData}>
-            <Grid>
-              <Row>
-                <Col
-                  tv={largeColSize}
-                  desk={largeColSize}
-                  tablet={largeColSize}
-                  palm={largeColSize}
-                >
-                  <div className={theme.field}>Rua</div>
-                  <div className={theme.value}>
-                    {address.street}
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <div className={theme.field}>Nº</div>
-                  <div className={theme.value}>
-                    {address.street_number}
-                  </div>
-                </Col>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <div className={theme.field}>Complemento</div>
-                  <div className={theme.value}>
-                    {address.complementary}
-                  </div>
-                </Col>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <div className={theme.field}>Bairro</div>
-                  <div className={theme.value}>
-                    {address.neighborhood}
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <div className={theme.field}>CEP</div>
-                  <div className={theme.value}>
-                    {address.zipcode}
-                  </div>
-                </Col>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <div className={theme.field}>Cidade</div>
-                  <div className={theme.value}>
-                    {address.city}
-                  </div>
-                </Col>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <div className={theme.field}>UF</div>
-                  <div className={theme.value}>
-                    {address.state}
-                  </div>
-                </Col>
-              </Row>
-            </Grid>
+            <p className={
+              classNames(
+                theme.text,
+                theme.textTruncate
+              )
+            }
+            >
+              {address.street},
+              {address.street_number},
+              {address.complementary},
+              {address.neighborhood},
+              {address.zipcode},
+              {address.city},
+              {address.state}
+            </p>
           </div>
         </div>
       </Col>
