@@ -7,7 +7,7 @@ import AddressForm from '../containers/AddressForm'
 import options from '../utils/states'
 import { Grid, Row, Col } from '../components/Grid'
 import Button from '../components/Button'
-import AddressOptions from '../components/AddressOptions'
+import AddressOptions from '../containers/AddressOptions'
 
 const largeColSize = 12
 const mediumColSize = 6
