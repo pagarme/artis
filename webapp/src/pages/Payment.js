@@ -307,6 +307,8 @@ class Payment extends Component {
       barcode,
     } = this.state
 
+    const { theme } = this.props
+
     return (
       <Fragment>
         <Row>
@@ -323,6 +325,7 @@ class Payment extends Component {
               disabled={!barcode}
               full
               size="extra-large"
+              className={theme.actionButton}
             >
               Salvar arquivo
             </Button>
@@ -343,6 +346,7 @@ class Payment extends Component {
               full
               size="extra-large"
               onClick={this.toggleSendByEmail}
+              className={theme.actionButton}
             >
               Encaminhar por e-mail
             </Button>
@@ -362,6 +366,7 @@ class Payment extends Component {
               disabled={!barcode}
               full
               size="extra-large"
+              className={theme.actionButton}
             >
               Copiar código de barras
             </Button>

@@ -1,0 +1,36 @@
+@import "./properties.css";
+
+.title {
+  font-family: var(--confirmation-font-family);
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-color);
+}
+
+.textAligned {
+  text-align: center;
+}
+
+.success {
+  color: var(--confirmation-success);
+  margin: 0;
+}
+
+.field,
+.value {
+  font-family: var(--confirmation-font-family);
+}
+
+.field {
+  color: var(--field-color);
+  margin-bottom: var(--field-margin-bottom);
+  font-size: var(--field-font-size);
+}
+
+.value {
+  color: var(--value-color);
+  font-size: var(--value-font-size);
+}
+
+.mediumSize {
+  width: 80%;
+}

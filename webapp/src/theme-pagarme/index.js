@@ -14,6 +14,8 @@ import UIShippingPage from './shipping-page/index.css'
 import UIAddressOptions from './address-options/index.css'
 import UISegmentedSwitch from './segmented-switch/index.css'
 import UIConfirmationPage from './confirmation-page/index.css'
+import UISuccessInfo from './success-info/index.css'
+import UIErrorInfo from './error-info/index.css'
 
 export default {
   UIButton,
@@ -32,4 +34,6 @@ export default {
   UIAddressOptions,
   UISegmentedSwitch,
   UIConfirmationPage,
+  UISuccessInfo,
+  UIErrorInfo,
 }
