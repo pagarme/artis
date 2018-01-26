@@ -113,7 +113,7 @@ class Dropdown extends React.Component {
         >
           <option
             disabled
-            hidden
+            selected
             value="placeholder"
             className={classNames(theme.option, theme.placeholder)}
           >
