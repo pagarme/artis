@@ -289,7 +289,7 @@ class Checkout extends Component {
           </div>
           <Footer
             total={params.amount}
-            buttonText={'Continuar'}
+            buttonText={'Confirmar'}
             buttonClick={
               this.handleNavigation.bind(this, 'NEXT', pages, steps)
             }
