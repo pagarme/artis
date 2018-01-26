@@ -7,10 +7,6 @@ O desenvolvimento é *open source*, ou seja, todo o código fonte estará dispon
 
 Veja online os componentes desenvolvidos no nosso [Storybook](https://pagarme.github.io/artis)
 
-## Roadmap
-
-Estamos utilizando [Issues](https://github.com/pagarme/artis/issues) e [Projects](https://github.com/pagarme/artis/projects/1) para gerenciar nossas tarefas, você pode acompanhar e fazer parte! :)
-
 ## Rodando o projeto
 
 Na pasta [webapp](webapp) você pode ver mais detalhes sobre como rodar o projeto.
