@@ -12,7 +12,7 @@
   --optionBox-selected-border-color: var(--color-greenish);
   --optionBox-selected-shadow-color: var(--color-grey-68);
 
-  --addressName-margin-bottom: var(--spacing-medium);
+  --addressName-margin-bottom: var(--spacing-small);
   --addressName-color: var(--color-grey-39);
   --addressName-selected-color: var(--color-greenish);
   --addressName-font-size: var(--font-size-medium);

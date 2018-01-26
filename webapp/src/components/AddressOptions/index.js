@@ -23,6 +23,30 @@ class AddressOptions extends React.Component {
     this.props.onChange(address)
   }
 
+  joinAddressData (address) {
+    const { theme } = this.props
+
+    const addressInfo = `${address.street},
+        ${address.street_number},
+        ${address.complementary},
+        ${address.neighborhood},
+        ${address.zipcode},
+        ${address.city},
+        ${address.state}
+      `
+
+    return (
+      <p className={
+        classNames(
+          theme.text,
+          theme.textTruncate
+        )
+      }
+      >
+        {addressInfo}
+      </p>
+    )
+  }
   render () {
     const { theme, addresses } = this.props
 
@@ -51,21 +75,7 @@ class AddressOptions extends React.Component {
             {address.name}
           </div>
           <div className={theme.addressData}>
-            <p className={
-              classNames(
-                theme.text,
-                theme.textTruncate
-              )
-            }
-            >
-              {address.street},
-              {address.street_number},
-              {address.complementary},
-              {address.neighborhood},
-              {address.zipcode},
-              {address.city},
-              {address.state}
-            </p>
+            {this.joinAddressData(address)}
           </div>
         </div>
       </Col>
