@@ -1,15 +1,15 @@
-# Artis Checkout | [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/mundipagg/artis/blob/master/LICENSE) [![Travis CI Status](https://travis-ci.org/mundipagg/artis.svg?branch=master)](https://travis-ci.org/mundipagg/artis)
+# Artis Checkout | [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/pagarme/artis/blob/master/LICENSE) [![Travis CI Status](https://travis-ci.org/pagarme/artis.svg?branch=master)](https://travis-ci.org/pagarme/artis)
 > Projeto em desenvolvimento em parceria entre Mundipagg e Pagar.me.
 
 Este repositório está em fase de desenvolvimento, então muitas mudanças ainda podem acontecer. A ideia é construirmos um Checkout que possa ser facilmente integrado em diversos e-commerces do Brasil, de forma segura e confiável.
 
 O desenvolvimento é *open source*, ou seja, todo o código fonte estará disponível para as pessoas que queiram conhecer, contribuir e melhorar este projeto.
 
-Veja online os componentes desenvolvidos no nosso [Storybook](https://mundipagg.github.io/artis)
+Veja online os componentes desenvolvidos no nosso [Storybook](https://pagarme.github.io/artis)
 
 ## Roadmap
 
-Estamos utilizando [Issues](https://github.com/mundipagg/artis/issues) e [Projects](https://github.com/mundipagg/artis/projects/1) para gerenciar nossas tarefas, você pode acompanhar e fazer parte! :)
+Estamos utilizando [Issues](https://github.com/pagarme/artis/issues) e [Projects](https://github.com/pagarme/artis/projects/1) para gerenciar nossas tarefas, você pode acompanhar e fazer parte! :)
 
 ## Rodando o projeto
 
