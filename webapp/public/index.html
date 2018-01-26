@@ -30,8 +30,10 @@
     boleto: {
       subtitle: '25% de Desconto!',
       instructions: 'Use this field to add instructions on boleto',
-      discountAmount: 1000,
-      discountPercentage: 25,
+      discount: {
+        type: 'percentage',
+        value: 25,
+      },
       expirationAt: '2018-01-30',
     },
     creditcard: {
@@ -84,9 +86,7 @@
   }
 
     const create = Checkout(key)
-
     const checkout = create(configs)
-
     const open = checkout(params)
 
     open()

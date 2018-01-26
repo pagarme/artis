@@ -21,8 +21,10 @@ const params = {
   postbackUrl: 'http://pagar.me',
   boleto: {
     instructions: 'Use this field to add instructions on boleto',
-    discountAmount: 1000,
-    discountPercentage: 25,
+    discount: {
+      type: 'percentage',
+      value: 15,
+    },
     expirationAt: '2018-01-30',
   },
   creditcard: {

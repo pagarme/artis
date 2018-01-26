@@ -4,5 +4,5 @@ const amountBRLParse = number => number.toLocaleString('pt-BR', {
 })
 
 export {
-  amountBRLParse, // eslint-disable-line import/prefer-default-export
+  amountBRLParse, // eslint-disable-line
 }

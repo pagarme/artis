@@ -92,6 +92,7 @@ class Confirmation extends React.Component {
 }
 
 Confirmation.propTypes = {
+  success: PropTypes.bool,
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
@@ -105,6 +106,7 @@ Confirmation.propTypes = {
 
 Confirmation.defaultProps = {
   theme: {},
+  success: true,
 }
 
 export default applyThemr(Confirmation)

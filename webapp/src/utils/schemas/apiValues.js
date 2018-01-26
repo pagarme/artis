@@ -35,17 +35,26 @@ const addressSchema = Joi.object()
       .required(),
   })
 
+const discountSchema = Joi.object()
+  .keys({
+    type: Joi.string()
+      .required()
+      .valid('percentage', 'amount'),
+    value: Joi.number()
+      .required()
+      .when('type', {
+        is: 'percentage',
+        then: Joi.number()
+          .min(1)
+          .max(100),
+      }),
+  })
+
 const boletoSchema = Joi.object()
   .keys({
     subtitle: Joi.string(),
     instructions: Joi.string(),
-    discountAmount: Joi.number()
-      .integer()
-      .min(0),
-    discountPercentage: Joi.number()
-      .integer()
-      .min(0)
-      .max(100),
+    discount: discountSchema,
     expirationAt: Joi.date()
       .min(formatDate(new Date().getTime())),
   })
@@ -60,6 +69,9 @@ const creditcardSchema = Joi.object()
       .integer()
       .min(1)
       .max(12),
+    interestRate: Joi.number()
+      .min(0)
+      .max(100),
     freeInstallment: Joi.number()
       .integer()
       .min(1)

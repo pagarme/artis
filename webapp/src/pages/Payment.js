@@ -15,6 +15,7 @@ import Input from './../components/Input'
 import Dropdown from './../components/Dropdown'
 import Button from './../components/Button'
 import { amountBRLParse } from './../utils/parsers'
+import discountParser from './../utils/discountParser'
 import installmentsData from './../utils/installments'
 import Barcode from './../images/barcode.svg'
 
@@ -51,7 +52,6 @@ class Payment extends Component {
     const {
       payment,
       paymentMethods,
-      amount,
     } = this.props
 
     const paymentOptions = paymentMethods.map(
@@ -75,7 +75,6 @@ class Payment extends Component {
       flipped: false,
       barcode: '',
       showEmailForm: false,
-      amount,
     }
 
     this.flipCard = this.flipCard.bind(this)
@@ -152,8 +151,7 @@ class Payment extends Component {
   }
 
   renderAmount () {
-    const { amount } = this.state
-    const { theme } = this.props
+    const { theme, amount } = this.props
 
     return (
       <h4 className={theme.amount} >
@@ -274,11 +272,22 @@ class Payment extends Component {
 
   renderGenerateBoleto () {
     const {
-      amount,
       barcode,
     } = this.state
 
-    const { theme } = this.props
+    const {
+      theme,
+      boleto,
+      amount,
+    } = this.props
+
+    let discountAmount
+
+    if (boleto.discount) {
+      const { type, value } = boleto.discount
+
+      discountAmount = discountParser(type, value, amount)
+    }
 
     return (
       <Col
@@ -305,7 +314,12 @@ class Payment extends Component {
             )
           }
           >
-            Valor a pagar: {amountBRLParse(amount)}
+            Valor a pagar:
+            {
+              discountAmount ?
+                amountBRLParse(discountAmount) :
+                amountBRLParse(amount)
+            }
           </h4>
         </div>
       </Col>
@@ -561,14 +575,17 @@ Payment.propTypes = {
   boleto: PropTypes.shape({
     subtitle: PropTypes.string,
     instructions: PropTypes.string,
-    discountAmount: PropTypes.number,
-    discountPercentage: PropTypes.number,
+    discount: PropTypes.shape({
+      type: PropTypes.string,
+      value: PropTypes.number,
+    }),
     expirationAt: PropTypes.string,
   }),
   creditcard: PropTypes.shape({
     subtitle: PropTypes.string,
     brands: PropTypes.arrayOf(PropTypes.string),
     maxInstallment: PropTypes.number,
+    interestRate: PropTypes.number,
     freeInstallment: PropTypes.number,
     defaultInstallment: PropTypes.number,
   }),
