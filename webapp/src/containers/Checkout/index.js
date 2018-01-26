@@ -70,7 +70,6 @@ const statechart = {
       on: {
         PREV: 'shipping',
         NEXT: 'confirmation',
-        ERROR: 'error',
       },
       onEntry: 'payment',
     },
@@ -79,12 +78,6 @@ const statechart = {
         PREV: 'payment',
       },
       onEntry: 'confirmation',
-    },
-    error: {
-      on: {
-        PREV: 'payment',
-      },
-      onEntry: 'error',
     },
   },
 }
@@ -229,14 +222,6 @@ class Checkout extends Component {
         <Action show="confirmation">
           <ConfirmationPage
             title="Confirmação"
-            success
-            isBigScreen={isBigScreen}
-          />
-        </Action>
-        <Action show="error">
-          <ConfirmationPage
-            title="Confirmação"
-            success={false}
             isBigScreen={isBigScreen}
           />
         </Action>
