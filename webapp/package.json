@@ -61,7 +61,7 @@
     "react-dev-utils": "5.0.0",
     "react-dom": "16.2.0",
     "react-icons": "2.2.7",
-    "react-maskedinput": "4.0.0",
+    "react-maskedinput": "4.0.1",
     "react-payment-card-component": "0.1.0",
     "react-test-renderer": "16.2.0",
     "request": "2.83.0",
