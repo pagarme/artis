@@ -8,7 +8,7 @@
 .progressBar {
   width: 0;
   height: 3px;
-  background-color: var(--progressbar-background-color);
+  background: linear-gradient(to left, var(--progressbar-background-end-color), var(--progressbar-background-begin-color));
   transition: all 0.25s ease-out;
 }
 

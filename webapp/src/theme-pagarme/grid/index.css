@@ -27,10 +27,6 @@
   overflow-x: hidden;
 }
 
-.row:last-child {
-  margin-bottom: calc(-1 * var(--grid-column-spacing));
-}
-
 .flex > * {
   flex: 1;
 }

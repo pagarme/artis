@@ -4,7 +4,9 @@
 
 :root {
   --wrapper-background-color: var(--color-grey-68);
-  --progressbar-background-color: var(--color-greenish);
+
+  --progressbar-background-begin-color: var(--color-dark-greenish-100);
+  --progressbar-background-end-color: var(--color-dark-downy-100);
 
   --steps-margin: 0 0 22px;
   --step-font-family: var(--primary-font-family);
