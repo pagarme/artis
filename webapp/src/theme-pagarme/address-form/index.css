@@ -4,7 +4,6 @@
   background-color: var(--addressForm-background-color);
   border: 2px dashed var(--addressForm-border-color);
   padding: 33px 24px;
-  margin-top: 24px;
 }
 
 .hidden {
