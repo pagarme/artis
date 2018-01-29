@@ -1,34 +1,72 @@
 import {
   gte,
   filter,
+  identity,
+  ifElse,
   map,
+  mergeDeepLeft,
   pipe,
 } from 'ramda'
 
+import { amountBRLParse } from './parsers'
+
 const filterInstallment = range => ({ value }) => gte(range, value)
 
-const calculateInstallment = (
+const isFree = (freeInstallments, value) => value > freeInstallments
+
+const getInstallmentAmount = (amount, installments) => amount / installments
+
+const getInterest = (amount, interest) => amount * (interest / 100)
+
+const calculateInstallmentAmount = (
   interestRate,
-  freeInstallment,
-) => {
-  return {}
+  freeInstallments,
+  amount,
+) => (installment) => {
+  const { name, value } = installment
+
+  if (isFree(freeInstallments, value)) {
+    const interest = getInterest(amount, interestRate)
+    const newAmount = amount + interest
+    const installmentAmount = getInstallmentAmount(newAmount, value)
+    const parsedAmount = amountBRLParse(installmentAmount)
+
+    return {
+      value,
+      interest,
+      installmentAmount,
+      name: `${name} de ${parsedAmount} com juros.`,
+      amount: newAmount,
+    }
+  }
+
+  const installmentAmount = getInstallmentAmount(amount, value)
+  const parsedAmount = amountBRLParse(installmentAmount)
+
+  return {
+    value,
+    amount,
+    installmentAmount,
+    name: `${name} de ${parsedAmount} sem juros.`,
+  }
 }
 
 const calculate = (creditcard, installments, amount) => {
   const {
-    maxInstallments,
-    interestRate,
-    freeInstallment,
+    maxInstallments = 12,
+    interestRate = 0,
+    freeInstallments = 12,
   } = creditcard
 
   return pipe(
     filter(filterInstallment(maxInstallments)),
-    map(calculateInstallment(freeInstallment, interestRate))
+    map(calculateInstallmentAmount(interestRate, freeInstallments, amount)),
   )(installments)
 }
 
 export {
   filterInstallment,
+  calculateInstallmentAmount,
 }
 
 export default calculate

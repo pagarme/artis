@@ -4,10 +4,7 @@ import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
 import ReactGA from 'react-ga'
-import {
-  pick,
-  flip,
-} from 'ramda'
+import { pick } from 'ramda'
 
 import { Grid, Row, Col } from './../components/Grid'
 import SegmentedSwitch from './../components/SegmentedSwitch'
@@ -43,8 +40,6 @@ const paymentMethodsSupported = {
   },
 }
 
-const flipedPick = flip(pick)
-
 class Payment extends Component {
   constructor (props) {
     super(props)
@@ -55,7 +50,7 @@ class Payment extends Component {
     } = this.props
 
     const paymentOptions = paymentMethods.map(
-      flipedPick(paymentMethodsSupported)
+      option => paymentMethodsSupported[option]
     )
 
     const paymentData = payment || {
