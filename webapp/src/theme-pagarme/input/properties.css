@@ -35,7 +35,7 @@
   --input-icon-active-color: var(--color-grey-85);
   --input-icon-inactive-color: var(--color-grey-53);
 
-  --input-secondary-text-color: var(--color-grey-secundary);
+  --input-secondary-text-color: var(--color-grey-secondary);
   --input-secondary-text-font-size: 12px;
 
   --input-textarea-padding-top: var(--spacing-small);
