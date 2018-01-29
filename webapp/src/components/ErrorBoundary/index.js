@@ -3,8 +3,9 @@ import {
   node,
   element,
 } from 'prop-types'
+import ReactGA from 'react-ga'
 
-import report from '../../../config/ErrorReport'
+import report from './ErrorReport'
 
 export default class ErrorBoundary extends Component {
   constructor (props) {
@@ -15,7 +16,13 @@ export default class ErrorBoundary extends Component {
   }
 
   componentDidCatch (error, errorInfo) {
+    ReactGA.event({
+      category: 'Error Boundary',
+      action: error.message,
+    })
+
     report(error, errorInfo)
+
     this.setState({
       error,
     })
