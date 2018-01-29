@@ -23,7 +23,7 @@ const SuccessInfo = ({ theme }) => (
       <h4 className={
         classNames(
           {
-            [theme.textAligned]: !isBigScreen,
+            [theme.textAlignedCenter]: !isBigScreen,
           },
           theme.success,
         )}
@@ -94,7 +94,7 @@ SuccessInfo.propTypes = {
     value: PropTypes.string,
     mediumSize: PropTypes.string,
     success: PropTypes.string,
-    textAligned: PropTypes.string,
+    textAlignedCenter: PropTypes.string,
     title: PropTypes.string,
   }),
 }

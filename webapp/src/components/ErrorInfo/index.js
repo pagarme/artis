@@ -22,7 +22,7 @@ const ErrorInfo = ({ theme }) => (
       <h4 className={
         classNames(
           {
-            [theme.textAligned]: !isBigScreen,
+            [theme.textAlignedCenter]: !isBigScreen,
           },
           theme.error,
         )}
@@ -32,7 +32,7 @@ const ErrorInfo = ({ theme }) => (
       <p className={
         classNames(
           {
-            [theme.textAligned]: !isBigScreen,
+            [theme.textAlignedCenter]: !isBigScreen,
           },
           theme.info,
         )}
@@ -47,7 +47,7 @@ const ErrorInfo = ({ theme }) => (
 ErrorInfo.propTypes = {
   theme: PropTypes.shape({
     alignSelfCenter: PropTypes.string,
-    textAligned: PropTypes.string,
+    textAlignedCenter: PropTypes.string,
     mediumSize: PropTypes.string,
     title: PropTypes.string,
     info: PropTypes.string,

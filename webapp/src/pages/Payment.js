@@ -281,10 +281,7 @@ class Payment extends Component {
           <Input
             name="nameEmail"
             label="Digite seu nome - opcional"
-            hint=""
-            mask=""
             value={nameEmail}
-            placeholder=""
             onChange={this.handleInputChange}
           />
         </Row>
@@ -293,7 +290,6 @@ class Payment extends Component {
             name="email"
             label="Digite o e-mail"
             value={email}
-            placeholder=""
             onKeyPress={this.handleKeyPress}
             onChange={this.handleInputChange}
           />
