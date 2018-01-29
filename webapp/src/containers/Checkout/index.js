@@ -176,7 +176,16 @@ class Checkout extends Component {
 
   renderPages () {
     const { isBigScreen } = this.state
-    const { customer, billing } = this.state.checkoutData
+    const {
+      customer,
+      billing,
+      shipping,
+      addresses,
+      payment,
+      paymentMethods,
+      boleto,
+      creaditcard,
+    } = this.state.checkoutData
 
     return (
       <React.Fragment>
@@ -185,7 +194,7 @@ class Checkout extends Component {
             title="Dados Pessoais"
             isBigScreen={isBigScreen}
             handlePageChange={this.handlePageChange}
-            {...customer}
+            customer={customer}
             billingData={billing}
           />
         </Action>
@@ -193,7 +202,7 @@ class Checkout extends Component {
           <BillingPage
             title="Endereço de Cobrança"
             handlePageChange={this.handlePageChange}
-            {...billing}
+            billing={billing}
           />
         </Action>
         <Action show="shipping">
@@ -201,12 +210,20 @@ class Checkout extends Component {
             title="Selecione um endereço cadastrado"
             footerButtonVisible={this.handleFooterButton}
             isBigScreen={isBigScreen}
+            shipping={shipping}
+            addresses={addresses || []}
+            handlePageChange={this.handlePageChange}
           />
         </Action>
         <Action show="payment">
           <PaymentPage
             title="Dados de Pagamento"
             isBigScreen={isBigScreen}
+            payment={payment}
+            paymentMethods={paymentMethods}
+            boleto={boleto}
+            creaditcard={creaditcard}
+            handlePageChange={this.handlePageChange}
           />
         </Action>
         <Action show="confirmation">

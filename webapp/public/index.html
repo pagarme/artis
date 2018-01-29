@@ -28,12 +28,14 @@
     ],
     postbackUrl: 'http://pagar.me',
     boleto: {
+      subtitle: '25% de Desconto!',
       instructions: 'Use this field to add instructions on boleto',
       discountAmount: 1000,
       discountPercentage: 25,
       expirationAt: '2018-01-30',
     },
     creditcard: {
+      subtitle: 'Parcele em até 6x',
       brands: [
         'elo',
         'amex',
@@ -42,7 +44,7 @@
         'visa',
         'mastercard',
       ],
-      maxInstallments: 12,
+      maxInstallments: 6,
       freeInstallment: 3,
       defaultInstallment: 1,
     },
@@ -53,6 +55,15 @@
       phoneNumber: '1130442277',
     },
     billing: {
+      street: 'Rua Fidêncio Ramos',
+      number: '308',
+      complement: 'Pagar.me',
+      neighborhood: 'Vila Olimpia',
+      city: 'São Paulo',
+      state: 'SP',
+      zipcode: '04551010',
+    },
+    shipping: {
       street: 'Rua Fidêncio Ramos',
       number: '308',
       complement: 'Pagar.me',

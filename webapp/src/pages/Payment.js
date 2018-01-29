@@ -4,6 +4,10 @@ import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
 import ReactGA from 'react-ga'
+import {
+  pick,
+  flip,
+} from 'ramda'
 
 import { Grid, Row, Col } from './../components/Grid'
 import SegmentedSwitch from './../components/SegmentedSwitch'
@@ -16,7 +20,7 @@ import Barcode from './../images/barcode.svg'
 
 const applyThemr = themr('UIPaymentPage')
 
-const isCreditCard = ({ value }) => (value === 'creditcard')
+const checkRenderMethod = name => ({ value }) => (value === name)
 
 const defaultColSize = 12
 const mediumColSize = 6
@@ -25,37 +29,53 @@ const defaultCvv = '•••'
 const defaultExpirationDate = 'MM/AA'
 const defaultCardName = 'Nome Completo'
 
+const paymentMethodsSupported = {
+  creditcard: {
+    value: 'creditcard',
+    title: 'Cartão de Crédito',
+    render: this.renderCreditcard,
+  },
+  boleto: {
+    value: 'boleto',
+    title: 'Boleto bancário',
+    render: this.renderBoleto,
+  },
+}
+
+const flipedPick = flip(pick)
+
 class Payment extends Component {
   constructor (props) {
     super(props)
 
-    const paymentOptions = [
-      {
-        value: 'creditcard',
-        title: 'Cartão de Crédito',
-        subtitle: 'Em até 2x sem juros',
-      },
-      {
-        value: 'bankbill',
-        title: 'Boleto bancário',
-        subtitle: '10% de desconto',
-      },
-    ]
+    const {
+      payment,
+      paymentMethods,
+      amount,
+    } = this.props
 
-    this.state = {
-      paymentOptions,
-      selected: paymentOptions[0],
+    const paymentOptions = paymentMethods.map(
+      flipedPick(paymentMethodsSupported)
+    )
+
+    const paymentData = payment || {
       cardNumber: '',
       name: '',
       dateValidate: '',
       cvv: '',
+      installments: 'placeholder',
+    }
+
+    this.state = {
+      ...paymentData,
+      paymentOptions,
+      selected: paymentOptions[0],
       nameEmail: '',
       email: '',
-      installments: 'placeholder',
-      amount: 100,
       flipped: false,
       barcode: '',
       showEmailForm: false,
+      amount,
     }
 
     this.flipCard = this.flipCard.bind(this)
@@ -65,6 +85,18 @@ class Payment extends Component {
     this.handleGenerateBoleto = this.handleGenerateBoleto.bind(this)
     this.handleToggleSendByEmail = this.handleToggleSendByEmail.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
+  }
+
+  componentWillUnmount () {
+    const paymentData = pick([
+      'cardNumber',
+      'name',
+      'cvv',
+      'dateValidate',
+      'installments',
+    ], this.state)
+
+    this.props.handlePageChange(paymentData, 'payment')
   }
 
   handleSwitchChange (selected) {
@@ -130,7 +162,7 @@ class Payment extends Component {
     )
   }
 
-  renderCreditCard () {
+  renderCreditcard () {
     const {
       cardNumber,
       name,
@@ -460,6 +492,16 @@ class Payment extends Component {
     )
   }
 
+  renderPaymentOptions () {
+    const { paymentOptions } = this.state
+
+    return paymentOptions.map(({ name, render }) => (
+      <Fragment>
+        { checkRenderMethod(name) && render() }
+      </Fragment>
+    ))
+  }
+
   render () {
     const {
       paymentOptions,
@@ -478,9 +520,7 @@ class Payment extends Component {
             name="paymentOptions"
           />
         </Row>
-        { isCreditCard(selected) ?
-          this.renderCreditCard() :
-          this.renderBoleto() }
+        { this.renderPaymentOptions() }
       </Grid>
     )
   }
@@ -503,10 +543,42 @@ Payment.propTypes = {
     emailFormTitle: PropTypes.string,
   }),
   isBigScreen: PropTypes.bool.isRequired,
+  payment: PropTypes.shape({
+    cardNumber: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    name: PropTypes.string,
+    dateValidate: PropTypes.string,
+    cvv: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    installments: PropTypes.string,
+  }).isRequired,
+  amount: PropTypes.number.isRequired,
+  paymentMethods: PropTypes.arrayOf(PropTypes.string).isRequired,
+  boleto: PropTypes.shape({
+    subtitle: PropTypes.string,
+    instructions: PropTypes.string,
+    discountAmount: PropTypes.number,
+    discountPercentage: PropTypes.number,
+    expirationAt: PropTypes.string,
+  }),
+  creditcard: PropTypes.shape({
+    subtitle: PropTypes.string,
+    brands: PropTypes.arrayOf(PropTypes.string),
+    maxInstallment: PropTypes.number,
+    freeInstallment: PropTypes.number,
+    defaultInstallment: PropTypes.number,
+  }),
+  handlePageChange: PropTypes.func.isRequired,
 }
 
 Payment.defaultProps = {
   theme: {},
+  payment: {},
+  boleto: {},
 }
 
 export default applyThemr(Payment)

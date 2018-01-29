@@ -13,45 +13,41 @@ const largeColSize = 12
 const mediumColSize = 6
 
 const applyThemr = themr('UIShippingPage')
-
-const addresses = [
-  {
-    name: 'Mesmo endereço de cobrança',
-    street: 'Rua lorem ipsum',
-    street_number: 123,
-    state: 'SP',
-    city: 'São Paulo',
-    neighborhood: 'Pirituba',
-    complementary: 'Casa de esquina',
-    zipcode: '05170500',
-  },
-  {
-    name: 'Casa',
-    street: 'Rua lorem ipsum',
-    street_number: 123,
-    state: 'SP',
-    city: 'São Paulo',
-    neighborhood: 'Pirituba',
-    complementary: 'Casa de esquina',
-    zipcode: '05170500',
-  },
-]
-
 class ShippingPage extends Component {
   constructor (props) {
     super(props)
 
+    const { shipping, addresses } = this.props
+
+    const addressList = addresses || []
+
     this.state = {
-      selectedAddress: {},
+      addresses: shipping ? [shipping, ...addressList] : addressList,
+      selected: {},
       openAddressForm: false,
     }
 
     this.toggleOpenAddressForm = this.toggleOpenAddressForm.bind(this)
+    this.addAddress = this.addAddress.bind(this)
     this.onChangeAddress = this.onChangeAddress.bind(this)
   }
 
+  componentWillUnmount () {
+    const { selected } = this.state
+
+    this.props.handlePageChange(selected, 'shipping')
+  }
+
   onChangeAddress (address) {
-    this.setState({ selectedAddress: address })
+    this.setState({ selected: address })
+  }
+
+  addAddress (address) {
+    this.setState(({ addresses }) => ({
+      addresses: [...addresses, address],
+    }))
+
+    this.toggleOpenAddressForm()
   }
 
   toggleOpenAddressForm () {
@@ -62,6 +58,7 @@ class ShippingPage extends Component {
   }
 
   render () {
+    const { addresses } = this.state
     const { theme, isBigScreen } = this.props
 
     return (
@@ -71,6 +68,7 @@ class ShippingPage extends Component {
           onCancel={this.toggleOpenAddressForm}
           options={options}
           isBigScreen={isBigScreen}
+          onConfirm={this.addAddress}
         />
         <Grid
           hidden={this.state.openAddressForm}
@@ -115,13 +113,44 @@ ShippingPage.propTypes = {
     title: PropTypes.string,
     btnAddNewAddress: PropTypes.string,
   }),
+  addresses: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      street: PropTypes.string,
+      number: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]),
+      complement: PropTypes.string,
+      neighborhood: PropTypes.string,
+      city: PropTypes.string,
+      state: PropTypes.string,
+      zipcode: PropTypes.string,
+    }),
+  ),
+  shipping: PropTypes.shape({
+    name: PropTypes.string,
+    street: PropTypes.string,
+    number: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    complement: PropTypes.string,
+    neighborhood: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zipcode: PropTypes.string,
+  }),
   title: PropTypes.string.isRequired,
   footerButtonVisible: PropTypes.func,
   isBigScreen: PropTypes.bool.isRequired,
+  handlePageChange: PropTypes.func.isRequired,
 }
 
 ShippingPage.defaultProps = {
   theme: {},
+  shipping: {},
+  addresses: [],
   footerButtonVisible: null,
 }
 

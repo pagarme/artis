@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
+import shortid from 'shortid'
 import { Col } from '../../components/Grid'
 
 const largeColSize = 12
@@ -27,8 +28,8 @@ class AddressOptions extends React.Component {
     const { theme } = this.props
 
     const addressInfo = `${address.street},
-        ${address.street_number},
-        ${address.complementary},
+        ${address.number},
+        ${address.complement},
         ${address.neighborhood},
         ${address.zipcode},
         ${address.city},
@@ -52,7 +53,7 @@ class AddressOptions extends React.Component {
 
     return addresses.map((address, index) => (
       <Col
-        key={address.name}
+        key={address.name || shortid.generate()}
         tv={mediumColSize}
         desk={mediumColSize}
         tablet={mediumColSize}
@@ -72,7 +73,7 @@ class AddressOptions extends React.Component {
           }
         >
           <div className={theme.addressName}>
-            {address.name}
+            {address.name || `Endereço ${index + 1}`}
           </div>
           <div className={theme.addressData}>
             {this.joinAddressData(address)}
@@ -96,11 +97,14 @@ AddressOptions.propTypes = {
     PropTypes.shape({
       name: PropTypes.string,
       street: PropTypes.string,
-      street_number: PropTypes.number,
+      number: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]),
       state: PropTypes.string,
       city: PropTypes.string,
       neighborhood: PropTypes.string,
-      complementary: PropTypes.string,
+      complement: PropTypes.string,
       zipcode: PropTypes.string,
     })
   ).isRequired,

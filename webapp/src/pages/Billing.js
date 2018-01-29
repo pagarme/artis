@@ -20,24 +20,8 @@ class BillingPage extends Component {
   constructor (props) {
     super(props)
 
-    const {
-      street,
-      number,
-      complement,
-      neighborhood,
-      city,
-      state,
-      zipcode,
-    } = this.props
-
     this.state = {
-      street,
-      number,
-      complement,
-      neighborhood,
-      city,
-      state,
-      zipcode,
+      ...this.props.billing,
       zipcodeError: '',
     }
 
@@ -235,25 +219,24 @@ BillingPage.propTypes = {
   title: PropTypes.string.isRequired,
   isBigScreen: PropTypes.bool,
   handlePageChange: PropTypes.func.isRequired,
-  street: PropTypes.string,
-  number: PropTypes.string,
-  complement: PropTypes.string,
-  neighborhood: PropTypes.string,
-  city: PropTypes.string,
-  state: PropTypes.string,
-  zipcode: PropTypes.string,
+  billing: PropTypes.shape({
+    street: PropTypes.string,
+    number: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    complement: PropTypes.string,
+    neighborhood: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zipcode: PropTypes.string,
+  }),
 }
 
 BillingPage.defaultProps = {
   theme: {},
   isBigScreen: false,
-  street: '',
-  number: '',
-  complement: '',
-  neighborhood: '',
-  city: '',
-  state: 'placeholder',
-  zipcode: '',
+  billing: {},
 }
 
 export default applyThemr(BillingPage)

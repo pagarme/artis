@@ -17,6 +17,7 @@ const dateRegex = /^\d{4}-\d{2}-\d{2}$/
 
 const addressSchema = Joi.object()
   .keys({
+    name: Joi.string(),
     street: Joi.string()
       .required(),
     number: Joi.number()
@@ -36,6 +37,7 @@ const addressSchema = Joi.object()
 
 const boletoSchema = Joi.object()
   .keys({
+    subtitle: Joi.string(),
     instructions: Joi.string(),
     discountAmount: Joi.number()
       .integer()
@@ -50,6 +52,7 @@ const boletoSchema = Joi.object()
 
 const creditcardSchema = Joi.object()
   .keys({
+    subtitle: Joi.string(),
     brands: Joi.array()
       .items(Joi.string())
       .unique(),
@@ -128,6 +131,8 @@ const apiValuesSchema = Joi.object()
         .items(itemsSchema)
         .required(),
       billing: addressSchema,
+      shipping: Joi.alternatives(Joi.array()
+        .items(addressSchema), addressSchema),
     }).required(),
   })
 

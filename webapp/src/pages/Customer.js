@@ -14,18 +14,8 @@ class CustomerPage extends Component {
   constructor (props) {
     super(props)
 
-    const {
-      name,
-      email,
-      documentNumber,
-      phoneNumber,
-    } = this.props
-
     this.state = {
-      name,
-      email,
-      documentNumber,
-      phoneNumber,
+      ...this.props.customer,
     }
 
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -113,7 +103,7 @@ class CustomerPage extends Component {
             <BillingPage
               title="Endereço de Cobrança"
               isBigScreen
-              {...billingData}
+              billing={billingData}
               handlePageChange={handlePageChange}
             />
           </Col>
@@ -128,23 +118,33 @@ CustomerPage.propTypes = {
     page: PropTypes.string,
     title: PropTypes.string,
   }),
-  billingData: PropTypes.object, // eslint-disable-line
+  billingData: PropTypes.shape({
+    street: PropTypes.string,
+    number: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    complement: PropTypes.string,
+    neighborhood: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zipcode: PropTypes.string,
+  }),
   title: PropTypes.string.isRequired,
   isBigScreen: PropTypes.bool.isRequired,
-  name: PropTypes.string,
-  email: PropTypes.string,
-  documentNumber: PropTypes.string,
-  phoneNumber: PropTypes.string,
+  customer: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+    documentNumber: PropTypes.string,
+    phoneNumber: PropTypes.string,
+  }),
   handlePageChange: PropTypes.func.isRequired,
 }
 
 CustomerPage.defaultProps = {
   theme: {},
   billingData: {},
-  name: '',
-  email: '',
-  documentNumber: '',
-  phoneNumber: '',
+  customer: {},
 }
 
 export default applyThemr(CustomerPage)
