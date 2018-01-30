@@ -16,14 +16,14 @@ describe('Calculate Installments', () => {
       value: '2',
       amount: 12500,
       interest: 2500,
-      installmentAmount: 6250,
+      installmentAmount: '6250',
     }
 
     const installment1 = {
       name: '1x de R$ 100,00 sem juros.',
       value: '1',
       amount: 10000,
-      installmentAmount: 10000,
+      installmentAmount: '10000',
     }
 
     const newInstallments = calculateInstallments(
@@ -48,14 +48,14 @@ describe('Calculate Installments', () => {
       value: '2',
       amount: 1250000,
       interest: 250000,
-      installmentAmount: 625000,
+      installmentAmount: '625000',
     }
 
     const installment1 = {
       name: '1x de R$ 10.000,00 sem juros.',
       value: '1',
       amount: 1000000,
-      installmentAmount: 1000000,
+      installmentAmount: '1000000',
     }
 
     const newInstallments = calculateInstallments(

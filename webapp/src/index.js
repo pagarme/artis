@@ -46,7 +46,7 @@ const render = apiValues => () => {
     <ThemeProvider theme={theme}>
       <ErrorBoundary CrashReportComponent={<TempErrorComponent />}>
         <Checkout
-          apiValues={{ ...apiValues }}
+          apiValues={apiValues}
           targetElement={target}
         />
       </ErrorBoundary>

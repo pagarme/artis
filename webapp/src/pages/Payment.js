@@ -4,7 +4,7 @@ import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
 import ReactGA from 'react-ga'
-import { pick } from 'ramda'
+import { pick, prop, propOr } from 'ramda'
 
 import { Grid, Row, Col } from './../components/Grid'
 import SegmentedSwitch from './../components/SegmentedSwitch'
@@ -15,10 +15,11 @@ import { amountBRLParse } from './../utils/parsers'
 import discountParser from './../utils/discountParser'
 import installmentsData from './../utils/installments'
 import Barcode from './../images/barcode.svg'
+import calculate from './../utils/calculateInstallments'
 
 const applyThemr = themr('UIPaymentPage')
 
-const checkRenderMethod = name => ({ value }) => (value === name)
+const checkRenderPaymentMethod = (name, { value }) => (value === name)
 
 const defaultColSize = 12
 const mediumColSize = 6
@@ -27,17 +28,16 @@ const defaultCvv = '•••'
 const defaultExpirationDate = 'MM/AA'
 const defaultCardName = 'Nome Completo'
 
-const paymentMethodsSupported = {
-  creditcard: {
-    value: 'creditcard',
-    title: 'Cartão de Crédito',
-    render: this.renderCreditcard,
-  },
-  boleto: {
-    value: 'boleto',
-    title: 'Boleto bancário',
-    render: this.renderBoleto,
-  },
+const getProp = {
+  cardNumber: propOr('', 'cardNumber'),
+  name: propOr('', 'name'),
+  dateValidate: propOr('', 'dataValidate'),
+  cvv: propOr('', 'cvv'),
+  selectedInstallments: (
+    installments,
+    selectedInstallments,
+    defaultInstallments
+  ) => installments[selectedInstallments || (defaultInstallments - 1) || 0],
 }
 
 class Payment extends Component {
@@ -47,23 +47,44 @@ class Payment extends Component {
     const {
       payment,
       paymentMethods,
+      creditcard,
+      boleto,
+      amount,
     } = this.props
+
+    const paymentMethodsSupported = {
+      creditcard: {
+        value: 'creditcard',
+        title: 'Cartão de Crédito',
+        subtitle: prop('subtitle', creditcard) || '',
+        render: this.renderCreditcard.bind(this),
+      },
+      boleto: {
+        value: 'boleto',
+        title: 'Boleto bancário',
+        subtitle: prop('subtitle', boleto) || '',
+        render: this.renderBoleto.bind(this),
+      },
+    }
 
     const paymentOptions = paymentMethods.map(
       option => paymentMethodsSupported[option]
     )
 
-    const paymentData = payment || {
-      cardNumber: '',
-      name: '',
-      dateValidate: '',
-      cvv: '',
-      installments: 'placeholder',
-    }
+    const installmentsOptions = calculate(creditcard, installmentsData, amount)
 
     this.state = {
-      ...paymentData,
+      cardNumber: getProp.cardNumber(payment),
+      name: getProp.name(payment),
+      dateValidate: getProp.dateValidate(payment),
+      cvv: getProp.cvv(payment),
+      selectedInstallments: getProp.selectedInstallments(
+        installmentsOptions,
+        payment.selectedInstallments,
+        creditcard.defaultInstallments
+      ),
       paymentOptions,
+      installmentsOptions,
       selected: paymentOptions[0],
       nameEmail: '',
       email: '',
@@ -87,7 +108,7 @@ class Payment extends Component {
       'name',
       'cvv',
       'dateValidate',
-      'installments',
+      'selectedInstallments',
     ], this.state)
 
     this.props.handlePageChange(paymentData, 'payment')
@@ -98,7 +119,7 @@ class Payment extends Component {
   }
 
   handleInstallmentsChange (value) {
-    this.setState({ installments: value })
+    this.setState({ selectedInstallments: value })
   }
 
   handleInputChange (e) {
@@ -161,8 +182,9 @@ class Payment extends Component {
       name,
       expiration,
       cvv,
-      installments,
+      selectedInstallments,
       flipped,
+      installmentsOptions,
     } = this.state
 
     const { theme, isBigScreen } = this.props
@@ -247,17 +269,20 @@ class Payment extends Component {
               />
             </Col>
           </Row>
-          <Row>
-            <Dropdown
-              options={installmentsData}
-              name="installments"
-              label="Quantidade de Parcelas"
-              value={installments}
-              onChange={this.handleInstallmentsChange}
-              title="Selecione"
-            />
-          </Row>
-          <Row hidden={this.props.isBigScreen}>
+          {
+            installmentsOptions.length &&
+            <Row>
+              <Dropdown
+                options={installmentsOptions}
+                name="installments"
+                label="Quantidade de Parcelas"
+                value={selectedInstallments.value}
+                onChange={this.handleInstallmentsChange}
+                title="Selecione"
+              />
+            </Row>
+          }
+          <Row hidden={isBigScreen}>
             { this.renderAmount() }
           </Row>
         </Col>
@@ -502,11 +527,11 @@ class Payment extends Component {
   }
 
   renderPaymentOptions () {
-    const { paymentOptions } = this.state
+    const { paymentOptions, selected } = this.state
 
-    return paymentOptions.map(({ name, render }) => (
+    return paymentOptions.map(({ value, render }) => (
       <Fragment>
-        { checkRenderMethod(name) && render() }
+        { checkRenderPaymentMethod(value, selected) && render() }
       </Fragment>
     ))
   }
@@ -563,7 +588,7 @@ Payment.propTypes = {
       PropTypes.number,
       PropTypes.string,
     ]),
-    installments: PropTypes.string,
+    selectedInstallments: PropTypes.string,
   }).isRequired,
   amount: PropTypes.number.isRequired,
   paymentMethods: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -579,10 +604,10 @@ Payment.propTypes = {
   creditcard: PropTypes.shape({
     subtitle: PropTypes.string,
     brands: PropTypes.arrayOf(PropTypes.string),
-    maxInstallment: PropTypes.number,
+    maxInstallments: PropTypes.number,
     interestRate: PropTypes.number,
-    freeInstallment: PropTypes.number,
-    defaultInstallment: PropTypes.number,
+    freeInstallments: PropTypes.number,
+    defaultInstallments: PropTypes.number,
   }),
   handlePageChange: PropTypes.func.isRequired,
 }
@@ -591,6 +616,7 @@ Payment.defaultProps = {
   theme: {},
   payment: {},
   boleto: {},
+  creditcard: {},
 }
 
 export default applyThemr(Payment)

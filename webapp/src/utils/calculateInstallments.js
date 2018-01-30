@@ -14,9 +14,9 @@ const filterInstallment = range => ({ value }) => gte(range, value)
 
 const isFree = (freeInstallments, value) => value > freeInstallments
 
-const getInstallmentAmount = (amount, installments) => amount / installments
+const getInstallmentAmount = (amount, installments) => (amount / installments).toFixed(0)
 
-const getInterest = (amount, interest) => amount * (interest / 100)
+const getInterest = (amount, interest) => (amount * (interest / 100))
 
 const calculateInstallmentAmount = (
   interestRate,
@@ -53,10 +53,14 @@ const calculateInstallmentAmount = (
 
 const calculate = (creditcard, installments, amount) => {
   const {
-    maxInstallments = 12,
-    interestRate = 0,
-    freeInstallments = 12,
+    maxInstallments,
+    interestRate,
+    freeInstallments,
   } = creditcard
+
+  if (!maxInstallments) {
+    return []
+  }
 
   return pipe(
     filter(filterInstallment(maxInstallments)),

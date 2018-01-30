@@ -69,14 +69,22 @@ const creditcardSchema = Joi.object()
       .integer()
       .min(1)
       .max(12),
-    interestRate: Joi.number()
-      .min(0)
-      .max(100),
-    freeInstallment: Joi.number()
+    interestRate: Joi.any()
+      .when('freeInstallments', {
+        is: Joi.exist(),
+        then: Joi.number()
+          .min(0)
+          .max(100)
+          .required(),
+        otherwise: Joi.number()
+          .min(0)
+          .max(100),
+      }),
+    freeInstallments: Joi.number()
       .integer()
       .min(1)
       .max(12),
-    defaultInstallment: Joi.number()
+    defaultInstallments: Joi.number()
       .integer()
       .min(1)
       .max(12),

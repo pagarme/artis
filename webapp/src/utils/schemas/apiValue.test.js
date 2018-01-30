@@ -25,7 +25,7 @@ const params = {
       type: 'percentage',
       value: 15,
     },
-    expirationAt: '2018-01-30',
+    expirationAt: '2099-01-30',
   },
   creditcard: {
     brands: [
@@ -37,8 +37,9 @@ const params = {
       'mastercard',
     ],
     maxInstallments: 12,
-    freeInstallment: 3,
-    defaultInstallment: 1,
+    freeInstallments: 3,
+    defaultInstallments: 1,
+    interestRate: 25,
   },
   customer: {
     name: 'Dan Abramov',

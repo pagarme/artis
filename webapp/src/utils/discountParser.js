@@ -1,6 +1,6 @@
 const discounts = {
   percentage: {
-    calc: (amount, discount) => (amount * (discount / 100)),
+    calc: (amount, discount) => (amount - (amount * (discount / 100))),
   },
   amount: {
     calc: (amount, discount) => (amount - discount),

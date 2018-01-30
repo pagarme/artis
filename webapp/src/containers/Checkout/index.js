@@ -177,6 +177,7 @@ class Checkout extends Component {
       paymentMethods,
       boleto,
       creditcard,
+      amount,
     } = this.state.checkoutData
 
     return (
@@ -214,6 +215,7 @@ class Checkout extends Component {
             paymentMethods={paymentMethods}
             boleto={boleto}
             creditcard={creditcard}
+            amount={amount}
             handlePageChange={this.handlePageChange}
           />
         </Action>
