@@ -1,10 +1,7 @@
 import {
   gte,
   filter,
-  identity,
-  ifElse,
   map,
-  mergeDeepLeft,
   pipe,
 } from 'ramda'
 

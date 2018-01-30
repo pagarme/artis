@@ -530,7 +530,7 @@ class Payment extends Component {
     const { paymentOptions, selected } = this.state
 
     return paymentOptions.map(({ value, render }) => (
-      <Fragment>
+      <Fragment key={value}>
         { checkRenderPaymentMethod(value, selected) && render() }
       </Fragment>
     ))
