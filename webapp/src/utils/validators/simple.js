@@ -23,7 +23,7 @@ function lettersValidation (value) {
 }
 
 function numbersValidation (value) {
-  return isNaN(value) ? 'Esse campo deve ser numérico' : ''
+  return validator.isNumeric(value) ? '' : 'Esse campo deve ser numérico'
 }
 
 function emailValidation (value) {

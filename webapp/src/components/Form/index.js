@@ -6,11 +6,10 @@ import FormValidation from 'react-vanilla-form'
 const applyThemr = themr('UIForm')
 
 const Form = ({ theme, validation, children }) => (
-  <React.Fragment>
-    <FormValidation validation={validation} className={theme.form}>
-      { children }
-    </FormValidation>
-  </React.Fragment>
+  <FormValidation validation={validation} className={theme.form}>
+    { children }
+  </FormValidation>
+
 )
 
 Form.propTypes = {
