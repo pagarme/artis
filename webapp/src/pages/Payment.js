@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { Grid, Row, Col } from './../components/Grid'
 import Switch from './../components/Switch'
 import Input from './../components/Input'
+import Form from './../components/Form'
 import Dropdown from './../components/Dropdown'
 
 import formatToBRL from './../utils/helpers/formatToBRL'
@@ -16,6 +17,13 @@ import { applyDiscount, generateInstallmnets } from './../utils/calculations'
 
 import Barcode from './../images/barcode.svg'
 import { addPageInfo } from '../actions'
+
+import {
+  maxLengthValidation,
+  requiredValidation,
+  lettersValidation,
+  numbersValidation,
+} from '../utils/validators/'
 
 const applyThemr = themr('UIPaymentPage')
 
@@ -124,105 +132,132 @@ class PaymentPage extends Component {
 
     return (
       <Grid className={theme.page}>
-        <Row>
-          <Col
-            tv={mediumColSize}
-            desk={mediumColSize}
-            tablet={mediumColSize}
-            palm={defaultColSize}
-            alignCenter
-            hidden={!isBigScreen}
-          >
-            <PaymentCard
-              number={cardNumber || '•••• •••• •••• ••••'}
-              cvv={cvv || '•••'}
-              holderName={holderName || 'Nome Completo'}
-              expiration={expiration || 'MM/AA'}
-              flipped={flipped}
-            />
-            <h4 className={theme.amount} >
+        <Form
+          validation={{
+            cardNumber: [
+              requiredValidation,
+              maxLengthValidation(16),
+            ],
+            name: [
+              requiredValidation,
+              maxLengthValidation(16),
+              lettersValidation,
+            ],
+            expiration: [
+              requiredValidation,
+              maxLengthValidation(4),
+            ],
+            cvv: [
+              requiredValidation,
+              maxLengthValidation(3),
+            ],
+            installments: [
+              requiredValidation,
+              maxLengthValidation(22),
+              numbersValidation,
+            ],
+          }}
+        >
+          <Row>
+            <Col
+              tv={mediumColSize}
+              desk={mediumColSize}
+              tablet={mediumColSize}
+              palm={defaultColSize}
+              alignCenter
+              hidden={!isBigScreen}
+            >
+              <PaymentCard
+                number={cardNumber || '•••• •••• •••• ••••'}
+                cvv={cvv || '•••'}
+                holderName={holderName || 'Nome Completo'}
+                expiration={expiration || 'MM/AA'}
+                flipped={flipped}
+              />
+              <h4 className={theme.amount} >
               Valor a pagar: {formatToBRL(amount)}
-            </h4>
-          </Col>
-          <Col
-            tv={mediumColSize}
-            desk={mediumColSize}
-            tablet={mediumColSize}
-            palm={defaultColSize}
-          >
-            <Row>
-              <Input
-                name="cardNumber"
-                label="Número do cartão"
-                value={cardNumber}
-                type="number"
-                mask="1111 1111 1111 1111"
-                onChange={this.handleCreditcardtChange}
-              />
-            </Row>
-            <Row>
-              <Input
-                name="holderName"
-                label="Nome"
-                hint="(Igual no cartão)"
-                maxLength="24"
-                value={holderName}
-                onChange={this.handleCreditcardtChange}
-              />
-            </Row>
-            <Row>
-              <Col
-                tv={7}
-                desk={7}
-                tablet={defaultColSize}
-                palm={defaultColSize}
-              >
-                <Input
-                  name="expiration"
-                  label="Data de validade"
-                  mask="11/11"
-                  value={expiration}
-                  onChange={this.handleCreditcardtChange}
-                />
-              </Col>
-              <Col
-                tv={5}
-                desk={5}
-                tablet={defaultColSize}
-                palm={defaultColSize}
-              >
-                <Input
-                  name="cvv"
-                  label="CVV"
-                  value={cvv}
-                  type="number"
-                  mask="111"
-                  onChange={this.handleCreditcardtChange}
-                  onFocus={this.handleFlipCard}
-                  onBlur={this.handleFlipCard}
-                />
-              </Col>
-            </Row>
-            {
-              installmentsOptions.length &&
+              </h4>
+            </Col>
+            <Col
+              tv={mediumColSize}
+              desk={mediumColSize}
+              tablet={mediumColSize}
+              palm={defaultColSize}
+            >
               <Row>
-                <Dropdown
-                  options={installmentsOptions}
-                  name="installments"
-                  label="Quantidade de Parcelas"
-                  value={installments}
-                  onChange={this.handleInstallmentChange}
-                  title="Selecione"
+                <Input
+                  name="cardNumber"
+                  label="Número do cartão"
+                  value={cardNumber}
+                  type="number"
+                  mask="1111 1111 1111 1111"
+                  onChange={this.handleCreditcardtChange}
                 />
               </Row>
-            }
-            <Row hidden={isBigScreen}>
-              <h4 className={theme.amount} >
+              <Row>
+                <Input
+                  name="holderName"
+                  label="Nome"
+                  hint="(Igual no cartão)"
+                  maxLength="24"
+                  value={holderName}
+                  onChange={this.handleCreditcardtChange}
+                />
+              </Row>
+              <Row>
+                <Col
+                  tv={7}
+                  desk={7}
+                  tablet={defaultColSize}
+                  palm={defaultColSize}
+                >
+                  <Input
+                    name="expiration"
+                    label="Data de validade"
+                    mask="11/11"
+                    value={expiration}
+                    onChange={this.handleCreditcardtChange}
+                  />
+                </Col>
+                <Col
+                  tv={5}
+                  desk={5}
+                  tablet={defaultColSize}
+                  palm={defaultColSize}
+                >
+                  <Input
+                    name="cvv"
+                    label="CVV"
+                    value={cvv}
+                    type="number"
+                    mask="111"
+                    onChange={this.handleCreditcardtChange}
+                    onFocus={this.handleFlipCard}
+                    onBlur={this.handleFlipCard}
+                  />
+                </Col>
+              </Row>
+              {
+                installmentsOptions.length &&
+                <Row>
+                  <Dropdown
+                    options={installmentsOptions}
+                    name="installments"
+                    label="Quantidade de Parcelas"
+                    value={getSelectedInstallment(installments)}
+                    onChange={this.handleInstallmentChange}
+                    title="Selecione"
+                  />
+                </Row>
+              }
+              <Row hidden={isBigScreen}>
+                <h4 className={theme.amount} >
                 Valor a pagar: {formatToBRL(amount)}
-              </h4>
-            </Row>
-          </Col>
-        </Row>
+                </h4>
+              </Row>
+            </Col>
+          </Row>
+        </Form>
       </Grid>
     )
   }
