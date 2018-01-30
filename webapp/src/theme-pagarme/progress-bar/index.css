@@ -12,10 +12,6 @@
   transition: all 0.25s ease-out;
 }
 
-.steps {
-  margin: var(--steps-margin);
-}
-
 .step {
   font-family: var(--step-font-family);
   font-size: var(--step-font-size);
@@ -27,4 +23,15 @@
 
 .active {
   color: var(--step-color-active);
+}
+
+@media (--media-palm) {
+
+  .active {
+    width: 100%;
+  }
+
+  .step:not(.active) {
+    display: none;
+  }
 }
