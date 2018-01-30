@@ -173,11 +173,10 @@ class Checkout extends Component {
       customer,
       billing,
       shipping,
-      addresses,
       payment,
       paymentMethods,
       boleto,
-      creaditcard,
+      creditcard,
     } = this.state.checkoutData
 
     return (
@@ -204,7 +203,6 @@ class Checkout extends Component {
             footerButtonVisible={this.handleFooterButton}
             isBigScreen={isBigScreen}
             shipping={shipping}
-            addresses={addresses || []}
             handlePageChange={this.handlePageChange}
           />
         </Action>
@@ -215,7 +213,7 @@ class Checkout extends Component {
             payment={payment}
             paymentMethods={paymentMethods}
             boleto={boleto}
-            creaditcard={creaditcard}
+            creditcard={creditcard}
             handlePageChange={this.handlePageChange}
           />
         </Action>

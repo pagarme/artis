@@ -17,12 +17,10 @@ class ShippingPage extends Component {
   constructor (props) {
     super(props)
 
-    const { shipping, addresses } = this.props
-
-    const addressList = addresses || []
+    const { shipping } = this.props
 
     this.state = {
-      addresses: shipping ? [shipping, ...addressList] : addressList,
+      addresses: [shipping],
       selected: {},
       openAddressForm: false,
     }
@@ -113,21 +111,6 @@ ShippingPage.propTypes = {
     title: PropTypes.string,
     btnAddNewAddress: PropTypes.string,
   }),
-  addresses: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      street: PropTypes.string,
-      number: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-      ]),
-      complement: PropTypes.string,
-      neighborhood: PropTypes.string,
-      city: PropTypes.string,
-      state: PropTypes.string,
-      zipcode: PropTypes.string,
-    }),
-  ),
   shipping: PropTypes.shape({
     name: PropTypes.string,
     street: PropTypes.string,
@@ -150,7 +133,6 @@ ShippingPage.propTypes = {
 ShippingPage.defaultProps = {
   theme: {},
   shipping: {},
-  addresses: [],
   footerButtonVisible: null,
 }
 
