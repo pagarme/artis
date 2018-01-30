@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
+import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
 
 import { Grid, Row, Col } from './../components/Grid'
@@ -10,11 +11,10 @@ import Dropdown from './../components/Dropdown'
 import Button from './../components/Button'
 import { amountBRLParse } from './../utils/parsers'
 import installmentsData from './../utils/installments'
+import isBigScreen from './../utils/isBigScreen'
 import Barcode from './../images/barcode.svg'
 
 const applyThemr = themr('UIPaymentPage')
-
-const isDesktop = window.innerWidth > 640
 
 const isCreditCard = ({ value }) => (value === 'creditcard')
 
@@ -133,7 +133,7 @@ class Payment extends Component {
           palm={defaultColSize}
           alignCenter
           className={theme.cardContainer}
-          hidden={!isDesktop}
+          hidden={!isBigScreen}
         >
           <PaymentCard
             number={cardNumber || defaultCardNumber}
@@ -152,39 +152,24 @@ class Payment extends Component {
           palm={defaultColSize}
         >
           <Row>
-            <Col
-              tv={defaultColSize}
-              desk={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-            >
-              <Input
-                name="cardNumber"
-                label="Número do cartão"
-                value={cardNumber}
-                type="number"
-                mask="1111 1111 1111 1111"
-                max="9999999999999999999"
-                onChange={this.handleInputChange}
-              />
-            </Col>
+            <Input
+              name="cardNumber"
+              label="Número do cartão"
+              value={cardNumber}
+              type="number"
+              mask="1111 1111 1111 1111"
+              onChange={this.handleInputChange}
+            />
           </Row>
           <Row>
-            <Col
-              tv={defaultColSize}
-              desk={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-            >
-              <Input
-                name="name"
-                label="Nome"
-                hint="(Igual no cartão)"
-                value={name}
-                placeholder=""
-                onChange={this.handleInputChange}
-              />
-            </Col>
+            <Input
+              name="name"
+              label="Nome"
+              hint="(Igual no cartão)"
+              maxLength="24"
+              value={name}
+              onChange={this.handleInputChange}
+            />
           </Row>
           <Row>
             <Col
@@ -196,10 +181,8 @@ class Payment extends Component {
               <Input
                 name="expiration"
                 label="Data de validade"
-                hint=""
                 mask="11/11"
                 value={expiration}
-                placeholder=""
                 onChange={this.handleInputChange}
               />
             </Col>
@@ -214,7 +197,6 @@ class Payment extends Component {
                 label="CVV"
                 value={cvv}
                 type="number"
-                maxLength="3"
                 mask="111"
                 onChange={this.handleInputChange}
                 onFocus={this.flipCard}
@@ -223,31 +205,17 @@ class Payment extends Component {
             </Col>
           </Row>
           <Row>
-            <Col
-              tv={defaultColSize}
-              desk={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-            >
-              <Dropdown
-                options={installmentsData}
-                name="installments"
-                label="Quantidade de Parcelas"
-                value={installments}
-                onChange={this.handleInstallmentsChange}
-                title="Selecione"
-              />
-            </Col>
+            <Dropdown
+              options={installmentsData}
+              name="installments"
+              label="Quantidade de Parcelas"
+              value={installments}
+              onChange={this.handleInstallmentsChange}
+              title="Selecione"
+            />
           </Row>
-          <Row hidden={isDesktop}>
-            <Col
-              tv={defaultColSize}
-              desk={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-            >
-              { this.renderAmount() }
-            </Col>
+          <Row hidden={isBigScreen}>
+            { this.renderAmount() }
           </Row>
         </Col>
       </Row>
@@ -280,7 +248,13 @@ class Payment extends Component {
             Gerar Boleto
           </Button>}
           {barcode && <p className={theme.barcode} >{barcode}</p>}
-          <h4 className={`${theme.amount} ${theme.boletoAmount}`} >
+          <h4 className={
+            classNames(
+              theme.amount,
+              theme.boletoAmount,
+            )
+          }
+          >
             Valor a pagar: {amountBRLParse(amount)}
           </h4>
         </div>
@@ -299,51 +273,26 @@ class Payment extends Component {
     return (
       <div className={theme.emailForm}>
         <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <h4 className={theme.emailFormTitle}>
-              Encaminhar por e-mail
-            </h4>
-          </Col>
+          <h4 className={theme.emailFormTitle}>
+            Encaminhar por e-mail
+          </h4>
         </Row>
         <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Input
-              name="nameEmail"
-              label="Digite seu nome - opcional"
-              hint=""
-              mask=""
-              value={nameEmail}
-              placeholder=""
-              onChange={this.handleInputChange}
-            />
-          </Col>
+          <Input
+            name="nameEmail"
+            label="Digite seu nome - opcional"
+            value={nameEmail}
+            onChange={this.handleInputChange}
+          />
         </Row>
         <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Input
-              name="email"
-              label="Digite o e-mail"
-              value={email}
-              placeholder=""
-              onKeyPress={this.handleKeyPress}
-              onChange={this.handleInputChange}
-            />
-          </Col>
+          <Input
+            name="email"
+            label="Digite o e-mail"
+            value={email}
+            onKeyPress={this.handleKeyPress}
+            onChange={this.handleInputChange}
+          />
         </Row>
       </div>
     )
@@ -372,7 +321,7 @@ class Payment extends Component {
               disabled={!barcode}
               full
               size="extra-large"
-              className={theme.boletoOption}
+              className={theme.actionButton}
             >
               Salvar arquivo
             </Button>
@@ -392,8 +341,8 @@ class Payment extends Component {
               disabled={!barcode}
               full
               size="extra-large"
-              className={theme.boletoOption}
               onClick={this.toggleSendByEmail}
+              className={theme.actionButton}
             >
               Encaminhar por e-mail
             </Button>
@@ -413,7 +362,7 @@ class Payment extends Component {
               disabled={!barcode}
               full
               size="extra-large"
-              className={theme.boletoOption}
+              className={theme.actionButton}
             >
               Copiar código de barras
             </Button>
@@ -440,7 +389,7 @@ class Payment extends Component {
         className={theme.optionsContainer}
       >
         { showEmailForm ? this.renderEmailForm() : this.renderOptions() }
-        <Row hidden={isDesktop} >
+        <Row hidden={isBigScreen} >
           <Col
             tv={defaultColSize}
             desk={defaultColSize}
@@ -450,7 +399,7 @@ class Payment extends Component {
             { this.renderAmount() }
           </Col>
         </Row>
-        <Row hidden={isDesktop} >
+        <Row hidden={isBigScreen} >
           <Col
             tv={defaultColSize}
             desk={defaultColSize}
@@ -459,11 +408,9 @@ class Payment extends Component {
           >
             <Button
               relevance="low"
-              textAlign="center"
               disabled={!barcode}
               full
               size="extra-large"
-              className={theme.boletoOption}
             >
               Fechar
             </Button>
@@ -478,11 +425,11 @@ class Payment extends Component {
       barcode,
     } = this.state
 
-    if (!isDesktop && !barcode) {
+    if (!isBigScreen && !barcode) {
       return this.renderGenerateBoleto()
     }
 
-    if (!isDesktop && barcode) {
+    if (!isBigScreen && barcode) {
       return this.renderBoletoOptions()
     }
 
@@ -505,19 +452,12 @@ class Payment extends Component {
     return (
       <Grid className={theme.grid}>
         <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <SegmentedSwitch
-              onChange={this.handleSwitchChange}
-              items={paymentOptions}
-              selected={selected}
-              name="paymentOptions"
-            />
-          </Col>
+          <SegmentedSwitch
+            onChange={this.handleSwitchChange}
+            items={paymentOptions}
+            selected={selected}
+            name="paymentOptions"
+          />
         </Row>
         { isCreditCard(selected) ?
           this.renderCreditCard() :
@@ -533,14 +473,11 @@ Payment.propTypes = {
     cardContainer: PropTypes.string,
     cardForm: PropTypes.string,
     grid: PropTypes.string,
-    page: PropTypes.string,
-    title: PropTypes.string,
     barcode: PropTypes.string,
     barcodeImg: PropTypes.string,
     generateBoleto: PropTypes.string,
     generateBoletoContainer: PropTypes.string,
     boletoAmount: PropTypes.string,
-    boletoOption: PropTypes.string,
     boletoContainer: PropTypes.string,
     optionsContainer: PropTypes.string,
     emailForm: PropTypes.string,

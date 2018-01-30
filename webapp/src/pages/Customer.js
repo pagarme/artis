@@ -6,6 +6,8 @@ import { Grid, Row, Col } from '../components/Grid'
 import Input from '../components/Input'
 import BillingPage from './Billing'
 
+import isBigScreen from '../utils/isBigScreen'
+
 const applyThemr = themr('UICustomerPage')
 const defaultColSize = 12
 const mediumColSize = 6
@@ -38,97 +40,62 @@ class CustomerPage extends Component {
       phoneNumber,
     } = this.state
 
-    const { desktop, theme } = this.props
+    const { theme } = this.props
+
+    const sizeWithDesktop = isBigScreen
+      ? mediumColSize
+      : defaultColSize
 
     return (
       <Grid className={theme.page}>
         <Col
-          tv={desktop ? mediumColSize : defaultColSize}
-          desk={desktop ? mediumColSize : defaultColSize}
-          tablet={desktop ? mediumColSize : defaultColSize}
+          tv={sizeWithDesktop}
+          desk={sizeWithDesktop}
+          tablet={sizeWithDesktop}
         >
-          <Row>
-            <Col
-              tv={defaultColSize}
-              desk={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-              className={theme.title}
-              alignCenter
-            >
-              { this.props.title }
-            </Col>
-            <Col
-              tv={defaultColSize}
-              desk={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-            >
-              <Input
-                name="name"
-                label="Nome"
-                hint=""
-                value={name}
-                placeholder="Digite seu nome"
-                onChange={this.handleInputChange}
-              />
-            </Col>
+          <Row className={theme.title} alignCenter>
+            { this.props.title }
           </Row>
           <Row>
-            <Col
-              tv={defaultColSize}
-              desk={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-            >
-              <Input
-                name="email"
-                label="E-mail"
-                hint=""
-                value={email}
-                placeholder="Digite seu e-mail"
-                onChange={this.handleInputChange}
-              />
-            </Col>
+            <Input
+              name="name"
+              label="Nome"
+              value={name}
+              placeholder="Digite seu nome"
+              onChange={this.handleInputChange}
+            />
           </Row>
           <Row>
-            <Col
-              tv={defaultColSize}
-              desk={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-            >
-              <Input
-                name="documentNumber"
-                label="CPF"
-                hint=""
-                mask="111.111.111-11"
-                value={documentNumber}
-                placeholder="Digite seu CPF"
-                onChange={this.handleInputChange}
-              />
-            </Col>
+            <Input
+              name="email"
+              label="E-mail"
+              value={email}
+              placeholder="Digite seu e-mail"
+              onChange={this.handleInputChange}
+            />
           </Row>
           <Row>
-            <Col
-              tv={defaultColSize}
-              desk={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-            >
-              <Input
-                name="phoneNumber"
-                label="DDD + Telefone"
-                hint=""
-                mask="(11) 11111-1111"
-                value={phoneNumber}
-                placeholder="Digite seu telefone"
-                onChange={this.handleInputChange}
-              />
-            </Col>
+            <Input
+              name="documentNumber"
+              label="CPF"
+              mask="111.111.111-11"
+              value={documentNumber}
+              placeholder="Digite seu CPF"
+              onChange={this.handleInputChange}
+            />
+          </Row>
+          <Row>
+            <Input
+              name="phoneNumber"
+              label="DDD + Telefone"
+              mask="(11) 11111-1111"
+              value={phoneNumber}
+              placeholder="Digite seu telefone"
+              onChange={this.handleInputChange}
+            />
           </Row>
         </Col>
-        {desktop &&
+        {isBigScreen &&
           <Col
             tv={mediumColSize}
             desk={mediumColSize}
@@ -136,7 +103,7 @@ class CustomerPage extends Component {
           >
             <BillingPage
               title="Endereço de Cobrança"
-              isDesktop
+              isBigScreen
             />
           </Col>
         }
@@ -151,7 +118,6 @@ CustomerPage.propTypes = {
     title: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
-  desktop: PropTypes.bool.isRequired,
 }
 
 CustomerPage.defaultProps = {

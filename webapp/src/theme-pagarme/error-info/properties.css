@@ -1,0 +1,12 @@
+@import "../colors.css";
+@import "../typography.css";
+@import "../spacing.css";
+
+:root {
+  --page-title-font-size: var(--font-size-xxlarge);
+  --page-title-color: var(--color-white);
+
+  --confirmation-font-family: var(--primary-font-family);
+  --confirmation-error: var(--color-error);
+  --confirmation-info: var(--font-size-large);
+}

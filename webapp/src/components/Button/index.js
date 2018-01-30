@@ -47,14 +47,9 @@ function Button ({
 Button.propTypes = {
   theme: PropTypes.shape({
     button: PropTypes.string,
-    disabled: PropTypes.string,
-    size: PropTypes.string,
-    flat: PropTypes.string,
-    gradient: PropTypes.string,
     outline: PropTypes.string,
     clean: PropTypes.string,
     highRelevance: PropTypes.string,
-    normalRelevance: PropTypes.string,
     lowRelevance: PropTypes.string,
     light: PropTypes.string,
     dark: PropTypes.string,
@@ -62,6 +57,7 @@ Button.propTypes = {
     small: PropTypes.string,
     default: PropTypes.string,
     large: PropTypes.string,
+    'extra-large': PropTypes.string,
     full: PropTypes.string,
   }).isRequired,
   type: PropTypes.oneOf([
@@ -76,11 +72,10 @@ Button.propTypes = {
   ]),
   onClick: PropTypes.func,
   fill: PropTypes.oneOf([
-    'flat',
-    'gradient',
     'outline',
     'clean',
     'double',
+    'flat',
   ]),
   base: PropTypes.oneOf([
     'dark', 'light',

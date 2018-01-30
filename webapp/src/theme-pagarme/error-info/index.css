@@ -1,0 +1,28 @@
+@import "./properties.css";
+
+.title {
+  font-family: var(--confirmation-font-family);
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-color);
+}
+
+.textAlignedCenter {
+  text-align: center;
+}
+
+.alignSelfCenter {
+  align-self: center;
+}
+
+.error {
+  color: var(--confirmation-error);
+  margin: 0;
+}
+
+.info {
+  font-size: var(--confirmation-info);
+}
+
+.mediumSize {
+  width: 80%;
+}

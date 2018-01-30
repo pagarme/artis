@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
-import { Col } from '../Grid'
+import { Col } from '../../components/Grid'
 
 const largeColSize = 12
 const mediumColSize = 6

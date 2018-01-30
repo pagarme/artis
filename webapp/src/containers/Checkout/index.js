@@ -15,12 +15,10 @@ import BillingPage from '../../pages/Billing'
 import ShippingPage from '../../pages/Shipping'
 import PaymentPage from '../../pages/Payment'
 import ConfirmationPage from '../../pages/Confirmation'
-
+import isBigScreen from '../../utils/isBigScreen'
 import defaultLogo from '../../images/logo_pagarme.png'
 
 const applyThemr = themr('UICheckout')
-
-const checkDesktop = window.innerWidth > 640
 
 const statechart = {
   initial: 'customer',
@@ -36,10 +34,10 @@ const statechart = {
       on: {
         NEXT: {
           billing: {
-            cond: extState => !extState.isDesktop,
+            cond: extState => !extState.isBigScreen,
           },
           shipping: {
-            cond: extState => extState.isDesktop,
+            cond: extState => extState.isBigScreen,
           },
         },
       },
@@ -56,10 +54,10 @@ const statechart = {
       on: {
         PREV: {
           billing: {
-            cond: extState => !extState.isDesktop,
+            cond: extState => !extState.isBigScreen,
           },
           customer: {
-            cond: extState => extState.isDesktop,
+            cond: extState => extState.isBigScreen,
           },
         },
         NEXT: 'payment',
@@ -104,7 +102,7 @@ class Checkout extends Component {
 
   handleNavigation (transitionTo, pages, steps) {
     this.props.transition(transitionTo, {
-      isDesktop: checkDesktop,
+      isBigScreen,
     })
 
     const inc = transitionTo === 'NEXT' ? 1 : -1
@@ -139,7 +137,6 @@ class Checkout extends Component {
       <React.Fragment>
         <Action show="customer">
           <CustomerPage
-            desktop={checkDesktop}
             title="Dados Pessoais"
           />
         </Action>
@@ -186,7 +183,7 @@ class Checkout extends Component {
 
     const { pages } = statechart
 
-    if (checkDesktop) {
+    if (isBigScreen) {
       delete pages.billing
     }
 
@@ -216,7 +213,7 @@ class Checkout extends Component {
               steps={steps}
               activePage={activePage}
             />
-            {this.renderPages(checkDesktop)}
+            {this.renderPages(isBigScreen)}
           </div>
           <Footer
             total={params.amount}
@@ -245,7 +242,7 @@ Checkout.propTypes = {
     configs: PropTypes.shape({
       image: PropTypes.string,
       theme: PropTypes.string,
-      target: PropTypes.string.isRequired,
+      target: PropTypes.string,
     }).isRequired,
     params: PropTypes.shape({
       amount: PropTypes.number.isRequired,
@@ -257,9 +254,6 @@ Checkout.propTypes = {
 
 Checkout.defaultProps = {
   theme: {},
-  configs: {
-    target: '',
-  },
   apiValues: {
     configs: {
       image: '',

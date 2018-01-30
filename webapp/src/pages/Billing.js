@@ -13,7 +13,6 @@ import removeZipcodeMask from '../utils/removeZipcodeMask'
 
 const applyThemr = themr('UIBillingPage')
 
-const defaultColSize = 12
 const smallColSize = 4
 const bigColSize = 8
 
@@ -105,59 +104,38 @@ class BillingPage extends Component {
       state,
     } = this.state
 
-    const { theme, isDesktop } = this.props
+    const { theme, isBigScreen } = this.props
 
     return (
       <Grid className={
         classNames(theme.page, {
-          [theme.noMarginTop]: isDesktop,
+          [theme.noMarginTop]: isBigScreen,
         })}
       >
-        <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-            className={theme.title}
-            alignCenter
-          >
-            {this.props.title}
-          </Col>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Input
-              name="zipcode"
-              label="CEP"
-              mask="11111-111"
-              value={zipcode}
-              error={zipcodeError}
-              placeholder="Digite o CEP"
-              onChange={this.handleZipcodeChange}
-              onBlur={this.handleZipcodeBlur}
-            />
-          </Col>
+        <Row className={theme.title}>
+          {this.props.title}
         </Row>
         <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Input
-              name="street"
-              label="Logradouro"
-              hint="Rua, Av, Praça ou Travessa"
-              value={street}
-              placeholder="Digite o logradouro"
-              onChange={this.handleInputChange}
-            />
-          </Col>
+          <Input
+            name="zipcode"
+            label="CEP"
+            mask="11111-111"
+            value={zipcode}
+            error={zipcodeError}
+            placeholder="Digite o CEP"
+            onChange={this.handleZipcodeChange}
+            onBlur={this.handleZipcodeBlur}
+          />
+        </Row>
+        <Row>
+          <Input
+            name="street"
+            label="Logradouro"
+            hint="Rua, Av, Praça ou Travessa"
+            value={street}
+            placeholder="Digite o logradouro"
+            onChange={this.handleInputChange}
+          />
         </Row>
         <Row>
           <Col
@@ -193,21 +171,14 @@ class BillingPage extends Component {
           </Col>
         </Row>
         <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Input
-              name="neighborhood"
-              label="Bairro"
-              hint=""
-              value={neighborhood}
-              placeholder="Digite o bairro"
-              onChange={this.handleInputChange}
-            />
-          </Col>
+          <Input
+            name="neighborhood"
+            label="Bairro"
+            hint=""
+            value={neighborhood}
+            placeholder="Digite o bairro"
+            onChange={this.handleInputChange}
+          />
         </Row>
         <Row>
           <Col
@@ -252,12 +223,12 @@ BillingPage.propTypes = {
     title: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
-  isDesktop: PropTypes.bool,
+  isBigScreen: PropTypes.bool,
 }
 
 BillingPage.defaultProps = {
   theme: {},
-  isDesktop: false,
+  isBigScreen: false,
 }
 
 export default applyThemr(BillingPage)

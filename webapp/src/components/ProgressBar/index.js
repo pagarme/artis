@@ -10,8 +10,7 @@ import { clamp } from 'ramda'
 import { themr } from 'react-css-themr'
 
 import { Grid, Row, Col } from '../Grid'
-
-const isDesktop = window.innerWidth > 640
+import isBigScreen from '../../utils/isBigScreen'
 
 const applyThemr = themr('UIProgressBar')
 
@@ -48,7 +47,7 @@ const ProgressBar = ({
 }) => {
   const totalSteps = steps.length
   const activeStep = activePage + 1
-  const shouldRenderSteps = totalSteps > 0 && isDesktop
+  const shouldRenderSteps = totalSteps > 0 && isBigScreen
 
   const totalPercent = clamp(
     0,

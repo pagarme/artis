@@ -18,10 +18,11 @@
   --color-grey-68: #515151;
   --color-grey-74: #434343;
   --color-grey-77: #555555;
-  --color-grey-80: #333333;
   --color-grey-83: #2b2b2b;
   --color-grey-84: #282828;
   --color-grey-85: #1d1d26;
+
+  --color-grey-secondary: #7d7c7c;
 
   --color-error: var(--color-pink);
   --color-success: var(--color-greenish);

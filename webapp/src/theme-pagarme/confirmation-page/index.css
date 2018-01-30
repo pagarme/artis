@@ -16,15 +16,6 @@
   color: var(--page-title-color);
 }
 
-.textAligned {
-  text-align: center;
-}
-
-.success {
-  color: var(--confirmation-success);
-  margin: 0;
-}
-
 .successIcon {
   padding-top: var(--success-icon-padding-top);
 }
@@ -44,33 +35,4 @@
   padding: var(--confirmation-icon-default-padding);
   width: var(--confirmation-icon-size);
   height: var(--confirmation-icon-size);
-}
-
-.error {
-  color: var(--confirmation-error);
-  margin: 0;
-}
-
-.info {
-  font-size: var(--confirmation-info);
-}
-
-.field,
-.value {
-  font-family: var(--confirmation-font-family);
-}
-
-.field {
-  color: var(--field-color);
-  margin-bottom: var(--field-margin-bottom);
-  font-size: var(--field-font-size);
-}
-
-.value {
-  color: var(--value-color);
-  font-size: var(--value-font-size);
-}
-
-.mediumSize {
-  width: 80%;
 }

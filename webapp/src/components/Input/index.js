@@ -65,6 +65,7 @@ class Input extends React.Component {
       inputRef,
       mask,
       theme,
+      maxLength,
     } = this.props
 
     let { onChange } = this.props
@@ -95,13 +96,14 @@ class Input extends React.Component {
 
     const inputProps = merge(
       pick(
-        ['disabled', 'placeholder', 'value', 'onFocus', 'onBlur', 'onKeyPress'],
+        ['disabled', 'placeholder', 'value', 'onFocus', 'onKeyPress'],
         this.props
       ),
       {
         ref: inputRef,
         onBlur,
         onChange,
+        maxLength,
       }
     )
 
@@ -207,6 +209,7 @@ Input.propTypes = {
   className: PropTypes.string,
   mask: PropTypes.string,
   inputRef: PropTypes.func,
+  maxLength: PropTypes.string,
 }
 
 Input.defaultProps = {
@@ -223,6 +226,7 @@ Input.defaultProps = {
   mask: '',
   inputRef: null,
   onBlur: null,
+  maxLength: '200',
 }
 
 export default applyThemr(Input)

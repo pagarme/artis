@@ -66,11 +66,6 @@
   margin-top: 27px;
 }
 
-.boletoOption {
-  margin-right: 50px;
-  margin-left: 50px;
-}
-
 .emailForm {
   font-size: 16px;
   width: 100%;
@@ -86,13 +81,12 @@
   font-family: var(--email-form-title-font-family);
   font-weight: var(--email-form-title-font-weight);
   color: var(--email-form-title-color);
-  margin-top: 1px;
-  margin-bottom: 24px;
+  margin-top: 0;
+  padding-bottom: 0;
   font-size: 16px;
 }
 
 .generateBoleto {
-  margin: auto;
   margin-top: 31px;
 }
 
@@ -109,6 +103,13 @@
   text-transform: uppercase;
   text-align: center;
   width: 100%;
+}
+
+.actionButton {
+  box-shadow: 0 0 0 2px #515151;
+  outline: none;
+  border-radius: 0;
+  width: 99%;
 }
 
 @media (--media-palm) {

@@ -11,6 +11,7 @@
   color: var(--page-title-color);
   text-transform: uppercase;
   letter-spacing: 1.4px;
+  padding-bottom: var(--page-title-padding-bottom);
 }
 
 .btnAddNewAddress {
@@ -20,8 +21,4 @@
 .btnAddNewAddress svg {
   margin-right: 4px;
   margin-bottom: 4px;
-}
-
-.visible {
-  display: block;
 }
