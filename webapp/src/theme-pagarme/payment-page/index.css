@@ -105,13 +105,6 @@
   width: 100%;
 }
 
-.actionButton {
-  box-shadow: 0 0 0 2px #515151;
-  outline: none;
-  border-radius: 0;
-  width: 99%;
-}
-
 @media (--media-palm) {
 
   .generateBoletoContainer {

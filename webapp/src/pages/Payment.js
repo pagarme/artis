@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
@@ -9,12 +9,11 @@ import { pick } from 'ramda'
 import { Grid, Row, Col } from './../components/Grid'
 import Switch from './../components/Switch'
 import Input from './../components/Input'
-// import Dropdown from './../components/Dropdown'
+import ActionList from './../components/ActionList'
 import Button from './../components/Button'
 
 import formatToBRL from './../utils/formatToBRL'
 import discountParser from './../utils/discountParser'
-import installmentsData from './../utils/installments'
 import Barcode from './../images/barcode.svg'
 
 const applyThemr = themr('UIPaymentPage')
@@ -109,7 +108,7 @@ class Payment extends Component {
 
   handleKeyPress (e) {
     if (e.key === 'Enter') {
-      this.toggleSendByEmail()
+      this.handleToggleSendByEmail()
     }
   }
 
@@ -312,78 +311,6 @@ class Payment extends Component {
     )
   }
 
-  renderOptions () {
-    const { barcode } = this.state.boleto
-    const { theme } = this.props
-
-    return (
-      <Fragment>
-        <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Button
-              textAlign="left"
-              relevance="low"
-              fill="double"
-              disabled={!barcode}
-              full
-              size="extra-large"
-              className={theme.actionButton}
-            >
-              Salvar arquivo
-            </Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Button
-              relevance="low"
-              textAlign="left"
-              fill="double"
-              disabled={!barcode}
-              full
-              size="extra-large"
-              onClick={this.toggleSendByEmail}
-              className={theme.actionButton}
-            >
-              Encaminhar por e-mail
-            </Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Button
-              relevance="low"
-              textAlign="left"
-              fill="double"
-              disabled={!barcode}
-              full
-              size="extra-large"
-              className={theme.actionButton}
-              onClick={this.handleCopyBarCode}
-            >
-              Copiar código de barras
-            </Button>
-          </Col>
-        </Row>
-      </Fragment>
-    )
-  }
-
   renderBoletoOptions () {
     const { boleto, showEmailForm } = this.state
     const { barcode } = boleto
@@ -397,7 +324,16 @@ class Payment extends Component {
         palm={defaultColSize}
         className={theme.optionsContainer}
       >
-        { showEmailForm ? this.renderEmailForm() : this.renderOptions() }
+        { showEmailForm
+          ? this.renderEmailForm()
+          : <ActionList buttons={[
+            { text: 'Salvar arquivo', disabled: !barcode },
+            { text: 'Encaminhar por e-mail', disabled: !barcode, onClick: this.handleToggleSendByEmail },
+            { text: 'Copiar código de barras', disabled: !barcode },
+          ]}
+          />
+        }
+
         <Row hidden={isBigScreen} >
           <Col
             tv={defaultColSize}
