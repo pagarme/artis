@@ -27,7 +27,7 @@ const renderSteps = (steps, activePage, theme) => {
                 })
               }
             >
-              <span className={theme.index}>{ `${index + 1}.` }</span>
+              <span className={theme.stepIndex}>{ `${index + 1}.` }</span>
               { step }
             </Col>
           ))

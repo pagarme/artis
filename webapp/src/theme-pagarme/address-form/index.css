@@ -21,7 +21,7 @@
   padding-bottom: var(--page-title-padding-bottom);
 }
 
-.title span {
+.title > span {
   padding-left: 0;
   padding-bottom: 0;
 }
@@ -48,9 +48,22 @@
 
   .addressForm {
     border: 0;
+    padding: 0;
+  }
+
+  .addressForm > * {
+    padding-left: 0;
   }
 
   .title {
     justify-content: center;
+  }
+
+  .buttonsWrapper {
+    margin-top: 10px;
+  }
+
+  .buttonsWrapper > * {
+    padding-bottom: 0;
   }
 }

@@ -4,4 +4,5 @@
 :root {
   --page-margin: var(--spacing-medium) var(--spacing-small);
   --checkout-background-color: var(--color-main-background);
+  --dark-content-background-color: var(--color-grey-83);
 }

@@ -31,6 +31,7 @@ class Checkout extends Component {
 
     this.state = {
       activePage: 0,
+      showProgressbar: true,
       closingEffect: false,
       isBigScreen: true,
       footerButtonVisible: true,
@@ -40,7 +41,7 @@ class Checkout extends Component {
     }
 
     this.handleFooterButton = this.handleFooterButton.bind(this)
-    this.handlePageChange = this.handlePageChange.bind(this)
+    this.handleProgressBar = this.handleProgressBar.bind(this)
     this.updateDimensions = this.updateDimensions.bind(this)
   }
 
@@ -171,6 +172,7 @@ class Checkout extends Component {
     const {
       activePage,
       footerButtonVisible,
+      showProgressbar,
     } = this.state
 
     const { apiData, theme } = this.props
@@ -206,14 +208,17 @@ class Checkout extends Component {
               this.handleNavigation.bind(this, 'PREV', pages, steps)
             }
             onClose={this.close.bind(this)}
-            prevButtonDisabled={activePage === 0}
+            prevButtonDisabled={disablePrevButton}
           />
-          <div className={theme.content}>
-            <ProgressBar
-              steps={steps}
-              activePage={activePage}
-            />
-            {this.renderPages(isBigScreen)}
+          <div className={contentClasses}>
+            {
+              (showProgressbar || isBigScreen) &&
+              <ProgressBar
+                steps={steps}
+                activePage={activePage}
+              />
+            }
+            {this.renderPages()}
           </div>
           <Footer
             total={params.amount}
@@ -236,6 +241,7 @@ Checkout.propTypes = {
     wrapper: PropTypes.string,
     closingEffect: PropTypes.string,
     checkout: PropTypes.string,
+    darkContent: PropTypes.string,
   }),
   apiData: PropTypes.shape({
     key: PropTypes.string.isRequired,

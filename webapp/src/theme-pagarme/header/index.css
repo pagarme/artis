@@ -16,8 +16,8 @@
 }
 
 .header {
-  min-height: var(--min-height);
-  max-height: var(--max-height);
+  min-height: var(--header-min-height);
+  max-height: var(--header-max-height);
   display: flex;
 }
 

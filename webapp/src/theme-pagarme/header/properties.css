@@ -4,6 +4,6 @@
   --logo-padding-bottom: 33px;
   --logo-max-width: 400px;
   --logo-max-height: 26px;
-  --min-height: 90px;
-  --max-height: 90px;
+  --header-min-height: 90px;
+  --header-max-height: 90px;
 }
