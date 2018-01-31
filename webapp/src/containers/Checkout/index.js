@@ -96,12 +96,10 @@ class Checkout extends Component {
   }
 
   handlePageChange (pageState, page) {
-    this.setState(prevState => ({
-      ...prevState,
+    this.setState(state => ({
       checkoutData: {
-        ...prevState.checkoutData,
+        ...state.checkoutData,
         [page]: {
-          ...prevState.checkoutData[page],
           ...pageState,
         },
       },
