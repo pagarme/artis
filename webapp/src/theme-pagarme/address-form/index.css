@@ -21,6 +21,11 @@
   padding-bottom: var(--page-title-padding-bottom);
 }
 
+.title span {
+  padding-left: 0;
+  padding-bottom: 0;
+}
+
 .buttonsWrapper {
   margin-top: 26px;
 }
@@ -36,5 +41,16 @@
 
   .actionButton {
     padding: 17px 24px;
+  }
+}
+
+@media (--media-palm) {
+
+  .addressForm {
+    border: 0;
+  }
+
+  .title {
+    justify-content: center;
   }
 }

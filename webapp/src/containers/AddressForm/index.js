@@ -150,7 +150,9 @@ class AddressForm extends Component {
       >
         <Grid>
           <Row className={theme.title}>
-            Cadastrar novo endereço
+            <span>
+              Cadastrar novo endereço
+            </span>
           </Row>
           <Row className={theme.addressForm}>
             <Col
