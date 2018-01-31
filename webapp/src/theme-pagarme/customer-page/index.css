@@ -14,3 +14,11 @@
   justify-content: center;
   padding-bottom: var(--page-title-padding-bottom);
 }
+
+@media (--media-palm) {
+
+  .title {
+    display: none;
+  }
+}
+
