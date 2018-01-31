@@ -19,6 +19,8 @@ import defaultLogo from '../../images/logo_pagarme.png'
 
 const applyThemr = themr('UICheckout')
 
+const bigScreenSize = 640
+
 const statechart = {
   initial: 'customer',
   pages: {
@@ -113,11 +115,11 @@ class Checkout extends Component {
   updateDimensions () {
     const { isBigScreen } = this.state
 
-    if (window.innerWidth > 640 && !isBigScreen) {
+    if (window.innerWidth > bigScreenSize && !isBigScreen) {
       this.setState({ isBigScreen: true })
     }
 
-    if (window.innerWidth < 640 && isBigScreen) {
+    if (window.innerWidth < bigScreenSize && isBigScreen) {
       this.setState({ isBigScreen: false })
     }
   }
