@@ -110,7 +110,6 @@ class Input extends React.Component {
       ? 'text'
       : type
 
-
     return (
       <div className={containerClasses}>
         {icon &&

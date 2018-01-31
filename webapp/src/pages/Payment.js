@@ -244,7 +244,7 @@ class PaymentPage extends Component {
                     options={installmentsOptions}
                     name="installments"
                     label="Quantidade de Parcelas"
-                    value={getSelectedInstallment(installments)}
+                    value={installments}
                     onChange={this.handleInstallmentChange}
                     title="Selecione"
                   />
