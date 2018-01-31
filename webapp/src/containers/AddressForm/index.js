@@ -118,7 +118,12 @@ class AddressForm extends Component {
       zipcodeError,
     } = this.state
 
-    const { options, visible, onCancel, theme } = this.props
+    const {
+      options,
+      visible,
+      onCancel,
+      theme,
+    } = this.props
 
     return (
       <div
@@ -267,9 +272,6 @@ class AddressForm extends Component {
               <Button
                 size={'extra-large'}
                 fill="outline"
-                className={classNames({
-                  [theme.actionButton]: !this.props.isBigScreen,
-                })}
                 full
                 onClick={onCancel.bind(this)}
               >
@@ -283,9 +285,6 @@ class AddressForm extends Component {
               palm={mediumColSize}
             >
               <Button
-                className={classNames({
-                  [theme.actionButton]: !this.props.isBigScreen,
-                })}
                 full
                 size={'extra-large'}
                 onClick={this.handleRegisterAddress}
@@ -313,7 +312,6 @@ AddressForm.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
   })),
-  isBigScreen: PropTypes.bool.isRequired,
 }
 
 AddressForm.defaultProps = {
