@@ -8100,9 +8100,9 @@ react-treebeard@^2.1.0:
     shallowequal "^0.2.2"
     velocity-react "^1.3.1"
 
-react-vanilla-form@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/react-vanilla-form/-/react-vanilla-form-0.2.1.tgz#32a5678b7f04e13eaa373b798b57b6b2260f8d7c"
+react-vanilla-form@0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-vanilla-form/-/react-vanilla-form-0.2.2.tgz#f444c41ba241126fcb876e8d6be8229604b36d3a"
   dependencies:
     ramda "0.25.0"
 

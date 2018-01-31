@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
-import Form from '../components/Form'
 
 import { Grid, Row, Col } from '../components/Grid'
 import Input from '../components/Input'
+import Form from '../components/Form'
 import Dropdown from '../components/Dropdown'
 
 import options from '../utils/data/states'
@@ -168,8 +168,7 @@ class BillingPage extends Component {
           <Row>
             <Input
               name="street"
-              label="Endereço"
-              hint="Rua, Av, Praça ou Travessa"
+              label="Rua"
               value={street}
               placeholder="Digite o endereço"
               onChange={this.handleInputChange}
@@ -183,11 +182,11 @@ class BillingPage extends Component {
               palm={smallColSize}
             >
               <Input
-                inputRef={this.handleStreetNumberInputRef}
-                name="streetNumber"
+                inputRef={this.handleNumberInputRef}
+                name="number"
                 label="Nº"
                 hint=""
-                value={streetNumber}
+                value={number}
                 placeholder="Digite o número"
                 onChange={this.handleInputChange}
               />
@@ -199,10 +198,10 @@ class BillingPage extends Component {
               palm={bigColSize}
             >
               <Input
-                name="streetComplement"
+                name="complement"
                 label="Complemento"
                 hint=""
-                value={streetComplement}
+                value={complement}
                 placeholder="Digite o complemento do endereço"
                 onChange={this.handleInputChange}
               />
@@ -212,13 +211,12 @@ class BillingPage extends Component {
             <Input
               name="neighborhood"
               label="Bairro"
-              hint=""
               value={neighborhood}
               placeholder="Digite o bairro"
               onChange={this.handleInputChange}
             />
           </Row>
-          <Row>
+          <Row overflowVisible>
             <Col
               tv={bigColSize}
               desk={bigColSize}
@@ -228,7 +226,6 @@ class BillingPage extends Component {
               <Input
                 name="city"
                 label="Cidade"
-                hint=""
                 value={city}
                 placeholder="Digite a cidade"
                 onChange={this.handleInputChange}
@@ -239,14 +236,14 @@ class BillingPage extends Component {
               desk={smallColSize}
               tablet={smallColSize}
               palm={smallColSize}
+              overflowVisible
             >
               <Dropdown
                 options={options}
-                name="state"
-                label="Estado"
+                id="state"
+                label="UF"
                 value={state}
                 onChange={this.handleStateChange}
-                title="Selecione"
               />
             </Col>
           </Row>
