@@ -11,7 +11,6 @@ import Button from '../../components/Button'
 
 import getAddress from '../../utils/getAddress'
 import removeZipcodeMask from '../../utils/removeZipcodeMask'
-import isBigScreen from '../../utils/isBigScreen'
 
 const applyThemr = themr('UIAddressForm')
 
@@ -269,7 +268,7 @@ class AddressForm extends Component {
                 size={'extra-large'}
                 fill="outline"
                 className={classNames({
-                  [theme.actionButton]: !isBigScreen,
+                  [theme.actionButton]: !this.props.isBigScreen,
                 })}
                 full
                 onClick={onCancel.bind(this)}
@@ -285,7 +284,7 @@ class AddressForm extends Component {
             >
               <Button
                 className={classNames({
-                  [theme.actionButton]: !isBigScreen,
+                  [theme.actionButton]: !this.props.isBigScreen,
                 })}
                 full
                 size={'extra-large'}
@@ -301,12 +300,6 @@ class AddressForm extends Component {
   }
 }
 
-AddressForm.defaultProps = {
-  visible: false,
-  options: [],
-  theme: {},
-}
-
 AddressForm.propTypes = {
   theme: PropTypes.shape({
     hidden: PropTypes.string,
@@ -320,6 +313,13 @@ AddressForm.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
   })),
+  isBigScreen: PropTypes.bool.isRequired,
+}
+
+AddressForm.defaultProps = {
+  visible: false,
+  options: [],
+  theme: {},
 }
 
 export default applyThemr(AddressForm)
