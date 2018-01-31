@@ -5,7 +5,7 @@ import {
   pipe,
 } from 'ramda'
 
-import { amountBRLParse } from './parsers'
+import formatToBRL from './formatToBRL'
 
 const filterInstallment = range => ({ value }) => gte(range, value)
 
@@ -26,7 +26,7 @@ const calculateInstallmentAmount = (
     const interest = getInterest(amount, interestRate)
     const newAmount = amount + interest
     const installmentAmount = getInstallmentAmount(newAmount, value)
-    const parsedAmount = amountBRLParse(installmentAmount)
+    const parsedAmount = formatToBRL(installmentAmount)
 
     return {
       value,
@@ -38,7 +38,7 @@ const calculateInstallmentAmount = (
   }
 
   const installmentAmount = getInstallmentAmount(amount, value)
-  const parsedAmount = amountBRLParse(installmentAmount)
+  const parsedAmount = formatToBRL(installmentAmount)
 
   return {
     value,

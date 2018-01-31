@@ -27,14 +27,16 @@ class Checkout extends Component {
   constructor (props) {
     super(props)
 
-    const { params } = this.props.apiValues
+    const { formData } = props.apiData
 
     this.state = {
       activePage: 0,
       closingEffect: false,
       isBigScreen: true,
       footerButtonVisible: true,
-      checkoutData: params,
+      checkoutData: {
+        ...formData,
+      },
     }
 
     this.handleFooterButton = this.handleFooterButton.bind(this)
@@ -112,12 +114,12 @@ class Checkout extends Component {
       customer,
       billing,
       shipping,
-      payment,
-      paymentMethods,
-      boleto,
-      creditcard,
-      amount,
     } = this.state.checkoutData
+
+    const {
+      amount,
+      paymentMethods,
+    } = this.props.apiData.transaction
 
     return (
       <React.Fragment>
@@ -150,10 +152,7 @@ class Checkout extends Component {
           <PaymentPage
             title="Dados de Pagamento"
             isBigScreen={isBigScreen}
-            payment={payment}
             paymentMethods={paymentMethods}
-            boleto={boleto}
-            creditcard={creditcard}
             amount={amount}
             handlePageChange={this.handlePageChange}
           />
@@ -173,10 +172,11 @@ class Checkout extends Component {
       activePage,
       footerButtonVisible,
     } = this.state
-    const { apiValues, theme } = this.props
+
+    const { apiData, theme } = this.props
     const { isBigScreen } = this.state
 
-    const { params = {}, configs = {} } = apiValues
+    const { params = {}, configs = {} } = apiData
 
     const { pages } = statechart
     const omitOnBigScreen = when(always(isBigScreen), omit(['billing']))
@@ -233,7 +233,7 @@ Checkout.propTypes = {
     closingEffect: PropTypes.string,
     checkout: PropTypes.string,
   }),
-  apiValues: PropTypes.shape({
+  apiData: PropTypes.shape({
     key: PropTypes.string.isRequired,
     configs: PropTypes.shape({
       image: PropTypes.string,
@@ -252,7 +252,7 @@ Checkout.propTypes = {
 
 Checkout.defaultProps = {
   theme: {},
-  apiValues: {
+  apiData: {
     configs: {
       image: '',
       theme: 'dark',

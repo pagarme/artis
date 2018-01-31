@@ -4,96 +4,46 @@ import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
 import ReactGA from 'react-ga'
-import { pick, prop, propOr } from 'ramda'
+import { pick } from 'ramda'
 
 import { Grid, Row, Col } from './../components/Grid'
-import SegmentedSwitch from './../components/SegmentedSwitch'
+import Switch from './../components/Switch'
 import Input from './../components/Input'
-import Dropdown from './../components/Dropdown'
+// import Dropdown from './../components/Dropdown'
 import Button from './../components/Button'
-import { amountBRLParse } from './../utils/parsers'
+
+import formatToBRL from './../utils/formatToBRL'
 import discountParser from './../utils/discountParser'
 import installmentsData from './../utils/installments'
 import Barcode from './../images/barcode.svg'
-import calculate from './../utils/calculateInstallments'
 
 const applyThemr = themr('UIPaymentPage')
 
-const checkRenderPaymentMethod = (name, { value }) => (value === name)
-
 const defaultColSize = 12
 const mediumColSize = 6
-const defaultCardNumber = '•••• •••• •••• ••••'
-const defaultCvv = '•••'
-const defaultExpirationDate = 'MM/AA'
-const defaultCardName = 'Nome Completo'
-
-const getProp = {
-  cardNumber: propOr('', 'cardNumber'),
-  name: propOr('', 'name'),
-  dateValidate: propOr('', 'dataValidate'),
-  cvv: propOr('', 'cvv'),
-  selectedInstallments: (
-    installments,
-    selectedInstallments,
-    defaultInstallments
-  ) => installments[selectedInstallments || (defaultInstallments - 1) || 0],
-}
 
 class Payment extends Component {
   constructor (props) {
     super(props)
 
-    const {
-      payment,
-      paymentMethods,
-      creditcard,
-      boleto,
-      amount,
-    } = this.props
-
-    const paymentMethodsSupported = {
+    this.state = {
       creditcard: {
-        value: 'creditcard',
-        title: 'Cartão de Crédito',
-        subtitle: prop('subtitle', creditcard) || '',
-        render: this.renderCreditcard.bind(this),
+        cardNumber: '•••• •••• •••• ••••',
+        name: 'Nome Completo',
+        expiration: 'MM/AA',
+        cvv: '•••',
+        flipped: false,
       },
       boleto: {
-        value: 'boleto',
-        title: 'Boleto bancário',
-        subtitle: prop('subtitle', boleto) || '',
-        render: this.renderBoleto.bind(this),
+        barcode: '',
       },
-    }
-
-    const paymentOptions = paymentMethods.map(
-      option => paymentMethodsSupported[option]
-    )
-
-    const installmentsOptions = calculate(creditcard, installmentsData, amount)
-
-    this.state = {
-      cardNumber: getProp.cardNumber(payment),
-      name: getProp.name(payment),
-      dateValidate: getProp.dateValidate(payment),
-      cvv: getProp.cvv(payment),
-      selectedInstallments: getProp.selectedInstallments(
-        installmentsOptions,
-        payment.selectedInstallments,
-        creditcard.defaultInstallments
-      ),
-      paymentOptions,
-      installmentsOptions,
-      selected: paymentOptions[0],
+      selectedPayment: 0,
       nameEmail: '',
       email: '',
-      flipped: false,
-      barcode: '',
       showEmailForm: false,
     }
 
-    this.flipCard = this.flipCard.bind(this)
+    this.handleFlipCard = this.handleFlipCard.bind(this)
     this.handleSwitchChange = this.handleSwitchChange.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleInstallmentsChange = this.handleInstallmentsChange.bind(this)
@@ -107,19 +57,14 @@ class Payment extends Component {
       'cardNumber',
       'name',
       'cvv',
-      'dateValidate',
-      'selectedInstallments',
-    ], this.state)
+      'expiration',
+    ], this.state.creditcard)
 
     this.props.handlePageChange(paymentData, 'payment')
   }
 
-  handleSwitchChange (selected) {
-    this.setState({ selected })
-  }
-
-  handleInstallmentsChange (value) {
-    this.setState({ selectedInstallments: value })
+  handleSwitchChange (choice) {
+    this.setState({ selectedPayment: choice })
   }
 
   handleInputChange (e) {
@@ -128,7 +73,7 @@ class Payment extends Component {
     this.setState({ [name]: value })
   }
 
-  flipCard () {
+  handleFlipCard () {
     this.setState(({ flipped }) => ({ flipped: !flipped }))
   }
 
@@ -139,7 +84,9 @@ class Payment extends Component {
     })
 
     this.setState({
-      barcode: '12345 00006 00007  00000 00008 9 10110000012134',
+      boleto: {
+        barcode: '12345 00006 00007  00000 00008 9 10110000012134',
+      },
     })
   }
 
@@ -166,28 +113,16 @@ class Payment extends Component {
     }
   }
 
-  renderAmount () {
-    const { theme, amount } = this.props
-
-    return (
-      <h4 className={theme.amount} >
-        Valor a pagar: {amountBRLParse(amount)}
-      </h4>
-    )
-  }
-
   renderCreditcard () {
     const {
       cardNumber,
       name,
       expiration,
       cvv,
-      selectedInstallments,
       flipped,
-      installmentsOptions,
     } = this.state
 
-    const { theme, isBigScreen } = this.props
+    const { theme, amount, isBigScreen } = this.props
 
     return (
       <Row>
@@ -201,13 +136,15 @@ class Payment extends Component {
           hidden={!isBigScreen}
         >
           <PaymentCard
-            number={cardNumber || defaultCardNumber}
-            cvv={cvv || defaultCvv}
-            holderName={name || defaultCardName}
-            expiration={expiration || defaultExpirationDate}
+            number={cardNumber}
+            cvv={cvv}
+            holderName={name}
+            expiration={expiration}
             flipped={flipped}
           />
-          { this.renderAmount() }
+          <h4 className={theme.amount} >
+            Valor a pagar: {formatToBRL(amount)}
+          </h4>
         </Col>
         <Col
           className={theme.cardForm}
@@ -264,12 +201,12 @@ class Payment extends Component {
                 type="number"
                 mask="111"
                 onChange={this.handleInputChange}
-                onFocus={this.flipCard}
-                onBlur={this.flipCard}
+                onFocus={this.handleFlipCard}
+                onBlur={this.handleFlipCard}
               />
             </Col>
           </Row>
-          {
+          {/* {
             installmentsOptions.length &&
             <Row>
               <Dropdown
@@ -281,9 +218,11 @@ class Payment extends Component {
                 title="Selecione"
               />
             </Row>
-          }
+          } */}
           <Row hidden={isBigScreen}>
-            { this.renderAmount() }
+            <h4 className={theme.amount} >
+              Valor a pagar: {formatToBRL(amount)}
+            </h4>
           </Row>
         </Col>
       </Row>
@@ -291,23 +230,9 @@ class Payment extends Component {
   }
 
   renderGenerateBoleto () {
-    const {
-      barcode,
-    } = this.state
-
-    const {
-      theme,
-      boleto,
-      amount,
-    } = this.props
-
-    let discountAmount
-
-    if (boleto.discount) {
-      const { type, value } = boleto.discount
-
-      discountAmount = discountParser(type, value, amount)
-    }
+    const { barcode } = this.state.boleto
+    const { theme, paymentMethods, amount } = this.props
+    const { discount } = paymentMethods.find(payment => payment.type === 'boleto')
 
     return (
       <Col
@@ -318,27 +243,32 @@ class Payment extends Component {
       >
         <div className={theme.generateBoletoContainer} >
           <img src={Barcode} alt="barcode" className={theme.barcodeImg} />
-          {!barcode && <Button
-            fill="outline"
-            className={theme.generateBoleto}
-            onClick={this.handleGenerateBoleto}
-            size="small"
-          >
-            Gerar Boleto
-          </Button>}
-          {barcode && <p className={theme.barcode} >{barcode}</p>}
-          <h4 className={
-            classNames(
-              theme.amount,
-              theme.boletoAmount,
-            )
+          {
+            !barcode && <Button
+              fill="outline"
+              className={theme.generateBoleto}
+              onClick={this.handleGenerateBoleto}
+              size="small"
+            >
+              Gerar Boleto
+            </Button>
           }
+          {
+            barcode && <p className={theme.barcode} >{barcode}</p>
+          }
+          <h4
+            className={
+              classNames(
+                theme.amount,
+                theme.boletoAmount,
+              )
+            }
           >
             Valor a pagar:
             {
-              discountAmount ?
-                amountBRLParse(discountAmount) :
-                amountBRLParse(amount)
+              discount ?
+                formatToBRL(discountParser(discount.type, discount.value, amount)) :
+                formatToBRL(amount)
             }
           </h4>
         </div>
@@ -383,10 +313,7 @@ class Payment extends Component {
   }
 
   renderOptions () {
-    const {
-      barcode,
-    } = this.state
-
+    const { barcode } = this.state.boleto
     const { theme } = this.props
 
     return (
@@ -458,12 +385,9 @@ class Payment extends Component {
   }
 
   renderBoletoOptions () {
-    const {
-      barcode,
-      showEmailForm,
-    } = this.state
-
-    const { theme, isBigScreen } = this.props
+    const { boleto, showEmailForm } = this.state
+    const { barcode } = boleto
+    const { theme, amount, isBigScreen } = this.props
 
     return (
       <Col
@@ -481,7 +405,9 @@ class Payment extends Component {
             tablet={defaultColSize}
             palm={defaultColSize}
           >
-            { this.renderAmount() }
+            <h4 className={theme.amount} >
+              Valor a pagar: {formatToBRL(amount)}
+            </h4>
           </Col>
         </Row>
         <Row hidden={isBigScreen} >
@@ -508,7 +434,7 @@ class Payment extends Component {
   renderBoleto () {
     const {
       barcode,
-    } = this.state
+    } = this.state.boleto
 
     if (!this.props.isBigScreen && !barcode) {
       return this.renderGenerateBoleto()
@@ -526,35 +452,32 @@ class Payment extends Component {
     )
   }
 
-  renderPaymentOptions () {
-    const { paymentOptions, selected } = this.state
-
-    return paymentOptions.map(({ value, render }) => (
-      <Fragment key={value}>
-        { checkRenderPaymentMethod(value, selected) && render() }
-      </Fragment>
-    ))
-  }
-
   render () {
-    const {
-      paymentOptions,
-      selected,
-    } = this.state
+    const { selectedPayment } = this.state
+    const { theme, paymentMethods } = this.props
 
-    const { theme } = this.props
+    const renders = {
+      boleto: this.renderBoleto.bind(this),
+      creditcard: this.renderCreditcard.bind(this),
+    }
+
+    const paymentOptions = paymentMethods.map(payment => ({
+      title: payment.title,
+      subtitle: payment.subtitle,
+      value: payment.type,
+      content: renders[payment.type](),
+    }))
 
     return (
       <Grid className={theme.grid}>
         <Row>
-          <SegmentedSwitch
+          <Switch
             onChange={this.handleSwitchChange}
             items={paymentOptions}
-            selected={selected}
+            selected={selectedPayment}
             name="paymentOptions"
           />
         </Row>
-        { this.renderPaymentOptions() }
       </Grid>
     )
   }
@@ -577,38 +500,8 @@ Payment.propTypes = {
     emailFormTitle: PropTypes.string,
   }),
   isBigScreen: PropTypes.bool.isRequired,
-  payment: PropTypes.shape({
-    cardNumber: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    name: PropTypes.string,
-    dateValidate: PropTypes.string,
-    cvv: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    selectedInstallments: PropTypes.string,
-  }).isRequired,
   amount: PropTypes.number.isRequired,
-  paymentMethods: PropTypes.arrayOf(PropTypes.string).isRequired,
-  boleto: PropTypes.shape({
-    subtitle: PropTypes.string,
-    instructions: PropTypes.string,
-    discount: PropTypes.shape({
-      type: PropTypes.string,
-      value: PropTypes.number,
-    }),
-    expirationAt: PropTypes.string,
-  }),
-  creditcard: PropTypes.shape({
-    subtitle: PropTypes.string,
-    brands: PropTypes.arrayOf(PropTypes.string),
-    maxInstallments: PropTypes.number,
-    interestRate: PropTypes.number,
-    freeInstallments: PropTypes.number,
-    defaultInstallments: PropTypes.number,
-  }),
+  paymentMethods: PropTypes.arrayOf(PropTypes.object).isRequired,
   handlePageChange: PropTypes.func.isRequired,
 }
 

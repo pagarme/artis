@@ -12,7 +12,7 @@ import UIPaymentPage from './payment-page/index.css'
 import UICustomerPage from './customer-page/index.css'
 import UIShippingPage from './shipping-page/index.css'
 import UIAddressOptions from './address-options/index.css'
-import UISegmentedSwitch from './segmented-switch/index.css'
+import UISwitch from './switch/index.css'
 import UIConfirmationPage from './confirmation-page/index.css'
 import UISuccessInfo from './success-info/index.css'
 import UIErrorInfo from './error-info/index.css'
@@ -32,7 +32,7 @@ export default {
   UICustomerPage,
   UIShippingPage,
   UIAddressOptions,
-  UISegmentedSwitch,
+  UISwitch,
   UIConfirmationPage,
   UISuccessInfo,
   UIErrorInfo,

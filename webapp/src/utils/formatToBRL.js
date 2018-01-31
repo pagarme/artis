@@ -1,4 +1,4 @@
-const amountBRLParse = (int) => {
+const formatToBRL = (int) => {
   let tmp = `${int}`
   tmp = tmp.replace(/([0-9]{2})$/g, ',$1')
   if (tmp.length > 6) {
@@ -8,6 +8,4 @@ const amountBRLParse = (int) => {
   return `R$ ${tmp}`
 }
 
-export {
-  amountBRLParse, // eslint-disable-line
-}
+export default formatToBRL

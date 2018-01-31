@@ -1,12 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import SegmentedSwitch from '../../src/components/SegmentedSwitch'
+import Switch from '../../src/components/Switch'
 
 import style from './style.css'
 
-
-class SegmentedSwitchState extends React.Component {
+class SwitchContainer extends React.Component {
   constructor (props) {
     super(props)
 
@@ -29,7 +28,7 @@ class SegmentedSwitchState extends React.Component {
 
   render () {
     return (
-      <SegmentedSwitch
+      <Switch
         items={this.props.items}
         onChange={this.handleChange}
         name={this.props.name}
@@ -75,12 +74,12 @@ const FourItems = [
   },
 ]
 
-storiesOf('SegmentedSwitch', module)
+storiesOf('Switch', module)
   .add('Default Theme', () => (
     <div className={style.container}>
       <section>
         <h2>Two options</h2>
-        <SegmentedSwitchState
+        <SwitchContainer
           items={twoItems}
           selected={twoItems[0]}
           name="live-test"
@@ -88,7 +87,7 @@ storiesOf('SegmentedSwitch', module)
       </section>
       <section>
         <h2>Four options</h2>
-        <SegmentedSwitchState
+        <SwitchContainer
           items={FourItems}
           selected={FourItems[2]}
           name="super-extra"
