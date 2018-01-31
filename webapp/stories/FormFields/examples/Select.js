@@ -2,7 +2,7 @@ import React from 'react'
 
 import Select from '../../../src/components/Select'
 
-const choices = [
+const options = [
   { name: 'SP', value: 'sp' },
   { name: 'RJ', value: 'rj' },
   { name: 'MG', value: 'mg' },
@@ -22,7 +22,7 @@ const SelectExamples = () => (
         name="uf"
         label="UF"
         placeholder="Selecione o estado"
-        choices={choices}
+        options={options}
       />
     </section>
 
@@ -32,7 +32,7 @@ const SelectExamples = () => (
         name="uf"
         label="UF"
         placeholder="Selecione o estado"
-        choices={choices}
+        options={options}
         hint="Estado brasileiro"
       />
     </section>
@@ -43,7 +43,7 @@ const SelectExamples = () => (
         name="uf"
         label="UF"
         placeholder="Selecione o estado"
-        choices={choices}
+        options={options}
         error="Estado inválido"
       />
     </section>

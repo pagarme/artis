@@ -5,6 +5,7 @@
  */
 
 .container {
+  position: relative;
   width: 100%;
 }
 
@@ -15,18 +16,6 @@
 
 .none {
   display: none;
-}
-
-.invisible {
-  visibility: hidden;
-}
-
-.visible {
-  visibility: visible;
-}
-
-.inputContainer {
-  position: relative;
 }
 
 .label {
@@ -57,6 +46,7 @@
   color: var(--select-color);
   display: block;
   width: 100%;
+  outline: none;
 }
 
 .selectArrow {
@@ -66,6 +56,10 @@
 .optionsList {
   padding-top: var(--optionsList-padding-top);
   padding-bottom: var(--optionsList-padding-bottom);
+}
+
+.optionContainer {
+  outline: none;
 }
 
 .optionItem {
@@ -88,6 +82,7 @@
 }
 
 .scrollBox {
+  visibility: hidden;
   border-radius: 4px;
   background-color: var(--scroll-background-color);
   box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.25);
@@ -140,10 +135,16 @@
 
 .mobileContainer {
   cursor: pointer;
-  position: relative;
 }
 
 .option {
   padding-left: 0;
 }
 
+/*
+ * Util classes
+ */
+
+.visible {
+  visibility: visible;
+}

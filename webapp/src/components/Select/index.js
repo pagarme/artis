@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import classnames from 'classnames'
@@ -7,51 +7,44 @@ import { Scrollbars } from 'react-custom-scrollbars'
 
 import AngleDownIcon from 'react-icons/lib/fa/angle-down'
 import AngleUpIcon from 'react-icons/lib/fa/angle-up'
-import MdArrowDropDown from 'react-icons/lib/md/arrow-drop-down'
+import ArrowDownIcon from 'react-icons/lib/md/arrow-drop-down'
 
 const applyThemr = themr('UISelect')
 
-class Select extends React.Component {
+class Select extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      selectedValue: null,
-      optionsHidden: true,
+      selectedName: '',
+      selectedValue: '',
+      isOpen: false,
     }
 
-    this.changeOptionsListVisibility = this.changeOptionsListVisibility.bind(this)
-    this.selectedItemMobile = this.selectedItemMobile.bind(this)
-    this.renderThumb = this.renderThumb.bind(this)
     this.instanceId = `${props.name}-${shortid.generate()}`
+
+    this.renderThumb = this.renderThumb.bind(this)
+    this.handleSelectItemMobile = this.handleSelectItemMobile.bind(this)
+    this.handleOpenOptions = this.handleOpenOptions.bind(this)
   }
 
-  selectedItemMobile (event) {
+  handleSelectItemMobile (event) {
     this.setState({ selectedValue: event.target.value })
   }
 
-  selectItemDesktop (item) {
+  handleSelectItemDesktop (item) {
     this.setState({
       selectedName: item.name,
       selectedValue: item.value,
-      optionsHidden: !this.state.optionsHidden,
+      isOpen: !this.state.isOpen,
     })
   }
 
-  changeOptionsListVisibility () {
-    this.setState({ optionsHidden: !this.state.optionsHidden })
+  handleOpenOptions () {
+    this.setState({ isOpen: !this.state.isOpen })
   }
 
-  renderSelectedOption () {
-    const { selectedValue } = this.state
-    const { value } = this.props
-
-    return (
-      <option value={value || selectedValue} />
-    )
-  }
-
-  renderThumb({ style, ...props }) { // eslint-disable-line
+  renderThumb ({ style, ...props }) { // eslint-disable-line
     const thumbStyle = {
       backgroundColor: '#00f385',
     }
@@ -64,36 +57,6 @@ class Select extends React.Component {
     )
   }
 
-  renderListItemsDesktop () {
-    const { theme, choices } = this.props
-
-    const items = choices.map((obj, index) => (
-      <div
-        role="button"
-        tabIndex={index}
-        onClick={this.selectItemDesktop.bind(this, obj)}
-      >
-        <span className={theme.optionItem}>{obj.name}</span>
-      </div>
-    ))
-
-    return items
-  }
-
-  renderListItemsMobile () {
-    const { theme, choices } = this.props
-
-    return choices.map(({ value: optValue, name }) => (
-      <option
-        key={optValue}
-        value={optValue}
-        className={theme.option}
-      >
-        {name}
-      </option>
-    ))
-  }
-
   renderOnMobile () {
     const {
       label,
@@ -102,6 +65,7 @@ class Select extends React.Component {
       error,
       theme,
       placeholder,
+      options,
     } = this.props
 
     const selectClass = classnames(
@@ -123,6 +87,16 @@ class Select extends React.Component {
       theme.mobileContainer,
     )
 
+    const optionsHTML = options.map(({ value, name: text }) => (
+      <option
+        key={value}
+        value={value}
+        className={theme.option}
+      >
+        {text}
+      </option>
+    ))
+
     return (
       <div className={mobileContainer}>
         <label
@@ -135,7 +109,7 @@ class Select extends React.Component {
         <select
           className={selectClass}
           name={name}
-          onChange={this.selectedItemMobile}
+          onChange={this.handleSelectItemMobile}
           defaultValue={placeholder}
         >
           <option
@@ -143,23 +117,23 @@ class Select extends React.Component {
           >
             {placeholder}
           </option>
-          {this.renderListItemsMobile()}
+          {optionsHTML}
         </select>
 
         {(hint || error) &&
-          <p className={theme.secondaryText}>
+          <span className={theme.secondaryText}>
             {error || hint}
-          </p>
+          </span>
         }
 
-        <MdArrowDropDown
+        <ArrowDownIcon
           className={arrowClass}
         />
       </div>
     )
   }
 
-  renderOnDesktop (scrollClass, scrollHeight, inputContainer) {
+  renderOnDesktop () {
     const {
       theme,
       placeholder,
@@ -168,41 +142,65 @@ class Select extends React.Component {
       error,
       hint,
       value,
+      options,
     } = this.props
 
-    const { selectedValue } = this.state
+    const {
+      selectedValue,
+      selectedName,
+      isOpen,
+    } = this.state
 
-    const { selectedName, optionsHidden } = this.state
+    const optionsHTML = options.map((obj, index) => (
+      <div
+        role="button"
+        tabIndex={index}
+        className={theme.optionContainer}
+        onClick={this.handleSelectItemDesktop.bind(this, obj)}
+      >
+        <span className={theme.optionItem}>{obj.name}</span>
+      </div>
+    ))
 
     return (
-      <div className={theme.container}>
-        <div className={inputContainer}>
+      <Fragment>
+        <div
+          className={classnames(theme.container,
+            {
+              [theme.error]: error,
+            },
+          )}
+        >
           <label htmlFor={name} className={theme.label}>
             {label}
           </label>
           <div
             role="button"
             tabIndex={0}
-            onClick={this.changeOptionsListVisibility}
+            onClick={this.handleOpenOptions}
             className={theme.select}
           >
             <span className={theme.placeholder}>
               {selectedName || placeholder}
             </span>
             {
-              optionsHidden
-                ? <AngleDownIcon className={theme.angleDownIcon} />
-                : <AngleUpIcon className={theme.angleDownIcon} />
+              isOpen
+                ? <AngleUpIcon className={theme.angleDownIcon} />
+                : <AngleDownIcon className={theme.angleDownIcon} />
             }
           </div>
           <div className={theme.scrollContainer}>
             <Scrollbars
-              style={{ height: scrollHeight }}
-              className={scrollClass}
+              style={{ height: 100 }}
+              className={classnames(theme.scrollBox,
+                {
+                  [theme.visible]: isOpen,
+                },
+              )}
               renderThumbVertical={this.renderThumb}
             >
               <div className={theme.optionsList}>
-                {this.renderListItemsDesktop()}
+                {optionsHTML}
               </div>
             </Scrollbars>
           </div>
@@ -218,42 +216,22 @@ class Select extends React.Component {
           className={theme.none}
           defaultValue={value || selectedValue}
         >
-          {(value || selectedValue) && this.renderSelectedOption()}
+          {value || selectedValue
+            ? <option value={value || selectedValue} />
+            : ''
+          }
         </select>
-      </div>
+      </Fragment>
     )
   }
 
   render () {
-    const {
-      optionsHidden,
-    } = this.state
-
-    const {
-      theme,
-      error,
-    } = this.props
-
-    const inputContainer = classnames(
-      theme.inputContainer,
-      {
-        [theme.error]: error,
-      }
-    )
-
-    const scrollClass = classnames(
-      theme.scrollBox,
-      optionsHidden ? theme.invisible : theme.visible,
-    )
-
-    const scrollHeight = 100
-
     const isPalm = window.innerWidth < 640
 
     return (
       isPalm
         ? this.renderOnMobile()
-        : this.renderOnDesktop(scrollClass, scrollHeight, inputContainer)
+        : this.renderOnDesktop()
     )
   }
 }
@@ -262,9 +240,8 @@ Select.propTypes = {
   theme: PropTypes.shape({
     container: PropTypes.string,
     boxContainer: PropTypes.string,
-    invisible: PropTypes.string,
+    hidden: PropTypes.string,
     visible: PropTypes.string,
-    inputContainer: PropTypes.string,
     label: PropTypes.string,
     placeholder: PropTypes.string,
     angleDownIcon: PropTypes.string,
@@ -282,7 +259,7 @@ Select.propTypes = {
   error: PropTypes.string,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  choices: PropTypes.arrayOf(
+  options: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
       value: PropTypes.string,
