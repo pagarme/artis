@@ -15,9 +15,11 @@ import removeZipcodeMask from '../../utils/helpers/removeZipcodeMask'
 
 const applyThemr = themr('UIAddressForm')
 
+const bigColSize = 12
 const mediumColSize = 6
 const smallColSize = 4
 const oneQuarterColSize = 3
+const threeQuarterColSize = 9
 const tinyColSize = 2
 
 const defaultAddress = {
@@ -155,7 +157,7 @@ class AddressForm extends Component {
               tv={mediumColSize}
               desk={mediumColSize}
               tablet={mediumColSize}
-              palm={mediumColSize}
+              palm={bigColSize}
             >
               <Input
                 name="name"
@@ -169,7 +171,7 @@ class AddressForm extends Component {
               tv={mediumColSize}
               desk={mediumColSize}
               tablet={mediumColSize}
-              palm={mediumColSize}
+              palm={bigColSize}
             >
               <Input
                 name="zipcode"
@@ -186,7 +188,7 @@ class AddressForm extends Component {
               tv={mediumColSize}
               desk={mediumColSize}
               tablet={mediumColSize}
-              palm={mediumColSize}
+              palm={bigColSize}
             >
               <Input
                 name="street"
@@ -201,7 +203,7 @@ class AddressForm extends Component {
               tv={tinyColSize}
               desk={tinyColSize}
               tablet={tinyColSize}
-              palm={tinyColSize}
+              palm={oneQuarterColSize}
             >
               <Input
                 inputRef={this.handleStreetNumberInputRef}
@@ -216,7 +218,7 @@ class AddressForm extends Component {
               tv={smallColSize}
               desk={smallColSize}
               tablet={smallColSize}
-              palm={smallColSize}
+              palm={threeQuarterColSize}
             >
               <Input
                 name="complement"
@@ -230,7 +232,7 @@ class AddressForm extends Component {
               tv={mediumColSize}
               desk={mediumColSize}
               tablet={mediumColSize}
-              palm={mediumColSize}
+              palm={bigColSize}
             >
               <Input
                 name="neighborhood"
@@ -245,7 +247,7 @@ class AddressForm extends Component {
               tv={smallColSize}
               desk={smallColSize}
               tablet={smallColSize}
-              palm={smallColSize}
+              palm={threeQuarterColSize}
             >
               <Input
                 name="city"
@@ -259,7 +261,7 @@ class AddressForm extends Component {
               tv={tinyColSize}
               desk={tinyColSize}
               tablet={tinyColSize}
-              palm={tinyColSize}
+              palm={oneQuarterColSize}
             >
               <Dropdown
                 options={options}
