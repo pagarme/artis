@@ -10,7 +10,6 @@ import { clamp } from 'ramda'
 import { themr } from 'react-css-themr'
 
 import { Grid, Row, Col } from '../Grid'
-import isBigScreen from '../../utils/isBigScreen'
 
 const applyThemr = themr('UIProgressBar')
 
@@ -20,21 +19,23 @@ const renderSteps = (steps, activePage, theme) => {
   return (
     <Grid className={theme.steps}>
       <Row>
-        { steps.map((step, index) => (
-          <Col
-            key={`colKey-${index + 1}`}
-            tv={colSize}
-            desk={colSize}
-            tablet={colSize}
-            className={
-              classNames(theme.step, {
-                [theme.active]: index === activePage,
-              })
-            }
-          >
-            { `${index + 1}. ${step}` }
-          </Col>
-        ))}
+        { steps
+          .map((step, index) => (
+            <Col
+              key={`colKey-${index + 1}`}
+              tv={colSize}
+              desk={colSize}
+              tablet={colSize}
+              className={
+                classNames(theme.step, {
+                  [theme.active]: index === activePage,
+                })
+              }
+            >
+              { `${index + 1}. ${step}` }
+            </Col>
+          ))
+        }
       </Row>
     </Grid>
   )
@@ -47,7 +48,7 @@ const ProgressBar = ({
 }) => {
   const totalSteps = steps.length
   const activeStep = activePage + 1
-  const shouldRenderSteps = totalSteps > 0 && isBigScreen
+  const shouldRenderSteps = totalSteps > 0
 
   const totalPercent = clamp(
     0,
