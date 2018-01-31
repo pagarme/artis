@@ -1,0 +1,42 @@
+@import "./properties.css";
+
+.emailForm {
+  font-size: 16px;
+  width: 100%;
+  margin-right: 50px;
+  margin-left: 50px;
+  background-color: var(--email-form-background);
+  padding: 21px;
+  border: 2px solid var(--email-form-border-color);
+  box-shadow: inset 0 0 1px 1px var(--email-form-box-shadow-color);
+}
+
+.emailFormTitle {
+  font-family: var(--email-form-title-font-family);
+  font-weight: var(--email-form-title-font-weight);
+  color: var(--email-form-title-color);
+  margin-top: 0;
+  padding-bottom: 0;
+  font-size: 16px;
+}
+
+.emailFormClose {
+  font-size: 16px;
+  padding: 0;
+}
+
+@media (--media-palm) {
+
+  .emailForm {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .generateBoleto {
+    width: 100%;
+  }
+
+  .cardForm {
+    margin-top: 0;
+  }
+}

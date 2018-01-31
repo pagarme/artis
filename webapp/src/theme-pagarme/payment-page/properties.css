@@ -18,10 +18,4 @@
   --barcode-font-weight: var(--title-font-bold);
   --barcode-font-size: var(--title-size-medium);
   --barcode-color: var(--color-grey-33);
-  --email-form-background: var(--color-grey-74);
-  --email-form-border-color: var(--color-grey-77);
-  --email-form-box-shadow-color: var(--color-grey-83);
-  --email-form-title-color: var(--color-greenish);
-  --email-form-title-font-family: var(--primary-font-family);
-  --email-form-title-font-weight: var(--title-font-bold);
 }

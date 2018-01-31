@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import shortid from 'shortid'
 import { themr } from 'react-css-themr'
 
 const applyThemr = themr('UISwitch')
@@ -27,7 +26,7 @@ class Switch extends Component {
 
     return (
       items.map((item, index) => {
-        const id = item.id || shortid()
+        const id = item.title
 
         return (
           <label
@@ -59,7 +58,7 @@ class Switch extends Component {
 
     return items.map((item, index) => (
       <div
-        key={shortid()}
+        key={item.title}
         className={
           classNames(theme.content, {
             [theme.visible]: index === this.state.selected,

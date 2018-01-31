@@ -17,6 +17,7 @@ import UIConfirmationPage from './confirmation-page/index.css'
 import UISuccessInfo from './success-info/index.css'
 import UIErrorInfo from './error-info/index.css'
 import UIActionList from './action-list/index.css'
+import UIEmailForm from './email-form/index.css'
 
 export default {
   UIButton,
@@ -38,4 +39,5 @@ export default {
   UISuccessInfo,
   UIErrorInfo,
   UIActionList,
+  UIEmailForm,
 }

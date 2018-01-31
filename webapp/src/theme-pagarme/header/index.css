@@ -8,10 +8,6 @@
   padding: 0;
 }
 
-.close {
-  justify-content: flex-end;
-}
-
 .logo {
   max-height: var(--logo-max-height);
   max-width: var(--logo-max-width);

@@ -11,6 +11,7 @@ import Switch from './../components/Switch'
 import Input from './../components/Input'
 import ActionList from './../components/ActionList'
 import Button from './../components/Button'
+import EmailForm from './../containers/EmailForm'
 
 import formatToBRL from './../utils/formatToBRL'
 import discountParser from './../utils/discountParser'
@@ -37,18 +38,14 @@ class Payment extends Component {
         barcode: '',
       },
       selectedPayment: 0,
-      nameEmail: '',
-      email: '',
       showEmailForm: false,
     }
 
     this.handleFlipCard = this.handleFlipCard.bind(this)
     this.handleSwitchChange = this.handleSwitchChange.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleInstallmentsChange = this.handleInstallmentsChange.bind(this)
     this.handleGenerateBoleto = this.handleGenerateBoleto.bind(this)
-    this.handleToggleSendByEmail = this.handleToggleSendByEmail.bind(this)
-    this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.toggleEmailForm = this.toggleEmailForm.bind(this)
   }
 
   componentWillUnmount () {
@@ -89,13 +86,13 @@ class Payment extends Component {
     })
   }
 
-  handleToggleSendByEmail () {
+  toggleEmailForm () {
     ReactGA.event({
       category: 'Boleto',
-      action: 'Send by email',
+      action: `${this.state.showEmailForm ? 'Close' : 'Open'} send by email modal`,
     })
 
-    this.setState(({ showEmailForm }) => ({ showEmailForm: !showEmailForm }))
+    this.setState({ showEmailForm: !this.state.showEmailForm })
   }
 
   /* eslint-disable class-methods-use-this */
@@ -104,12 +101,6 @@ class Payment extends Component {
       category: 'Boleto',
       action: 'Copy Bar Code',
     })
-  }
-
-  handleKeyPress (e) {
-    if (e.key === 'Enter') {
-      this.handleToggleSendByEmail()
-    }
   }
 
   renderCreditcard () {
@@ -275,42 +266,6 @@ class Payment extends Component {
     )
   }
 
-  renderEmailForm () {
-    const {
-      nameEmail,
-      email,
-    } = this.state
-
-    const { theme } = this.props
-
-    return (
-      <div className={theme.emailForm}>
-        <Row>
-          <h4 className={theme.emailFormTitle}>
-            Encaminhar por e-mail
-          </h4>
-        </Row>
-        <Row>
-          <Input
-            name="nameEmail"
-            label="Digite seu nome - opcional"
-            value={nameEmail}
-            onChange={this.handleInputChange}
-          />
-        </Row>
-        <Row>
-          <Input
-            name="email"
-            label="Digite o e-mail"
-            value={email}
-            onKeyPress={this.handleKeyPress}
-            onChange={this.handleInputChange}
-          />
-        </Row>
-      </div>
-    )
-  }
-
   renderBoletoOptions () {
     const { boleto, showEmailForm } = this.state
     const { barcode } = boleto
@@ -325,15 +280,16 @@ class Payment extends Component {
         className={theme.optionsContainer}
       >
         { showEmailForm
-          ? this.renderEmailForm()
+          ? <EmailForm
+            handleClose={this.toggleEmailForm}
+          />
           : <ActionList buttons={[
             { text: 'Salvar arquivo', disabled: !barcode },
-            { text: 'Encaminhar por e-mail', disabled: !barcode, onClick: this.handleToggleSendByEmail },
+            { text: 'Encaminhar por e-mail', disabled: !barcode, onClick: this.toggleEmailForm },
             { text: 'Copiar código de barras', disabled: !barcode },
           ]}
           />
         }
-
         <Row hidden={isBigScreen} >
           <Col
             tv={defaultColSize}
@@ -432,8 +388,6 @@ Payment.propTypes = {
     boletoAmount: PropTypes.string,
     boletoContainer: PropTypes.string,
     optionsContainer: PropTypes.string,
-    emailForm: PropTypes.string,
-    emailFormTitle: PropTypes.string,
   }),
   isBigScreen: PropTypes.bool.isRequired,
   amount: PropTypes.number.isRequired,
