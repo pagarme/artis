@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { Action, withStatechart } from 'react-automata'
+import { omit, when, always } from 'ramda'
 
 import ProgressBar from '../../components/ProgressBar'
 import Header from '../../components/Header'
@@ -214,12 +215,11 @@ class Checkout extends Component {
     const { params = {}, configs = {} } = apiValues
 
     const { pages } = statechart
+    const omitOnBigScreen = when(always(isBigScreen), omit(['billing']))
 
-    if (isBigScreen) {
-      delete pages.billing
-    }
-
-    const steps = Object.values(pages)
+    const steps = Object.values(
+      omitOnBigScreen(pages)
+    )
 
     return (
       <div

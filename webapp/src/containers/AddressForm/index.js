@@ -177,10 +177,10 @@ class AddressForm extends Component {
             >
               <Input
                 name="street"
-                label="Logradouro"
+                label="Endereço"
                 hint="Rua, Av, Praça ou Travessa"
                 value={street}
-                placeholder="Digite o logradouro"
+                placeholder="Digite o endereço"
                 onChange={this.handleInputChange}
               />
             </Col>
@@ -274,6 +274,7 @@ class AddressForm extends Component {
                 fill="outline"
                 full
                 onClick={onCancel.bind(this)}
+                className={theme.actionButton}
               >
                 Cancelar
               </Button>
@@ -288,6 +289,7 @@ class AddressForm extends Component {
                 full
                 size={'extra-large'}
                 onClick={this.handleRegisterAddress}
+                className={theme.actionButton}
               >
                 Cadastrar
               </Button>

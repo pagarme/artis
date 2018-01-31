@@ -24,3 +24,10 @@
 .buttonsWrapper {
   margin-top: 26px;
 }
+
+@media (--media-palm) {
+
+  .actionButton {
+    padding: 17px 24px;
+  }
+}

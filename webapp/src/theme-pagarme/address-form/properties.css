@@ -1,5 +1,6 @@
 @import "../colors.css";
 @import "../typography.css";
+@import "../media.css";
 
 :root {
   --addressForm-background-color: var(--color-grey-83);
