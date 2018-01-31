@@ -5,7 +5,7 @@ import { themr } from 'react-css-themr'
 
 import { Grid, Row, Col } from '../components/Grid'
 import Input from '../components/Input'
-import Dropdown from '../components/Dropdown'
+import Select from '../components/Select'
 
 import options from '../utils/states'
 import getAddress from '../utils/getAddress'
@@ -202,13 +202,14 @@ class BillingPage extends Component {
             tablet={smallColSize}
             palm={smallColSize}
           >
-            <Dropdown
+            <Select
               options={options}
               name="state"
               label="Estado"
               value={state}
               onChange={this.handleStateChange}
-              title="Selecione"
+              placeholder="Selecione"
+              isBigScreen={isBigScreen}
             />
           </Col>
         </Row>

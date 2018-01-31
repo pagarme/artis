@@ -40,7 +40,7 @@
 
 .select {
   border: 0;
-  background-color: var(--select-background-color);
+  background-color: transparent;
   border-bottom: 1px solid var(--select-border-bottom);
   cursor: pointer;
   color: var(--select-color);
@@ -79,6 +79,7 @@
 .scrollContainer {
   width: 100%;
   position: absolute;
+  z-index: 3;
 }
 
 .scrollBox {
@@ -86,6 +87,10 @@
   border-radius: 4px;
   background-color: var(--scroll-background-color);
   box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.scrollBox > div {
+  overflow: auto;
 }
 
 .scrollLine {

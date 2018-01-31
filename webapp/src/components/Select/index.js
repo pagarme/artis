@@ -29,15 +29,24 @@ class Select extends Component {
   }
 
   handleSelectItemMobile (event) {
-    this.setState({ selectedValue: event.target.value })
+    const { onChange } = this.props
+    const value = event.target.value
+
+    this.setState({ selectedValue: value })
+
+    if (onChange) { onChange(value) }
   }
 
   handleSelectItemDesktop (item) {
+    const { onChange } = this.props
+
     this.setState({
       selectedName: item.name,
       selectedValue: item.value,
       isOpen: !this.state.isOpen,
     })
+
+    if (onChange) { onChange(item.value) }
   }
 
   handleOpenOptions () {
@@ -66,7 +75,10 @@ class Select extends Component {
       theme,
       placeholder,
       options,
+      value,
     } = this.props
+
+    const { selectedValue } = this.state
 
     const selectClass = classnames(
       theme.select,
@@ -87,10 +99,10 @@ class Select extends Component {
       theme.mobileContainer,
     )
 
-    const optionsHTML = options.map(({ value, name: text }) => (
+    const optionsHTML = options.map(({ value: optionValue, name: text }) => (
       <option
-        key={value}
-        value={value}
+        key={optionValue}
+        value={optionValue}
         className={theme.option}
       >
         {text}
@@ -110,7 +122,7 @@ class Select extends Component {
           className={selectClass}
           name={name}
           onChange={this.handleSelectItemMobile}
-          defaultValue={placeholder}
+          defaultValue={value || selectedValue}
         >
           <option
             disabled
@@ -153,6 +165,7 @@ class Select extends Component {
 
     const optionsHTML = options.map((obj, index) => (
       <div
+        key={obj.name}
         role="button"
         tabIndex={index}
         className={theme.optionContainer}
@@ -226,10 +239,10 @@ class Select extends Component {
   }
 
   render () {
-    const isPalm = window.innerWidth < 640
+    const { isBigScreen } = this.props
 
     return (
-      isPalm
+      !isBigScreen
         ? this.renderOnMobile()
         : this.renderOnDesktop()
     )
@@ -268,6 +281,8 @@ Select.propTypes = {
   value: PropTypes.string,
   hint: PropTypes.string,
   disabled: PropTypes.bool,
+  isBigScreen: PropTypes.bool.isRequired,
+  onChange: PropTypes.func,
 }
 
 Select.defaultProps = {
@@ -276,6 +291,7 @@ Select.defaultProps = {
   hint: '',
   value: null,
   disabled: false,
+  onChange: null,
 }
 
 export default applyThemr(Select)

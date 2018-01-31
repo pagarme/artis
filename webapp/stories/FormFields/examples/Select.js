@@ -12,17 +12,31 @@ const options = [
   { name: 'PA', value: 'pa' },
 ]
 
+const isBigScreen = true
+
 const SelectExamples = () => (
   <div>
     <h2>Select input</h2>
 
     <section>
-      <h3>Default</h3>
+      <h3>Desktop Default</h3>
       <Select
         name="uf"
         label="UF"
         placeholder="Selecione o estado"
         options={options}
+        isBigScreen={isBigScreen}
+      />
+    </section>
+
+    <section>
+      <h3>Mobile Default</h3>
+      <Select
+        name="uf"
+        label="UF"
+        placeholder="Selecione o estado"
+        options={options}
+        isBigScreen={!isBigScreen}
       />
     </section>
 
@@ -34,6 +48,7 @@ const SelectExamples = () => (
         placeholder="Selecione o estado"
         options={options}
         hint="Estado brasileiro"
+        isBigScreen={isBigScreen}
       />
     </section>
 
@@ -45,6 +60,7 @@ const SelectExamples = () => (
         placeholder="Selecione o estado"
         options={options}
         error="Estado inválido"
+        isBigScreen={isBigScreen}
       />
     </section>
   </div>
