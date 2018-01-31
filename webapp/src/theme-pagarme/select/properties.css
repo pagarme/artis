@@ -23,7 +23,7 @@
   --optionItem-color: var(--color-white);
   --optionItem-color-hover: var(--color-greenish-100);
 
-  --scroll-background-color: #1f1f1f;
+  --scroll-background-color: var(--color-nero-100);
   --scroll-line-background-color: var(--color-greenish);
 
   --select-font-family: var(--primary-font-family);

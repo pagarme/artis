@@ -47,6 +47,7 @@
   display: block;
   width: 100%;
   outline: none;
+  min-height: 23px;
 }
 
 .selectArrow {
@@ -121,14 +122,13 @@
 
 .arrow {
   background-color: var(--select-background-color);
-  border-bottom: 1px solid var(--select-border-bottom);
   color: var(--arrow-color);
   pointer-events: none;
   position: absolute;
-  top: 9px;
+  top: 10px;
   right: 0;
   padding: 0;
-  height: 31.5px;
+  height: 30px;
   width: 30px;
 }
 

@@ -26,6 +26,7 @@ class Select extends Component {
     this.renderThumb = this.renderThumb.bind(this)
     this.handleSelectItemMobile = this.handleSelectItemMobile.bind(this)
     this.handleOpenOptions = this.handleOpenOptions.bind(this)
+    this.handleOnLeave = this.handleOnLeave.bind(this)
   }
 
   handleSelectItemMobile (event) {
@@ -37,13 +38,18 @@ class Select extends Component {
     if (onChange) { onChange(value) }
   }
 
+  handleOnLeave () {
+    setTimeout(() => {
+      this.handleOpenOptions()
+    }, 120)
+  }
+
   handleSelectItemDesktop (item) {
     const { onChange } = this.props
 
     this.setState({
       selectedName: item.name,
       selectedValue: item.value,
-      isOpen: !this.state.isOpen,
     })
 
     if (onChange) { onChange(item.value) }
@@ -96,7 +102,7 @@ class Select extends Component {
 
     const mobileContainer = classnames(
       theme.container,
-      theme.mobileContainer,
+      theme.mobileContainer
     )
 
     const optionsHTML = options.map(({ value: optionValue, name: text }) => (
@@ -190,6 +196,7 @@ class Select extends Component {
           <div
             role="button"
             tabIndex={0}
+            onBlur={this.handleOnLeave}
             onClick={this.handleOpenOptions}
             className={theme.select}
           >
@@ -229,9 +236,10 @@ class Select extends Component {
           className={theme.none}
           defaultValue={value || selectedValue}
         >
-          {value || selectedValue
-            ? <option value={value || selectedValue} />
-            : ''
+          {
+            value || selectedValue
+              ? <option value={value || selectedValue} />
+              : ''
           }
         </select>
       </Fragment>
@@ -291,7 +299,7 @@ Select.defaultProps = {
   hint: '',
   value: null,
   disabled: false,
-  onChange: null,
+  onChange: () => {},
 }
 
 export default applyThemr(Select)

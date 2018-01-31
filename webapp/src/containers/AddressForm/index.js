@@ -256,7 +256,7 @@ class AddressForm extends Component {
                 value={state}
                 onChange={this.handleStateChange}
                 placeholder="Selecione"
-                isBigScreen={isBigScreen}
+                isBigScreen={this.props.isBigScreen}
               />
             </Col>
           </Row>
@@ -315,6 +315,7 @@ AddressForm.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
   })),
+  isBigScreen: PropTypes.bool.isRequired,
 }
 
 AddressForm.defaultProps = {
