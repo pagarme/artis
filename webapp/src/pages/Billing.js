@@ -21,7 +21,7 @@ class BillingPage extends Component {
     super(props)
 
     this.state = {
-      ...this.props.billing,
+      ...props.billing,
       zipcodeError: '',
     }
 

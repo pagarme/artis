@@ -15,7 +15,7 @@ class CustomerPage extends Component {
     super(props)
 
     this.state = {
-      ...this.props.customer,
+      ...props.customer,
     }
 
     this.handleInputChange = this.handleInputChange.bind(this)
