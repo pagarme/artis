@@ -11,12 +11,13 @@
 .logo {
   max-height: var(--logo-max-height);
   max-width: var(--logo-max-width);
+  padding-top: var(--logo-padding-top);
+  padding-bottom: var(--logo-padding-bottom);
 }
 
 .header {
-  padding-top: var(--padding-top);
-  padding-bottom: var(--padding-bottom);
-  min-height: 26px;
+  min-height: var(--min-height);
+  max-height: var(--max-height);
   display: flex;
 }
 

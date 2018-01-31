@@ -14,6 +14,7 @@
 .wrapper {
   width: 90vw;
   height: 93vh;
+  padding-left: calc(100vw - 100%);
   max-width: 1000px;
   margin: 0 auto;
   display: flex;
