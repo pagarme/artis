@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
+import ReactGA from 'react-ga'
 
 import { Grid, Row, Col } from '../../components/Grid'
 import Input from '../../components/Input'
@@ -44,6 +45,7 @@ class AddressForm extends Component {
     this.handleZipcodeChange = this.handleZipcodeChange.bind(this)
     this.handleZipcodeBlur = this.handleZipcodeBlur.bind(this)
     this.handleStreetNumberInputRef = this.handleStreetNumberInputRef.bind(this)
+    this.handleRegisterAddress = this.handleRegisterAddress.bind(this)
   }
 
   handleStateChange (value) {
@@ -73,6 +75,14 @@ class AddressForm extends Component {
 
   handleZipcodeBlur () {
     this.setState({ zipcodeError: '' })
+  }
+
+  /* eslint-disable class-methods-use-this */
+  handleRegisterAddress () {
+    ReactGA.event({
+      category: 'Shipping',
+      action: 'Add new address',
+    })
   }
 
   autocompleteAddress (zipcode) {
@@ -279,6 +289,7 @@ class AddressForm extends Component {
                 })}
                 full
                 size={'extra-large'}
+                onClick={this.handleRegisterAddress}
               >
                 Cadastrar
               </Button>

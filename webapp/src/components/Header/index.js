@@ -8,6 +8,7 @@ import {
 } from 'prop-types'
 import CloseIcon from 'react-icons/lib/io/android-close'
 import BackIcon from 'react-icons/lib/io/android-arrow-back'
+import ReactGA from 'react-ga'
 
 import Button from '../Button'
 import {
@@ -23,6 +24,15 @@ const imgColSize = 10
 
 const buttonPalmColSize = 3
 const imgPalmColSize = 6
+
+const handleOnClose = (close) => {
+  ReactGA.event({
+    category: 'Header',
+    action: 'Click - Close Button',
+  })
+
+  close()
+}
 
 const Header = ({
   logoSrc,
@@ -71,7 +81,7 @@ const Header = ({
           <Button
             className={theme.close}
             fill="clean"
-            onClick={onClose}
+            onClick={handleOnClose.bind(this, onClose)}
             relevance="high"
           >
             <CloseIcon />

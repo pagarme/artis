@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
+import ReactGA from 'react-ga'
 
 import { Grid, Row, Col } from './../components/Grid'
 import SegmentedSwitch from './../components/SegmentedSwitch'
@@ -62,8 +63,8 @@ class Payment extends Component {
     this.handleSwitchChange = this.handleSwitchChange.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleInstallmentsChange = this.handleInstallmentsChange.bind(this)
-    this.generateBoleto = this.generateBoleto.bind(this)
-    this.toggleSendByEmail = this.toggleSendByEmail.bind(this)
+    this.handleGenerateBoleto = this.handleGenerateBoleto.bind(this)
+    this.handleToggleSendByEmail = this.handleToggleSendByEmail.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
   }
 
@@ -85,14 +86,32 @@ class Payment extends Component {
     this.setState(({ flipped }) => ({ flipped: !flipped }))
   }
 
-  generateBoleto () {
+  handleGenerateBoleto () {
+    ReactGA.event({
+      category: 'Boleto',
+      action: 'Create Boleto',
+    })
+
     this.setState({
       barcode: '12345 00006 00007  00000 00008 9 10110000012134',
     })
   }
 
-  toggleSendByEmail () {
+  handleToggleSendByEmail () {
+    ReactGA.event({
+      category: 'Boleto',
+      action: 'Send by email',
+    })
+
     this.setState(({ showEmailForm }) => ({ showEmailForm: !showEmailForm }))
+  }
+
+  /* eslint-disable class-methods-use-this */
+  handleCopyBarCode () {
+    ReactGA.event({
+      category: 'Boleto',
+      action: 'Copy Bar Code',
+    })
   }
 
   handleKeyPress (e) {
@@ -242,7 +261,7 @@ class Payment extends Component {
           {!barcode && <Button
             fill="outline"
             className={theme.generateBoleto}
-            onClick={this.generateBoleto}
+            onClick={this.handleGenerateBoleto}
             size="small"
           >
             Gerar Boleto
@@ -363,6 +382,7 @@ class Payment extends Component {
               full
               size="extra-large"
               className={theme.actionButton}
+              onClick={this.handleCopyBarCode}
             >
               Copiar código de barras
             </Button>
