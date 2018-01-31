@@ -40,7 +40,6 @@ const ProgressBar = ({
   steps,
   activePage,
   theme,
-  isBigScreen,
 }) => {
   const totalSteps = steps.length
   const activeStep = activePage + 1
@@ -75,7 +74,6 @@ ProgressBar.propTypes = {
   }),
   steps: PropTypes.arrayOf(PropTypes.string).isRequired,
   activePage: PropTypes.number.isRequired,
-  isBigScreen: PropTypes.bool.isRequired,
 }
 
 ProgressBar.defaultProps = {

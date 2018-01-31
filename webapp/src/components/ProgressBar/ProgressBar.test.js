@@ -8,7 +8,6 @@ describe('ProgressBar', () => {
   it('should not render with steps', () => {
     const component = shallow(
       <ProgressBar
-        isBigScreen
         steps={[]}
         activePage={0}
       />
@@ -20,7 +19,6 @@ describe('ProgressBar', () => {
   it('should render with 4 steps', () => {
     const component = shallow(
       <ProgressBar
-        isBigScreen
         steps={[
           'Im',
           'Multiple',
@@ -37,7 +35,6 @@ describe('ProgressBar', () => {
   it('should check for steps content', () => {
     const component = shallow(
       <ProgressBar
-        isBigScreen
         steps={[
           'Still',
           'Some Steps',
@@ -52,7 +49,6 @@ describe('ProgressBar', () => {
   it('should not allow width greater than 100%', () => {
     const component = shallow(
       <ProgressBar
-        isBigScreen
         steps={[
           'Long',
           'Journey',

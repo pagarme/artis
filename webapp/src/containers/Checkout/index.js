@@ -242,7 +242,6 @@ class Checkout extends Component {
             <ProgressBar
               steps={steps}
               activePage={activePage}
-              isBigScreen={isBigScreen}
             />
             {this.renderPages(isBigScreen)}
           </div>
