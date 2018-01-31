@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { Row, Col } from '../Grid'
-import isBigScreen from '../../utils/isBigScreen'
 
 const applyThemr = themr('UISuccessInfo')
 
@@ -17,7 +16,7 @@ const paymentInfo = {
   payment: '2x vezes sem juros com 20% de desconto na primeira parcela',
 }
 
-const SuccessInfo = ({ theme }) => (
+const SuccessInfo = ({ theme, isBigScreen }) => (
   <React.Fragment>
     <Row className={theme.title}>
       <h4 className={
@@ -97,6 +96,7 @@ SuccessInfo.propTypes = {
     textAlignedCenter: PropTypes.string,
     title: PropTypes.string,
   }),
+  isBigScreen: PropTypes.bool.isRequired,
 }
 
 SuccessInfo.defaultProps = {

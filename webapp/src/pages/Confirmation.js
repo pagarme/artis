@@ -15,7 +15,7 @@ const iconColSize = 4
 const contentColSize = 8
 const defaultColSize = 12
 
-const Confirmation = ({ theme, success }) => (
+const Confirmation = ({ theme, success, isBigScreen }) => (
   <Grid
     className={theme.page}
   >
@@ -58,8 +58,8 @@ const Confirmation = ({ theme, success }) => (
         palm={defaultColSize}
       >
         {success
-          ? <SuccessInfo />
-          : <ErrorInfo />
+          ? <SuccessInfo isBigScreen={isBigScreen} />
+          : <ErrorInfo isBigScreen={isBigScreen} />
         }
       </Col>
     </Row>
@@ -76,6 +76,7 @@ Confirmation.propTypes = {
     confirmationIcon: PropTypes.string,
   }),
   success: PropTypes.bool,
+  isBigScreen: PropTypes.bool.isRequired,
 }
 
 Confirmation.defaultProps = {

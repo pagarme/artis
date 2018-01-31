@@ -1,10 +1,5 @@
 import React, { Fragment } from 'react'
-import {
-  arrayOf,
-  string,
-  number,
-  shape,
-} from 'prop-types'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { clamp } from 'ramda'
 import { themr } from 'react-css-themr'
@@ -71,14 +66,14 @@ const ProgressBar = ({
 }
 
 ProgressBar.propTypes = {
-  theme: shape({
-    step: string,
-    steps: string,
-    wrapper: string,
-    progressBar: string,
+  theme: PropTypes.shape({
+    step: PropTypes.string,
+    steps: PropTypes.string,
+    wrapper: PropTypes.string,
+    progressBar: PropTypes.string,
   }),
-  steps: arrayOf(string).isRequired,
-  activePage: number.isRequired,
+  steps: PropTypes.arrayOf(PropTypes.string).isRequired,
+  activePage: PropTypes.number.isRequired,
 }
 
 ProgressBar.defaultProps = {

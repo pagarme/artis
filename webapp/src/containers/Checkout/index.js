@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { Action, withStatechart } from 'react-automata'
+import { omit, when, always } from 'ramda'
 
 import ProgressBar from '../../components/ProgressBar'
 import Header from '../../components/Header'
@@ -15,10 +16,11 @@ import BillingPage from '../../pages/Billing'
 import ShippingPage from '../../pages/Shipping'
 import PaymentPage from '../../pages/Payment'
 import ConfirmationPage from '../../pages/Confirmation'
-import isBigScreen from '../../utils/isBigScreen'
 import defaultLogo from '../../images/logo_pagarme.png'
 
 const applyThemr = themr('UICheckout')
+
+const bigScreenSize = 640
 
 const statechart = {
   initial: 'customer',
@@ -94,15 +96,38 @@ class Checkout extends Component {
     this.state = {
       activePage: 0,
       closingEffect: false,
+      isBigScreen: true,
       footerButtonVisible: true,
     }
 
     this.handleFooterButton = this.handleFooterButton.bind(this)
+    this.updateDimensions = this.updateDimensions.bind(this)
+  }
+
+  componentDidMount () {
+    this.updateDimensions()
+    window.addEventListener('resize', this.updateDimensions)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.updateDimensions)
+  }
+
+  updateDimensions () {
+    const { isBigScreen } = this.state
+
+    if (window.innerWidth > bigScreenSize && !isBigScreen) {
+      this.setState({ isBigScreen: true })
+    }
+
+    if (window.innerWidth < bigScreenSize && isBigScreen) {
+      this.setState({ isBigScreen: false })
+    }
   }
 
   handleNavigation (transitionTo, pages, steps) {
     this.props.transition(transitionTo, {
-      isBigScreen,
+      isBigScreen: this.state.isBigScreen,
     })
 
     const inc = transitionTo === 'NEXT' ? 1 : -1
@@ -133,11 +158,14 @@ class Checkout extends Component {
   }
 
   renderPages () {
+    const { isBigScreen } = this.state
+
     return (
       <React.Fragment>
         <Action show="customer">
           <CustomerPage
             title="Dados Pessoais"
+            isBigScreen={isBigScreen}
           />
         </Action>
         <Action show="billing">
@@ -149,23 +177,27 @@ class Checkout extends Component {
           <ShippingPage
             title="Selecione um endereço cadastrado"
             footerButtonVisible={this.handleFooterButton}
+            isBigScreen={isBigScreen}
           />
         </Action>
         <Action show="payment">
           <PaymentPage
             title="Dados de Pagamento"
+            isBigScreen={isBigScreen}
           />
         </Action>
         <Action show="confirmation">
           <ConfirmationPage
             title="Confirmação"
             success
+            isBigScreen={isBigScreen}
           />
         </Action>
         <Action show="error">
           <ConfirmationPage
             title="Confirmação"
             success={false}
+            isBigScreen={isBigScreen}
           />
         </Action>
       </React.Fragment>
@@ -178,16 +210,16 @@ class Checkout extends Component {
       footerButtonVisible,
     } = this.state
     const { apiValues, theme } = this.props
+    const { isBigScreen } = this.state
 
     const { params = {}, configs = {} } = apiValues
 
     const { pages } = statechart
+    const omitOnBigScreen = when(always(isBigScreen), omit(['billing']))
 
-    if (isBigScreen) {
-      delete pages.billing
-    }
-
-    const steps = Object.values(pages)
+    const steps = Object.values(
+      omitOnBigScreen(pages)
+    )
 
     return (
       <div

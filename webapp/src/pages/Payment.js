@@ -12,7 +12,6 @@ import Dropdown from './../components/Dropdown'
 import Button from './../components/Button'
 import { amountBRLParse } from './../utils/parsers'
 import installmentsData from './../utils/installments'
-import isBigScreen from './../utils/isBigScreen'
 import Barcode from './../images/barcode.svg'
 
 const applyThemr = themr('UIPaymentPage')
@@ -141,7 +140,7 @@ class Payment extends Component {
       flipped,
     } = this.state
 
-    const { theme } = this.props
+    const { theme, isBigScreen } = this.props
 
     return (
       <Row>
@@ -233,7 +232,7 @@ class Payment extends Component {
               title="Selecione"
             />
           </Row>
-          <Row hidden={isBigScreen}>
+          <Row hidden={this.props.isBigScreen}>
             { this.renderAmount() }
           </Row>
         </Col>
@@ -398,7 +397,7 @@ class Payment extends Component {
       showEmailForm,
     } = this.state
 
-    const { theme } = this.props
+    const { theme, isBigScreen } = this.props
 
     return (
       <Col
@@ -445,11 +444,11 @@ class Payment extends Component {
       barcode,
     } = this.state
 
-    if (!isBigScreen && !barcode) {
+    if (!this.props.isBigScreen && !barcode) {
       return this.renderGenerateBoleto()
     }
 
-    if (!isBigScreen && barcode) {
+    if (!this.props.isBigScreen && barcode) {
       return this.renderBoletoOptions()
     }
 
@@ -503,6 +502,7 @@ Payment.propTypes = {
     emailForm: PropTypes.string,
     emailFormTitle: PropTypes.string,
   }),
+  isBigScreen: PropTypes.bool.isRequired,
 }
 
 Payment.defaultProps = {

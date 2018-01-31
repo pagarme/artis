@@ -4,11 +4,10 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { Row } from '../Grid'
-import isBigScreen from '../../utils/isBigScreen'
 
 const applyThemr = themr('UIErrorInfo')
 
-const ErrorInfo = ({ theme }) => (
+const ErrorInfo = ({ theme, isBigScreen }) => (
   <div className={
     classNames(
       theme.alignSelfCenter,
@@ -53,6 +52,7 @@ ErrorInfo.propTypes = {
     info: PropTypes.string,
     error: PropTypes.string,
   }),
+  isBigScreen: PropTypes.bool.isRequired,
 }
 
 ErrorInfo.defaultProps = {

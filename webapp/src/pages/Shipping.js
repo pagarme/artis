@@ -62,7 +62,7 @@ class ShippingPage extends Component {
   }
 
   render () {
-    const { theme } = this.props
+    const { theme, isBigScreen } = this.props
 
     return (
       <div className={theme.page}>
@@ -70,6 +70,7 @@ class ShippingPage extends Component {
           visible={this.state.openAddressForm}
           onCancel={this.toggleOpenAddressForm}
           options={options}
+          isBigScreen={isBigScreen}
         />
         <Grid
           hidden={this.state.openAddressForm}
@@ -116,6 +117,7 @@ ShippingPage.propTypes = {
   }),
   title: PropTypes.string.isRequired,
   footerButtonVisible: PropTypes.func,
+  isBigScreen: PropTypes.bool.isRequired,
 }
 
 ShippingPage.defaultProps = {

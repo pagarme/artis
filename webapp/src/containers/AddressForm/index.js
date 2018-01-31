@@ -11,7 +11,6 @@ import Button from '../../components/Button'
 
 import getAddress from '../../utils/getAddress'
 import removeZipcodeMask from '../../utils/removeZipcodeMask'
-import isBigScreen from '../../utils/isBigScreen'
 
 const applyThemr = themr('UIAddressForm')
 
@@ -119,7 +118,12 @@ class AddressForm extends Component {
       zipcodeError,
     } = this.state
 
-    const { options, visible, onCancel, theme } = this.props
+    const {
+      options,
+      visible,
+      onCancel,
+      theme,
+    } = this.props
 
     return (
       <div
@@ -173,10 +177,10 @@ class AddressForm extends Component {
             >
               <Input
                 name="street"
-                label="Logradouro"
+                label="Endereço"
                 hint="Rua, Av, Praça ou Travessa"
                 value={street}
-                placeholder="Digite o logradouro"
+                placeholder="Digite o endereço"
                 onChange={this.handleInputChange}
               />
             </Col>
@@ -268,11 +272,9 @@ class AddressForm extends Component {
               <Button
                 size={'extra-large'}
                 fill="outline"
-                className={classNames({
-                  [theme.actionButton]: !isBigScreen,
-                })}
                 full
                 onClick={onCancel.bind(this)}
+                className={theme.actionButton}
               >
                 Cancelar
               </Button>
@@ -284,12 +286,10 @@ class AddressForm extends Component {
               palm={mediumColSize}
             >
               <Button
-                className={classNames({
-                  [theme.actionButton]: !isBigScreen,
-                })}
                 full
                 size={'extra-large'}
                 onClick={this.handleRegisterAddress}
+                className={theme.actionButton}
               >
                 Cadastrar
               </Button>
@@ -299,12 +299,6 @@ class AddressForm extends Component {
       </div>
     )
   }
-}
-
-AddressForm.defaultProps = {
-  visible: false,
-  options: [],
-  theme: {},
 }
 
 AddressForm.propTypes = {
@@ -320,6 +314,12 @@ AddressForm.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
   })),
+}
+
+AddressForm.defaultProps = {
+  visible: false,
+  options: [],
+  theme: {},
 }
 
 export default applyThemr(AddressForm)

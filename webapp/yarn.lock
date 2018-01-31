@@ -7828,7 +7828,7 @@ react-fuzzy@^0.5.1:
     fuse.js "^3.0.1"
     prop-types "^15.5.9"
 
-react-ga@^2.4.1:
+react-ga@2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-2.4.1.tgz#dfbd5f028ed39a07067f7a8bf57dc0d240000767"
   optionalDependencies:

@@ -130,10 +130,10 @@ class BillingPage extends Component {
         <Row>
           <Input
             name="street"
-            label="Logradouro"
+            label="Endereço"
             hint="Rua, Av, Praça ou Travessa"
             value={street}
-            placeholder="Digite o logradouro"
+            placeholder="Digite o endereço"
             onChange={this.handleInputChange}
           />
         </Row>

@@ -25,6 +25,9 @@
   margin-top: 26px;
 }
 
-.actionButton {
-  padding: 17px 24px;
+@media (--media-palm) {
+
+  .actionButton {
+    padding: 17px 24px;
+  }
 }
