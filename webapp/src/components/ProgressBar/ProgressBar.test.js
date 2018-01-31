@@ -43,7 +43,7 @@ describe('ProgressBar', () => {
       />
     )
 
-    expect(component.html().includes('1. Still')).toBeTruthy()
+    expect(component.html().includes('<span>1.</span>Still')).toBeTruthy()
   })
 
   it('should not allow width greater than 100%', () => {

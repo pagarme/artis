@@ -13,4 +13,5 @@
   --step-font-size: var(--font-size-small);
   --step-color: var(--color-grey-39);
   --step-color-active: var(--color-greenish);
+  --step-color-active-mobile: var(--color-white);
 }

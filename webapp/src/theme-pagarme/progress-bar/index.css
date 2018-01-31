@@ -25,10 +25,19 @@
   color: var(--step-color-active);
 }
 
+.index {
+  margin-right: 4px;
+}
+
 @media (--media-palm) {
+
+  .index {
+    display: none;
+  }
 
   .active {
     width: 100%;
+    color: var(--step-color-active-mobile);
   }
 
   .step:not(.active) {

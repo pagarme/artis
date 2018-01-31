@@ -27,7 +27,8 @@ const renderSteps = (steps, activePage, theme) => {
                 })
               }
             >
-              { `${index + 1}. ${step}` }
+              <span className={theme.index}>{ `${index + 1}.` }</span>
+              { step }
             </Col>
           ))
         }
@@ -71,6 +72,7 @@ ProgressBar.propTypes = {
     steps: PropTypes.string,
     wrapper: PropTypes.string,
     progressBar: PropTypes.string,
+    index: PropTypes.string,
   }),
   steps: PropTypes.arrayOf(PropTypes.string).isRequired,
   activePage: PropTypes.number.isRequired,
