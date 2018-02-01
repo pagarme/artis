@@ -117,4 +117,5 @@
 
 .visible {
   display: block;
+  width: 100%;
 }

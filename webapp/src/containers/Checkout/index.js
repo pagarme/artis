@@ -185,6 +185,10 @@ class Checkout extends Component {
       omitOnBigScreen(pages)
     )
 
+    const footerButtonText = this.props.machineState === 'payment'
+      ? 'Finalizar compra'
+      : 'Confirmar'
+
     return (
       <div
         className={classNames(
@@ -213,7 +217,7 @@ class Checkout extends Component {
           </div>
           <Footer
             total={params.amount}
-            buttonText={'Confirmar'}
+            buttonText={footerButtonText}
             buttonClick={
               this.handleNavigation.bind(this, 'NEXT', pages, steps)
             }

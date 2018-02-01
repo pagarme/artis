@@ -29,10 +29,10 @@ class Payment extends Component {
 
     this.state = {
       creditcard: {
-        cardNumber: '•••• •••• •••• ••••',
-        name: 'Nome Completo',
-        expiration: 'MM/AA',
-        cvv: '•••',
+        cardNumber: '',
+        holderName: '',
+        expiration: '',
+        cvv: '',
         flipped: false,
       },
       boleto: {
@@ -44,34 +44,57 @@ class Payment extends Component {
 
     this.handleFlipCard = this.handleFlipCard.bind(this)
     this.handleSwitchChange = this.handleSwitchChange.bind(this)
-    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleCreditcardtChange = this.handleCreditcardtChange.bind(this)
     this.handleGenerateBoleto = this.handleGenerateBoleto.bind(this)
     this.toggleEmailForm = this.toggleEmailForm.bind(this)
   }
 
   componentWillUnmount () {
-    const paymentData = pick([
-      'cardNumber',
-      'name',
-      'cvv',
-      'expiration',
-    ], this.state.creditcard)
+    const { paymentMethods } = this.props
+    const { selectedPayment } = this.state
 
-    this.props.handlePageChange(paymentData, 'payment')
+    const paymentMethod = paymentMethods[selectedPayment]
+
+    if (paymentMethod.type === 'creditcard') {
+      paymentMethod.info = pick([
+        'cardNumber',
+        'holderName',
+        'cvv',
+        'expiration',
+      ], this.state.creditcard)
+    }
+
+    const payment = {
+      paymentMethod,
+    }
+
+    this.props.handlePageChange(payment, 'payment')
   }
 
   handleSwitchChange (choice) {
     this.setState({ selectedPayment: choice })
   }
 
-  handleInputChange (e) {
+  handleCreditcardtChange (e) {
     const { name, value } = e.target
 
-    this.setState({ [name]: value })
+    this.setState(previousState => ({
+      ...previousState,
+      creditcard: {
+        ...previousState.creditcard,
+        [name]: value,
+      },
+    }))
   }
 
   handleFlipCard () {
-    this.setState(({ flipped }) => ({ flipped: !flipped }))
+    this.setState(previousState => ({
+      ...previousState,
+      creditcard: {
+        ...previousState.creditcard,
+        flipped: !previousState.creditcard.flipped,
+      },
+    }))
   }
 
   handleGenerateBoleto () {
@@ -109,11 +132,11 @@ class Payment extends Component {
   renderCreditcard () {
     const {
       cardNumber,
-      name,
+      holderName,
       expiration,
       cvv,
       flipped,
-    } = this.state
+    } = this.state.creditcard
 
     const { theme, amount, isBigScreen } = this.props
 
@@ -130,10 +153,10 @@ class Payment extends Component {
             hidden={!isBigScreen}
           >
             <PaymentCard
-              number={cardNumber}
-              cvv={cvv}
-              holderName={name}
-              expiration={expiration}
+              number={cardNumber || '•••• •••• •••• ••••'}
+              cvv={cvv || '•••'}
+              holderName={holderName || 'Nome Completo'}
+              expiration={expiration || 'MM/AA'}
               flipped={flipped}
             />
             <h4 className={theme.amount} >
@@ -154,17 +177,17 @@ class Payment extends Component {
                 value={cardNumber}
                 type="number"
                 mask="1111 1111 1111 1111"
-                onChange={this.handleInputChange}
+                onChange={this.handleCreditcardtChange}
               />
             </Row>
             <Row>
               <Input
-                name="name"
+                name="holderName"
                 label="Nome"
                 hint="(Igual no cartão)"
                 maxLength="24"
-                value={name}
-                onChange={this.handleInputChange}
+                value={holderName}
+                onChange={this.handleCreditcardtChange}
               />
             </Row>
             <Row>
@@ -179,7 +202,7 @@ class Payment extends Component {
                   label="Data de validade"
                   mask="11/11"
                   value={expiration}
-                  onChange={this.handleInputChange}
+                  onChange={this.handleCreditcardtChange}
                 />
               </Col>
               <Col
@@ -194,7 +217,7 @@ class Payment extends Component {
                   value={cvv}
                   type="number"
                   mask="111"
-                  onChange={this.handleInputChange}
+                  onChange={this.handleCreditcardtChange}
                   onFocus={this.handleFlipCard}
                   onBlur={this.handleFlipCard}
                 />
@@ -224,58 +247,49 @@ class Payment extends Component {
     )
   }
 
-  renderBoleto () {
-    const { barcode } = this.state.boleto
+  renderGenerateBoleto () {
     const { theme, paymentMethods, amount } = this.props
     const { discount } = paymentMethods.find(payment => payment.type === 'boleto')
 
     return (
-      <Grid className={theme.page}>
-        <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
+      <Col
+        tv={defaultColSize}
+        desk={defaultColSize}
+        tablet={defaultColSize}
+        palm={defaultColSize}
+      >
+        <div className={theme.generateBoletoContainer} >
+          <img src={Barcode} alt="barcode" className={theme.barcodeImg} />
+          <h4
+            className={
+              classNames(
+                theme.amount,
+                theme.boletoAmount,
+              )
+            }
           >
-            <div className={theme.generateBoletoContainer} >
-              <img src={Barcode} alt="barcode" className={theme.barcodeImg} />
-              {
-                !barcode && <Button
-                  fill="outline"
-                  className={theme.generateBoleto}
-                  onClick={this.handleGenerateBoleto}
-                  size="small"
-                >
-                  Gerar Boleto
-                </Button>
-              }
-              {
-                barcode && <p className={theme.barcode} >{barcode}</p>
-              }
-              <h4
-                className={
-                  classNames(
-                    theme.amount,
-                    theme.boletoAmount,
-                  )
-                }
-              >
-                Valor a pagar:
-                {
-                  discount ?
-                    formatToBRL(discountParser(discount.type, discount.value, amount)) :
-                    formatToBRL(amount)
-                }
-              </h4>
-            </div>
-          </Col>
-        </Row>
-      </Grid>
+            Valor a pagar:
+            {
+              discount ?
+                formatToBRL(discountParser(discount.type, discount.value, amount)) :
+                formatToBRL(amount)
+            }
+          </h4>
+          <span className={theme.boletoInfo}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Mauris risus nunc, malesuada vitae libero venenatis,
+            vehicula luctus nulla. Aliquam erat volutpat.
+            Sed porttitor ex vestibulum augue fermentum molestie.
+            Sed id convallis augue. Nam id malesuada nisl.
+            Quisque quis orci eget.
+          </span>
+
+        </div>
+      </Col>
     )
   }
 
-  renderBoletoOptions () {
+  renderBoleto () {
     const { boleto, showEmailForm } = this.state
     const { barcode } = boleto
     const { theme, amount, isBigScreen } = this.props
