@@ -8,7 +8,7 @@ import { Row, Col } from '../../components/Grid'
 import ActionList from '../../components/ActionList'
 import Button from '../../components/Button'
 import EmailForm from '../EmailForm'
-import formatToBRL from '../../utils/formatToBRL'
+import formatToBRL from '../../utils/helpers/formatToBRL'
 
 const mediumColSize = 6
 const defaultColSize = 12

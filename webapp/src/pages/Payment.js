@@ -81,7 +81,12 @@ class Payment extends Component {
   }
 
   handleInstallmentChange (installments) {
-    this.setState({ creditcard: { installments } })
+    this.setState(({ creditcard }) => ({
+      creditcard: {
+        ...creditcard,
+        installments,
+      },
+    }))
   }
 
   handleFlipCard () {
