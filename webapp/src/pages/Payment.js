@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
 import ReactGA from 'react-ga'
 import { pick } from 'ramda'
+import copy from 'copy-to-clipboard'
 
 import { Grid, Row, Col } from './../components/Grid'
 import Switch from './../components/Switch'
@@ -96,11 +97,13 @@ class Payment extends Component {
   }
 
   /* eslint-disable class-methods-use-this */
-  handleCopyBarCode () {
+  handleCopyBarCode (barcode) {
     ReactGA.event({
       category: 'Boleto',
       action: 'Copy Bar Code',
     })
+
+    copy(barcode)
   }
 
   renderCreditcard () {
@@ -226,9 +229,9 @@ class Payment extends Component {
 
     return (
       <Col
-        tv={mediumColSize}
-        desk={mediumColSize}
-        tablet={mediumColSize}
+        tv={defaultColSize}
+        desk={defaultColSize}
+        tablet={defaultColSize}
         palm={defaultColSize}
       >
         <div className={theme.generateBoletoContainer} >
@@ -284,9 +287,21 @@ class Payment extends Component {
             handleClose={this.toggleEmailForm}
           />
           : <ActionList buttons={[
-            { text: 'Salvar arquivo', disabled: !barcode },
-            { text: 'Encaminhar por e-mail', disabled: !barcode, onClick: this.toggleEmailForm },
-            { text: 'Copiar código de barras', disabled: !barcode },
+            {
+              text: 'Salvar arquivo',
+              disabled: !barcode,
+            },
+            {
+              text: 'Encaminhar por e-mail',
+              disabled: !barcode,
+              onClick: this.toggleEmailForm,
+            },
+            {
+              text: 'Copiar código de barras',
+              disabled: !barcode,
+              onClick: this.handleCopyBarCode
+                .bind(this, barcode),
+            },
           ]}
           />
         }
@@ -339,7 +354,7 @@ class Payment extends Component {
     return (
       <Row>
         { this.renderGenerateBoleto() }
-        { this.renderBoletoOptions() }
+        {/* { this.renderBoletoOptions() } */}
       </Row>
     )
   }

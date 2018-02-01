@@ -26,6 +26,7 @@
     "cep-promise": "2.0.7",
     "chalk": "2.3.0",
     "classnames": "2.2.5",
+    "copy-to-clipboard": "3.0.8",
     "css-loader": "0.28.9",
     "dotenv": "4.0.0",
     "enzyme": "3.3.0",
