@@ -13,10 +13,6 @@
   letter-spacing: 1.4px;
 }
 
-.grid {
-  width: 100%;
-}
-
 .cardContainer {
   flex-direction: column;
   margin-top: 27px;
