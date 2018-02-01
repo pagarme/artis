@@ -6,7 +6,7 @@ import ReactGA from 'react-ga'
 
 import { Grid, Row, Col } from '../../components/Grid'
 import Input from '../../components/Input'
-import Dropdown from '../../components/Dropdown'
+import Select from '../../components/Select'
 import Button from '../../components/Button'
 
 import getAddress from '../../utils/getAddress'
@@ -249,13 +249,14 @@ class AddressForm extends Component {
               tablet={tinyColSize}
               palm={tinyColSize}
             >
-              <Dropdown
+              <Select
                 options={options}
                 name="state"
                 label="Estado"
                 value={state}
                 onChange={this.handleStateChange}
-                title="Selecione"
+                placeholder="Selecione"
+                isBigScreen={this.props.isBigScreen}
               />
             </Col>
           </Row>
@@ -314,6 +315,7 @@ AddressForm.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
   })),
+  isBigScreen: PropTypes.bool.isRequired,
 }
 
 AddressForm.defaultProps = {

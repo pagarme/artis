@@ -24,7 +24,6 @@
   flex: 1 0 100%;
   align-content: space-between;
   margin-left: calc(-1 * var(--grid-column-spacing));
-  overflow-x: hidden;
 }
 
 .flex > * {

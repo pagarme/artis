@@ -1,5 +1,4 @@
 import UIButton from './button/index.css'
-import UIDropdown from './dropdown/index.css'
 import UIFooter from './footer/index.css'
 import UIGrid from './grid/index.css'
 import UIHeader from './header/index.css'
@@ -16,10 +15,10 @@ import UISegmentedSwitch from './segmented-switch/index.css'
 import UIConfirmationPage from './confirmation-page/index.css'
 import UISuccessInfo from './success-info/index.css'
 import UIErrorInfo from './error-info/index.css'
+import UISelect from './select/index.css'
 
 export default {
   UIButton,
-  UIDropdown,
   UIFooter,
   UIGrid,
   UIHeader,
@@ -36,4 +35,5 @@ export default {
   UIConfirmationPage,
   UISuccessInfo,
   UIErrorInfo,
+  UISelect,
 }

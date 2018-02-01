@@ -8,7 +8,7 @@ import ReactGA from 'react-ga'
 import { Grid, Row, Col } from './../components/Grid'
 import SegmentedSwitch from './../components/SegmentedSwitch'
 import Input from './../components/Input'
-import Dropdown from './../components/Dropdown'
+import Select from './../components/Select'
 import Button from './../components/Button'
 import { amountBRLParse } from './../utils/parsers'
 import installmentsData from './../utils/installments'
@@ -223,14 +223,22 @@ class Payment extends Component {
             </Col>
           </Row>
           <Row>
-            <Dropdown
-              options={installmentsData}
-              name="installments"
-              label="Quantidade de Parcelas"
-              value={installments}
-              onChange={this.handleInstallmentsChange}
-              title="Selecione"
-            />
+            <Col
+              tv={defaultColSize}
+              desk={defaultColSize}
+              tablet={defaultColSize}
+              palm={defaultColSize}
+            >
+              <Select
+                options={installmentsData}
+                name="installments"
+                label="Quantidade de Parcelas"
+                value={installments}
+                onChange={this.handleInstallmentsChange}
+                placeholder="Selecione"
+                isBigScreen={isBigScreen}
+              />
+            </Col>
           </Row>
           <Row hidden={this.props.isBigScreen}>
             { this.renderAmount() }

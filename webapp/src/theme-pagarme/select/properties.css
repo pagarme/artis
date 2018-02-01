@@ -1,0 +1,36 @@
+@import "../colors.css";
+@import "../typography.css";
+@import "../spacing.css";
+@import "../media.css";
+
+:root {
+  --error-color: var(--color-pink);
+
+  --placeholder-color: var(--color-white);
+  --placeholder-font-size: var(--font-size-medium);
+
+  --icon-color: var(--color-white);
+
+  --select-background-color: var(--color-main-background);
+  --select-border-bottom: var(--color-grey-68);
+  --select-color: var(--color-white);
+
+  --optionsList-padding-top: 10px;
+  --optionsList-padding-bottom: 10px;
+
+  --optionItem-padding-left: 20px;
+  --optionItem-padding-bottom: 10px;
+  --optionItem-color: var(--color-white);
+  --optionItem-color-hover: var(--color-greenish-100);
+
+  --scroll-background-color: var(--color-nero-100);
+  --scroll-line-background-color: var(--color-greenish);
+
+  --select-font-family: var(--primary-font-family);
+  --select-secondary-text-font-size: var(--font-size-tiny);
+  --select-secondary-text-color: var(--color-grey-34);
+  --select-label-font-size-focus: var(--font-size-tiny);
+  --select-label-color-focus: var(--color-grey-53);
+
+  --arrow-color: var(--color-white);
+}

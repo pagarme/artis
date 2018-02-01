@@ -1,0 +1,155 @@
+@import "./properties.css";
+
+/*
+ * Desktop classes
+ */
+
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.container,
+.container * {
+  box-sizing: border-box;
+}
+
+.none {
+  display: none;
+}
+
+.label {
+  top: 2px;
+  font-family: var(--select-font-family);
+  font-size: var(--select-label-font-size-focus);
+  color: var(--select-label-color-focus);
+  width: 100%;
+}
+
+.placeholder {
+  color: var(--placeholder-color);
+  font-size: var(--placeholder-font-size);
+  font-family: var(--select-font-family);
+  letter-spacing: var(--letter-spacing);
+}
+
+.angleDownIcon {
+  color: var(--icon-color);
+  float: right;
+}
+
+.select {
+  border: 0;
+  background-color: transparent;
+  border-bottom: 1px solid var(--select-border-bottom);
+  cursor: pointer;
+  color: var(--select-color);
+  display: block;
+  width: 100%;
+  outline: none;
+  min-height: 23px;
+}
+
+.selectArrow {
+  position: relative;
+}
+
+.optionsList {
+  padding-top: var(--optionsList-padding-top);
+  padding-bottom: var(--optionsList-padding-bottom);
+}
+
+.optionContainer {
+  outline: none;
+}
+
+.optionItem {
+  display: block;
+  padding-bottom: var(--optionItem-padding-bottom);
+  padding-left: var(--optionItem-padding-left);
+  font-family: var(--select-font-family);
+  letter-spacing: var(--letter-spacing);
+  color: var(--optionItem-color);
+  cursor: pointer;
+}
+
+.optionItem:hover {
+  color: var(--optionItem-color-hover);
+}
+
+.scrollContainer {
+  width: 100%;
+  position: absolute;
+  z-index: 3;
+}
+
+.scrollBox {
+  visibility: hidden;
+  border-radius: 4px;
+  background-color: var(--scroll-background-color);
+  box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.scrollBox > div {
+  overflow: auto;
+}
+
+.scrollLine {
+  background-color: var(--scroll-line-background-color);
+}
+
+.secondaryText {
+  width: 100%;
+  font-family: var(--select-font-family);
+  font-size: var(--select-secondary-text-font-size);
+  text-align: left;
+  margin: 0;
+  margin-top: 5px;
+  color: var(--select-secondary-text-color);
+}
+
+.error ~ .secondaryText {
+  color: var(--error-color);
+}
+
+.error {
+  border-bottom: 2px solid var(--error-color);
+}
+
+/*
+ * Mobile classes
+ */
+
+.arrow {
+  background-color: var(--select-background-color);
+  color: var(--arrow-color);
+  pointer-events: none;
+  position: absolute;
+  top: 10px;
+  right: 0;
+  padding: 0;
+  height: 30px;
+  width: 30px;
+}
+
+.arrowDoubleBorder {
+  border-bottom-width: 2px;
+  border-bottom-color: var(--error-color);
+  height: 32px;
+}
+
+.mobileContainer {
+  cursor: pointer;
+}
+
+.option {
+  padding-left: 0;
+}
+
+/*
+ * Util classes
+ */
+
+.visible {
+  visibility: visible;
+}
