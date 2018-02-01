@@ -16,12 +16,15 @@ export default class ErrorBoundary extends Component {
   }
 
   componentDidCatch (error, errorInfo) {
+    if (process.env.NODE_ENV === 'production') {
+      report(error, errorInfo)
+    }
+
     ReactGA.event({
       category: 'Error Boundary',
       action: error.message,
+      label: `Ambiente - ${process.env.NODE_ENV}`,
     })
-
-    report(error, errorInfo)
 
     this.setState({
       error,
