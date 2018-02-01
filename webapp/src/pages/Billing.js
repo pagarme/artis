@@ -7,9 +7,9 @@ import { Grid, Row, Col } from '../components/Grid'
 import Input from '../components/Input'
 import Dropdown from '../components/Dropdown'
 
-import options from '../utils/states'
-import getAddress from '../utils/getAddress'
-import removeZipcodeMask from '../utils/removeZipcodeMask'
+import options from '../utils/data/states'
+import getAddress from '../utils/helpers/getAddress'
+import removeZipcodeMask from '../utils/helpers/removeZipcodeMask'
 
 const applyThemr = themr('UIBillingPage')
 

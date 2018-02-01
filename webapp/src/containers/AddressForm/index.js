@@ -10,8 +10,8 @@ import Input from '../../components/Input'
 import Dropdown from '../../components/Dropdown'
 import Button from '../../components/Button'
 
-import getAddress from '../../utils/getAddress'
-import removeZipcodeMask from '../../utils/removeZipcodeMask'
+import getAddress from '../../utils/helpers/getAddress'
+import removeZipcodeMask from '../../utils/helpers/removeZipcodeMask'
 
 const applyThemr = themr('UIAddressForm')
 

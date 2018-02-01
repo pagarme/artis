@@ -7,7 +7,7 @@ import ReactGA from 'react-ga'
 import Checkout from './containers/Checkout'
 import ErrorBoundary from './components/ErrorBoundary'
 
-import createElement from './utils/createElement'
+import createElement from './utils/helpers/createElement'
 import apiDataSchema from './utils/schemas/apiData'
 
 import theme from './theme-pagarme'

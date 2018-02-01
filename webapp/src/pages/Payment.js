@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
-import { pick } from 'ramda'
+import { pick, defaultTo, pipe } from 'ramda'
 
 import { Grid, Row, Col } from './../components/Grid'
 import Switch from './../components/Switch'
 import Input from './../components/Input'
-
-import formatToBRL from './../utils/formatToBRL'
-import discountParser from './../utils/discountParser'
+import Dropdown from './../components/Dropdown'
+import formatToBRL from './../utils/helpers/formatToBRL'
+import { applyDiscount, generateInstallmnets } from './../utils/calculations'
 import Barcode from './../images/barcode.svg'
 
 const applyThemr = themr('UIPaymentPage')
@@ -37,6 +37,7 @@ class Payment extends Component {
     this.handleSwitchChange = this.handleSwitchChange.bind(this)
     this.handleCreditcardtChange = this.handleCreditcardtChange.bind(this)
     this.renderBoleto = this.renderBoleto.bind(this)
+    this.handleInstallmentChange = this.handleInstallmentChange.bind(this)
   }
 
   componentWillUnmount () {
@@ -51,12 +52,14 @@ class Payment extends Component {
         'holderName',
         'cvv',
         'expiration',
+        'installments',
       ], this.state.creditcard)
     }
 
     const payment = {
       paymentMethod,
     }
+
 
     this.props.handlePageChange(payment, 'payment')
   }
@@ -77,6 +80,10 @@ class Payment extends Component {
     }))
   }
 
+  handleInstallmentChange (installments) {
+    this.setState({ creditcard: { installments } })
+  }
+
   handleFlipCard () {
     this.setState(previousState => ({
       ...previousState,
@@ -87,16 +94,26 @@ class Payment extends Component {
     }))
   }
 
-  renderCreditcard () {
+  renderCreditcard (creditcard) {
     const {
       cardNumber,
       holderName,
       expiration,
       cvv,
       flipped,
+      installments,
     } = this.state.creditcard
 
+    const { defaultInstallments } = creditcard
+
+    const getSelectedInstallment = pipe(
+      defaultTo(defaultInstallments),
+      defaultTo(0)
+    )
+
     const { theme, amount, isBigScreen } = this.props
+
+    const installmentsOptions = generateInstallmnets(creditcard, amount)
 
     return (
       <Grid className={theme.page}>
@@ -179,19 +196,19 @@ class Payment extends Component {
                 />
               </Col>
             </Row>
-            {/* {
+            {
               installmentsOptions.length &&
               <Row>
                 <Dropdown
                   options={installmentsOptions}
                   name="installments"
                   label="Quantidade de Parcelas"
-                  value={selectedInstallments.value}
-                  onChange={this.handleInstallmentsChange}
+                  value={getSelectedInstallment(installments)}
+                  onChange={this.handleInstallmentChange}
                   title="Selecione"
                 />
               </Row>
-            } */}
+            }
             <Row hidden={isBigScreen}>
               <h4 className={theme.amount} >
                 Valor a pagar: {formatToBRL(amount)}
@@ -228,7 +245,7 @@ class Payment extends Component {
             Valor a pagar:
             {
               discount ?
-                formatToBRL(discountParser(discount.type, discount.value, amount)) :
+                formatToBRL(applyDiscount(discount.type, discount.value, amount)) :
                 formatToBRL(amount)
             }
           </h4>
@@ -259,7 +276,7 @@ class Payment extends Component {
       title: payment.title,
       subtitle: payment.subtitle,
       value: payment.type,
-      content: renders[payment.type](),
+      content: renders[payment.type](payment),
     }))
 
     return (

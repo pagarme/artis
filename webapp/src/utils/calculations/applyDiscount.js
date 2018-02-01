@@ -7,10 +7,10 @@ const discounts = {
   },
 }
 
-const amountWithDiscount = (discountType, discountValue, amount) => {
+const applyDiscount = (discountType, discountValue, amount) => {
   const calcAmount = discounts[discountType].calc
 
   return calcAmount(amount, discountValue)
 }
 
-export default amountWithDiscount
+export default applyDiscount

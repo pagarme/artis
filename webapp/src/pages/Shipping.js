@@ -4,7 +4,7 @@ import PlusIcon from 'react-icons/lib/go/plus'
 import { themr } from 'react-css-themr'
 
 import AddressForm from '../containers/AddressForm'
-import options from '../utils/states'
+import options from '../utils/data/states'
 import { Grid, Row, Col } from '../components/Grid'
 import Button from '../components/Button'
 import AddressOptions from '../containers/AddressOptions'
