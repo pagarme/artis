@@ -20,6 +20,7 @@ import UILoadingInfo from './loading-info/index.css'
 import UIActionList from './action-list/index.css'
 import UIEmailForm from './email-form/index.css'
 import UIBoletoOptions from './boleto-options/index.css'
+import UIErrorPage from './error-page/index.css'
 
 export default {
   UIButton,
@@ -44,4 +45,5 @@ export default {
   UIActionList,
   UIEmailForm,
   UIBoletoOptions,
+  UIErrorPage,
 }

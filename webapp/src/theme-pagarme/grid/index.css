@@ -40,15 +40,15 @@
   justify-content: flex-start;
 }
 
-.alignCenter {
-  justify-content: center;
-}
-
 .alignEnd {
   justify-content: flex-end;
 }
 
-.alignItensCenter {
+.alignCenter {
+  justify-content: center;
+}
+
+.alignVerticalCenter {
   align-items: center;
 }
 
@@ -69,4 +69,9 @@
 
 .hidden {
   display: none;
+}
+
+.fullSize {
+  width: 100vh;
+  height: 100vh;
 }

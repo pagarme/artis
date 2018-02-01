@@ -19,18 +19,3 @@
 .buggyCounter button:active {
   background-color: #545454;
 }
-
-.friendlyMessage {
-  background-color: #85acea;
-  padding: 10px;
-  width: 300px;
-  font-size: 10px;
-  border: 1px solid #000000;
-  text-align: center;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-
-.friendlyMessage a {
-  font-size: 15px;
-  color: #000000;
-}

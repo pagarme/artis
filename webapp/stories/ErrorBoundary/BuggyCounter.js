@@ -19,6 +19,7 @@ export default class BuggyCounter extends Component {
     if (this.state.counter === 3) {
       throw new Error('I crashed!')
     }
+
     return (
       <div className={style.buggyCounter}>
         <h1>Click 3 times in this button to trigger an exception</h1>
