@@ -18,6 +18,7 @@ import UISuccessInfo from './success-info/index.css'
 import UIErrorInfo from './error-info/index.css'
 import UIActionList from './action-list/index.css'
 import UIEmailForm from './email-form/index.css'
+import UIBoletoOptions from './boleto-options/index.css'
 
 export default {
   UIButton,
@@ -40,4 +41,5 @@ export default {
   UIErrorInfo,
   UIActionList,
   UIEmailForm,
+  UIBoletoOptions,
 }

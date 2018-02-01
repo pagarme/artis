@@ -4,7 +4,7 @@
 @import "../media.css";
 
 :root {
-  --page-margin: var(--spacing-medium) var(--spacing-small);
+  --page-margin: var(--spacing-medium) var(--spacing-small) 0;
   --page-title-font-family: var(--primary-font-family);
   --page-title-font-size: var(--font-size-small);
   --page-title-color: var(--color-white);
@@ -16,6 +16,5 @@
   --generate-background-color: var(--color-grey-84);
   --barcode-font-family: var(--primary-font-family);
   --barcode-font-weight: var(--title-font-bold);
-  --barcode-font-size: var(--title-size-medium);
   --barcode-color: var(--color-grey-33);
 }

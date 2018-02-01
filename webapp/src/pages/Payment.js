@@ -3,16 +3,11 @@ import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
-import ReactGA from 'react-ga'
 import { pick } from 'ramda'
-import copy from 'copy-to-clipboard'
 
 import { Grid, Row, Col } from './../components/Grid'
 import Switch from './../components/Switch'
 import Input from './../components/Input'
-import ActionList from './../components/ActionList'
-import Button from './../components/Button'
-import EmailForm from './../containers/EmailForm'
 
 import formatToBRL from './../utils/formatToBRL'
 import discountParser from './../utils/discountParser'
@@ -35,18 +30,13 @@ class Payment extends Component {
         cvv: '',
         flipped: false,
       },
-      boleto: {
-        barcode: '',
-      },
       selectedPayment: 0,
-      showEmailForm: false,
     }
 
     this.handleFlipCard = this.handleFlipCard.bind(this)
     this.handleSwitchChange = this.handleSwitchChange.bind(this)
     this.handleCreditcardtChange = this.handleCreditcardtChange.bind(this)
-    this.handleGenerateBoleto = this.handleGenerateBoleto.bind(this)
-    this.toggleEmailForm = this.toggleEmailForm.bind(this)
+    this.renderBoleto = this.renderBoleto.bind(this)
   }
 
   componentWillUnmount () {
@@ -97,38 +87,6 @@ class Payment extends Component {
     }))
   }
 
-  handleGenerateBoleto () {
-    ReactGA.event({
-      category: 'Boleto',
-      action: 'Create Boleto',
-    })
-
-    this.setState({
-      boleto: {
-        barcode: '12345 00006 00007  00000 00008 9 10110000012134',
-      },
-    })
-  }
-
-  toggleEmailForm () {
-    ReactGA.event({
-      category: 'Boleto',
-      action: `${this.state.showEmailForm ? 'Close' : 'Open'} send by email modal`,
-    })
-
-    this.setState({ showEmailForm: !this.state.showEmailForm })
-  }
-
-  /* eslint-disable class-methods-use-this */
-  handleCopyBarCode (barcode) {
-    ReactGA.event({
-      category: 'Boleto',
-      action: 'Copy Bar Code',
-    })
-
-    copy(barcode)
-  }
-
   renderCreditcard () {
     const {
       cardNumber,
@@ -149,7 +107,6 @@ class Payment extends Component {
             tablet={mediumColSize}
             palm={defaultColSize}
             alignCenter
-            className={theme.cardContainer}
             hidden={!isBigScreen}
           >
             <PaymentCard
@@ -164,7 +121,6 @@ class Payment extends Component {
             </h4>
           </Col>
           <Col
-            className={theme.cardForm}
             tv={mediumColSize}
             desk={mediumColSize}
             tablet={mediumColSize}
@@ -247,9 +203,10 @@ class Payment extends Component {
     )
   }
 
-  renderGenerateBoleto () {
+  renderBoleto () {
     const { theme, paymentMethods, amount } = this.props
-    const { discount } = paymentMethods.find(payment => payment.type === 'boleto')
+    const { discount } = paymentMethods
+      .find(payment => payment.type === 'boleto')
 
     return (
       <Col
@@ -258,7 +215,7 @@ class Payment extends Component {
         tablet={defaultColSize}
         palm={defaultColSize}
       >
-        <div className={theme.generateBoletoContainer} >
+        <div className={theme.boletoContainer} >
           <img src={Barcode} alt="barcode" className={theme.barcodeImg} />
           <h4
             className={
@@ -285,75 +242,6 @@ class Payment extends Component {
           </span>
 
         </div>
-      </Col>
-    )
-  }
-
-  renderBoleto () {
-    const { boleto, showEmailForm } = this.state
-    const { barcode } = boleto
-    const { theme, amount, isBigScreen } = this.props
-
-    return (
-      <Col
-        tv={mediumColSize}
-        desk={mediumColSize}
-        tablet={mediumColSize}
-        palm={defaultColSize}
-        className={theme.optionsContainer}
-      >
-        { showEmailForm
-          ? <EmailForm
-            handleClose={this.toggleEmailForm}
-          />
-          : <ActionList buttons={[
-            {
-              text: 'Salvar arquivo',
-              disabled: !barcode,
-            },
-            {
-              text: 'Encaminhar por e-mail',
-              disabled: !barcode,
-              onClick: this.toggleEmailForm,
-            },
-            {
-              text: 'Copiar código de barras',
-              disabled: !barcode,
-              onClick: this.handleCopyBarCode
-                .bind(this, barcode),
-            },
-          ]}
-          />
-        }
-        <Row hidden={isBigScreen} >
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <h4 className={theme.amount} >
-              Valor a pagar: {formatToBRL(amount)}
-            </h4>
-          </Col>
-        </Row>
-        <Row hidden={isBigScreen} >
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Button
-              relevance="low"
-              disabled={!barcode}
-              full
-              size="extra-large"
-            >
-              Fechar
-            </Button>
-          </Col>
-        </Row>
       </Col>
     )
   }
@@ -387,17 +275,13 @@ class Payment extends Component {
 
 Payment.propTypes = {
   theme: PropTypes.shape({
-    amount: PropTypes.string,
-    cardContainer: PropTypes.string,
-    cardForm: PropTypes.string,
     page: PropTypes.string,
-    barcode: PropTypes.string,
+    title: PropTypes.string,
+    amount: PropTypes.string,
+    grid: PropTypes.string,
     barcodeImg: PropTypes.string,
-    generateBoleto: PropTypes.string,
-    generateBoletoContainer: PropTypes.string,
     boletoAmount: PropTypes.string,
     boletoContainer: PropTypes.string,
-    optionsContainer: PropTypes.string,
   }),
   isBigScreen: PropTypes.bool.isRequired,
   amount: PropTypes.number.isRequired,
@@ -408,7 +292,6 @@ Payment.propTypes = {
 Payment.defaultProps = {
   theme: {},
   payment: {},
-  boleto: {},
   creditcard: {},
 }
 

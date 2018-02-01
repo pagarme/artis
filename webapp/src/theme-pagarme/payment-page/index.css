@@ -13,29 +13,6 @@
   letter-spacing: 1.4px;
 }
 
-.cardContainer {
-  flex-direction: column;
-  margin-top: 27px;
-}
-
-.cardForm {
-  margin-top: 17px;
-}
-
-.cardContainer > div {
-  margin: auto;
-}
-
-.barcode {
-  font-family: var(--barcode-font-family);
-  font-weight: var(--barcode-font-weight);
-  color: var(--barcode-color);
-  width: 100%;
-  text-align: center;
-  margin-top: 33px;
-  font-size: var(--amount-font-size);
-}
-
 .boletoInfo {
   font-family: var(--barcode-font-family);
   font-weight: var(--barcode-font-weight);
@@ -49,7 +26,7 @@
   margin-top: 34px;
 }
 
-.generateBoletoContainer {
+.boletoContainer {
   background-color: var(--generate-background-color);
   width: 100%;
   margin-top: 27px;
@@ -65,14 +42,6 @@
   flex-direction: column;
 }
 
-.optionsContainer {
-  margin-top: 27px;
-}
-
-.generateBoleto {
-  margin-top: 31px;
-}
-
 .amount {
   color: var(--amount-color);
   letter-spacing: 1.6px;
@@ -82,19 +51,15 @@
   text-transform: uppercase;
   text-align: center;
   width: 100%;
+  padding-bottom: 0;
 }
 
 @media (--media-palm) {
 
-  .generateBoletoContainer {
+  .boletoContainer {
     background-color: transparent;
     padding-left: 0;
     padding-right: 0;
-  }
-
-  .boletoOption {
-    margin-right: 0;
-    margin-left: 0;
   }
 
   .barcodeImg {
