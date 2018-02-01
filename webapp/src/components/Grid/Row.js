@@ -13,6 +13,7 @@ const classnames = ({
   className,
   hidden,
   alignEnd,
+  overflowVisible,
 }) =>
   classNames(
     className,
@@ -23,6 +24,7 @@ const classnames = ({
       [theme.alignItensCenter]: alignCenter,
       [theme.alignEnd]: alignEnd,
       [theme.hidden]: hidden,
+      [theme.overflowVisible]: overflowVisible,
     }
   )
 
@@ -35,8 +37,22 @@ const Row = ({
   className,
   hidden,
   alignEnd,
+  overflowVisible,
 }) => (
-  <div className={classnames({ theme, flex, stretch, alignCenter, className, hidden, alignEnd })}>
+  <div
+    className={
+      classnames({
+        theme,
+        flex,
+        stretch,
+        alignCenter,
+        className,
+        hidden,
+        alignEnd,
+        overflowVisible,
+      })
+    }
+  >
     {children}
   </div>
 )
@@ -48,6 +64,7 @@ Row.propTypes = {
     stretch: PropTypes.string,
     alignItensCenter: PropTypes.string,
     hidden: PropTypes.string,
+    overflowVisible: PropTypes.string,
   }).isRequired,
   alignEnd: PropTypes.bool,
   alignCenter: PropTypes.bool,
@@ -56,6 +73,7 @@ Row.propTypes = {
   stretch: PropTypes.bool,
   hidden: PropTypes.bool,
   className: PropTypes.string,
+  overflowVisible: PropTypes.bool,
 }
 
 Row.defaultProps = {
@@ -66,6 +84,7 @@ Row.defaultProps = {
   stretch: false,
   hidden: false,
   className: null,
+  overflowVisible: null,
 }
 
 export default applyThemr(Row)
