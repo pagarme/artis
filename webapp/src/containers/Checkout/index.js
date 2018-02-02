@@ -41,7 +41,7 @@ class Checkout extends Component {
     }
 
     this.handleFooterButton = this.handleFooterButton.bind(this)
-    this.handleProgressBar = this.handleProgressBar.bind(this)
+    this.handlePageChange = this.handlePageChange.bind(this)
     this.updateDimensions = this.updateDimensions.bind(this)
   }
 
@@ -208,9 +208,9 @@ class Checkout extends Component {
               this.handleNavigation.bind(this, 'PREV', pages, steps)
             }
             onClose={this.close.bind(this)}
-            prevButtonDisabled={disablePrevButton}
+            prevButtonDisabled={activePage === 0}
           />
-          <div className={contentClasses}>
+          <div className={theme.content}>
             {
               (showProgressbar || isBigScreen) &&
               <ProgressBar

@@ -33,5 +33,6 @@
 }
 
 .darkContent {
+  flex-grow: 0;
   background-color: var(--dark-content-background-color);
 }

@@ -273,42 +273,43 @@ class AddressForm extends Component {
                 title="Selecione"
               />
             </Col>
-          </Row>
-          <Row
-            className={theme.buttonsWrapper}
-            alignEnd
-          >
-            <Col
-              tv={oneQuarterColSize}
-              desk={oneQuarterColSize}
-              tablet={oneQuarterColSize}
-              palm={mediumColSize}
+            <Row
+              className={theme.buttonsWrapper}
+              alignEnd
             >
-              <Button
-                size={'extra-large'}
-                fill="outline"
-                full
-                onClick={onCancel.bind(this)}
-                className={theme.actionButton}
+              <Col
+                tv={oneQuarterColSize}
+                desk={oneQuarterColSize}
+                tablet={oneQuarterColSize}
+                palm={mediumColSize}
+                alignEnd
               >
-                Cancelar
-              </Button>
-            </Col>
-            <Col
-              tv={oneQuarterColSize}
-              desk={oneQuarterColSize}
-              tablet={oneQuarterColSize}
-              palm={mediumColSize}
-            >
-              <Button
-                full
-                size={'extra-large'}
-                onClick={this.onConfirm}
-                className={theme.actionButton}
+                <Button
+                  size={'extra-large'}
+                  fill="outline"
+                  full
+                  onClick={onCancel.bind(this)}
+                  className={theme.actionButton}
+                >
+                  Cancelar
+                </Button>
+              </Col>
+              <Col
+                tv={oneQuarterColSize}
+                desk={oneQuarterColSize}
+                tablet={oneQuarterColSize}
+                palm={mediumColSize}
               >
-                Cadastrar
-              </Button>
-            </Col>
+                <Button
+                  full
+                  size={'extra-large'}
+                  onClick={this.handleRegisterAddress}
+                  className={theme.actionButton}
+                >
+                  Cadastrar
+                </Button>
+              </Col>
+            </Row>
           </Row>
         </Grid>
       </div>
