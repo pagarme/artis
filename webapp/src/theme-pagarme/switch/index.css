@@ -45,11 +45,13 @@
   margin-top: 23px;
   margin-bottom: 6px;
   text-transform: var(--context-switch-text-transform);
+  font-weight: normal;
 }
 
 .label > p {
   font-size: var(--context-switch-label-subtitle-font-size);
-  margin-bottom: 19px;
+  margin-top: 0;
+  margin-bottom: 14px;
   color: var(--context-switch-label-subtitle-color);
 }
 

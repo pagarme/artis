@@ -13,7 +13,7 @@
   --input-textarea-focus-placeholder-opacity: 1;
   --input-textarea-focus-placeholder-color: var(--color-grey-34);
 
-  --input-textarea-caret-default-color: var(--color-grey-85);
+  --input-textarea-caret-default-color: var(--color-white);
   --input-textarea-placeholder-opacity: 0;
 
   --input-textarea-disabled-border: none;

@@ -3,7 +3,7 @@
 .addressForm {
   background-color: var(--addressForm-background-color);
   border: 2px dashed var(--addressForm-border-color);
-  padding: 33px 24px 33px 0;
+  padding: 33px 24px 0 0;
   margin: auto;
 }
 
@@ -21,8 +21,14 @@
   padding-bottom: var(--page-title-padding-bottom);
 }
 
+.title > span {
+  padding-left: 0;
+  padding-bottom: 0;
+}
+
 .buttonsWrapper {
   margin-top: 26px;
+  padding-bottom: 0;
 }
 
 @media (--media-palm) {
@@ -36,5 +42,29 @@
 
   .actionButton {
     padding: 17px 24px;
+  }
+}
+
+@media (--media-palm) {
+
+  .addressForm {
+    border: 0;
+    padding: 0;
+  }
+
+  .addressForm > * {
+    padding-left: 0;
+  }
+
+  .title {
+    justify-content: center;
+  }
+
+  .buttonsWrapper {
+    margin-top: 10px;
+  }
+
+  .buttonsWrapper > * {
+    padding-bottom: 0;
   }
 }

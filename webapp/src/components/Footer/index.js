@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import LockIcon from 'react-icons/lib/md/lock-outline'
 import { themr } from 'react-css-themr'
 
@@ -32,14 +31,12 @@ const Footer = ({
           alignEnd
         >
           <Button
-            hidden={nextButtonDisabled}
+            hidden={nextButtonDisabled || !buttonVisible}
             disabled={nextButtonDisabled}
             size="extra-large"
             relevance="normal"
             onClick={buttonClick}
-            className={classNames(theme.button, {
-              [theme.hidden]: !buttonVisible,
-            })}
+            className={theme.button}
           >
             {buttonText}
           </Button>

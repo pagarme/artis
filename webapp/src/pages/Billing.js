@@ -124,8 +124,7 @@ class BillingPage extends Component {
         <Row>
           <Input
             name="street"
-            label="Endereço"
-            hint="Rua, Av, Praça ou Travessa"
+            label="Rua"
             value={street}
             placeholder="Digite o endereço"
             onChange={this.handleInputChange}
@@ -168,7 +167,6 @@ class BillingPage extends Component {
           <Input
             name="neighborhood"
             label="Bairro"
-            hint=""
             value={neighborhood}
             placeholder="Digite o bairro"
             onChange={this.handleInputChange}
@@ -184,7 +182,6 @@ class BillingPage extends Component {
             <Input
               name="city"
               label="Cidade"
-              hint=""
               value={city}
               placeholder="Digite a cidade"
               onChange={this.handleInputChange}
@@ -199,7 +196,7 @@ class BillingPage extends Component {
             <Dropdown
               options={options}
               name="state"
-              label="Estado"
+              label="UF"
               value={state}
               onChange={this.handleStateChange}
               title="Selecione"

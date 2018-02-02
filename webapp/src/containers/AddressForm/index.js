@@ -15,9 +15,11 @@ import removeZipcodeMask from '../../utils/helpers/removeZipcodeMask'
 
 const applyThemr = themr('UIAddressForm')
 
+const bigColSize = 12
 const mediumColSize = 6
 const smallColSize = 4
 const oneQuarterColSize = 3
+const threeQuarterColSize = 9
 const tinyColSize = 2
 
 const defaultAddress = {
@@ -148,14 +150,16 @@ class AddressForm extends Component {
       >
         <Grid>
           <Row className={theme.title}>
-            Cadastrar novo endereço
+            <span>
+              Cadastrar novo endereço
+            </span>
           </Row>
           <Row className={theme.addressForm}>
             <Col
               tv={mediumColSize}
               desk={mediumColSize}
               tablet={mediumColSize}
-              palm={mediumColSize}
+              palm={bigColSize}
             >
               <Input
                 name="name"
@@ -169,7 +173,7 @@ class AddressForm extends Component {
               tv={mediumColSize}
               desk={mediumColSize}
               tablet={mediumColSize}
-              palm={mediumColSize}
+              palm={bigColSize}
             >
               <Input
                 name="zipcode"
@@ -186,12 +190,11 @@ class AddressForm extends Component {
               tv={mediumColSize}
               desk={mediumColSize}
               tablet={mediumColSize}
-              palm={mediumColSize}
+              palm={bigColSize}
             >
               <Input
                 name="street"
                 label="Endereço"
-                hint="Rua, Av, Praça ou Travessa"
                 value={street}
                 placeholder="Digite o endereço"
                 onChange={this.handleInputChange}
@@ -201,7 +204,7 @@ class AddressForm extends Component {
               tv={tinyColSize}
               desk={tinyColSize}
               tablet={tinyColSize}
-              palm={tinyColSize}
+              palm={oneQuarterColSize}
             >
               <Input
                 inputRef={this.handleStreetNumberInputRef}
@@ -216,7 +219,7 @@ class AddressForm extends Component {
               tv={smallColSize}
               desk={smallColSize}
               tablet={smallColSize}
-              palm={smallColSize}
+              palm={threeQuarterColSize}
             >
               <Input
                 name="complement"
@@ -230,7 +233,7 @@ class AddressForm extends Component {
               tv={mediumColSize}
               desk={mediumColSize}
               tablet={mediumColSize}
-              palm={mediumColSize}
+              palm={bigColSize}
             >
               <Input
                 name="neighborhood"
@@ -245,7 +248,7 @@ class AddressForm extends Component {
               tv={smallColSize}
               desk={smallColSize}
               tablet={smallColSize}
-              palm={smallColSize}
+              palm={threeQuarterColSize}
             >
               <Input
                 name="city"
@@ -259,7 +262,7 @@ class AddressForm extends Component {
               tv={tinyColSize}
               desk={tinyColSize}
               tablet={tinyColSize}
-              palm={tinyColSize}
+              palm={oneQuarterColSize}
             >
               <Dropdown
                 options={options}
@@ -270,42 +273,43 @@ class AddressForm extends Component {
                 title="Selecione"
               />
             </Col>
-          </Row>
-          <Row
-            className={theme.buttonsWrapper}
-            alignEnd
-          >
-            <Col
-              tv={oneQuarterColSize}
-              desk={oneQuarterColSize}
-              tablet={oneQuarterColSize}
-              palm={mediumColSize}
+            <Row
+              className={theme.buttonsWrapper}
+              alignEnd
             >
-              <Button
-                size={'extra-large'}
-                fill="outline"
-                full
-                onClick={onCancel.bind(this)}
-                className={theme.actionButton}
+              <Col
+                tv={oneQuarterColSize}
+                desk={oneQuarterColSize}
+                tablet={oneQuarterColSize}
+                palm={mediumColSize}
+                alignEnd
               >
-                Cancelar
-              </Button>
-            </Col>
-            <Col
-              tv={oneQuarterColSize}
-              desk={oneQuarterColSize}
-              tablet={oneQuarterColSize}
-              palm={mediumColSize}
-            >
-              <Button
-                full
-                size={'extra-large'}
-                onClick={this.onConfirm}
-                className={theme.actionButton}
+                <Button
+                  size={'extra-large'}
+                  fill="outline"
+                  full
+                  onClick={onCancel.bind(this)}
+                  className={theme.actionButton}
+                >
+                  Cancelar
+                </Button>
+              </Col>
+              <Col
+                tv={oneQuarterColSize}
+                desk={oneQuarterColSize}
+                tablet={oneQuarterColSize}
+                palm={mediumColSize}
               >
-                Cadastrar
-              </Button>
-            </Col>
+                <Button
+                  full
+                  size={'extra-large'}
+                  onClick={this.handleRegisterAddress}
+                  className={theme.actionButton}
+                >
+                  Cadastrar
+                </Button>
+              </Col>
+            </Row>
           </Row>
         </Grid>
       </div>

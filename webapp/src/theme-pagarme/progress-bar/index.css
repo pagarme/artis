@@ -3,6 +3,7 @@
 .wrapper {
   width: 100%;
   background-color: var(--wrapper-background-color);
+  box-shadow: var(--wrapper-box-shadow);
 }
 
 .progressBar {
@@ -25,10 +26,24 @@
   color: var(--step-color-active);
 }
 
+.passed {
+  color: var(--step-color-active);
+  opacity: 0.6;
+}
+
+.stepIndex {
+  margin-right: 4px;
+}
+
 @media (--media-palm) {
+
+  .stepIndex {
+    display: none;
+  }
 
   .active {
     width: 100%;
+    color: var(--step-color-active-mobile);
   }
 
   .step:not(.active) {

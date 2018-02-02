@@ -24,10 +24,12 @@ const renderSteps = (steps, activePage, theme) => {
               className={
                 classNames(theme.step, {
                   [theme.active]: index === activePage,
+                  [theme.passed]: index < activePage,
                 })
               }
             >
-              { `${index + 1}. ${step}` }
+              <span className={theme.stepIndex}>{ `${index + 1}.` }</span>
+              { step }
             </Col>
           ))
         }
@@ -45,12 +47,8 @@ const ProgressBar = ({
   const activeStep = activePage + 1
   const shouldRenderSteps = totalSteps > 0
 
-  const totalPercent = clamp(
-    0,
-    100,
-    (100 / totalSteps) * activeStep
-  )
-
+  const totalCalc = (100 / totalSteps) * activeStep
+  const totalPercent = clamp(0, 100, totalCalc)
   const width = `${totalPercent}%`
 
   return (
@@ -71,6 +69,9 @@ ProgressBar.propTypes = {
     steps: PropTypes.string,
     wrapper: PropTypes.string,
     progressBar: PropTypes.string,
+    index: PropTypes.string,
+    active: PropTypes.string,
+    passed: PropTypes.string,
   }),
   steps: PropTypes.arrayOf(PropTypes.string).isRequired,
   activePage: PropTypes.number.isRequired,

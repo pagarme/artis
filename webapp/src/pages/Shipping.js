@@ -134,6 +134,7 @@ ShippingPage.defaultProps = {
   theme: {},
   shipping: {},
   footerButtonVisible: null,
+  handleProgressBar: null,
 }
 
 export default applyThemr(ShippingPage)

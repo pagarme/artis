@@ -39,10 +39,15 @@
   display: none;
 }
 
+.button {
+  margin-right: 16px;
+}
+
 @media (--media-palm) {
 
   .button {
     width: 100%;
+    margin-left: 16px;
   }
 
   .safe,
