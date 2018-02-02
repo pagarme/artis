@@ -172,7 +172,7 @@ class BillingPage extends Component {
             onChange={this.handleInputChange}
           />
         </Row>
-        <Row>
+        <Row overflowVisible>
           <Col
             tv={bigColSize}
             desk={bigColSize}
@@ -192,14 +192,14 @@ class BillingPage extends Component {
             desk={smallColSize}
             tablet={smallColSize}
             palm={smallColSize}
+            overflowVisible
           >
             <Dropdown
               options={options}
-              name="state"
+              id="state"
               label="UF"
               value={state}
               onChange={this.handleStateChange}
-              title="Selecione"
             />
           </Col>
         </Row>

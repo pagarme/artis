@@ -2,44 +2,36 @@
 @import "../typography.css";
 
 :root {
-  --dropdown-background-color: var(--color-white);
-  --dropdown-font-family: var(--primary-font-family);
+  --background-color: var(--color-white);
+  --font-family: var(--primary-font-family);
 
-  --dropdown-border-radius: 0;
-  --dropdown-border-bottom: var(--color-grey-68);
-  --dropdown-border-left: none;
-  --dropdown-border-right: none;
-  --dropdown-border-top: none;
+  --wrapper-border-bottom-color: var(--color-grey-68);
 
-  --dropdown-input-font-size: var(--font-size-small);
-  --dropdown-input-text-color: var(--color-white);
+  --label-text-color: var(--color-white);
+  --label-font-size: var(--font-size-small);
+  --label-transition-time: 0.1s;
 
-  --dropdown-color-disabled: var(--color-grey-34);
+  --isOpen-label-text-color: var(--color-grey-39);
+  --isOpen-label-font-size: var(--font-size-tiny);
 
-  --dropdown-icon-size: 30px;
+  --icon-color: var(--color-grey-53);
 
-  --dropdown-option-color: var(--color-grey-85);
-  --dropdown-option-selected-color: var(--color-white);
-  --dropdown-option-disabled-opacity: 0.5;
+  --optionsWrapper-transition-time: 0.1s;
+  --optionsWrapper-background-color: var(--color-grey-85);
+  --optionsWrapper-padding: var(--spacing-small) 0 var(--spacing-small);
 
-  --dropdown-disabled-opacity: 0.6;
-  --dropdown-disabled-background: none;
+  --option-text-color: var(--color-white);
+  --option-hover-text-color: var(--color-greenish-100);
+  --option-font-size: var(--font-size-small);
+  --option-padding: 7px var(--spacing-medium) 7px;
 
-  --dropdown-placeholder-color: var(--color-grey-53);
-  --dropdown-label-font-size: var(--font-size-tiny);
+  --selectedValue-font-size: var(--font-size-small);
+  --selectedValue-text-color: var(--color-white);
 
-  --dropdown-secondary-text-font-size: var(--font-size-tiny);
+  --scrollbar-thumb-background-color: var(--color-greenish-100);
+  --scrollbar-thumb-border-radius: 5px;
 
-  --dropdown-error-color: var(--color-error);
-
-  --dropdown-icon-color-active: var(--color-black);
-  --dropdown-icon-background-active: var(--color-grey-34);
-  --dropdown-text-color: var(--color-grey-68);
-
-  --dropdown-select-padding-bottom: 2px;
-  --dropdown-select-padding-left: 0;
-  --dropdown-select-padding-right: 20px;
-  --dropdown-select-padding-top: 3px;
-
-  --dropdown-arrow-padding-top: 8px;
+  --disabled-opacity: 0.6;
+  --error-color: var(--color-error);
+  --error-font-size: var(--font-size-tiny);
 }

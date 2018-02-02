@@ -20,42 +20,55 @@ const options = [
     name: 'Michelangelo',
     value: 'michelangelo',
   },
+  {
+    name: 'Mr. Splinter',
+    value: 'splinter',
+  },
+  {
+    name: 'April O\'Neil',
+    value: 'april',
+  },
 ]
 
 
-class DropdownState extends React.Component {
+class DropdownContainer extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { selected: '' }
+    this.state = {
+      selected: {
+        name: '',
+        value: '',
+      },
+    }
 
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange (value) {
-    this.setState({ selected: value })
+  handleChange (selected) {
+    this.setState({ selected })
   }
 
   render () {
+    const { selected } = this.state
     return (
       <div>
         <Dropdown
+          label="Tartarugas ninjas"
           options={options}
-          name="pessoas"
-          label="Pessoas"
           onChange={this.handleChange}
-          value={this.state.selected}
-          disabled={this.props.disabled}
-          title={this.props.title}
-          error={this.props.error}
+          {...this.props}
         />
-
-        <p>Selecionado: {this.state.selected}</p>
+        <div>
+          <p><strong>On change</strong></p>
+          <p>Name: {selected.name}</p>
+          <p>Value: {selected.value}</p>
+        </div>
       </div>
     )
   }
 }
 
-DropdownState.defaultProps = {
+DropdownContainer.defaultProps = {
   disabled: false,
   error: '',
   title: '',
@@ -67,27 +80,22 @@ const DropdownExamples = () => (
 
     <section>
       <h3>Default</h3>
-      <DropdownState />
+      <DropdownContainer />
     </section>
 
     <section>
-      <h3>With title</h3>
-      <DropdownState title="Selecione alguem" />
-    </section>
-
-    <section>
-      <h3>Disabled with title</h3>
-      <DropdownState disabled title="Selecione alguem" />
+      <h3>Passing a selected value by default</h3>
+      <DropdownContainer value="michelangelo" />
     </section>
 
     <section>
       <h3>Disabled</h3>
-      <DropdownState disabled />
+      <DropdownContainer disabled />
     </section>
 
     <section>
       <h3>Error</h3>
-      <DropdownState error="Something went wrong" />
+      <DropdownContainer error="Something is wrong" />
     </section>
 
   </div>
