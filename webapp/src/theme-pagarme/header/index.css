@@ -1,27 +1,35 @@
-@import "../colors.css";
-@import "../typography.css";
 @import "./properties.css";
+@import "../media.css";
 
 .close,
 .back {
-  font-size: var(--header-button-size);
+  font-size: var(--header-button-font-size);
   padding: 0;
 }
 
 .logo {
   max-height: var(--logo-max-height);
   max-width: var(--logo-max-width);
-  padding-top: var(--logo-padding-top);
-  padding-bottom: var(--logo-padding-bottom);
+  margin-top: var(--logo-margin-top);
 }
 
 .header {
   min-height: var(--header-min-height);
   max-height: var(--header-max-height);
+  margin-bottom: var(--header-margin-bottom);
   display: flex;
 }
 
 .header > * {
   align-items: center;
   flex: 1;
+}
+
+@media (--media-palm) {
+
+  .close,
+  .back {
+    font-size: var(--header-button-font-size-mobile);
+    margin-top: 20px;
+  }
 }
