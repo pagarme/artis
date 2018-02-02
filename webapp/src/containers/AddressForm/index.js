@@ -303,7 +303,7 @@ class AddressForm extends Component {
                 <Button
                   full
                   size={'extra-large'}
-                  onClick={this.handleRegisterAddress}
+                  onClick={this.onConfirm}
                   className={theme.actionButton}
                 >
                   Cadastrar

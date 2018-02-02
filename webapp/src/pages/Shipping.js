@@ -20,7 +20,7 @@ class ShippingPage extends Component {
     const { shipping } = this.props
 
     this.state = {
-      addresses: [shipping],
+      addresses: shipping ? [shipping] : [],
       selected: {},
       openAddressForm: false,
     }

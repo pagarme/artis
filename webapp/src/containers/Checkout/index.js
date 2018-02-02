@@ -35,9 +35,7 @@ class Checkout extends Component {
       closingEffect: false,
       isBigScreen: true,
       footerButtonVisible: true,
-      checkoutData: {
-        ...formData,
-      },
+      ...formData,
     }
 
     this.handleFooterButton = this.handleFooterButton.bind(this)
@@ -115,7 +113,7 @@ class Checkout extends Component {
       customer,
       billing,
       shipping,
-    } = this.state.checkoutData
+    } = this.state
 
     const {
       amount,
@@ -246,15 +244,24 @@ Checkout.propTypes = {
   apiData: PropTypes.shape({
     key: PropTypes.string.isRequired,
     configs: PropTypes.shape({
+      companyName: PropTypes.string,
       image: PropTypes.string,
-      theme: PropTypes.string,
-      target: PropTypes.string,
+      primaryColor: PropTypes.string,
+      seconryColor: PropTypes.string,
+      postback: PropTypes.string,
+      onSuccess: PropTypes.func,
+      onError: PropTypes.func,
+      onClose: PropTypes.func,
     }).isRequired,
-    params: PropTypes.shape({
+    formData: PropTypes.shape({
+      curtomer: PropTypes.object,
+      billing: PropTypes.object,
+      shipping: PropTypes.object,
+      items: PropTypes.arrayOf(PropTypes.object),
+    }),
+    transaction: PropTypes.shape({
       amount: PropTypes.number.isRequired,
-      paymentMethods: PropTypes.arrayOf(
-        PropTypes.string,
-      ).isRequired,
+      paymentMethods: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
   targetElement: PropTypes.object.isRequired,
