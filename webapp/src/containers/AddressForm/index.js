@@ -154,7 +154,7 @@ class AddressForm extends Component {
               Cadastrar novo endereço
             </span>
           </Row>
-          <Row className={theme.addressForm}>
+          <Row className={theme.addressForm} overflowVisible>
             <Col
               tv={mediumColSize}
               desk={mediumColSize}
@@ -270,7 +270,6 @@ class AddressForm extends Component {
                 label="Estado"
                 value={state}
                 onChange={this.handleStateChange}
-                title="Selecione"
               />
             </Col>
             <Row

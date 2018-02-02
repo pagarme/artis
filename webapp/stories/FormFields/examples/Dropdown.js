@@ -57,7 +57,7 @@ class DropdownContainer extends React.Component {
           options={options}
           onChange={this.handleChange}
           {...this.props}
-        />        
+        />
         <div>
           <p><strong>On change</strong></p>
           <p>Name: {selected.name}</p>
