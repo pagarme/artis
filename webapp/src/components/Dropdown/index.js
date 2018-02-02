@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import shortid from 'shortid'
 import { themr } from 'react-css-themr'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { find, prop, propEq } from 'ramda'
+import { find, prop, propEq, compose, merge } from 'ramda'
 
 import AngleDownIcon from 'react-icons/lib/fa/angle-down'
 import AngleUpIcon from 'react-icons/lib/fa/angle-up'
@@ -15,12 +15,21 @@ class Dropdown extends Component {
   constructor (props) {
     super(props)
 
+    const getValueProp = prop('value')
+    const getOptionsProp = prop('options')
+
+    const findSelectedOption = find(
+      propEq('value', getValueProp(props)),
+    )
+
+    const getSelectedProp = compose(findSelectedOption, getOptionsProp)
+
     this.state = {
       isOpen: false,
-      selected: {
+      selected: merge({
         name: null,
         value: null,
-      },
+      }, getSelectedProp(props)),
     }
 
     this.id = shortid.generate()
@@ -53,15 +62,14 @@ class Dropdown extends Component {
   }
 
   renderOptions () {
-    const { theme, options, value } = this.props
+    const { theme, options } = this.props
     const { selected } = this.state
 
     return options.map((option, index) => {
       const isSelected = option.value === selected.value
-      const isValuePassed = option.value === value && !selected.value
 
       const optionClasses = classNames(theme.option, {
-        [theme.selected]: isSelected || isValuePassed,
+        [theme.selected]: isSelected,
       })
 
       return (
@@ -89,18 +97,13 @@ class Dropdown extends Component {
       theme,
       id,
       label,
-      value,
-      options,
       disabled,
       error,
     } = this.props
 
-    const getOptionByValue = find(propEq('value', value))
-    const passedValue = getOptionByValue(options)
-
     const wrapperClasses = classNames(theme.wrapper, {
       [theme.isOpen]: isOpen,
-      [theme.labelEffect]: selected.value || passedValue,
+      [theme.labelEffect]: selected.value,
       [theme.disabled]: disabled,
       [theme.error]: error,
     })
@@ -128,10 +131,10 @@ class Dropdown extends Component {
           <div className={theme.icon}>
             {isOpen ? <AngleUpIcon /> : <AngleDownIcon />}
           </div>
-          {selected.value || prop('value', passedValue)
+          {selected.value
             ? (
               <div className={theme.selectedValue}>
-                {selected.name || prop('name', passedValue) }
+                {selected.name}
               </div>
             )
             : ''
@@ -170,7 +173,7 @@ Dropdown.propTypes = {
   }),
   label: PropTypes.string,
   id: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.string, // eslint-disable-line
   options: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
