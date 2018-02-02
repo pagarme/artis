@@ -42,6 +42,7 @@
     "fs-extra": "5.0.0",
     "gh-pages": "1.1.0",
     "html-webpack-plugin": "2.30.1",
+    "husky": "0.14.3",
     "jest": "22.1.4",
     "joi-browser": "13.0.1",
     "nyc": "11.4.1",
@@ -79,6 +80,7 @@
     "webpack-dev-server": "2.11.1"
   },
   "scripts": {
+    "precommit": "yarn lint && jest",
     "build": "node scripts/build.js",
     "coverage": "nyc --reporter=html --reporter=text --lines 300 npm run test-coverage",
     "deploy-storybook": "storybook-to-ghpages",
