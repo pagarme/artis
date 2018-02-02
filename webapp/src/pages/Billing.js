@@ -125,7 +125,6 @@ class BillingPage extends Component {
           <Input
             name="street"
             label="Endereço"
-            hint="Rua, Av, Praça ou Travessa"
             value={street}
             placeholder="Digite o endereço"
             onChange={this.handleInputChange}
