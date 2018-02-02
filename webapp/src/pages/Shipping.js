@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import PlusIcon from 'react-icons/lib/go/plus'
 import { themr } from 'react-css-themr'
+import {
+  equals,
+  filter,
+  not,
+  pipe,
+  isEmpty,
+} from 'ramda'
 
 import AddressForm from '../containers/AddressForm'
 import options from '../utils/data/states'
@@ -17,10 +24,10 @@ class ShippingPage extends Component {
   constructor (props) {
     super(props)
 
-    const { shipping } = this.props
+    const { shipping, addresses } = this.props
 
     this.state = {
-      addresses: shipping ? [shipping] : [],
+      addresses: !isEmpty(shipping) ? [shipping, ...addresses] : addresses,
       selected: {},
       openAddressForm: false,
     }
@@ -31,9 +38,17 @@ class ShippingPage extends Component {
   }
 
   componentWillUnmount () {
-    const { selected } = this.state
+    const { selected, addresses } = this.state
+
+    const removeSelected = filter(
+      pipe(
+        equals(selected),
+        not
+      )
+    )
 
     this.props.handlePageChange(selected, 'shipping')
+    this.props.handlePageChange(removeSelected(addresses), 'addresses')
   }
 
   onChangeAddress (address) {
@@ -111,6 +126,7 @@ ShippingPage.propTypes = {
     title: PropTypes.string,
     btnAddNewAddress: PropTypes.string,
   }),
+  addresses: PropTypes.arrayOf(PropTypes.object),
   shipping: PropTypes.shape({
     name: PropTypes.string,
     street: PropTypes.string,
@@ -132,6 +148,7 @@ ShippingPage.propTypes = {
 
 ShippingPage.defaultProps = {
   theme: {},
+  addresses: [],
   shipping: {},
   footerButtonVisible: null,
   handleProgressBar: null,

@@ -36,6 +36,7 @@ class Checkout extends Component {
       isBigScreen: true,
       footerButtonVisible: true,
       ...formData,
+      addresses: [],
     }
 
     this.handleFooterButton = this.handleFooterButton.bind(this)
@@ -96,15 +97,8 @@ class Checkout extends Component {
     this.setState({ footerButtonVisible })
   }
 
-  handlePageChange (pageState, page) {
-    this.setState(state => ({
-      checkoutData: {
-        ...state.checkoutData,
-        [page]: {
-          ...pageState,
-        },
-      },
-    }))
+  handlePageChange (data, paramName) {
+    this.setState({ [paramName]: data })
   }
 
   renderPages () {
@@ -113,6 +107,7 @@ class Checkout extends Component {
       customer,
       billing,
       shipping,
+      addresses,
     } = this.state
 
     const {
@@ -144,6 +139,7 @@ class Checkout extends Component {
             footerButtonVisible={this.handleFooterButton}
             isBigScreen={isBigScreen}
             shipping={shipping}
+            addresses={addresses}
             handlePageChange={this.handlePageChange}
           />
         </Action>
