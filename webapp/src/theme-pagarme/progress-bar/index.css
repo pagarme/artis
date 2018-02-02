@@ -26,6 +26,11 @@
   color: var(--step-color-active);
 }
 
+.passed {
+  color: var(--step-color-active);
+  opacity: 0.6;
+}
+
 .stepIndex {
   margin-right: 4px;
 }
