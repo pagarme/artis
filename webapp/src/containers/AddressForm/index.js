@@ -45,7 +45,6 @@ class AddressForm extends Component {
     this.handleZipcodeChange = this.handleZipcodeChange.bind(this)
     this.handleZipcodeBlur = this.handleZipcodeBlur.bind(this)
     this.handleStreetNumberInputRef = this.handleStreetNumberInputRef.bind(this)
-    this.handleRegisterAddress = this.handleRegisterAddress.bind(this)
     this.onConfirm = this.onConfirm.bind(this)
   }
 
@@ -60,6 +59,11 @@ class AddressForm extends Component {
       'city',
       'state',
     ], this.state)
+
+    ReactGA.event({
+      category: 'Shipping',
+      action: 'Add new address',
+    })
 
     this.props.onConfirm(address)
   }
@@ -91,14 +95,6 @@ class AddressForm extends Component {
 
   handleZipcodeBlur () {
     this.setState({ zipcodeError: '' })
-  }
-
-  /* eslint-disable class-methods-use-this */
-  handleRegisterAddress () {
-    ReactGA.event({
-      category: 'Shipping',
-      action: 'Add new address',
-    })
   }
 
   autocompleteAddress (zipcode) {
@@ -304,7 +300,7 @@ class AddressForm extends Component {
               <Button
                 full
                 size={'extra-large'}
-                onClick={this.handleRegisterAddress}
+                onClick={this.onConfirm}
                 className={theme.actionButton}
               >
                 Cadastrar
