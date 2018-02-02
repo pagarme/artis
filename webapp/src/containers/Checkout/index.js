@@ -18,89 +18,29 @@ import PaymentPage from '../../pages/Payment'
 import ConfirmationPage from '../../pages/Confirmation'
 import defaultLogo from '../../images/logo_pagarme.png'
 
-const applyThemr = themr('UICheckout')
+import statechart from './statechart'
 
 const bigScreenSize = 640
-
-const statechart = {
-  initial: 'customer',
-  pages: {
-    customer: 'Identificação',
-    billing: 'Endereço de Cobrança',
-    shipping: 'Endereço de Entrega',
-    payment: 'Forma de Pagamento',
-    confirmation: 'Confirmação',
-  },
-  states: {
-    customer: {
-      on: {
-        NEXT: {
-          billing: {
-            cond: extState => !extState.isBigScreen,
-          },
-          shipping: {
-            cond: extState => extState.isBigScreen,
-          },
-        },
-      },
-      onEntry: 'customer',
-    },
-    billing: {
-      on: {
-        PREV: 'customer',
-        NEXT: 'shipping',
-      },
-      onEntry: 'billing',
-    },
-    shipping: {
-      on: {
-        PREV: {
-          billing: {
-            cond: extState => !extState.isBigScreen,
-          },
-          customer: {
-            cond: extState => extState.isBigScreen,
-          },
-        },
-        NEXT: 'payment',
-      },
-      onEntry: 'shipping',
-    },
-    payment: {
-      on: {
-        PREV: 'shipping',
-        NEXT: 'confirmation',
-        ERROR: 'error',
-      },
-      onEntry: 'payment',
-    },
-    confirmation: {
-      on: {
-        PREV: 'payment',
-      },
-      onEntry: 'confirmation',
-    },
-    error: {
-      on: {
-        PREV: 'payment',
-      },
-      onEntry: 'error',
-    },
-  },
-}
+const applyThemr = themr('UICheckout')
 
 class Checkout extends Component {
   constructor (props) {
     super(props)
+
+    const { formData } = props.apiData
 
     this.state = {
       activePage: 0,
       closingEffect: false,
       isBigScreen: true,
       footerButtonVisible: true,
+      checkoutData: {
+        ...formData,
+      },
     }
 
     this.handleFooterButton = this.handleFooterButton.bind(this)
+    this.handlePageChange = this.handlePageChange.bind(this)
     this.updateDimensions = this.updateDimensions.bind(this)
   }
 
@@ -157,8 +97,29 @@ class Checkout extends Component {
     this.setState({ footerButtonVisible })
   }
 
+  handlePageChange (pageState, page) {
+    this.setState(state => ({
+      checkoutData: {
+        ...state.checkoutData,
+        [page]: {
+          ...pageState,
+        },
+      },
+    }))
+  }
+
   renderPages () {
     const { isBigScreen } = this.state
+    const {
+      customer,
+      billing,
+      shipping,
+    } = this.state.checkoutData
+
+    const {
+      amount,
+      paymentMethods,
+    } = this.props.apiData.transaction
 
     return (
       <React.Fragment>
@@ -166,11 +127,16 @@ class Checkout extends Component {
           <CustomerPage
             title="Dados Pessoais"
             isBigScreen={isBigScreen}
+            handlePageChange={this.handlePageChange}
+            customer={customer}
+            billingData={billing}
           />
         </Action>
         <Action show="billing">
           <BillingPage
             title="Endereço de Cobrança"
+            handlePageChange={this.handlePageChange}
+            billing={billing}
           />
         </Action>
         <Action show="shipping">
@@ -178,25 +144,22 @@ class Checkout extends Component {
             title="Selecione um endereço cadastrado"
             footerButtonVisible={this.handleFooterButton}
             isBigScreen={isBigScreen}
+            shipping={shipping}
+            handlePageChange={this.handlePageChange}
           />
         </Action>
         <Action show="payment">
           <PaymentPage
             title="Dados de Pagamento"
             isBigScreen={isBigScreen}
+            paymentMethods={paymentMethods}
+            amount={amount}
+            handlePageChange={this.handlePageChange}
           />
         </Action>
         <Action show="confirmation">
           <ConfirmationPage
             title="Confirmação"
-            success
-            isBigScreen={isBigScreen}
-          />
-        </Action>
-        <Action show="error">
-          <ConfirmationPage
-            title="Confirmação"
-            success={false}
             isBigScreen={isBigScreen}
           />
         </Action>
@@ -209,10 +172,11 @@ class Checkout extends Component {
       activePage,
       footerButtonVisible,
     } = this.state
-    const { apiValues, theme } = this.props
+
+    const { apiData, theme } = this.props
     const { isBigScreen } = this.state
 
-    const { params = {}, configs = {} } = apiValues
+    const { params = {}, configs = {} } = apiData
 
     const { pages } = statechart
     const omitOnBigScreen = when(always(isBigScreen), omit(['billing']))
@@ -220,6 +184,10 @@ class Checkout extends Component {
     const steps = Object.values(
       omitOnBigScreen(pages)
     )
+
+    const footerButtonText = this.props.machineState === 'payment'
+      ? 'Finalizar compra'
+      : 'Confirmar'
 
     return (
       <div
@@ -249,7 +217,7 @@ class Checkout extends Component {
           </div>
           <Footer
             total={params.amount}
-            buttonText={'Continuar'}
+            buttonText={footerButtonText}
             buttonClick={
               this.handleNavigation.bind(this, 'NEXT', pages, steps)
             }
@@ -269,7 +237,7 @@ Checkout.propTypes = {
     closingEffect: PropTypes.string,
     checkout: PropTypes.string,
   }),
-  apiValues: PropTypes.shape({
+  apiData: PropTypes.shape({
     key: PropTypes.string.isRequired,
     configs: PropTypes.shape({
       image: PropTypes.string,
@@ -278,7 +246,9 @@ Checkout.propTypes = {
     }).isRequired,
     params: PropTypes.shape({
       amount: PropTypes.number.isRequired,
-      paymentMethod: PropTypes.string.isRequired,
+      paymentMethods: PropTypes.arrayOf(
+        PropTypes.string,
+      ).isRequired,
     }),
   }).isRequired,
   targetElement: PropTypes.object.isRequired,
@@ -286,7 +256,7 @@ Checkout.propTypes = {
 
 Checkout.defaultProps = {
   theme: {},
-  apiValues: {
+  apiData: {
     configs: {
       image: '',
       theme: 'dark',

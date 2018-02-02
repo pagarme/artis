@@ -12,10 +12,14 @@ import UIPaymentPage from './payment-page/index.css'
 import UICustomerPage from './customer-page/index.css'
 import UIShippingPage from './shipping-page/index.css'
 import UIAddressOptions from './address-options/index.css'
-import UISegmentedSwitch from './segmented-switch/index.css'
+import UISwitch from './switch/index.css'
 import UIConfirmationPage from './confirmation-page/index.css'
 import UISuccessInfo from './success-info/index.css'
 import UIErrorInfo from './error-info/index.css'
+import UILoadingInfo from './loading-info/index.css'
+import UIActionList from './action-list/index.css'
+import UIEmailForm from './email-form/index.css'
+import UIBoletoOptions from './boleto-options/index.css'
 
 export default {
   UIButton,
@@ -32,8 +36,12 @@ export default {
   UICustomerPage,
   UIShippingPage,
   UIAddressOptions,
-  UISegmentedSwitch,
+  UISwitch,
   UIConfirmationPage,
   UISuccessInfo,
   UIErrorInfo,
+  UILoadingInfo,
+  UIActionList,
+  UIEmailForm,
+  UIBoletoOptions,
 }

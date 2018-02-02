@@ -3,14 +3,15 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import ReactGA from 'react-ga'
+import { pick } from 'ramda'
 
 import { Grid, Row, Col } from '../../components/Grid'
 import Input from '../../components/Input'
 import Dropdown from '../../components/Dropdown'
 import Button from '../../components/Button'
 
-import getAddress from '../../utils/getAddress'
-import removeZipcodeMask from '../../utils/removeZipcodeMask'
+import getAddress from '../../utils/helpers/getAddress'
+import removeZipcodeMask from '../../utils/helpers/removeZipcodeMask'
 
 const applyThemr = themr('UIAddressForm')
 
@@ -21,8 +22,8 @@ const tinyColSize = 2
 
 const defaultAddress = {
   street: '',
-  streetNumber: '',
-  streetComplement: '',
+  number: '',
+  complement: '',
   neighborhood: '',
   city: '',
   state: 'placeholder',
@@ -44,7 +45,27 @@ class AddressForm extends Component {
     this.handleZipcodeChange = this.handleZipcodeChange.bind(this)
     this.handleZipcodeBlur = this.handleZipcodeBlur.bind(this)
     this.handleStreetNumberInputRef = this.handleStreetNumberInputRef.bind(this)
-    this.handleRegisterAddress = this.handleRegisterAddress.bind(this)
+    this.onConfirm = this.onConfirm.bind(this)
+  }
+
+  onConfirm () {
+    const address = pick([
+      'name',
+      'zipcode',
+      'street',
+      'number',
+      'complement',
+      'neighborhood',
+      'city',
+      'state',
+    ], this.state)
+
+    ReactGA.event({
+      category: 'Shipping',
+      action: 'Add new address',
+    })
+
+    this.props.onConfirm(address)
   }
 
   handleStateChange (value) {
@@ -76,14 +97,6 @@ class AddressForm extends Component {
     this.setState({ zipcodeError: '' })
   }
 
-  /* eslint-disable class-methods-use-this */
-  handleRegisterAddress () {
-    ReactGA.event({
-      category: 'Shipping',
-      action: 'Add new address',
-    })
-  }
-
   autocompleteAddress (zipcode) {
     const updateAddress = (address) => {
       this.setState({
@@ -110,8 +123,8 @@ class AddressForm extends Component {
       name,
       zipcode,
       street,
-      streetNumber,
-      complementary,
+      number,
+      complement,
       neighborhood,
       city,
       state,
@@ -192,9 +205,9 @@ class AddressForm extends Component {
             >
               <Input
                 inputRef={this.handleStreetNumberInputRef}
-                name="streetNumber"
+                name="number"
                 label="Nº"
-                value={streetNumber}
+                value={number}
                 placeholder="Digite o número"
                 onChange={this.handleInputChange}
               />
@@ -206,10 +219,9 @@ class AddressForm extends Component {
               palm={smallColSize}
             >
               <Input
-                name="complementary"
+                name="complement"
                 label="Complemento"
-                hint=""
-                value={complementary}
+                value={complement}
                 placeholder="Digite o complemento do endereço"
                 onChange={this.handleInputChange}
               />
@@ -288,7 +300,7 @@ class AddressForm extends Component {
               <Button
                 full
                 size={'extra-large'}
-                onClick={this.handleRegisterAddress}
+                onClick={this.onConfirm}
                 className={theme.actionButton}
               >
                 Cadastrar
@@ -310,6 +322,7 @@ AddressForm.propTypes = {
   }),
   visible: PropTypes.bool,
   onCancel: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     value: PropTypes.string,

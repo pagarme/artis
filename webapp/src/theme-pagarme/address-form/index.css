@@ -31,3 +31,10 @@
     padding: 17px 24px;
   }
 }
+
+@media (--media-tablet) {
+
+  .actionButton {
+    padding: 17px 24px;
+  }
+}

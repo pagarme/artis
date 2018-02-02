@@ -1,6 +1,7 @@
 @import "../colors.css";
 @import "../typography.css";
 @import "../spacing.css";
+@import "../media.css";
 
 :root {
   --page-title-font-size: var(--font-size-xxlarge);

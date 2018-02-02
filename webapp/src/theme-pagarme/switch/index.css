@@ -1,8 +1,13 @@
 @import "./properties.css";
 
-.segmentedSwitch {
+.switch {
   display: inline-flex;
   user-select: none;
+  width: 100%;
+}
+
+.content {
+  display: none;
   width: 100%;
 }
 
@@ -108,4 +113,9 @@
   .label > h1 {
     font-size: var(--font-size-tiny);
   }
+}
+
+.visible {
+  display: block;
+  width: 100%;
 }

@@ -19,14 +19,7 @@ const paymentInfo = {
 const SuccessInfo = ({ theme, isBigScreen }) => (
   <React.Fragment>
     <Row className={theme.title}>
-      <h4 className={
-        classNames(
-          {
-            [theme.textAlignedCenter]: !isBigScreen,
-          },
-          theme.success,
-        )}
-      >
+      <h4 className={theme.success}>
         Seu pagamento foi concluído com sucesso
       </h4>
     </Row>
@@ -93,7 +86,6 @@ SuccessInfo.propTypes = {
     value: PropTypes.string,
     mediumSize: PropTypes.string,
     success: PropTypes.string,
-    textAlignedCenter: PropTypes.string,
     title: PropTypes.string,
   }),
   isBigScreen: PropTypes.bool.isRequired,

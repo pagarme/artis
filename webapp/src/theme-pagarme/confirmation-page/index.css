@@ -10,12 +10,6 @@
     0;
 }
 
-.title {
-  font-family: var(--confirmation-font-family);
-  font-size: var(--page-title-font-size);
-  color: var(--page-title-color);
-}
-
 .successIcon {
   padding-top: var(--success-icon-padding-top);
 }

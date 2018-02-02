@@ -6,10 +6,6 @@
   color: var(--page-title-color);
 }
 
-.textAlignedCenter {
-  text-align: center;
-}
-
 .success {
   color: var(--confirmation-success);
   margin: 0;
@@ -33,4 +29,11 @@
 
 .mediumSize {
   width: 80%;
+}
+
+@media (--media-palm) {
+
+  .success {
+    text-align: center;
+  }
 }

@@ -7,8 +7,8 @@ import ReactGA from 'react-ga'
 import Checkout from './containers/Checkout'
 import ErrorBoundary from './components/ErrorBoundary'
 
-import createElement from './utils/createElement'
-import apiValuesSchema from './utils/schemas/apiValues'
+import createElement from './utils/helpers/createElement'
+import apiDataSchema from './utils/schemas/apiData'
 
 import theme from './theme-pagarme'
 
@@ -21,16 +21,16 @@ const TempErrorComponent = () => (
   </div>
 )
 
-const validateApiValues = (apiValues) => {
-  const { error } = Joi.validate(apiValues, apiValuesSchema)
+const validateApiData = (apiData) => {
+  const { error } = Joi.validate(apiData, apiDataSchema)
 
   if (error) throw new Error(error.stack)
 
   return true
 }
 
-const render = apiValues => () => {
-  const clientTarget = apiValues.configs.target
+const render = apiData => () => {
+  const clientTarget = apiData.configs.target
 
   const target = clientTarget
     ? document.getElementById(clientTarget)
@@ -39,14 +39,14 @@ const render = apiValues => () => {
   ReactGA.event({
     category: 'API',
     action: 'Customer Key',
-    label: apiValues.key,
+    label: apiData.key,
   })
 
   ReactDOM.render(
     <ThemeProvider theme={theme}>
       <ErrorBoundary CrashReportComponent={<TempErrorComponent />}>
         <Checkout
-          apiValues={{ ...apiValues }}
+          apiData={apiData}
           targetElement={target}
         />
       </ErrorBoundary>
@@ -70,9 +70,10 @@ const integrations = {
         amount: parseFloat(button.dataset.amount),
         paymentMethod: button.dataset.paymentMethod,
       }
-      const apiValues = { key, configs, params }
 
-      if (validateApiValues(apiValues)) {
+      const apiData = { key, configs, params }
+
+      if (validateApiData(apiData)) {
         const open = render({ key, configs, params })
 
         button.addEventListener('click', (e) => {
@@ -83,12 +84,10 @@ const integrations = {
     })
   },
   custom: () => {
-    window.Checkout = key => configs => params => () => {
-      const apiValues = { key, configs, params }
+    window.Checkout = ({ key, configs, formData, transaction }) => () => {
+      const apiData = { key, configs, formData, transaction }
 
-      if (validateApiValues(apiValues)) {
-        render(apiValues)()
-      }
+      if (validateApiData(apiData)) render(apiData)()
     }
   },
 }

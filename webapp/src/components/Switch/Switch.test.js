@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import SegmentedSwitch from './index'
+import Switch from './index'
 
-describe('SegmentedSwitch', () => {
+describe('Switch', () => {
   it('should mount with two options', () => {
     const paymentOptions = [
       {
@@ -21,7 +21,7 @@ describe('SegmentedSwitch', () => {
     const onChange = jest.fn()
 
     const component = shallow(
-      <SegmentedSwitch
+      <Switch
         items={paymentOptions}
         selected={paymentOptions[1]}
         onChange={onChange}
@@ -33,7 +33,7 @@ describe('SegmentedSwitch', () => {
       .first()
       .simulate('change')
 
-    expect(onChange).toHaveBeenCalledWith(paymentOptions[0], 0)
+    expect(onChange).toHaveBeenCalledWith(0)
   })
 
   it('should mount with more than two options basic', () => {
@@ -58,7 +58,7 @@ describe('SegmentedSwitch', () => {
     const onChange = jest.fn()
 
     const component = shallow(
-      <SegmentedSwitch
+      <Switch
         items={paymentOptions}
         onChange={onChange}
         selected={paymentOptions[1]}
@@ -67,9 +67,10 @@ describe('SegmentedSwitch', () => {
     ).dive()
 
     component.find('input')
-      .first()
+      .last()
       .simulate('change')
 
-    expect(onChange).toHaveBeenCalledWith(paymentOptions[0], 0)
+    expect(onChange).toHaveBeenCalledWith(2)
+    expect(component.state('selected')).toBe(2)
   })
 })

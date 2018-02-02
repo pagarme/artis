@@ -80,6 +80,7 @@ class Dropdown extends React.Component {
       placeholder,
       theme,
       value,
+      name,
     } = this.props
 
     const rootClasses = classNames(
@@ -110,6 +111,7 @@ class Dropdown extends React.Component {
           onChange={this.handleChange}
           disabled={disabled}
           value={value}
+          name={name}
         >
           <option
             disabled
