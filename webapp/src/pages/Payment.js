@@ -300,7 +300,6 @@ Payment.propTypes = {
     page: PropTypes.string,
     title: PropTypes.string,
     amount: PropTypes.string,
-    grid: PropTypes.string,
     barcodeImg: PropTypes.string,
     boletoAmount: PropTypes.string,
     boletoContainer: PropTypes.string,

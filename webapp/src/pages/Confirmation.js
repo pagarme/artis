@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import { Grid, Row, Col } from '../components/Grid'
 import SuccessInfo from '../components/SuccessInfo'
 import ErrorInfo from '../components/ErrorInfo'
+import LoadingInfo from '../components/LoadingInfo'
 import successIcon from '../images/success-icon.png'
 import errorIcon from '../images/error-icon.png'
 
@@ -31,12 +32,16 @@ class Confirmation extends React.Component {
         loading: false,
         success: Math.random() > 0.5, // while we do not have a proper fetch function
       })
-    }, 1000)
+    }, 1500)
   }
 
   render () {
     const { theme, isBigScreen } = this.props
-    const { success } = this.state
+    const { success, loading } = this.state
+
+    if (loading) {
+      return <LoadingInfo />
+    }
 
     return (
       <Grid
@@ -50,7 +55,6 @@ class Confirmation extends React.Component {
             desk={iconColSize}
             tablet={iconColSize}
             palm={defaultColSize}
-            className={theme.title}
             alignCenter
           >
             <div className={
@@ -94,7 +98,6 @@ class Confirmation extends React.Component {
 Confirmation.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
-    title: PropTypes.string,
     successIcon: PropTypes.string,
     errorIcon: PropTypes.string,
     alignSelfCenter: PropTypes.string,

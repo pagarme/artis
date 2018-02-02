@@ -47,7 +47,7 @@ class BillingPage extends Component {
   }
 
   handleNumberInputRef (input) {
-    this.NumberInput = input
+    this.numberInput = input
   }
 
   handleZipcodeChange (e) {
@@ -72,7 +72,7 @@ class BillingPage extends Component {
         zipcodeError: '',
       })
 
-      this.NumberInput.focus()
+      this.numberInput.focus()
     }
 
     const handleError = error =>

@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
-import shortid from 'shortid'
 import { Col } from '../../components/Grid'
 
 const largeColSize = 12
@@ -53,7 +52,7 @@ class AddressOptions extends React.Component {
 
     return addresses.map((address, index) => (
       <Col
-        key={address.name || shortid.generate()}
+        key={address.name || `${address.zipcode}-${address.number}`}
         tv={mediumColSize}
         desk={mediumColSize}
         tablet={mediumColSize}

@@ -16,6 +16,7 @@ import UISwitch from './switch/index.css'
 import UIConfirmationPage from './confirmation-page/index.css'
 import UISuccessInfo from './success-info/index.css'
 import UIErrorInfo from './error-info/index.css'
+import UILoadingInfo from './loading-info/index.css'
 import UIActionList from './action-list/index.css'
 import UIEmailForm from './email-form/index.css'
 import UIBoletoOptions from './boleto-options/index.css'
@@ -39,6 +40,7 @@ export default {
   UIConfirmationPage,
   UISuccessInfo,
   UIErrorInfo,
+  UILoadingInfo,
   UIActionList,
   UIEmailForm,
   UIBoletoOptions,

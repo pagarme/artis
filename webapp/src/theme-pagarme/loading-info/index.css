@@ -1,0 +1,21 @@
+@import "./properties.css";
+
+.page {
+  margin: var(--page-margin);
+  background-color: var(--background-fill-color);
+  padding: var(--spacing-medium) 0 0 0;
+}
+
+.loading {
+  font-family: var(--loading-font-family);
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-color);
+  text-align: center;
+}
+
+@media (--media-palm) {
+
+  .loading {
+    text-align: center;
+  }
+}

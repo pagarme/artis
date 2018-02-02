@@ -1,0 +1,13 @@
+@import "../colors.css";
+@import "../typography.css";
+@import "../media.css";
+@import "../spacing.css";
+
+:root {
+  --page-margin: var(--spacing-medium) var(--spacing-small);
+  --page-title-font-size: var(--font-size-xxlarge);
+  --page-title-color: var(--color-grey-33);
+
+  --background-fill-color: var(--color-grey-83);
+  --loading-font-family: var(--primary-font-family);
+}
