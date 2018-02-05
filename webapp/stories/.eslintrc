@@ -12,9 +12,7 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": false,
-        "optionalDependencies": false,
-        "peerDependencies": false
+        "devDependencies": true
       }
     ],
     "react/jsx-filename-extension": 0,
