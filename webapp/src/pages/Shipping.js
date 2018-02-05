@@ -8,7 +8,7 @@ import AddressForm from '../containers/AddressForm'
 import options from '../utils/data/states'
 import { Grid, Row, Col } from '../components/Grid'
 import Button from '../components/Button'
-import AddressOptions from '../containers/AddressOptions'
+import AddressOptions from '../components/AddressOptions'
 
 const largeColSize = 12
 const mediumColSize = 6
@@ -52,6 +52,7 @@ class ShippingPage extends Component {
   addAddress (address) {
     this.setState(({ addresses }) => ({
       addresses: [...addresses, address],
+      selected: address,
     }))
 
     this.toggleOpenAddressForm()

@@ -10,50 +10,32 @@ const mediumColSize = 6
 
 const applyThemr = themr('UIAddressOptions')
 
-class AddressOptions extends React.Component {
-  constructor (props) {
-    super(props)
+const joinAddressData = (address, theme) => {
+  const addressInfo = `${address.street},
+      ${address.number},
+      ${address.complement},
+      ${address.neighborhood},
+      ${address.zipcode},
+      ${address.city},
+      ${address.state}
+    `
 
-    const { selected, addresses } = props
-
-    this.state = {
-      selected: selected || addresses[0],
+  return (
+    <p className={
+      classNames(
+        theme.text,
+        theme.textTruncate
+      )
     }
-  }
+    >
+      {addressInfo}
+    </p>
+  )
+}
 
-  handleClick (address) {
-    this.setState({ selected: address })
-    this.props.onChange(address)
-  }
-
-  joinAddressData (address) {
-    const { theme } = this.props
-
-    const addressInfo = `${address.street},
-        ${address.number},
-        ${address.complement},
-        ${address.neighborhood},
-        ${address.zipcode},
-        ${address.city},
-        ${address.state}
-      `
-
-    return (
-      <p className={
-        classNames(
-          theme.text,
-          theme.textTruncate
-        )
-      }
-      >
-        {addressInfo}
-      </p>
-    )
-  }
-  render () {
-    const { theme, addresses } = this.props
-
-    return addresses.map((address, index) => (
+const AddressOptions = ({ theme, addresses, selected, onChange }) =>
+  (
+    addresses.map((address, index) => (
       <Col
         key={address.name || `${address.zipcode}-${address.number}`}
         tv={mediumColSize}
@@ -64,12 +46,12 @@ class AddressOptions extends React.Component {
         <div
           role="button"
           tabIndex={index}
-          onClick={this.handleClick.bind(this, address)}
+          onClick={() => onChange(address)} // eslint-disable-line
           className={
             classNames(
               theme.optionBox,
               {
-                [theme.selected]: equals(this.state.selected, address),
+                [theme.selected]: equals(selected, address),
               }
             )
           }
@@ -78,13 +60,12 @@ class AddressOptions extends React.Component {
             {address.name || `Endereço ${index + 1}`}
           </div>
           <div className={theme.addressData}>
-            {this.joinAddressData(address)}
+            {joinAddressData(address, theme)}
           </div>
         </div>
       </Col>
     ))
-  }
-}
+  )
 
 AddressOptions.propTypes = {
   theme: PropTypes.shape({
