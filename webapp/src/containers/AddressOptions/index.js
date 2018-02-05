@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { equals } from 'ramda'
 import { themr } from 'react-css-themr'
 import { Col } from '../../components/Grid'
 
@@ -10,16 +11,18 @@ const mediumColSize = 6
 const applyThemr = themr('UIAddressOptions')
 
 class AddressOptions extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
+
+    const { selected, addresses } = props
 
     this.state = {
-      selected: 0,
+      selected: selected || addresses[0],
     }
   }
 
-  handleClick (index, address) {
-    this.setState({ selected: index })
+  handleClick (address) {
+    this.setState({ selected: address })
     this.props.onChange(address)
   }
 
@@ -61,12 +64,12 @@ class AddressOptions extends React.Component {
         <div
           role="button"
           tabIndex={index}
-          onClick={this.handleClick.bind(this, index, address)}
+          onClick={this.handleClick.bind(this, address)}
           className={
             classNames(
               theme.optionBox,
               {
-                [theme.selected]: this.state.selected === index,
+                [theme.selected]: equals(this.state.selected, address),
               }
             )
           }
@@ -92,6 +95,19 @@ AddressOptions.propTypes = {
     selected: PropTypes.string,
     optionBox: PropTypes.string,
   }),
+  selected: PropTypes.shape({
+    name: PropTypes.string,
+    street: PropTypes.string,
+    number: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    state: PropTypes.string,
+    city: PropTypes.string,
+    neighborhood: PropTypes.string,
+    complement: PropTypes.string,
+    zipcode: PropTypes.string,
+  }).isRequired,
   addresses: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
