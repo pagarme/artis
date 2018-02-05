@@ -102,18 +102,25 @@ class Checkout extends Component {
   }
 
   renderPages () {
-    const { isBigScreen } = this.state
     const {
+      isBigScreen,
       customer,
       billing,
       shipping,
       addresses,
+      payment,
     } = this.state
+
+    const { key } = this.props.apiData
 
     const {
       amount,
       paymentMethods,
     } = this.props.apiData.transaction
+
+    const {
+      postback,
+    } = this.props.apiData.configs
 
     return (
       <React.Fragment>
@@ -156,6 +163,15 @@ class Checkout extends Component {
           <ConfirmationPage
             title="Confirmação"
             isBigScreen={isBigScreen}
+            transactionData={{
+              amount,
+              postback,
+              customer,
+              billing,
+              shipping,
+              payment,
+              key,
+            }}
           />
         </Action>
       </React.Fragment>

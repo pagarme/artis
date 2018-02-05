@@ -44,10 +44,14 @@ class Payment extends Component {
     const { paymentMethods } = this.props
     const { selectedPayment } = this.state
 
-    const paymentMethod = paymentMethods[selectedPayment]
+    const method = paymentMethods[selectedPayment]
 
-    if (paymentMethod.type === 'creditcard') {
-      paymentMethod.info = pick([
+    const payment = {
+      method,
+    }
+
+    if (method.type === 'creditcard') {
+      payment.info = pick([
         'cardNumber',
         'holderName',
         'cvv',
@@ -55,11 +59,6 @@ class Payment extends Component {
         'installments',
       ], this.state.creditcard)
     }
-
-    const payment = {
-      paymentMethod,
-    }
-
 
     this.props.handlePageChange(payment, 'payment')
   }

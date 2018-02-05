@@ -24,7 +24,7 @@
       onClose: () => {},
     }
 
-    const formData = {    
+    const formData = {
       customer: {
         name: 'Dan Abramov',
         documentNumber: '44455522299',
@@ -64,17 +64,6 @@
       amount: 5000,
       paymentMethods: [
         {
-          type: 'boleto',
-          title: 'Boleto',
-          subtitle: '25% de Desconto!',
-          instructions: 'Use this field to add instructions',
-          discount: {
-            type: 'percentage',
-            value: 25,
-          },
-          expirationAt: '2018-01-30',
-        },
-        {
           type: 'creditcard',
           title: 'Cartão de Crédito',
           subtitle: 'Parcele em até 6x!',
@@ -90,8 +79,19 @@
             'jcb',
             'visa',
             'mastercard',
-          ],        
-        }
+          ],
+        },
+        {
+          type: 'boleto',
+          title: 'Boleto',
+          subtitle: '25% de Desconto!',
+          instructions: 'Use this field to add instructions',
+          discount: {
+            type: 'percentage',
+            value: 25,
+          },
+          expirationAt: '2018-02-30',
+        },
       ],
     }
 

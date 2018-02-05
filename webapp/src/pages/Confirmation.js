@@ -16,28 +16,103 @@ const iconColSize = 4
 const contentColSize = 8
 const defaultColSize = 12
 
+const baseUrl = 'https://api.mundipagg.com/checkout/v1/'
+
+const defaultToken = {
+  type: 'order',
+  currency: 'BRL',
+}
+
+const getBoletoData = payment => ({
+  instructions: payment.method.instructions || '',
+  due_at: payment.method.expirationAt,
+})
+
+const getCreditcardData = ({ method, info }) => ({
+  statement_descriptor: method.statementDescriptor || '',
+  installments: [
+    {
+      Number: info.installments.value,
+      Total: info.installments.amount,
+    },
+  ],
+})
+
+const getSpecificData = payment => (
+  payment.method.type === 'boleto' ?
+    getBoletoData(payment) :
+    getCreditcardData(payment)
+)
+
+const getTokenData = (payment, postback) => {
+  const { method } = payment
+
+  return {
+    ...defaultToken,
+    success_url: postback,
+    payment_settings: {
+      accepted_payment_methods: [method.type],
+      [method.type]: getSpecificData(payment),
+    },
+  }
+}
+
 class Confirmation extends React.Component {
   constructor (props) {
     super(props)
 
+    this.isRequesting = false
+
     this.state = {
       loading: true,
       success: false,
+      barcode: '',
     }
   }
 
-  componentDidMount () {
-    setTimeout(() => {
-      this.setState({
-        loading: false,
-        success: Math.random() > 0.5, // while we do not have a proper fetch function
-      })
-    }, 1500)
+  componentWillReceiveProps (newProps) {
+    const {
+      postback,
+      key,
+    } = this.props.transactionData
+
+    const {
+      payment,
+    } = newProps.transactionData
+
+    if (payment && !this.isRequesting) {
+      this.isRequesting = true
+
+      const tokenPayload = {
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${key}`,
+        },
+        data: getTokenData(payment, postback),
+      }
+
+      fetch(`${baseUrl}/tokens`, tokenPayload)
+        .then((res) => {
+          if (res.status < 300 && res.ok) {
+            this.setState({ success: true, loading: false })
+          } else {
+            this.setState({ success: false, loading: false })
+          }
+        })
+    }
   }
 
   render () {
-    const { theme, isBigScreen } = this.props
-    const { success, loading } = this.state
+    const {
+      theme,
+      isBigScreen,
+    } = this.props
+
+    const {
+      success,
+      loading,
+      barcode,
+    } = this.state
 
     if (loading) {
       return <LoadingInfo />
@@ -84,9 +159,13 @@ class Confirmation extends React.Component {
             tablet={contentColSize}
             palm={defaultColSize}
           >
-            {success
-              ? <SuccessInfo isBigScreen={isBigScreen} />
-              : <ErrorInfo isBigScreen={isBigScreen} />
+            {
+              success
+                ? <SuccessInfo
+                  isBigScreen={isBigScreen}
+                  barcode={barcode}
+                />
+                : <ErrorInfo isBigScreen={isBigScreen} />
             }
           </Col>
         </Row>
@@ -103,6 +182,15 @@ Confirmation.propTypes = {
     alignSelfCenter: PropTypes.string,
     confirmationIcon: PropTypes.string,
   }),
+  transactionData: PropTypes.shape({
+    amount: PropTypes.number,
+    customer: PropTypes.object,
+    shipping: PropTypes.object,
+    billing: PropTypes.object,
+    payment: PropTypes.object,
+    postback: PropTypes.string,
+    key: PropTypes.string,
+  }).isRequired,
   isBigScreen: PropTypes.bool.isRequired,
 }
 
