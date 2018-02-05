@@ -173,11 +173,11 @@ Dropdown.propTypes = {
   }),
   label: PropTypes.string,
   id: PropTypes.string,
-  value: PropTypes.string, // eslint-disable-line
+  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]), // eslint-disable-line
   options: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
-      value: PropTypes.string,
+      value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
     })
   ).isRequired,
   disabled: PropTypes.bool,

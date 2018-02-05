@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import PlusIcon from 'react-icons/lib/go/plus'
 import { themr } from 'react-css-themr'
+import { isNil } from 'ramda'
 
 import AddressForm from '../containers/AddressForm'
 import options from '../utils/data/states'
@@ -18,10 +19,11 @@ class ShippingPage extends Component {
     super(props)
 
     const { shipping } = this.props
+    const addresses = !isNil(shipping) ? [shipping] : []
 
     this.state = {
-      addresses: shipping ? [shipping] : [],
-      selected: {},
+      addresses,
+      selected: !isNil(addresses) ? { ...addresses[0] } : {},
       openAddressForm: false,
     }
 
