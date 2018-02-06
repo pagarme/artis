@@ -72,7 +72,10 @@ class Confirmation extends React.Component {
     if (loading) return <LoadingInfo />
 
     return (
-      <Grid className={theme.page}>
+      <Grid
+        id="confirmation-page"
+        className={theme.page}
+      >
         <Row stretch>
           <Col
             tv={iconColSize}

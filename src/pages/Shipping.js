@@ -103,6 +103,7 @@ class ShippingPage extends Component {
               palm={largeColSize}
             >
               <Button
+                id="shipping-page-add-address-btn"
                 size="extra-large"
                 fill="double"
                 relevance="low"

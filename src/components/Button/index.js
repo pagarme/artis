@@ -7,6 +7,7 @@ const applyThemr = themr('UIButton')
 
 function Button ({
   base,
+  id,
   children,
   relevance,
   disabled,
@@ -33,6 +34,7 @@ function Button ({
 
   return (
     <button
+      id={id}
       disabled={disabled}
       hidden={hidden}
       className={buttonClasses}
@@ -60,6 +62,7 @@ Button.propTypes = {
     'extra-large': PropTypes.string,
     full: PropTypes.string,
   }).isRequired,
+  id: PropTypes.string,
   type: PropTypes.oneOf([
     'button',
     'submit',
@@ -105,6 +108,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
   theme: {},
+  id: null,
   fill: 'flat',
   base: 'dark',
   relevance: 'normal',
