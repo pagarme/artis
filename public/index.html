@@ -4,101 +4,122 @@
     <meta charset="utf-8">
     <title>Checkout | Custom Integration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
   </head>
   <body>
-    <a id="switch" href="/simple.html">Switch to simple</a>
-    <script>
-      const key = 'SOME_KEY'
+    <div class="box box-custom">
+      <h2>Custom API parameters</h2>
+      <button id="btn-open-custom" class="btn-open">Open</button>
+      <button id="btn-reset-custom" class="btn-reset">Reset</button>
+      <div id="custom">var key = 'SOME_KEY';
 
-      const configs = {
-        companyName: 'Pagar.me',
-        image: './pagarme.png',
-        primaryColor: '323232',
-        secondaryColor: '323232',
-        postback: 'http://pagar.me',
-      }
+var configs = {
+  companyName: 'Pagar.me',
+  image: './pagarme.png',
+  themeBase: 'dark',
+  primaryColor: '323232',
+  secondaryColor: '323232',
+};
 
-      const formData = {
-        customer: {
-          name: 'Dan Abramov',
-          documentNumber: '44455522299',
-          email: 'mercurio@pagar.me',
-          phoneNumber: '1130442277',
+var formData = {};
+
+var transaction = {
+  amount: 5000,
+  paymentMethods: [
+    {
+      type: 'creditcard',
+    }
+  ],
+};</div>
+    </div>
+    
+    <div class="box box-full">
+      <h2>Full API parameters</h2>
+      <button id="btn-open-full" class="btn-open">Open</button>
+      <div id="full">var key = 'SOME_KEY';
+
+var configs = {
+  companyName: 'Pagar.me',
+  image: './pagarme.png',
+  themeBase: 'dark',
+  primaryColor: '323232',
+  secondaryColor: '323232',
+  postback: 'http://pagar.me',
+  onSuccess: () => {},
+  onError: () => {},
+  onClose: () => {},
+};
+
+var formData = {
+  customer: {
+    name: 'Dan Abramov',
+    documentNumber: '44455522299',
+    email: 'mercurio@pagar.me',
+    phoneNumber: '1130442277',
+  },
+  billing: {
+    street: 'Rua Fidêncio Ramos',
+    number: '308',
+    additionalInfo: 'Pagar.me',
+    neighborhood: 'Vila Olimpia',
+    city: 'São Paulo',
+    state: 'SP',
+    zipcode: '04551010',
+  },
+  shipping: {
+    street: 'Rua Fidêncio Ramos',
+    number: '308',
+    additionalInfo: 'Pagar.me',
+    neighborhood: 'Vila Olimpia',
+    city: 'São Paulo',
+    state: 'SP',
+    zipcode: '04551010',
+  },
+  items: [
+    {
+      id: 1,
+      title: 'Red pill',
+      unitPrice: 5000,
+      quantity: 1,
+      tangible: true,
+    },
+  ],
+};
+
+var transaction = {
+  amount: 5000,
+  paymentMethods: [
+    {
+      type: 'boleto',
+      config: {
+        title: 'Boleto',
+        subtitle: '25% de Desconto!',
+        instructions: 'Use this field to add instructions',
+        expirationAt: '2018-01-30',
+        discount: {
+          type: 'percentage',
+          value: 25,
         },
-        billing: {
-          street: 'Rua Fidêncio Ramos',
-          number: '308',
-          complement: 'Pagar.me',
-          neighborhood: 'Vila Olimpia',
-          city: 'São Paulo',
-          state: 'SP',
-          zipcode: '04551010',
-        },
-        shipping: {
-          street: 'Rua Fidêncio Ramos',
-          number: '308',
-          complement: 'Pagar.me',
-          neighborhood: 'Vila Olimpia',
-          city: 'São Paulo',
-          state: 'SP',
-          zipcode: '04551010',
-        },
-        items: [
-          {
-            description: 'Red pill',
-            amount: 5000,
-            quantity: 1,
-            tangible: true,
-          },
-        ]
+      },
+    },
+    {
+      type: 'creditcard',
+      config: {
+        title: 'Cartão de Crédito',
+        subtitle: 'em até 12x',
+        instructions: 'Use this field to add instructions',
+        maxInstallments: 6,
+        freeInstallments: 3,
+        defaultInstallments: 2,
+        interestRate: 25,
       }
+    }
+  ],
+};</div>
+    </div>    
 
-      const transaction = {
-        amount: 5000,
-        paymentMethods: [
-          {
-            type: 'creditcard',
-            title: 'Cartão de Crédito',
-            subtitle: 'Parcele em até 6x!',
-            statementDescriptor: 'Use this field to add instructions',
-            maxInstallments: 6,
-            freeInstallments: 3,
-            defaultInstallments: 2,
-            interestRate: 25,
-            brands: [
-              'elo',
-              'amex',
-              'diners',
-              'jcb',
-              'visa',
-              'mastercard',
-            ],
-          },
-          {
-            type: 'boleto',
-            title: 'Boleto',
-            subtitle: '25% de Desconto!',
-            instructions: 'Use this field to add instructions',
-            discount: {
-              type: 'percentage',
-              value: 25,
-            },
-            expirationAt: '2018-02-30',
-          },
-        ],
-      }
-
-      window.onload = function () {
-        const open = Checkout({
-          key: key,
-          configs: configs,
-          formData: formData,
-          transaction: transaction,
-        })
-
-        open()
-      }
-    </script>
+  </body>
+  <script src="assets/js/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="assets/js/custom.js" type="text/javascript" charset="utf-8"></script>
   </body>
 </html>
