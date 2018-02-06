@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
+import axios from 'axios'
 
 import { Grid, Row, Col } from '../components/Grid'
 import SuccessInfo from '../components/SuccessInfo'
@@ -9,6 +10,10 @@ import ErrorInfo from '../components/ErrorInfo'
 import LoadingInfo from '../components/LoadingInfo'
 import successIcon from '../images/success-icon.png'
 import errorIcon from '../images/error-icon.png'
+import {
+  getTokenData,
+  getHeaders,
+} from '../utils/helpers/requester'
 
 const applyThemr = themr('UIConfirmationPage')
 
@@ -17,45 +22,6 @@ const contentColSize = 8
 const defaultColSize = 12
 
 const baseUrl = 'https://api.mundipagg.com/checkout/v1/'
-
-const defaultToken = {
-  type: 'order',
-  currency: 'BRL',
-}
-
-const getBoletoData = payment => ({
-  instructions: payment.method.instructions || '',
-  due_at: payment.method.expirationAt,
-})
-
-const getCreditcardData = ({ method, info }) => ({
-  statement_descriptor: method.statementDescriptor || '',
-  installments: [
-    {
-      Number: info.installments.value,
-      Total: info.installments.amount,
-    },
-  ],
-})
-
-const getSpecificData = payment => (
-  payment.method.type === 'boleto' ?
-    getBoletoData(payment) :
-    getCreditcardData(payment)
-)
-
-const getTokenData = (payment, postback) => {
-  const { method } = payment
-
-  return {
-    ...defaultToken,
-    success_url: postback,
-    payment_settings: {
-      accepted_payment_methods: [method.type],
-      [method.type]: getSpecificData(payment),
-    },
-  }
-}
 
 class Confirmation extends React.Component {
   constructor (props) {
@@ -72,9 +38,12 @@ class Confirmation extends React.Component {
 
   componentWillReceiveProps (newProps) {
     const {
-      postback,
+      transactionData,
+    } = this.props
+
+    const {
       key,
-    } = this.props.transactionData
+    } = transactionData
 
     const {
       payment,
@@ -83,22 +52,13 @@ class Confirmation extends React.Component {
     if (payment && !this.isRequesting) {
       this.isRequesting = true
 
-      const tokenPayload = {
-        method: 'POST',
-        headers: {
-          Authorization: `Basic ${key}`,
-        },
-        data: getTokenData(payment, postback),
-      }
-
-      fetch(`${baseUrl}/tokens`, tokenPayload)
-        .then((res) => {
-          if (res.status < 300 && res.ok) {
-            this.setState({ success: true, loading: false })
-          } else {
-            this.setState({ success: false, loading: false })
-          }
-        })
+      axios.post(
+        `${baseUrl}/tokens`,
+        getTokenData(payment, transactionData),
+        getHeaders(key)
+      )
+        .then(() => this.setState({ success: true, loading: false }))
+        .catch(() => this.setState({ success: false, loading: false }))
     }
   }
 
@@ -190,6 +150,7 @@ Confirmation.propTypes = {
     payment: PropTypes.object,
     postback: PropTypes.string,
     key: PropTypes.string,
+    items: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   isBigScreen: PropTypes.bool.isRequired,
 }

@@ -21,11 +21,11 @@ const addressSchema = Joi.object().keys({
 })
 
 const itemsSchema = Joi.object().keys({
-  id: Joi.empty('').required(),
-  title: Joi.string().required(),
-  unitPrice: Joi.number().integer().min(1).required(),
-  quantity: Joi.number().integer().min(1).required(),
-  tangible: Joi.boolean().required(),
+  id: Joi.empty(''),
+  description: Joi.string().required(),
+  amount: Joi.number().integer().min(1),
+  quantity: Joi.number().integer().min(1),
+  tangible: Joi.boolean(),
   category: Joi.string(),
   venue: Joi.string(),
   date: Joi.string().regex(dateRegex, 'date'),

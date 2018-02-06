@@ -111,16 +111,18 @@ class Checkout extends Component {
       payment,
     } = this.state
 
-    const { key } = this.props.apiData
+    const { key, formData, transaction, configs } = this.props.apiData
+
+    const { items } = formData
 
     const {
       amount,
       paymentMethods,
-    } = this.props.apiData.transaction
+    } = transaction
 
     const {
       postback,
-    } = this.props.apiData.configs
+    } = configs
 
     return (
       <React.Fragment>
@@ -171,6 +173,7 @@ class Checkout extends Component {
               shipping,
               payment,
               key,
+              items,
             }}
           />
         </Action>
