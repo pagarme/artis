@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
-import { pick, defaultTo, pipe } from 'ramda'
+import { pick } from 'ramda'
 
 import { Grid, Row, Col } from './../components/Grid'
 import Switch from './../components/Switch'
@@ -18,6 +18,8 @@ const applyThemr = themr('UIPaymentPage')
 const defaultColSize = 12
 const mediumColSize = 6
 
+const findCreditCard = option => option.type === 'creditcard'
+
 class Payment extends Component {
   constructor (props) {
     super(props)
@@ -29,6 +31,10 @@ class Payment extends Component {
         expiration: '',
         cvv: '',
         flipped: false,
+        installments: props
+          .paymentMethods
+          .find(findCreditCard)
+          .defaultInstallments || 1,
       },
       selectedPayment: 0,
     }
@@ -79,11 +85,11 @@ class Payment extends Component {
     }))
   }
 
-  handleInstallmentChange (installments) {
+  handleInstallmentChange ({ value }) {
     this.setState(({ creditcard }) => ({
       creditcard: {
         ...creditcard,
-        installments,
+        installments: value,
       },
     }))
   }
@@ -107,13 +113,6 @@ class Payment extends Component {
       flipped,
       installments,
     } = this.state.creditcard
-
-    const { defaultInstallments } = creditcard
-
-    const getSelectedInstallment = pipe(
-      defaultTo(defaultInstallments),
-      defaultTo(0)
-    )
 
     const { theme, amount, isBigScreen } = this.props
 
@@ -207,7 +206,7 @@ class Payment extends Component {
                   options={installmentsOptions}
                   name="installments"
                   label="Quantidade de Parcelas"
-                  value={getSelectedInstallment(installments)}
+                  value={installments}
                   onChange={this.handleInstallmentChange}
                   title="Selecione"
                 />
