@@ -5,10 +5,7 @@ import { themr } from 'react-css-themr'
 import ReactGA from 'react-ga'
 import { pick } from 'ramda'
 
-import { Grid, Row, Col } from '../../components/Grid'
-import Input from '../../components/Input'
-import Dropdown from '../../components/Dropdown'
-import Button from '../../components/Button'
+import { Grid, Row, Col, Input, Dropdown, Button } from '../../components'
 
 import getAddress from '../../utils/helpers/getAddress'
 import removeZipcodeMask from '../../utils/helpers/removeZipcodeMask'

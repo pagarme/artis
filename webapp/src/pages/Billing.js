@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 
-import { Grid, Row, Col } from '../components/Grid'
-import Input from '../components/Input'
-import Dropdown from '../components/Dropdown'
+import { Grid, Row, Col, Input, Dropdown } from '../components'
 
 import options from '../utils/data/states'
 import getAddress from '../utils/helpers/getAddress'

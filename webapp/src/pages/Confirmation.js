@@ -4,13 +4,19 @@ import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import axios from 'axios'
 
-import { Grid, Row, Col } from '../components/Grid'
-import SuccessInfo from '../components/SuccessInfo'
-import ErrorInfo from '../components/ErrorInfo'
-import LoadingInfo from '../components/LoadingInfo'
+import {
+  Grid,
+  Row,
+  Col,
+  SuccessInfo,
+  ErrorInfo,
+  LoadingInfo,
+} from '../components'
+
+import { tokenData, headers } from '../utils/parsers/request'
+
 import successIcon from '../images/success-icon.png'
 import errorIcon from '../images/error-icon.png'
-import { tokenData, headers } from '../utils/parsers/request'
 
 const applyThemr = themr('UIConfirmationPage')
 

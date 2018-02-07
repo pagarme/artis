@@ -7,9 +7,7 @@ import { themr } from 'react-css-themr'
 import { Action, withStatechart } from 'react-automata'
 import { omit, when, always } from 'ramda'
 
-import ProgressBar from '../../components/ProgressBar'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
+import { ProgressBar, Header, Footer } from '../../components'
 
 import CustomerPage from '../../pages/Customer'
 import BillingPage from '../../pages/Billing'

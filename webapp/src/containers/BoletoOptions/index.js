@@ -4,9 +4,8 @@ import copy from 'copy-to-clipboard'
 import ReactGA from 'react-ga'
 import { themr } from 'react-css-themr'
 
-import { Row, Col } from '../../components/Grid'
-import ActionList from '../../components/ActionList'
-import Button from '../../components/Button'
+import { Row, Col, ActionList, Button } from '../../components'
+
 import EmailForm from '../EmailForm'
 import formatToBRL from '../../utils/helpers/formatToBRL'
 

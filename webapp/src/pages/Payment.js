@@ -5,12 +5,11 @@ import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
 import { pick } from 'ramda'
 
-import { Grid, Row, Col } from './../components/Grid'
-import Switch from './../components/Switch'
-import Input from './../components/Input'
-import Dropdown from './../components/Dropdown'
+import { Grid, Row, Col, Switch, Input, Dropdown } from './../components'
+
 import formatToBRL from './../utils/helpers/formatToBRL'
 import { applyDiscount, generateInstallmnets } from './../utils/calculations'
+
 import Barcode from './../images/barcode.svg'
 
 const applyThemr = themr('UIPaymentPage')
@@ -20,7 +19,7 @@ const mediumColSize = 6
 
 const findCreditCard = paymentMethod => paymentMethod.type === 'creditcard'
 
-class Payment extends Component {
+class PaymentPage extends Component {
   constructor (props) {
     super(props)
 
@@ -293,7 +292,7 @@ class Payment extends Component {
   }
 }
 
-Payment.propTypes = {
+PaymentPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
@@ -308,10 +307,10 @@ Payment.propTypes = {
   handlePageChange: PropTypes.func.isRequired,
 }
 
-Payment.defaultProps = {
+PaymentPage.defaultProps = {
   theme: {},
   payment: {},
   creditcard: {},
 }
 
-export default applyThemr(Payment)
+export default applyThemr(PaymentPage)

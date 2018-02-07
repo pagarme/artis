@@ -4,16 +4,17 @@ import PlusIcon from 'react-icons/lib/go/plus'
 import { themr } from 'react-css-themr'
 import { equals, filter, isNil, not, pipe } from 'ramda'
 
+import { Grid, Row, Col, Button, AddressOptions } from '../components'
+
 import AddressForm from '../containers/AddressForm'
+
 import options from '../utils/data/states'
-import { Grid, Row, Col } from '../components/Grid'
-import Button from '../components/Button'
-import AddressOptions from '../components/AddressOptions'
 
 const largeColSize = 12
 const mediumColSize = 6
 
 const applyThemr = themr('UIShippingPage')
+
 class ShippingPage extends Component {
   constructor (props) {
     super(props)
