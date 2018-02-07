@@ -1,62 +1,77 @@
-import { generateInstallments } from '../calculations'
+import {
+  applySpec,
+  propOr,
+  prop,
+  path,
+  pathOr,
+  always,
+  pipe,
+  of,
+  pathEq,
+  cond,
+  T,
+} from 'ramda'
 
-const getInstallments = (creditcard, amount, selectedInstallment) => {
-  const installments = generateInstallments(creditcard, amount)
+const toIsoDate = data => new Date(data).toISOString()
 
-  if (installments.length) {
-    const installmentsObj = installments[selectedInstallment - 1]
+const getFormatedExpirationAt = pipe(
+  path(['payment', 'method', 'expirationAt']),
+  toIsoDate
+)
 
-    return {
-      installments: [
-        {
-          number: installmentsObj.value,
-          total: installmentsObj.amount,
-        },
-      ],
-    }
+const getBoletoSettings = applySpec(
+  {
+    accepted_payment_methods: pipe(
+      always('boleto'),
+      of
+    ),
+    boleto: {
+      due_at: getFormatedExpirationAt,
+      instructions: pathOr('', ['payment', 'method', 'instructions']),
+    },
   }
+)
 
-  return {}
-}
+const getCreditcardSettings = applySpec(
+  {
+    accepted_payment_methods: pipe(
+      always('credit_card'),
+      of
+    ),
+    credit_card: {
+      statement_descriptor: path(['payment', 'method', 'statementDescriptor']),
+    },
+  }
+)
 
-const boletoData = payment => ({
-  accepted_payment_methods: ['boleto'],
-  boleto: {
-    instructions: payment.method.instructions || '',
-    due_at: new Date(payment.method.expirationAt).toISOString(),
-  },
-})
+const getPaymentSettings = cond([
+  [pathEq(['payment', 'method', 'type'], 'boleto'), getBoletoSettings],
+  [T, getCreditcardSettings],
+])
 
-const creditcardData = ({ method, info }, amount) => ({
-  accepted_payment_methods: ['credit_card'],
-  credit_card: {
-    statement_descriptor: method.statementDescriptor || '',
-    ...getInstallments(method, amount, info.installments),
-  },
-})
+const getTokenData = applySpec(
+  {
+    type: always('order'),
+    currency: propOr('BRL', 'currency'),
+    success_url: prop('postback'),
+    order: {
+      items: prop('items'),
+    },
+    payment_settings: getPaymentSettings,
+  }
+)
 
-const paymentSettings = (payment, amount) => (
-  payment.method.type === 'boleto'
-    ? boletoData(payment)
-    : creditcardData(payment, amount))
-
-const tokenData = ({ amount, payment, items, postback }) => ({
-  type: 'order',
-  currency: 'BRL',
-  success_url: postback,
-  order: {
-    items,
-  },
-  payment_settings: paymentSettings(payment, amount),
-})
-
-const headers = key => ({
+const getHeaders = key => ({
   auth: {
     username: key,
   },
 })
 
+const getPaymentData = () => {}
+
 export {
-  headers,
-  tokenData,
+  getHeaders,
+  getTokenData,
+  getPaymentData,
+  toIsoDate,
 }

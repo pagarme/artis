@@ -25,7 +25,10 @@ const contentColSize = 8
 const defaultColSize = 12
 
 const baseUrl = 'https://api.mundipagg.com/checkout/v1'
+<<<<<<< b9085a5abe4eaf907b1c07c5a0701143aac6100e
 const tokenUrl = `${baseUrl}/tokens`
+=======
+>>>>>>> requester: refactor all functions
 
 class Confirmation extends React.Component {
   constructor (props) {
@@ -46,15 +49,26 @@ class Confirmation extends React.Component {
 
     if (!payment) throw new Error('Ops! Forma de pagamento não identificada.')
 
-    if (!this.isRequesting) {
+    const {
+      payment,
+    } = newProps.transactionData
+
+    const data = {
+      ...transactionData,
+      payment,
+    }
+
+    if (payment && !this.isRequesting) {
       this.isRequesting = true
 
       axios.post(
-        tokenUrl,
-        headers(key),
-        tokenData(transactionData)
+        `${baseUrl}/tokens`,
+        getTokenData(data),
+        getHeaders(key)
       )
-        .then(() => this.setState({ success: true, loading: false }))
+        .then(() => {
+          this.setState({ success: true, loading: false })
+        })
         .catch(() => this.setState({ success: false, loading: false }))
     }
   }
