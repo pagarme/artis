@@ -1,7 +1,7 @@
 import {
   toIsoDate,
   getTokenData,
-} from './requester'
+} from './request'
 
 const rawDataBoleto = {
   amount: 5000,

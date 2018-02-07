@@ -13,7 +13,7 @@ import {
   LoadingInfo,
 } from '../components'
 
-import { tokenData, headers } from '../utils/parsers/request'
+import { getTokenData, getHeaders } from '../utils/parsers/request'
 
 import successIcon from '../images/success-icon.png'
 import errorIcon from '../images/error-icon.png'
@@ -25,10 +25,7 @@ const contentColSize = 8
 const defaultColSize = 12
 
 const baseUrl = 'https://api.mundipagg.com/checkout/v1'
-<<<<<<< b9085a5abe4eaf907b1c07c5a0701143aac6100e
 const tokenUrl = `${baseUrl}/tokens`
-=======
->>>>>>> requester: refactor all functions
 
 class Confirmation extends React.Component {
   constructor (props) {
@@ -47,12 +44,6 @@ class Confirmation extends React.Component {
     const { transactionData } = newProps
     const { key, payment } = transactionData
 
-    if (!payment) throw new Error('Ops! Forma de pagamento não identificada.')
-
-    const {
-      payment,
-    } = newProps.transactionData
-
     const data = {
       ...transactionData,
       payment,
@@ -62,7 +53,7 @@ class Confirmation extends React.Component {
       this.isRequesting = true
 
       axios.post(
-        `${baseUrl}/tokens`,
+        tokenUrl,
         getTokenData(data),
         getHeaders(key)
       )
