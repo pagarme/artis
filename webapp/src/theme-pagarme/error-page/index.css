@@ -1,0 +1,29 @@
+@import "./properties.css";
+
+.page {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--container-background-color);
+}
+
+.title,
+.subtitle {
+  font-family: var(--text-font-family);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.title {
+  color: var(--title-color);
+  font-size: 67px;
+  margin-top: 20px;
+}
+
+.subtitle {
+  color: var(--subtitle-color);
+  font-size: 26px;
+}
+
+.image {
+  width: 150px;
+}

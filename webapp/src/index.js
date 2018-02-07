@@ -6,6 +6,7 @@ import ReactGA from 'react-ga'
 
 import Checkout from './containers/Checkout'
 import ErrorBoundary from './components/ErrorBoundary'
+import ErrorPage from './pages/Error'
 
 import createElement from './utils/helpers/createElement'
 import apiDataSchema from './utils/schemas/apiData'
@@ -13,13 +14,6 @@ import apiDataSchema from './utils/schemas/apiData'
 import theme from './theme-pagarme'
 
 ReactGA.initialize('UA-113290482-1')
-
-const TempErrorComponent = () => (
-  <div>
-    <h1>Catch Exception</h1>
-    <a target="blank" href="https://sentry.io/share/issue/efdacacc55724040930018482a612de9/">See the log!</a>
-  </div>
-)
 
 const validateApiData = (apiData) => {
   const { error } = Joi.validate(apiData, apiDataSchema)
@@ -44,7 +38,7 @@ const render = apiData => () => {
 
   ReactDOM.render(
     <ThemeProvider theme={theme}>
-      <ErrorBoundary CrashReportComponent={<TempErrorComponent />}>
+      <ErrorBoundary CrashReportComponent={<ErrorPage />}>
         <Checkout
           apiData={apiData}
           targetElement={target}

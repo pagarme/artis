@@ -10,10 +10,12 @@ const classnames = ({
   flex,
   stretch,
   alignCenter,
+  alignVerticalCenter,
   className,
   hidden,
   alignEnd,
   overflowVisible,
+  fullSize,
 }) =>
   classNames(
     className,
@@ -21,10 +23,12 @@ const classnames = ({
     {
       [theme.flex]: flex,
       [theme.stretch]: stretch,
-      [theme.alignItensCenter]: alignCenter,
+      [theme.alignCenter]: alignCenter,
+      [theme.alignVerticalCenter]: alignVerticalCenter,
       [theme.alignEnd]: alignEnd,
       [theme.hidden]: hidden,
       [theme.overflowVisible]: overflowVisible,
+      [theme.fullSize]: fullSize,
     }
   )
 
@@ -34,10 +38,12 @@ const Row = ({
   flex,
   stretch,
   alignCenter,
+  alignVerticalCenter,
   className,
   hidden,
   alignEnd,
   overflowVisible,
+  fullSize,
 }) => (
   <div
     className={
@@ -46,10 +52,12 @@ const Row = ({
         flex,
         stretch,
         alignCenter,
+        alignVerticalCenter,
         className,
         hidden,
         alignEnd,
         overflowVisible,
+        fullSize,
       })
     }
   >
@@ -62,16 +70,19 @@ Row.propTypes = {
     row: PropTypes.string,
     flex: PropTypes.string,
     stretch: PropTypes.string,
-    alignItensCenter: PropTypes.string,
+    alignVerticalCenter: PropTypes.string,
     hidden: PropTypes.string,
     overflowVisible: PropTypes.string,
+    fullSize: PropTypes.string,
   }).isRequired,
   alignEnd: PropTypes.bool,
   alignCenter: PropTypes.bool,
+  alignVerticalCenter: PropTypes.bool,
   children: PropTypes.node,
   flex: PropTypes.bool,
   stretch: PropTypes.bool,
   hidden: PropTypes.bool,
+  fullSize: PropTypes.bool,
   className: PropTypes.string,
   overflowVisible: PropTypes.bool,
 }
@@ -79,10 +90,12 @@ Row.propTypes = {
 Row.defaultProps = {
   alignEnd: false,
   alignCenter: false,
+  alignVerticalCenter: false,
   children: null,
   flex: false,
   stretch: false,
   hidden: false,
+  fullSize: false,
   className: null,
   overflowVisible: null,
 }
