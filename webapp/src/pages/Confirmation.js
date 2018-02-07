@@ -10,10 +10,7 @@ import ErrorInfo from '../components/ErrorInfo'
 import LoadingInfo from '../components/LoadingInfo'
 import successIcon from '../images/success-icon.png'
 import errorIcon from '../images/error-icon.png'
-import {
-  getTokenData,
-  getHeaders,
-} from '../utils/helpers/requester'
+import { tokenData, headers } from '../utils/parsers/request'
 
 const applyThemr = themr('UIConfirmationPage')
 
@@ -21,7 +18,8 @@ const iconColSize = 4
 const contentColSize = 8
 const defaultColSize = 12
 
-const baseUrl = 'https://api.mundipagg.com/checkout/v1/'
+const baseUrl = 'https://api.mundipagg.com/checkout/v1'
+const tokenUrl = `${baseUrl}/tokens`
 
 class Confirmation extends React.Component {
   constructor (props) {
@@ -37,25 +35,18 @@ class Confirmation extends React.Component {
   }
 
   componentWillReceiveProps (newProps) {
-    const {
-      transactionData,
-    } = this.props
+    const { transactionData } = newProps
+    const { key, payment } = transactionData
 
-    const {
-      key,
-    } = transactionData
+    if (!payment) throw new Error('Ops! Forma de pagamento não identificada.')
 
-    const {
-      payment,
-    } = newProps.transactionData
-
-    if (payment && !this.isRequesting) {
+    if (!this.isRequesting) {
       this.isRequesting = true
 
       axios.post(
-        `${baseUrl}/tokens`,
-        getTokenData(payment, transactionData),
-        getHeaders(key)
+        tokenUrl,
+        headers(key),
+        tokenData(transactionData)
       )
         .then(() => this.setState({ success: true, loading: false }))
         .catch(() => this.setState({ success: false, loading: false }))
@@ -63,28 +54,14 @@ class Confirmation extends React.Component {
   }
 
   render () {
-    const {
-      theme,
-      isBigScreen,
-    } = this.props
+    const { theme, isBigScreen } = this.props
+    const { success, loading, barcode } = this.state
 
-    const {
-      success,
-      loading,
-      barcode,
-    } = this.state
-
-    if (loading) {
-      return <LoadingInfo />
-    }
+    if (loading) return <LoadingInfo />
 
     return (
-      <Grid
-        className={theme.page}
-      >
-        <Row
-          stretch
-        >
+      <Grid className={theme.page}>
+        <Row stretch>
           <Col
             tv={iconColSize}
             desk={iconColSize}
@@ -142,16 +119,6 @@ Confirmation.propTypes = {
     alignSelfCenter: PropTypes.string,
     confirmationIcon: PropTypes.string,
   }),
-  transactionData: PropTypes.shape({
-    amount: PropTypes.number,
-    customer: PropTypes.object,
-    shipping: PropTypes.object,
-    billing: PropTypes.object,
-    payment: PropTypes.object,
-    postback: PropTypes.string,
-    key: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
   isBigScreen: PropTypes.bool.isRequired,
 }
 

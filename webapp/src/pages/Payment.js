@@ -18,11 +18,14 @@ const applyThemr = themr('UIPaymentPage')
 const defaultColSize = 12
 const mediumColSize = 6
 
-const findCreditCard = option => option.type === 'creditcard'
+const findCreditCard = paymentMethod => paymentMethod.type === 'creditcard'
 
 class Payment extends Component {
   constructor (props) {
     super(props)
+
+    const creditcardMethod = props.paymentMethods.filter(findCreditCard)
+    const installments = creditcardMethod.defaultInstallments || 1
 
     this.state = {
       creditcard: {
@@ -30,11 +33,8 @@ class Payment extends Component {
         holderName: '',
         expiration: '',
         cvv: '',
+        installments,
         flipped: false,
-        installments: props
-          .paymentMethods
-          .find(findCreditCard)
-          .defaultInstallments || 1,
       },
       selectedPayment: 0,
     }

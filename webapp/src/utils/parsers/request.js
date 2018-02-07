@@ -1,14 +1,7 @@
-import { generateInstallmnets } from '../calculations'
-
-const defaultToken = {
-  type: 'order',
-  currency: 'BRL',
-}
-
-const convertData = data => new Date(data).toISOString()
+import { generateInstallments } from '../calculations'
 
 const getInstallments = (creditcard, amount, selectedInstallment) => {
-  const installments = generateInstallmnets(creditcard, amount)
+  const installments = generateInstallments(creditcard, amount)
 
   if (installments.length) {
     const installmentsObj = installments[selectedInstallment - 1]
@@ -26,15 +19,15 @@ const getInstallments = (creditcard, amount, selectedInstallment) => {
   return {}
 }
 
-const getBoletoData = payment => ({
+const boletoData = payment => ({
   accepted_payment_methods: ['boleto'],
   boleto: {
     instructions: payment.method.instructions || '',
-    due_at: convertData(payment.method.expirationAt),
+    due_at: new Date(payment.method.expirationAt).toISOString(),
   },
 })
 
-const getCreditcardData = ({ method, info }, amount) => ({
+const creditcardData = ({ method, info }, amount) => ({
   accepted_payment_methods: ['credit_card'],
   credit_card: {
     statement_descriptor: method.statementDescriptor || '',
@@ -42,28 +35,28 @@ const getCreditcardData = ({ method, info }, amount) => ({
   },
 })
 
-const getSpecificData = (payment, amount) => (
-  payment.method.type === 'boleto' ?
-    getBoletoData(payment) :
-    getCreditcardData(payment, amount)
-)
+const paymentSettings = (payment, amount) => (
+  payment.method.type === 'boleto'
+    ? boletoData(payment)
+    : creditcardData(payment, amount))
 
-const getTokenData = (payment, { postback, items, amount }) => ({
-  ...defaultToken,
+const tokenData = ({ amount, payment, items, postback }) => ({
+  type: 'order',
+  currency: 'BRL',
   success_url: postback,
   order: {
     items,
   },
-  payment_settings: getSpecificData(payment, amount),
+  payment_settings: paymentSettings(payment, amount),
 })
 
-const getHeaders = key => ({
+const headers = key => ({
   auth: {
     username: key,
   },
 })
 
 export {
-  getHeaders,
-  getTokenData,
+  headers,
+  tokenData,
 }

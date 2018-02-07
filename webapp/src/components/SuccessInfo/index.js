@@ -34,14 +34,15 @@ class SuccessInfo extends Component {
     super(props)
 
     this.state = {
-      showEmailForm: false,
+      showBoletoOptions: false,
     }
 
     this.toggleEmailForm = this.toggleEmailForm.bind(this)
   }
 
   toggleEmailForm () {
-    this.setState(({ showEmailForm }) => ({ showEmailForm: !showEmailForm }))
+    this.setState(({ showBoletoOptions }) =>
+      ({ showBoletoOptions: !showBoletoOptions }))
   }
 
   renderBoleto () {
@@ -52,7 +53,7 @@ class SuccessInfo extends Component {
     } = this.props
 
     const {
-      showEmailForm,
+      showBoletoOptions,
     } = this.state
 
     return (
@@ -103,7 +104,7 @@ class SuccessInfo extends Component {
           </Row>
         }
         {
-          showEmailForm
+          showBoletoOptions
             ? <EmailForm
               handleClose={this.toggleEmailForm}
             />
