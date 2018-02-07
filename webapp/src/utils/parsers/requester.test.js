@@ -1,6 +1,6 @@
 import {
   toIsoDate,
-  getTokenData,
+  parseTokenData,
 } from './request'
 
 const rawDataBoleto = {
@@ -133,7 +133,7 @@ describe('Requester', () => {
       },
     }
 
-    const data = getTokenData(rawDataBoleto)
+    const data = parseTokenData(rawDataBoleto)
 
     expect(data).toEqual(expected)
   })
@@ -161,7 +161,7 @@ describe('Requester', () => {
       },
     }
 
-    const data = getTokenData(rawDataCreditCard)
+    const data = parseTokenData(rawDataCreditCard)
 
     expect(expected).toEqual(data)
   })

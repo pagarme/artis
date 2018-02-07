@@ -13,7 +13,7 @@ import {
   LoadingInfo,
 } from '../components'
 
-import { getTokenData, getHeaders } from '../utils/parsers/request'
+import { parseTokenData, parseHeaders } from '../utils/parsers/request'
 
 import successIcon from '../images/success-icon.png'
 import errorIcon from '../images/error-icon.png'
@@ -42,24 +42,22 @@ class Confirmation extends React.Component {
 
   componentWillReceiveProps (newProps) {
     const { transactionData } = newProps
-    const { key, payment } = transactionData
 
-    const data = {
-      ...transactionData,
-      payment,
-    }
+    this.getToken(transactionData)
+  }
+
+  getToken (transactionData) {
+    const { key, payment } = transactionData
 
     if (payment && !this.isRequesting) {
       this.isRequesting = true
 
       axios.post(
         tokenUrl,
-        getTokenData(data),
-        getHeaders(key)
+        parseTokenData(transactionData),
+        parseHeaders(key)
       )
-        .then(() => {
-          this.setState({ success: true, loading: false })
-        })
+        .then(() => this.setState({ success: true, loading: false }))
         .catch(() => this.setState({ success: false, loading: false }))
     }
   }

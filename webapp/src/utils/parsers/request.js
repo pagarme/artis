@@ -19,7 +19,7 @@ const getFormatedExpirationAt = pipe(
   toIsoDate
 )
 
-const getBoletoSettings = applySpec(
+const parseBoletoSettings = applySpec(
   {
     accepted_payment_methods: pipe(
       always('boleto'),
@@ -32,7 +32,7 @@ const getBoletoSettings = applySpec(
   }
 )
 
-const getCreditcardSettings = applySpec(
+const parseCreditcardSettings = applySpec(
   {
     accepted_payment_methods: pipe(
       always('credit_card'),
@@ -44,12 +44,12 @@ const getCreditcardSettings = applySpec(
   }
 )
 
-const getPaymentSettings = cond([
-  [pathEq(['payment', 'method', 'type'], 'boleto'), getBoletoSettings],
-  [T, getCreditcardSettings],
+const parsePaymentSettings = cond([
+  [pathEq(['payment', 'method', 'type'], 'boleto'), parseBoletoSettings],
+  [T, parseCreditcardSettings],
 ])
 
-const getTokenData = applySpec(
+const parseTokenData = applySpec(
   {
     type: always('order'),
     currency: propOr('BRL', 'currency'),
@@ -57,21 +57,21 @@ const getTokenData = applySpec(
     order: {
       items: prop('items'),
     },
-    payment_settings: getPaymentSettings,
+    payment_settings: parsePaymentSettings,
   }
 )
 
-const getHeaders = key => ({
+const parseHeaders = key => ({
   auth: {
     username: key,
   },
 })
 
-const getPaymentData = () => {}
+const parsePaymentData = () => {}
 
 export {
-  getHeaders,
-  getTokenData,
-  getPaymentData,
+  parseHeaders,
+  parseTokenData,
+  parsePaymentData,
   toIsoDate,
 }

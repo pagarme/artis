@@ -88,7 +88,7 @@ AddressOptions.propTypes = {
     neighborhood: PropTypes.string,
     complement: PropTypes.string,
     zipcode: PropTypes.string,
-  }).isRequired,
+  }),
   addresses: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
