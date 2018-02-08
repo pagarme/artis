@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 
-import { Grid, Row, Col } from '../components/Grid'
-import Input from '../components/Input'
+import { Grid, Row, Col, Input } from '../components'
+
 import BillingPage from './Billing'
 
 const applyThemr = themr('UICustomerPage')

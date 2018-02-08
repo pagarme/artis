@@ -3,14 +3,13 @@ import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
-import { pick, defaultTo, pipe } from 'ramda'
+import { pick } from 'ramda'
 
-import { Grid, Row, Col } from './../components/Grid'
-import Switch from './../components/Switch'
-import Input from './../components/Input'
-import Dropdown from './../components/Dropdown'
+import { Grid, Row, Col, Switch, Input, Dropdown } from './../components'
+
 import formatToBRL from './../utils/helpers/formatToBRL'
 import { applyDiscount, generateInstallmnets } from './../utils/calculations'
+
 import Barcode from './../images/barcode.svg'
 
 const applyThemr = themr('UIPaymentPage')
@@ -18,9 +17,14 @@ const applyThemr = themr('UIPaymentPage')
 const defaultColSize = 12
 const mediumColSize = 6
 
-class Payment extends Component {
+const findCreditCard = paymentMethod => paymentMethod.type === 'creditcard'
+
+class PaymentPage extends Component {
   constructor (props) {
     super(props)
+
+    const creditcardMethod = props.paymentMethods.filter(findCreditCard)
+    const installments = creditcardMethod.defaultInstallments || 1
 
     this.state = {
       creditcard: {
@@ -28,6 +32,7 @@ class Payment extends Component {
         holderName: '',
         expiration: '',
         cvv: '',
+        installments,
         flipped: false,
       },
       selectedPayment: 0,
@@ -44,10 +49,14 @@ class Payment extends Component {
     const { paymentMethods } = this.props
     const { selectedPayment } = this.state
 
-    const paymentMethod = paymentMethods[selectedPayment]
+    const method = paymentMethods[selectedPayment]
 
-    if (paymentMethod.type === 'creditcard') {
-      paymentMethod.info = pick([
+    const payment = {
+      method,
+    }
+
+    if (method.type === 'creditcard') {
+      payment.info = pick([
         'cardNumber',
         'holderName',
         'cvv',
@@ -55,11 +64,6 @@ class Payment extends Component {
         'installments',
       ], this.state.creditcard)
     }
-
-    const payment = {
-      paymentMethod,
-    }
-
 
     this.props.handlePageChange(payment, 'payment')
   }
@@ -80,11 +84,11 @@ class Payment extends Component {
     }))
   }
 
-  handleInstallmentChange (installments) {
+  handleInstallmentChange ({ value }) {
     this.setState(({ creditcard }) => ({
       creditcard: {
         ...creditcard,
-        installments,
+        installments: value,
       },
     }))
   }
@@ -108,13 +112,6 @@ class Payment extends Component {
       flipped,
       installments,
     } = this.state.creditcard
-
-    const { defaultInstallments } = creditcard
-
-    const getSelectedInstallment = pipe(
-      defaultTo(defaultInstallments),
-      defaultTo(0)
-    )
 
     const { theme, amount, isBigScreen } = this.props
 
@@ -208,7 +205,7 @@ class Payment extends Component {
                   options={installmentsOptions}
                   name="installments"
                   label="Quantidade de Parcelas"
-                  value={getSelectedInstallment(installments)}
+                  value={installments}
                   onChange={this.handleInstallmentChange}
                   title="Selecione"
                 />
@@ -295,7 +292,7 @@ class Payment extends Component {
   }
 }
 
-Payment.propTypes = {
+PaymentPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
@@ -310,10 +307,10 @@ Payment.propTypes = {
   handlePageChange: PropTypes.func.isRequired,
 }
 
-Payment.defaultProps = {
+PaymentPage.defaultProps = {
   theme: {},
   payment: {},
   creditcard: {},
 }
 
-export default applyThemr(Payment)
+export default applyThemr(PaymentPage)

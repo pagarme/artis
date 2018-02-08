@@ -7,9 +7,7 @@ import { themr } from 'react-css-themr'
 import { Action, withStatechart } from 'react-automata'
 import { omit, when, always } from 'ramda'
 
-import ProgressBar from '../../components/ProgressBar'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
+import { ProgressBar, Header, Footer } from '../../components'
 
 import CustomerPage from '../../pages/Customer'
 import BillingPage from '../../pages/Billing'
@@ -35,6 +33,7 @@ class Checkout extends Component {
       closingEffect: false,
       isBigScreen: true,
       footerButtonVisible: true,
+      addresses: [],
       ...formData,
     }
 
@@ -96,29 +95,32 @@ class Checkout extends Component {
     this.setState({ footerButtonVisible })
   }
 
-  handlePageChange (pageState, page) {
-    this.setState(state => ({
-      checkoutData: {
-        ...state.checkoutData,
-        [page]: {
-          ...pageState,
-        },
-      },
-    }))
+  handlePageChange (data, paramName) {
+    this.setState({ [paramName]: data })
   }
 
   renderPages () {
-    const { isBigScreen } = this.state
     const {
+      isBigScreen,
       customer,
       billing,
       shipping,
+      addresses,
+      payment,
     } = this.state
+
+    const { key, formData, transaction, configs } = this.props.apiData
+
+    const { items } = formData
 
     const {
       amount,
       paymentMethods,
-    } = this.props.apiData.transaction
+    } = transaction
+
+    const {
+      postback,
+    } = configs
 
     return (
       <React.Fragment>
@@ -144,6 +146,7 @@ class Checkout extends Component {
             footerButtonVisible={this.handleFooterButton}
             isBigScreen={isBigScreen}
             shipping={shipping}
+            addresses={addresses}
             handlePageChange={this.handlePageChange}
           />
         </Action>
@@ -160,6 +163,16 @@ class Checkout extends Component {
           <ConfirmationPage
             title="Confirmação"
             isBigScreen={isBigScreen}
+            transactionData={{
+              amount,
+              postback,
+              customer,
+              billing,
+              shipping,
+              payment,
+              key,
+              items,
+            }}
           />
         </Action>
       </React.Fragment>

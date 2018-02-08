@@ -2,26 +2,28 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import PlusIcon from 'react-icons/lib/go/plus'
 import { themr } from 'react-css-themr'
+import { equals, filter, isNil, not, pipe } from 'ramda'
+
+import { Grid, Row, Col, Button, AddressOptions } from '../components'
 
 import AddressForm from '../containers/AddressForm'
+
 import options from '../utils/data/states'
-import { Grid, Row, Col } from '../components/Grid'
-import Button from '../components/Button'
-import AddressOptions from '../containers/AddressOptions'
 
 const largeColSize = 12
 const mediumColSize = 6
 
 const applyThemr = themr('UIShippingPage')
+
 class ShippingPage extends Component {
   constructor (props) {
     super(props)
 
-    const { shipping } = this.props
+    const { shipping, addresses } = this.props
 
     this.state = {
-      addresses: shipping ? [shipping] : [],
-      selected: {},
+      addresses: !isNil(shipping) ? [...addresses, shipping] : addresses,
+      selected: !isNil(shipping) ? shipping : {},
       openAddressForm: false,
     }
 
@@ -31,9 +33,17 @@ class ShippingPage extends Component {
   }
 
   componentWillUnmount () {
-    const { selected } = this.state
+    const { selected, addresses } = this.state
+
+    const removeSelected = filter(
+      pipe(
+        equals(selected),
+        not
+      )
+    )
 
     this.props.handlePageChange(selected, 'shipping')
+    this.props.handlePageChange(removeSelected(addresses), 'addresses')
   }
 
   onChangeAddress (address) {
@@ -43,6 +53,7 @@ class ShippingPage extends Component {
   addAddress (address) {
     this.setState(({ addresses }) => ({
       addresses: [...addresses, address],
+      selected: address,
     }))
 
     this.toggleOpenAddressForm()
@@ -56,7 +67,7 @@ class ShippingPage extends Component {
   }
 
   render () {
-    const { addresses } = this.state
+    const { addresses, selected } = this.state
     const { theme, isBigScreen } = this.props
 
     return (
@@ -77,6 +88,7 @@ class ShippingPage extends Component {
           <Row>
             <AddressOptions
               addresses={addresses}
+              selected={selected}
               onChange={this.onChangeAddress}
             />
           </Row>
@@ -124,6 +136,19 @@ ShippingPage.propTypes = {
     state: PropTypes.string,
     zipcode: PropTypes.string,
   }),
+  addresses: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    street: PropTypes.string,
+    number: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    complement: PropTypes.string,
+    neighborhood: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zipcode: PropTypes.string,
+  })),
   title: PropTypes.string.isRequired,
   footerButtonVisible: PropTypes.func,
   isBigScreen: PropTypes.bool.isRequired,
@@ -133,6 +158,7 @@ ShippingPage.propTypes = {
 ShippingPage.defaultProps = {
   theme: {},
   shipping: {},
+  addresses: [],
   footerButtonVisible: null,
   handleProgressBar: null,
 }
