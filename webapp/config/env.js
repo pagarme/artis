@@ -47,7 +47,7 @@ function getClientEnvironment (publicUrl) {
       },
       {
         NODE_ENV: process.env.NODE_ENV || 'development',
-        SENTRY_URL: process.env.SENTRY_URL || 'https://3063173d7ec64ffdb5085bc507b64cb9@sentry.io/252228',
+        SENTRY_URL: process.env.SENTRY_URL || 'https://111eb6f578cd42bc8fbe58d22183226c@sentry.io/281472',
         PUBLIC_URL: publicUrl,
       }
     )
