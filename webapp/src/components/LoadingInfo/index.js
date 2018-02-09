@@ -8,7 +8,7 @@ const applyThemr = themr('UILoadingInfo')
 
 const defaultColSize = 12
 
-const LoadingInfo = ({ theme }) => (
+const LoadingInfo = ({ theme, title, subtitle }) => (
   <Grid
     className={theme.page}
   >
@@ -20,9 +20,11 @@ const LoadingInfo = ({ theme }) => (
         palm={defaultColSize}
         alignCenter
       >
-        <h4 className={theme.loading}>
-          Aguarde, finalizando a compra...
-        </h4>
+        <div className={theme.loadingWrapper}>
+          <h1 className={theme.loadingText}>{title}</h1>
+          <div className={theme.loadingContent} />
+        </div>
+        <div className={theme.subtitle}>{subtitle}</div>
       </Col>
     </Row>
   </Grid>
@@ -30,16 +32,22 @@ const LoadingInfo = ({ theme }) => (
 
 LoadingInfo.propTypes = {
   theme: PropTypes.shape({
-    field: PropTypes.string,
-    value: PropTypes.string,
-    mediumSize: PropTypes.string,
-    success: PropTypes.string,
-    title: PropTypes.string,
+    page: PropTypes.string,
+    loadingWrapper: PropTypes.string,
+    loadingText: PropTypes.string,
+    loadingContent: PropTypes.string,
+    subtitle: PropTypes.string,
+    col: PropTypes.string,
+    row: PropTypes.string,
   }),
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
 }
 
 LoadingInfo.defaultProps = {
   theme: {},
+  title: 'Finalizando',
+  subtitle: 'Aguarde, dentro de alguns instantes finalizaremos sua compra.',
 }
 
 export default applyThemr(LoadingInfo)
