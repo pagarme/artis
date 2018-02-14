@@ -5,7 +5,6 @@ process.on('unhandledRejection', (err) => {
   throw err
 })
 
-// Ensure environment variables are read.
 require('../config/env')
 
 const path = require('path')
@@ -20,6 +19,8 @@ const printHostingInstructions = require('react-dev-utils/printHostingInstructio
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter')
 const printBuildError = require('react-dev-utils/printBuildError')
 
+const appPackage = require(paths.appPackageJson) // eslint-disable-line
+
 const {
   measureFileSizesBeforeBuild,
   printFileSizesAfterBuild,
@@ -33,61 +34,6 @@ const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1)
 }
-
-measureFileSizesBeforeBuild(paths.appBuild)
-  .then((previousFileSizes) => {
-    fs.emptyDirSync(paths.appBuild)
-    copyPublicFolder()
-
-    return build(previousFileSizes)
-  })
-  .then(
-    ({ stats, previousFileSizes, warnings }) => {
-      if (warnings.length) {
-        console.log(chalk.yellow('Compiled with warnings.\n'))
-        console.log(warnings.join('\n\n'))
-        console.log(
-          '\nSearch for the ' +
-            chalk.underline(chalk.yellow('keywords')) +
-            ' to learn more about each warning.'
-        )
-        console.log(
-          'To ignore, add ' +
-            chalk.cyan('// eslint-disable-next-line') +
-            ' to the line before.\n'
-        )
-      } else {
-        console.log(chalk.green('Compiled successfully.\n'))
-      }
-
-      console.log('File sizes after gzip:\n')
-      printFileSizesAfterBuild(
-        stats,
-        previousFileSizes,
-        paths.appBuild,
-        WARN_AFTER_BUNDLE_GZIP_SIZE,
-        WARN_AFTER_CHUNK_GZIP_SIZE
-      )
-      console.log()
-
-      const appPackage = require(paths.appPackageJson);
-      const { publicUrl } = paths
-      const { publicPath } = config.output
-      const buildFolder = path.relative(process.cwd(), paths.appBuild);
-      printHostingInstructions(
-        appPackage,
-        publicUrl,
-        publicPath,
-        buildFolder,
-        useYarn
-      )
-    },
-    (err) => {
-      console.log(chalk.red('Failed to compile.\n'))
-      printBuildError(err)
-      process.exit(1)
-    }
-  )
 
 function build (previousFileSizes) {
   console.log('Creating an optimized production build...')
@@ -128,9 +74,53 @@ function build (previousFileSizes) {
   })
 }
 
-function copyPublicFolder () {
-  fs.copySync(paths.appPublic, paths.appBuild, {
-    dereference: true,
-    filter: file => file !== paths.appHtml,
+measureFileSizesBeforeBuild(paths.appBuild)
+  .then((previousFileSizes) => {
+    fs.emptyDirSync(paths.appBuild)
+
+    return build(previousFileSizes)
   })
-}
+  .then(({ stats, previousFileSizes, warnings }) => {
+    if (warnings.length) {
+      console.log(chalk.yellow('Compiled with warnings.\n'))
+      console.log(warnings.join('\n\n'))
+      console.log(`
+        \nSearch for the
+        ${chalk.underline(chalk.yellow('keywords'))} to learn more about each
+        warning.
+      `)
+      console.log(`
+        To ignore, add ${chalk.cyan('// eslint-disable-next-line')}  to the
+        line before.\n
+      `)
+    } else {
+      console.log(chalk.green('Compiled successfully.\n'))
+    }
+
+    console.log('File sizes after gzip:\n')
+
+    printFileSizesAfterBuild(
+      stats,
+      previousFileSizes,
+      paths.appBuild,
+      WARN_AFTER_BUNDLE_GZIP_SIZE,
+      WARN_AFTER_CHUNK_GZIP_SIZE
+    )
+
+    const { publicUrl } = paths
+    const { publicPath } = config.output
+    const buildFolder = path.relative(process.cwd(), paths.appBuild)
+
+    printHostingInstructions(
+      appPackage,
+      publicUrl,
+      publicPath,
+      buildFolder,
+      useYarn
+    )
+  },
+  (err) => {
+    console.log(chalk.red('Failed to compile.\n'))
+    printBuildError(err)
+    process.exit(1)
+  })
