@@ -1,12 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
+import { allPass, prop } from 'ramda'
 
-import { Grid, Row, Col } from '../components/Grid'
-import SuccessInfo from '../components/SuccessInfo'
-import ErrorInfo from '../components/ErrorInfo'
-import LoadingInfo from '../components/LoadingInfo'
+import {
+  Grid,
+  Row,
+  Col,
+  SuccessInfo,
+  ErrorInfo,
+  LoadingInfo,
+} from '../components'
+
+import { request, strategies } from '../utils/parsers/request'
+
 import successIcon from '../images/success-icon.png'
 import errorIcon from '../images/error-icon.png'
 
@@ -16,40 +25,55 @@ const iconColSize = 4
 const contentColSize = 8
 const defaultColSize = 12
 
+const strategyName = 'pagarme'
+
+const hasAllData = allPass([
+  prop('customer'),
+  prop('billing'),
+  prop('shipping'),
+  prop('payment'),
+  prop('amount'),
+  prop('publickey'),
+  prop('postback'),
+  prop('items'),
+])
+
 class Confirmation extends React.Component {
   constructor (props) {
     super(props)
 
+    this.isRequesting = false
+
     this.state = {
       loading: true,
       success: false,
+      barcode: '',
     }
   }
 
-  componentDidMount () {
-    setTimeout(() => {
-      this.setState({
-        loading: false,
-        success: Math.random() > 0.5, // while we do not have a proper fetch function
-      })
-    }, 1500)
+  componentWillReceiveProps (newProps) {
+    this.createATransaction(newProps)
+  }
+
+  createATransaction (transactionData) {
+    if (hasAllData(transactionData) && !this.isRequesting) {
+      this.isRequesting = true
+
+      request(transactionData, strategies[strategyName])
+        .then(() => this.setState({ success: true, loading: false }))
+        .catch(() => this.setState({ success: false, loading: false }))
+    }
   }
 
   render () {
-    const { theme, isBigScreen } = this.props
-    const { success, loading } = this.state
+    const { theme } = this.props
+    const { success, loading, barcode } = this.state
 
-    if (loading) {
-      return <LoadingInfo />
-    }
+    if (loading) return <LoadingInfo />
 
     return (
-      <Grid
-        className={theme.page}
-      >
-        <Row
-          stretch
-        >
+      <Grid className={theme.page}>
+        <Row stretch>
           <Col
             tv={iconColSize}
             desk={iconColSize}
@@ -84,9 +108,12 @@ class Confirmation extends React.Component {
             tablet={contentColSize}
             palm={defaultColSize}
           >
-            {success
-              ? <SuccessInfo isBigScreen={isBigScreen} />
-              : <ErrorInfo isBigScreen={isBigScreen} />
+            {
+              success
+                ? <SuccessInfo
+                  barcode={barcode}
+                />
+                : <ErrorInfo />
             }
           </Col>
         </Row>
@@ -103,11 +130,20 @@ Confirmation.propTypes = {
     alignSelfCenter: PropTypes.string,
     confirmationIcon: PropTypes.string,
   }),
-  isBigScreen: PropTypes.bool.isRequired,
+  publickey: PropTypes.string.isRequired, // eslint-disable-line
+  amount: PropTypes.number.isRequired, // eslint-disable-line
+  postback: PropTypes.string.isRequired, // eslint-disable-line
 }
 
 Confirmation.defaultProps = {
   theme: {},
 }
 
-export default applyThemr(Confirmation)
+const mapStateToProps = ({ pageInfo }) => ({
+  customer: pageInfo.customer,
+  billing: pageInfo.billing,
+  shipping: pageInfo.shipping,
+  payment: pageInfo.payment,
+})
+
+export default connect(mapStateToProps)(applyThemr(Confirmation))

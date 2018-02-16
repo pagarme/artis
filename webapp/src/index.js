@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ThemeProvider } from 'react-css-themr'
 import Joi from 'joi-browser'
 import ReactGA from 'react-ga'
+import { ThemeProvider } from 'react-css-themr'
+import { Provider } from 'react-redux'
 
 import Checkout from './containers/Checkout'
 import ErrorBoundary from './components/ErrorBoundary'
@@ -10,6 +11,7 @@ import ErrorPage from './pages/Error'
 
 import createElement from './utils/helpers/createElement'
 import apiDataSchema from './utils/schemas/apiData'
+import createStore from './store'
 
 import theme from './theme-pagarme'
 
@@ -36,15 +38,19 @@ const render = apiData => () => {
     label: apiData.key,
   })
 
+  const store = createStore(apiData.formData)
+
   ReactDOM.render(
-    <ThemeProvider theme={theme}>
-      <ErrorBoundary CrashReportComponent={<ErrorPage />}>
-        <Checkout
-          apiData={apiData}
-          targetElement={target}
-        />
-      </ErrorBoundary>
-    </ThemeProvider>,
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <ErrorBoundary CrashReportComponent={<ErrorPage />}>
+          <Checkout
+            apiData={apiData}
+            targetElement={target}
+          />
+        </ErrorBoundary>
+      </ThemeProvider>
+    </Provider>,
     target
   )
 }
@@ -78,9 +84,7 @@ const integrations = {
     })
   },
   custom: () => {
-    window.Checkout = ({ key, configs, formData, transaction }) => () => {
-      const apiData = { key, configs, formData, transaction }
-
+    window.Checkout = apiData => () => {
       if (validateApiData(apiData)) render(apiData)()
     }
   },

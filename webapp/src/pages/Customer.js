@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
+import { connect } from 'react-redux'
 
-import { Grid, Row, Col } from '../components/Grid'
-import Input from '../components/Input'
+import { Grid, Row, Col, Input } from '../components'
+
 import BillingPage from './Billing'
+import { addPageInfo } from '../actions'
 
 const applyThemr = themr('UICustomerPage')
 const defaultColSize = 12
@@ -22,7 +24,7 @@ class CustomerPage extends Component {
   }
 
   componentWillUnmount () {
-    this.props.handlePageChange(this.state, 'customer')
+    this.props.handlePageChange('customer', this.state)
   }
 
   handleInputChange (e) {
@@ -39,7 +41,7 @@ class CustomerPage extends Component {
       phoneNumber,
     } = this.state
 
-    const { theme, billingData, handlePageChange } = this.props
+    const { theme } = this.props
 
     const sizeWithDesktop = this.props.isBigScreen
       ? mediumColSize
@@ -100,12 +102,7 @@ class CustomerPage extends Component {
             desk={mediumColSize}
             tablet={mediumColSize}
           >
-            <BillingPage
-              title="Endereço de Cobrança"
-              isBigScreen
-              billing={billingData}
-              handlePageChange={handlePageChange}
-            />
+            <BillingPage title="Endereço de Cobrança" />
           </Col>
         }
       </Grid>
@@ -117,18 +114,6 @@ CustomerPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
-  }),
-  billingData: PropTypes.shape({
-    street: PropTypes.string,
-    number: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-    complement: PropTypes.string,
-    neighborhood: PropTypes.string,
-    city: PropTypes.string,
-    state: PropTypes.string,
-    zipcode: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
   isBigScreen: PropTypes.bool.isRequired,
@@ -147,4 +132,16 @@ CustomerPage.defaultProps = {
   customer: {},
 }
 
-export default applyThemr(CustomerPage)
+const mapStateToProps = ({ screenSize, pageInfo }) => ({
+  isBigScreen: screenSize.isBigScreen,
+  customer: pageInfo.customer,
+})
+
+const mapDispatchToProps = dispatch => ({
+  handlePageChange: (page, pageInfo) => {
+    dispatch(addPageInfo({ page, pageInfo }))
+  },
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(applyThemr(CustomerPage))

@@ -29,7 +29,11 @@
     "react-icons": "2.2.7",
     "react-maskedinput": "4.0.1",
     "react-payment-card-component": "0.1.0",
-    "shortid": "2.2.8"
+    "react-redux": "5.0.6",
+    "redux": "3.7.2",
+    "redux-logger": "3.0.6",
+    "shortid": "2.2.8",
+    "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
     "@storybook/addon-actions": "3.3.10",
