@@ -5,10 +5,7 @@ import { themr } from 'react-css-themr'
 import ReactGA from 'react-ga'
 import { pick } from 'ramda'
 
-import { Grid, Row, Col } from '../../components/Grid'
-import Input from '../../components/Input'
-import Dropdown from '../../components/Dropdown'
-import Button from '../../components/Button'
+import { Grid, Row, Col, Input, Dropdown, Button } from '../../components'
 
 import getAddress from '../../utils/helpers/getAddress'
 import removeZipcodeMask from '../../utils/helpers/removeZipcodeMask'
@@ -46,11 +43,18 @@ class AddressForm extends Component {
     this.handleStateChange = this.handleStateChange.bind(this)
     this.handleZipcodeChange = this.handleZipcodeChange.bind(this)
     this.handleZipcodeBlur = this.handleZipcodeBlur.bind(this)
-    this.handleStreetNumberInputRef = this.handleStreetNumberInputRef.bind(this)
-    this.onConfirm = this.onConfirm.bind(this)
+    this.numberInputRef = this.numberInputRef.bind(this)
+    this.handleConfirm = this.handleConfirm.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
+    this.cleanState = this.cleanState.bind(this)
   }
 
-  onConfirm () {
+  handleCancel () {
+    this.cleanState()
+    this.props.onCancel()
+  }
+
+  handleConfirm () {
     const address = pick([
       'name',
       'zipcode',
@@ -67,7 +71,17 @@ class AddressForm extends Component {
       action: 'Add new address',
     })
 
+    this.cleanState()
     this.props.onConfirm(address)
+  }
+
+  cleanState () {
+    this.setState({
+      name: '',
+      zipcode: '',
+      zipcodeError: '',
+      ...defaultAddress,
+    })
   }
 
   handleStateChange (value) {
@@ -80,7 +94,7 @@ class AddressForm extends Component {
     this.setState({ [name]: value })
   }
 
-  handleStreetNumberInputRef (input) {
+  numberInputRef (input) {
     this.streetNumberInput = input
   }
 
@@ -136,7 +150,6 @@ class AddressForm extends Component {
     const {
       options,
       visible,
-      onCancel,
       theme,
     } = this.props
 
@@ -207,7 +220,7 @@ class AddressForm extends Component {
               palm={oneQuarterColSize}
             >
               <Input
-                inputRef={this.handleStreetNumberInputRef}
+                inputRef={this.numberInputRef}
                 name="number"
                 label="Nº"
                 value={number}
@@ -287,7 +300,7 @@ class AddressForm extends Component {
                   size={'extra-large'}
                   fill="outline"
                   full
-                  onClick={onCancel.bind(this)}
+                  onClick={this.handleCancel}
                   className={theme.actionButton}
                 >
                   Cancelar
@@ -302,7 +315,7 @@ class AddressForm extends Component {
                 <Button
                   full
                   size={'extra-large'}
-                  onClick={this.onConfirm}
+                  onClick={this.handleConfirm}
                   className={theme.actionButton}
                 >
                   Cadastrar
