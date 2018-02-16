@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import copy from 'copy-to-clipboard'
 import ReactGA from 'react-ga'
 import { themr } from 'react-css-themr'
+import { connect } from 'react-redux'
 
-import { Row, Col } from '../../components/Grid'
-import ActionList from '../../components/ActionList'
-import Button from '../../components/Button'
+import { Row, Col, ActionList, Button } from '../../components'
+
 import EmailForm from '../EmailForm'
 import formatToBRL from '../../utils/helpers/formatToBRL'
 
@@ -129,4 +129,8 @@ BoletoOptions.defaultProps = {
   theme: {},
 }
 
-export default applyThemr(BoletoOptions)
+const mapStateToProps = ({ screenSize }) => ({
+  isBigScreen: screenSize.isBigScreen,
+})
+
+export default connect(mapStateToProps)(applyThemr(BoletoOptions))
