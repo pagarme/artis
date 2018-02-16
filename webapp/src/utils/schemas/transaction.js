@@ -20,6 +20,7 @@ const creditcardSchema = Joi.object().keys({
   maxInstallments: installmentsRule,
   freeInstallments: installmentsRule,
   defaultInstallments: installmentsRule,
+  statementDescriptor: Joi.string().max(22),
   brands: Joi.array().items(
     Joi.string()
   ).unique(),
