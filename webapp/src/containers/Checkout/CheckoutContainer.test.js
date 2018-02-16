@@ -2,10 +2,14 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Checkout from './'
+import createStore from '../../store'
+
+const store = createStore({})
 
 describe('Main App', () => {
   const component = shallow(
     <Checkout
+      store={store}
       apiValues={{
         key: 'some_key',
         configs: {
