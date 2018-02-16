@@ -1,15 +1,49 @@
-const path = require('path')
 const webpack = require('webpack')
-const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const paths = require('./paths')
 const postcssUrlRebase = require('./postcssUrlRebase')
 const stylelint = require('stylelint')
+const CompressionPlugin = require('compression-webpack-plugin')
+const BundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const postcssFlexbugsFixes = require('postcss-flexbugs-fixes')
 const postcssImport = require('postcss-import')
 const postcssSassEach = require('postcss-sass-each')
 const postcssUrl = require('postcss-url')({ url: postcssUrlRebase })
 const postcssNext = require('postcss-cssnext')
+
+const isTravis = 'TRAVIS' in process.env && 'CI' in process.env
+
+const plugins = [
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': '"production"',
+  }),
+  new webpack.optimize.UglifyJsPlugin({
+    mangle: true,
+    compress: {
+      warnings: false,
+      pure_getters: true,
+      unsafe: true,
+      unsafe_comps: true,
+      screw_ie8: true,
+    },
+    output: {
+      comments: false,
+    },
+    exclude: [/\.min\.js$/gi],
+  }),
+  new webpack.NoEmitOnErrorsPlugin(),
+  new CompressionPlugin({
+    asset: '[path].gz[query]',
+    algorithm: 'gzip',
+    test: /\.js$|\.css$|\.html$/,
+    threshold: 10240,
+    minRatio: 0,
+  }),
+]
+
+if (!isTravis) {
+  plugins.push(new BundleAnalyzer())
+}
 
 module.exports = {
   bail: true,
@@ -22,18 +56,8 @@ module.exports = {
   output: {
     path: paths.appBuild,
     filename: './index.js',
-    chunkFilename: './index.chunk.js',
     libraryTarget: 'umd',
     umdNamedDefine: true,
-  },
-  resolve: {
-    modules: ['node_modules', paths.appNodeModules].concat(
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
-    ),
-    extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
-    plugins: [
-      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
-    ],
   },
   module: {
     strictExportPresence: true,
@@ -123,17 +147,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        comparisons: true,
-      },
-      output: {
-        comments: false,
-        ascii_only: true,
-      },
-      sourceMap: true,
-    }),
-  ],
+  plugins,
 }
