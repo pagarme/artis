@@ -26,15 +26,6 @@ class Confirmation extends React.Component {
     }
   }
 
-  componentDidMount () {
-    setTimeout(() => {
-      this.setState({
-        loading: false,
-        success: Math.random() > 0.5, // while we do not have a proper fetch function
-      })
-    }, 1500)
-  }
-
   render () {
     const { theme, isBigScreen } = this.props
     const { success, loading } = this.state
