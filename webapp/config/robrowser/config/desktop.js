@@ -25,15 +25,7 @@ module.exports = [
         browserName: 'chrome',
         browser_version: '55.0',
       },
-      {
-        browserName: 'edge',
-        browser_version: '16.0',
-      },
-      {
-        browserName: 'opera',
-        browser_version: '42.0',
-      },
-    ]
+    ],
   },
 ]
 

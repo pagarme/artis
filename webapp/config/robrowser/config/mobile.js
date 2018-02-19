@@ -1,11 +1,11 @@
 module.exports = [
   {
-    device: 'Google Nexus 9',
-    os_version: '5.1',
+    device: 'Samsung Galaxy S8',
+    os_version: '7.0',
     deviceOrientation: 'portrait',
     realMobile: true,
+    local: true,
     browsers: [
-      { browserName: 'android' },
       { browserName: 'chrome' },
     ],
   },
