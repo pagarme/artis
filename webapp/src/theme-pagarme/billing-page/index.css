@@ -1,6 +1,7 @@
 @import "./properties.css";
 
 .page {
+  width: 100%;
   margin: var(--page-margin);
 }
 

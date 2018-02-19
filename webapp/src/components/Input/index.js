@@ -73,7 +73,6 @@ class Input extends React.Component {
     if (disabled) {
       onChange = null
     }
-
     const inputContainer = classnames(
       theme.inputContainer,
       {
@@ -110,7 +109,6 @@ class Input extends React.Component {
     const inputType = this.state.displayPassword
       ? 'text'
       : type
-
 
     return (
       <div className={containerClasses}>

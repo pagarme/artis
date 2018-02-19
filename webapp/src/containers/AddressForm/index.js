@@ -7,11 +7,20 @@ import { pick } from 'ramda'
 
 import { Grid, Row, Col } from '../../components/Grid'
 import Input from '../../components/Input'
+import Form from '../../components/Form'
 import Dropdown from '../../components/Dropdown'
 import Button from '../../components/Button'
 
 import getAddress from '../../utils/helpers/getAddress'
 import removeZipcodeMask from '../../utils/helpers/removeZipcodeMask'
+
+import {
+  requiredValidation,
+  lettersValidation,
+  maxLengthValidation,
+  minLengthValidation,
+  numbersValidation,
+} from '../../utils/validators/'
 
 const applyThemr = themr('UIAddressForm')
 
@@ -148,169 +157,211 @@ class AddressForm extends Component {
           })
         }
       >
-        <Grid>
-          <Row className={theme.title}>
-            <span>
+        <Form
+          validation={{
+            name: [
+              requiredValidation,
+              lettersValidation,
+              maxLengthValidation(100),
+            ],
+            zipcode: [
+              requiredValidation,
+              minLengthValidation(8),
+              maxLengthValidation(8),
+            ],
+            street: [
+              requiredValidation,
+              maxLengthValidation(100),
+            ],
+            streetNumber: [
+              requiredValidation,
+              numbersValidation,
+              maxLengthValidation(5),
+            ],
+            complementary: [
+              maxLengthValidation(100),
+            ],
+            neighborhood: [
+              requiredValidation,
+              maxLengthValidation(100),
+            ],
+            city: [
+              requiredValidation,
+              maxLengthValidation(100),
+              lettersValidation,
+            ],
+            state:
+              [
+                requiredValidation,
+                maxLengthValidation(100),
+                lettersValidation,
+              ],
+          }}
+        >
+          <Grid>
+            <Row className={theme.title}>
+              <span>
               Cadastrar novo endereço
-            </span>
-          </Row>
-          <Row className={theme.addressForm} overflowVisible>
-            <Col
-              tv={mediumColSize}
-              desk={mediumColSize}
-              tablet={mediumColSize}
-              palm={bigColSize}
-            >
-              <Input
-                name="name"
-                label="Nome do endereço"
-                value={name}
-                placeholder="Digite um nome para este endereço"
-                onChange={this.handleInputChange}
-              />
-            </Col>
-            <Col
-              tv={mediumColSize}
-              desk={mediumColSize}
-              tablet={mediumColSize}
-              palm={bigColSize}
-            >
-              <Input
-                name="zipcode"
-                label="CEP"
-                value={zipcode}
-                mask="11111-111"
-                error={zipcodeError}
-                placeholder="Digite o CEP"
-                onChange={this.handleZipcodeChange}
-                onBlur={this.handleZipcodeBlur}
-              />
-            </Col>
-            <Col
-              tv={mediumColSize}
-              desk={mediumColSize}
-              tablet={mediumColSize}
-              palm={bigColSize}
-            >
-              <Input
-                name="street"
-                label="Endereço"
-                value={street}
-                placeholder="Digite o endereço"
-                onChange={this.handleInputChange}
-              />
-            </Col>
-            <Col
-              tv={tinyColSize}
-              desk={tinyColSize}
-              tablet={tinyColSize}
-              palm={oneQuarterColSize}
-            >
-              <Input
-                inputRef={this.handleStreetNumberInputRef}
-                name="number"
-                label="Nº"
-                value={number}
-                placeholder="Digite o número"
-                onChange={this.handleInputChange}
-              />
-            </Col>
-            <Col
-              tv={smallColSize}
-              desk={smallColSize}
-              tablet={smallColSize}
-              palm={threeQuarterColSize}
-            >
-              <Input
-                name="complement"
-                label="Complemento"
-                value={complement}
-                placeholder="Digite o complemento do endereço"
-                onChange={this.handleInputChange}
-              />
-            </Col>
-            <Col
-              tv={mediumColSize}
-              desk={mediumColSize}
-              tablet={mediumColSize}
-              palm={bigColSize}
-            >
-              <Input
-                name="neighborhood"
-                label="Bairro"
-                hint=""
-                value={neighborhood}
-                placeholder="Digite o bairro"
-                onChange={this.handleInputChange}
-              />
-            </Col>
-            <Col
-              tv={smallColSize}
-              desk={smallColSize}
-              tablet={smallColSize}
-              palm={threeQuarterColSize}
-            >
-              <Input
-                name="city"
-                label="Cidade"
-                value={city}
-                placeholder="Digite a cidade"
-                onChange={this.handleInputChange}
-              />
-            </Col>
-            <Col
-              tv={tinyColSize}
-              desk={tinyColSize}
-              tablet={tinyColSize}
-              palm={oneQuarterColSize}
-            >
-              <Dropdown
-                options={options}
-                name="state"
-                label="Estado"
-                value={state}
-                onChange={this.handleStateChange}
-              />
-            </Col>
-            <Row
-              className={theme.buttonsWrapper}
-              alignEnd
-            >
+              </span>
+            </Row>
+            <Row className={theme.addressForm} overflowVisible>
               <Col
-                tv={oneQuarterColSize}
-                desk={oneQuarterColSize}
-                tablet={oneQuarterColSize}
-                palm={mediumColSize}
+                tv={mediumColSize}
+                desk={mediumColSize}
+                tablet={mediumColSize}
+                palm={bigColSize}
+              >
+                <Input
+                  name="name"
+                  label="Nome do endereço"
+                  value={name}
+                  placeholder="Digite um nome para este endereço"
+                  onChange={this.handleInputChange}
+                />
+              </Col>
+              <Col
+                tv={mediumColSize}
+                desk={mediumColSize}
+                tablet={mediumColSize}
+                palm={bigColSize}
+              >
+                <Input
+                  name="zipcode"
+                  label="CEP"
+                  value={zipcode}
+                  mask="11111-111"
+                  error={zipcodeError}
+                  placeholder="Digite o CEP"
+                  onChange={this.handleZipcodeChange}
+                  onBlur={this.handleZipcodeBlur}
+                />
+              </Col>
+              <Col
+                tv={mediumColSize}
+                desk={mediumColSize}
+                tablet={mediumColSize}
+                palm={bigColSize}
+              >
+                <Input
+                  name="street"
+                  label="Endereço"
+                  value={street}
+                  placeholder="Digite o endereço"
+                  onChange={this.handleInputChange}
+                />
+              </Col>
+              <Col
+                tv={tinyColSize}
+                desk={tinyColSize}
+                tablet={tinyColSize}
+                palm={oneQuarterColSize}
+              >
+                <Input
+                  inputRef={this.handleStreetNumberInputRef}
+                  name="number"
+                  label="Nº"
+                  value={number}
+                  placeholder="Digite o número"
+                  onChange={this.handleInputChange}
+                />
+              </Col>
+              <Col
+                tv={smallColSize}
+                desk={smallColSize}
+                tablet={smallColSize}
+                palm={threeQuarterColSize}
+              >
+                <Input
+                  name="complement"
+                  label="Complemento"
+                  value={complement}
+                  placeholder="Digite o complemento do endereço"
+                  onChange={this.handleInputChange}
+                />
+              </Col>
+              <Col
+                tv={mediumColSize}
+                desk={mediumColSize}
+                tablet={mediumColSize}
+                palm={bigColSize}
+              >
+                <Input
+                  name="neighborhood"
+                  label="Bairro"
+                  hint=""
+                  value={neighborhood}
+                  placeholder="Digite o bairro"
+                  onChange={this.handleInputChange}
+                />
+              </Col>
+              <Col
+                tv={smallColSize}
+                desk={smallColSize}
+                tablet={smallColSize}
+                palm={threeQuarterColSize}
+              >
+                <Input
+                  name="city"
+                  label="Cidade"
+                  value={city}
+                  placeholder="Digite a cidade"
+                  onChange={this.handleInputChange}
+                />
+              </Col>
+              <Col
+                tv={tinyColSize}
+                desk={tinyColSize}
+                tablet={tinyColSize}
+                palm={oneQuarterColSize}
+              >
+                <Dropdown
+                  options={options}
+                  name="state"
+                  label="Estado"
+                  value={state}
+                  onChange={this.handleStateChange}
+                />
+              </Col>
+              <Row
+                className={theme.buttonsWrapper}
                 alignEnd
               >
-                <Button
-                  size={'extra-large'}
-                  fill="outline"
-                  full
-                  onClick={onCancel.bind(this)}
-                  className={theme.actionButton}
+                <Col
+                  tv={oneQuarterColSize}
+                  desk={oneQuarterColSize}
+                  tablet={oneQuarterColSize}
+                  palm={mediumColSize}
+                  alignEnd
                 >
+                  <Button
+                    size={'extra-large'}
+                    fill="outline"
+                    full
+                    onClick={onCancel.bind(this)}
+                    className={theme.actionButton}
+                  >
                   Cancelar
-                </Button>
-              </Col>
-              <Col
-                tv={oneQuarterColSize}
-                desk={oneQuarterColSize}
-                tablet={oneQuarterColSize}
-                palm={mediumColSize}
-              >
-                <Button
-                  full
-                  size={'extra-large'}
-                  onClick={this.onConfirm}
-                  className={theme.actionButton}
+                  </Button>
+                </Col>
+                <Col
+                  tv={oneQuarterColSize}
+                  desk={oneQuarterColSize}
+                  tablet={oneQuarterColSize}
+                  palm={mediumColSize}
                 >
+                  <Button
+                    full
+                    size={'extra-large'}
+                    onClick={this.onConfirm}
+                    className={theme.actionButton}
+                  >
                   Cadastrar
-                </Button>
-              </Col>
+                  </Button>
+                </Col>
+              </Row>
             </Row>
-          </Row>
-        </Grid>
+          </Grid>
+        </Form>
       </div>
     )
   }
