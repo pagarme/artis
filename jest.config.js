@@ -8,6 +8,7 @@ module.exports = {
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.js?(x)',
     '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
+    '<rootDir>/stories/storyshots.test.js',
   ],
   transform: {
     '^.+\\.(js|jsx)$': '<rootDir>/node_modules/babel-jest',

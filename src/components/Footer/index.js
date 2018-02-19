@@ -70,6 +70,7 @@ const Footer = ({
 Footer.defaultProps = {
   theme: {},
   nextButtonDisabled: false,
+  buttonVisible: true,
 }
 
 Footer.propTypes = {
