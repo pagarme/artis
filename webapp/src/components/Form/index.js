@@ -5,32 +5,37 @@ import FormValidation from 'react-vanilla-form'
 
 const applyThemr = themr('UIForm')
 
-const Form = ({ theme, validation, children }) => (
+const Form = ({ children, onChange, onSubmit, theme, validation }) => (
   <FormValidation
-    validation={validation}
     className={theme.form}
     customErrorProp="error"
+    onChange={onChange}
+    onSubmit={onSubmit}
+    validation={validation}
   >
-    { children }
+    {children}
   </FormValidation>
-
 )
 
 Form.propTypes = {
-  theme: PropTypes.shape({
-    form: PropTypes.string,
-  }),
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.string,
     PropTypes.node,
   ]).isRequired,
+  onChange: PropTypes.func,
+  onSubmit: PropTypes.func,
+  theme: PropTypes.shape({
+    form: PropTypes.string,
+  }),
   validation: PropTypes.object, // eslint-disable-line
 }
 
 Form.defaultProps = {
-  validation: {},
+  onChange: () => {},
+  onSubmit: () => {},
   theme: {},
+  validation: {},
 }
 
 export default applyThemr(Form)

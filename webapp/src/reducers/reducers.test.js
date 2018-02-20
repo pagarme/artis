@@ -3,6 +3,7 @@ import reducer from './'
 describe('checkout reduceres', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
+      disableFooterButton: true,
       pageInfo: {},
       screenSize: {
         isBigScreen: true,

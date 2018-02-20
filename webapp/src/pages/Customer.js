@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { Grid, Row, Col, Input, Form } from '../components'
 
 import BillingPage from './Billing'
-import { addPageInfo } from '../actions'
+import { addPageInfo, disableFooterButton } from '../actions'
 
 import {
   requiredValidation,
@@ -31,6 +31,7 @@ class CustomerPage extends Component {
     }
 
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleOnChange = this.handleOnChange.bind(this)
   }
 
   componentWillUnmount () {
@@ -41,6 +42,22 @@ class CustomerPage extends Component {
     const { name, value } = e.target
 
     this.setState({ [name]: value })
+  }
+
+  handleSubmit(event) { // eslint-disable-line
+    console.log('onSubmit customer') // eslint-disable-line
+  }
+
+  handleOnChange(data, errors) { // eslint-disable-line
+    let existsError = false
+
+    if (errors) {
+      Object.keys(errors).forEach((key) => {
+        if (errors[key]) existsError = true
+      })
+    }
+
+    this.props.disableFooterButton(existsError)
   }
 
   render () {
@@ -65,6 +82,8 @@ class CustomerPage extends Component {
           tablet={sizeWithDesktop}
         >
           <Form
+            onSubmit={this.handleSubmit}
+            onChange={this.handleOnChange}
             validation={{
               name: [
                 requiredValidation,
@@ -89,6 +108,7 @@ class CustomerPage extends Component {
               ],
             }}
           >
+            <button>Enviar</button>
             <Row>
               <Col
                 tv={defaultColSize}
@@ -199,6 +219,7 @@ CustomerPage.propTypes = {
     phoneNumber: PropTypes.string,
   }),
   handlePageChange: PropTypes.func.isRequired,
+  disableFooterButton: PropTypes.func.isRequired,
 }
 
 CustomerPage.defaultProps = {
@@ -216,6 +237,7 @@ const mapDispatchToProps = dispatch => ({
   handlePageChange: (page, pageInfo) => {
     dispatch(addPageInfo({ page, pageInfo }))
   },
+  disableFooterButton: isDisable => dispatch(disableFooterButton(isDisable)),
 })
 
 

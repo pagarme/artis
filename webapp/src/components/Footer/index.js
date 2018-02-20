@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import LockIcon from 'react-icons/lib/md/lock-outline'
 import { themr } from 'react-css-themr'
+import { connect } from 'react-redux'
 
 import { Grid, Row, Col } from '../Grid'
 import Button from '../Button'
@@ -19,6 +20,7 @@ const Footer = ({
   nextButtonDisabled,
   theme,
   buttonVisible,
+  isDisable,
 }) => (
   <footer>
     <Grid>
@@ -32,7 +34,7 @@ const Footer = ({
         >
           <Button
             hidden={nextButtonDisabled || !buttonVisible}
-            disabled={nextButtonDisabled}
+            disabled={isDisable}
             size="extra-large"
             relevance="normal"
             onClick={buttonClick}
@@ -85,6 +87,11 @@ Footer.propTypes = {
   companyName: PropTypes.string.isRequired,
   nextButtonDisabled: PropTypes.bool,
   buttonVisible: PropTypes.bool.isRequired,
+  isDisable: PropTypes.bool.isRequired,
 }
 
-export default applyThemr(Footer)
+const mapToProps = ({ disableFooterButton }) => ({
+  isDisable: disableFooterButton,
+})
+
+export default connect(mapToProps)(applyThemr(Footer))
