@@ -61,12 +61,7 @@ class CustomerPage extends Component {
   }
 
   render () {
-    const {
-      name,
-      email,
-      documentNumber,
-      phoneNumber,
-    } = this.state
+    const name = 'jose'
 
     const { theme } = this.props
 
@@ -84,6 +79,9 @@ class CustomerPage extends Component {
           <Form
             onSubmit={this.handleSubmit}
             onChange={this.handleOnChange}
+            data={{
+              name,
+            }}
             validation={{
               name: [
                 requiredValidation,
@@ -130,9 +128,7 @@ class CustomerPage extends Component {
                   name="name"
                   label="Nome"
                   hint=""
-                  value={name}
                   placeholder="Digite seu nome"
-                  onChange={this.handleInputChange}
                 />
               </Col>
             </Row>
@@ -147,9 +143,7 @@ class CustomerPage extends Component {
                   name="email"
                   label="E-mail"
                   hint=""
-                  value={email}
                   placeholder="Digite seu e-mail"
-                  onChange={this.handleInputChange}
                 />
               </Col>
             </Row>
@@ -165,9 +159,7 @@ class CustomerPage extends Component {
                   label="CPF"
                   hint=""
                   mask="111.111.111-11"
-                  value={documentNumber}
                   placeholder="Digite seu CPF"
-                  onChange={this.handleInputChange}
                 />
               </Col>
             </Row>
@@ -183,9 +175,7 @@ class CustomerPage extends Component {
                   label="DDD + Telefone"
                   hint=""
                   mask="(11) 11111-1111"
-                  value={phoneNumber}
                   placeholder="Digite seu telefone"
-                  onChange={this.handleInputChange}
                 />
               </Col>
             </Row>

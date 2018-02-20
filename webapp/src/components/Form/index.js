@@ -5,13 +5,14 @@ import FormValidation from 'react-vanilla-form'
 
 const applyThemr = themr('UIForm')
 
-const Form = ({ children, onChange, onSubmit, theme, validation }) => (
+const Form = ({ children, onChange, onSubmit, theme, validation, ...other }) => (
   <FormValidation
     className={theme.form}
     customErrorProp="error"
     onChange={onChange}
     onSubmit={onSubmit}
     validation={validation}
+    {...other}
   >
     {children}
   </FormValidation>
