@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
+import { connect } from 'react-redux'
+import { omit } from 'ramda'
 
 import { Grid, Row, Col } from '../components/Grid'
 import Input from '../components/Input'
 import Dropdown from '../components/Dropdown'
+import { addPageInfo } from '../actions'
 
 import options from '../utils/data/states'
 import getAddress from '../utils/helpers/getAddress'
@@ -33,7 +36,10 @@ class BillingPage extends Component {
   }
 
   componentWillUnmount () {
-    this.props.handlePageChange(this.state, 'billing')
+    this.props.handlePageChange(
+      'billing',
+      omit(['zipcodeError'], this.state)
+    )
   }
 
   handleStateChange (value) {
@@ -236,5 +242,16 @@ BillingPage.defaultProps = {
   billing: {},
 }
 
-export default applyThemr(BillingPage)
+const mapStateToProps = ({ screenSize, pageInfo }) => ({
+  isBigScreen: screenSize.isBigScreen,
+  billing: pageInfo.billing,
+})
+
+const mapDispatchToProps = dispatch => ({
+  handlePageChange: (page, pageInfo) => {
+    dispatch(addPageInfo({ page, pageInfo }))
+  },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(applyThemr(BillingPage))
 

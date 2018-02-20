@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import ReactGA from 'react-ga'
+import copy from 'copy-to-clipboard'
+import { connect } from 'react-redux'
 
 import { Row, Col } from '../Grid'
+import EmailForm from '../../containers/EmailForm'
+import ActionList from '../ActionList'
 
 const applyThemr = themr('UISuccessInfo')
 
@@ -16,69 +21,191 @@ const paymentInfo = {
   payment: '2x vezes sem juros com 20% de desconto na primeira parcela',
 }
 
-const SuccessInfo = ({ theme, isBigScreen }) => (
-  <React.Fragment>
-    <Row className={theme.title}>
-      <h4 className={theme.success}>
-        Seu pagamento foi concluído com sucesso
-      </h4>
-    </Row>
-    {isBigScreen && <Row>
-      <Col
-        tv={mediumColSize}
-        desk={mediumColSize}
-        tablet={mediumColSize}
-      >
-        <Row>
-          <div>
-            <div className={theme.field}>Nome</div>
-            <div className={theme.value}>{paymentInfo.name}</div>
-          </div>
+const handleCopyBarCode = (barcode) => {
+  ReactGA.event({
+    category: 'Boleto',
+    action: 'Copy Bar Code',
+  })
+
+  copy(barcode)
+}
+
+class SuccessInfo extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      showBoletoOptions: false,
+    }
+
+    this.toggleEmailForm = this.toggleEmailForm.bind(this)
+  }
+
+  toggleEmailForm () {
+    this.setState(({ showBoletoOptions }) =>
+      ({ showBoletoOptions: !showBoletoOptions }))
+  }
+
+  renderBoleto () {
+    const {
+      theme,
+      barcode,
+      isBigScreen,
+    } = this.props
+
+    const {
+      showBoletoOptions,
+    } = this.state
+
+    return (
+      <React.Fragment>
+        <Row className={theme.title}>
+          <h4 className={theme.success}>
+            Seu pagamento foi concluído com sucesso
+          </h4>
         </Row>
-        <Row>
-          <div>
-            <div className={theme.field}>Valor pago</div>
-            <div className={theme.value}>{paymentInfo.amount}</div>
-          </div>
+        {
+          isBigScreen &&
+          <Row>
+            <Col
+              tv={mediumColSize}
+              desk={mediumColSize}
+              tablet={mediumColSize}
+            >
+              <Row>
+                <div>
+                  <div className={theme.field}>Nome</div>
+                  <div className={theme.value}>{paymentInfo.name}</div>
+                </div>
+              </Row>
+              <Row>
+                <div>
+                  <div className={theme.field}>Valor pago</div>
+                  <div className={theme.value}>{paymentInfo.amount}</div>
+                </div>
+              </Row>
+            </Col>
+            <Col
+              tv={mediumColSize}
+              desk={mediumColSize}
+              tablet={mediumColSize}
+            >
+              <Row>
+                <div>
+                  <div className={theme.field}>Endereço de entrega</div>
+                  <div className={
+                    classNames(
+                      theme.value,
+                      theme.mediumSize,
+                    )}
+                  >{paymentInfo.address}</div>
+                </div>
+              </Row>
+            </Col>
+          </Row>
+        }
+        {
+          showBoletoOptions
+            ? <EmailForm
+              handleClose={this.toggleEmailForm}
+            />
+            : <ActionList buttons={[
+              {
+                text: 'Salvar arquivo',
+              },
+              {
+                text: 'Encaminhar por e-mail',
+                onClick: this.toggleEmailForm,
+              },
+              {
+                text: 'Copiar código de barras',
+                onClick: handleCopyBarCode.bind(this, barcode),
+              },
+            ]}
+            />
+        }
+      </React.Fragment>
+    )
+  }
+
+  renderCreditcard () {
+    const {
+      theme,
+      isBigScreen,
+    } = this.props
+
+    return (
+      <React.Fragment>
+        <Row className={theme.title}>
+          <h4 className={theme.success}>
+            Seu pagamento foi concluído com sucesso
+          </h4>
         </Row>
-        <Row>
-          <div>
-            <div className={theme.field}>Cartão</div>
-            <div className={theme.value}>{paymentInfo.method}</div>
-          </div>
-        </Row>
-      </Col>
-      <Col
-        tv={mediumColSize}
-        desk={mediumColSize}
-        tablet={mediumColSize}
-      >
-        <Row>
-          <div>
-            <div className={theme.field}>Endereço de entrega</div>
-            <div className={
-              classNames(
-                theme.value,
-                theme.mediumSize,
-              )}
-            >{paymentInfo.address}</div>
-          </div>
-        </Row>
-        <Row>
-          <div>
-            <div className={theme.field}>Quantidade de parcelas</div>
-            <div className={
-              classNames(
-                theme.value,
-                theme.mediumSize,
-              )}
-            >{paymentInfo.payment}</div>
-          </div>
-        </Row>
-      </Col>
-    </Row>}
-  </React.Fragment>
-)
+        {
+          isBigScreen &&
+          <Row>
+            <Col
+              tv={mediumColSize}
+              desk={mediumColSize}
+              tablet={mediumColSize}
+            >
+              <Row>
+                <div>
+                  <div className={theme.field}>Nome</div>
+                  <div className={theme.value}>{paymentInfo.name}</div>
+                </div>
+              </Row>
+              <Row>
+                <div>
+                  <div className={theme.field}>Valor pago</div>
+                  <div className={theme.value}>{paymentInfo.amount}</div>
+                </div>
+              </Row>
+              <Row>
+                <div>
+                  <div className={theme.field}>Cartão</div>
+                  <div className={theme.value}>{paymentInfo.method}</div>
+                </div>
+              </Row>
+            </Col>
+            <Col
+              tv={mediumColSize}
+              desk={mediumColSize}
+              tablet={mediumColSize}
+            >
+              <Row>
+                <div>
+                  <div className={theme.field}>Endereço de entrega</div>
+                  <div className={
+                    classNames(
+                      theme.value,
+                      theme.mediumSize,
+                    )}
+                  >{paymentInfo.address}</div>
+                </div>
+              </Row>
+              <Row>
+                <div>
+                  <div className={theme.field}>Quantidade de parcelas</div>
+                  <div className={
+                    classNames(
+                      theme.value,
+                      theme.mediumSize,
+                    )}
+                  >{paymentInfo.payment}</div>
+                </div>
+              </Row>
+            </Col>
+          </Row>
+        }
+      </React.Fragment>
+    )
+  }
+
+  render () {
+    return this.props.barcode ? this.renderBoleto() : this.renderCreditcard()
+  }
+}
 
 SuccessInfo.propTypes = {
   theme: PropTypes.shape({
@@ -89,10 +216,16 @@ SuccessInfo.propTypes = {
     title: PropTypes.string,
   }),
   isBigScreen: PropTypes.bool.isRequired,
+  barcode: PropTypes.string,
 }
 
 SuccessInfo.defaultProps = {
   theme: {},
+  barcode: '',
 }
 
-export default applyThemr(SuccessInfo)
+const mapStateToProps = ({ screenSize }) => ({
+  isBigScreen: screenSize.isBigScreen,
+})
+
+export default connect(mapStateToProps)(applyThemr(SuccessInfo))

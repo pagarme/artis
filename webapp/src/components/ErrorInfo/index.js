@@ -2,6 +2,7 @@ import React from 'react'
 import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { connect } from 'react-redux'
 
 import { Row } from '../Grid'
 
@@ -59,4 +60,8 @@ ErrorInfo.defaultProps = {
   theme: {},
 }
 
-export default applyThemr(ErrorInfo)
+const mapStateToProps = ({ screenSize }) => ({
+  isBigScreen: screenSize.isBigScreen,
+})
+
+export default connect(mapStateToProps)(applyThemr(ErrorInfo))
