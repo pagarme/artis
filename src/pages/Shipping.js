@@ -12,7 +12,7 @@ import Button from '../components/Button'
 import AddressOptions from '../components/AddressOptions'
 
 import options from '../utils/data/states'
-import { addPageInfo, showFooterButton } from '../actions'
+import { addPageInfo, showFooterButton, showProgressBar } from '../actions'
 
 const largeColSize = 12
 const mediumColSize = 6
@@ -66,6 +66,7 @@ class ShippingPage extends Component {
   toggleOpenAddressForm () {
     const openAddressForm = !this.state.openAddressForm
 
+    this.props.progressBarVisible(!openAddressForm)
     this.props.footerButtonVisible(!openAddressForm)
     this.setState({ openAddressForm })
   }
@@ -154,7 +155,8 @@ ShippingPage.propTypes = {
     zipcode: PropTypes.string,
   })),
   title: PropTypes.string.isRequired,
-  footerButtonVisible: PropTypes.func,
+  progressBarVisible: PropTypes.func.isRequired,
+  footerButtonVisible: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
 }
 
@@ -163,7 +165,6 @@ ShippingPage.defaultProps = {
   shipping: {},
   addresses: [],
   footerButtonVisible: null,
-  handleProgressBar: null,
 }
 
 const mapStateToProps = ({ pageInfo }) => ({
@@ -176,6 +177,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addPageInfo({ page, pageInfo }))
   },
   footerButtonVisible: isVisible => dispatch(showFooterButton(isVisible)),
+  progressBarVisible: isVisible => dispatch(showProgressBar(isVisible)),
 })
 
 

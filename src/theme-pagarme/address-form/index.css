@@ -32,13 +32,6 @@
   padding-bottom: 0;
 }
 
-@media (--media-palm) {
-
-  .actionButton {
-    padding: 17px 24px;
-  }
-}
-
 @media (--media-tablet) {
 
   .actionButton {
@@ -48,9 +41,14 @@
 
 @media (--media-palm) {
 
+  .actionButton {
+    padding: 17px 24px;
+  }
+
   .addressForm {
     border: 0;
     padding: 0;
+    box-shadow: none;
   }
 
   .addressForm > * {
