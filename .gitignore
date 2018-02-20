@@ -2,3 +2,26 @@
 Thumbs.db
 .vs
 .nyc_output
+
+# dependencies
+/node_modules
+
+# testing
+/coverage
+/screenshots
+
+# production
+/build
+
+# misc
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+browserstack.err
+local.log
