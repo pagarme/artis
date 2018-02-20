@@ -3,9 +3,9 @@ const applyCustomMethods = require('../../utils/applyCustomMethods')
 module.exports = (wd, init, next, catchError) => {
   applyCustomMethods(wd)
 
-  const browser = init('desktop/allFlow-Boleto')
+  const browser = init('desktop/allFlow-Creditcard')
 
-  const paymentType = 'boleto'
+  const paymentType = 'creditcard'
   const footerBtn = 'footer-confirm-btn'
 
   browser

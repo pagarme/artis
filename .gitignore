@@ -26,4 +26,4 @@ yarn-error.log*
 browserstack.err
 local.log
 
-config/robrowser/auth.js
+/config/robrowser/auth.js

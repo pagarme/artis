@@ -3,14 +3,15 @@ const applyCustomMethods = require('../../utils/applyCustomMethods')
 module.exports = (wd, init, next, catchError) => {
   applyCustomMethods(wd)
 
-  const browser = init('desktop/allFlow-Boleto')
+  const browser = init('mobile/allFlow-Creditcard')
 
-  const paymentType = 'boleto'
+  const paymentType = 'creditcard'
   const footerBtn = 'footer-confirm-btn'
 
   browser
     .saveScreenshot('1_initializing.png')
     .fillCustomerForm(2)
+    .buttonClick(footerBtn)
     .fillBillingForm(3)
     .buttonClick(footerBtn)
     .fillShippingForm(4)
