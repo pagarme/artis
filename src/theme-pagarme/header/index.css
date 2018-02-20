@@ -5,6 +5,7 @@
 .back {
   font-size: var(--header-button-font-size);
   padding: 0;
+  margin-top: 22px;
 }
 
 .logo {
