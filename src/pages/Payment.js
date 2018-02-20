@@ -124,7 +124,7 @@ class PaymentPage extends Component {
 
     return (
       <Grid className={theme.page}>
-        <Row>
+        <Row overflowVisible>
           <Col
             tv={mediumColSize}
             desk={mediumColSize}
@@ -149,6 +149,7 @@ class PaymentPage extends Component {
             desk={mediumColSize}
             tablet={mediumColSize}
             palm={defaultColSize}
+            overflowVisible
           >
             <Row>
               <Input
@@ -205,7 +206,7 @@ class PaymentPage extends Component {
             </Row>
             {
               installmentsOptions.length &&
-              <Row>
+              <Row overflowVisible>
                 <Dropdown
                   options={installmentsOptions}
                   name="installments"
