@@ -1,7 +1,7 @@
 @import "./properties.css";
 
 .page {
-  margin: var(--page-margin);
+  margin: var(--page-margin-desktop);
 }
 
 .noMarginTop {
@@ -20,6 +20,10 @@
 }
 
 @media (--media-palm) {
+
+  .page {
+    margin: var(--page-margin-mobile);
+  }
 
   .title {
     display: none;
