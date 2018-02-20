@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Checkout | Custom Integration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a id="switch" href="/simple.html">Switch to simple</button>
+  </body>
+  <script>
+    const key = 'SOME_KEY'
+
+    const configs = {
+      companyName: 'Pagar.me',
+      image: './pagarme.png',
+      primaryColor: '323232',
+      secondaryColor: '323232',
+      postback: 'http://pagar.me',
+      onSuccess: () => {},
+      onError: () => {},
+      onClose: () => {},
+    }
+
+    const formData = {
+      customer: {
+        name: 'Dan Abramov',
+        documentNumber: '44455522299',
+        email: 'mercurio@pagar.me',
+        phoneNumber: '1130442277',
+      },
+      billing: {
+        street: 'Rua Fidêncio Ramos',
+        number: '308',
+        complement: 'Pagar.me',
+        neighborhood: 'Vila Olimpia',
+        city: 'São Paulo',
+        state: 'SP',
+        zipcode: '04551010',
+      },
+      shipping: {
+        street: 'Rua Fidêncio Ramos',
+        number: '308',
+        complement: 'Pagar.me',
+        neighborhood: 'Vila Olimpia',
+        city: 'São Paulo',
+        state: 'SP',
+        zipcode: '04551010',
+      },
+      items: [
+        {
+          description: 'Red pill',
+          amount: 5000,
+          quantity: 1,
+          tangible: true,
+        },
+      ],
+    }
+
+    const transaction = {
+      amount: 5000,
+      paymentMethods: [
+        {
+          type: 'creditcard',
+          title: 'Cartão de Crédito',
+          subtitle: 'Parcele em até 6x!',
+          statementDescriptor: 'Use this field to add instructions',
+          maxInstallments: 6,
+          freeInstallments: 3,
+          defaultInstallments: 2,
+          interestRate: 25,
+          brands: [
+            'elo',
+            'amex',
+            'diners',
+            'jcb',
+            'visa',
+            'mastercard',
+          ],
+        },
+        {
+          type: 'boleto',
+          title: 'Boleto',
+          subtitle: '25% de Desconto!',
+          instructions: 'Use this field to add instructions',
+          discount: {
+            type: 'percentage',
+            value: 25,
+          },
+          expirationAt: '2018-02-30',
+        },
+      ],
+    }
+
+    const open = Checkout({
+      key,
+      configs,
+      formData,
+      transaction,
+    })
+
+    open()
+  </script>
+</html>
