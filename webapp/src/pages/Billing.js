@@ -97,10 +97,6 @@ class BillingPage extends Component {
       .catch(handleError)
   }
 
-  handleSubmit(event) { // eslint-disable-line
-    console.log('onSubmit billing') // eslint-disable-line
-  }
-
   render () {
     const {
       zipcode,
@@ -122,7 +118,6 @@ class BillingPage extends Component {
         })}
       >
         <Form
-          onSubmit={this.handleSubmit}
           validation={{
             zipcode: [
               requiredValidation,
@@ -133,7 +128,7 @@ class BillingPage extends Component {
               requiredValidation,
               maxLengthValidation(100),
             ],
-            streetNumber: [
+            number: [
               requiredValidation,
               numbersValidation,
               maxLengthValidation(5),
@@ -156,8 +151,19 @@ class BillingPage extends Component {
               lettersValidation,
             ],
           }}
+          data={{
+            zipcode,
+            street,
+            number,
+            complement,
+            neighborhood,
+            city,
+            state,
+          }}
         >
-          <input type="submit" />
+          <button>
+            Seloko...
+          </button>
           <Row className={theme.title}>
             {this.props.title}
           </Row>
@@ -179,7 +185,7 @@ class BillingPage extends Component {
               label="Rua"
               value={street}
               placeholder="Digite o endereço"
-              onChange={this.handleInputChange}
+
             />
           </Row>
           <Row>
@@ -196,7 +202,7 @@ class BillingPage extends Component {
                 hint=""
                 value={number}
                 placeholder="Digite o número"
-                onChange={this.handleInputChange}
+
               />
             </Col>
             <Col
@@ -211,7 +217,7 @@ class BillingPage extends Component {
                 hint=""
                 value={complement}
                 placeholder="Digite o complemento do endereço"
-                onChange={this.handleInputChange}
+
               />
             </Col>
           </Row>
@@ -221,7 +227,7 @@ class BillingPage extends Component {
               label="Bairro"
               value={neighborhood}
               placeholder="Digite o bairro"
-              onChange={this.handleInputChange}
+
             />
           </Row>
           <Row overflowVisible>
@@ -236,7 +242,7 @@ class BillingPage extends Component {
                 label="Cidade"
                 value={city}
                 placeholder="Digite a cidade"
-                onChange={this.handleInputChange}
+
               />
             </Col>
             <Col
@@ -246,6 +252,11 @@ class BillingPage extends Component {
               palm={smallColSize}
               overflowVisible
             >
+              <Input
+                name="state"
+                type="hidden"
+                value={state}
+              />
               <Dropdown
                 options={options}
                 id="state"
