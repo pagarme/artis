@@ -12,6 +12,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -26,6 +27,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -40,6 +42,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={true}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -49,6 +52,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={true}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -63,6 +67,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -72,6 +77,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -81,6 +87,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -90,6 +97,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -99,6 +107,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -113,6 +122,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -140,6 +150,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -172,6 +183,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className="undefined"
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -186,6 +198,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -195,6 +208,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -204,6 +218,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -218,6 +233,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -227,6 +243,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -236,6 +253,7 @@ exports[`Storyshots Buttons defaultTheme 1`] = `
       className=""
       disabled={false}
       hidden={false}
+      id={null}
       onClick={null}
       type="button"
     >
@@ -267,6 +285,7 @@ exports[`Storyshots Footer Sample 1`] = `
   <footer>
     <div
       className=""
+      id={null}
     >
       <div
         className=""
@@ -278,6 +297,7 @@ exports[`Storyshots Footer Sample 1`] = `
             className=""
             disabled={false}
             hidden={false}
+            id="footer-confirm-btn"
             onClick={[Function]}
             type="button"
           >
@@ -1396,6 +1416,7 @@ exports[`Storyshots Grid Column sizes 1`] = `
 >
   <div
     className=""
+    id={null}
   >
     <div
       className=""
@@ -1623,6 +1644,7 @@ exports[`Storyshots Grid Flexible 1`] = `
 >
   <div
     className=""
+    id={null}
   >
     <div
       className=""
@@ -1724,6 +1746,7 @@ exports[`Storyshots Grid Proportional sizes 1`] = `
 >
   <div
     className=""
+    id={null}
   >
     <div
       className=""
@@ -2151,6 +2174,7 @@ exports[`Storyshots Grid Responsive 1`] = `
 >
   <div
     className=""
+    id={null}
   >
     <div
       className=""
@@ -2330,6 +2354,7 @@ exports[`Storyshots Grid Size combinations 1`] = `
 >
   <div
     className=""
+    id={null}
   >
     <div
       className=""
@@ -2536,6 +2561,7 @@ exports[`Storyshots Header Sample 1`] = `
   >
     <div
       className=""
+      id={null}
     >
       <div
         className=""
@@ -2547,6 +2573,7 @@ exports[`Storyshots Header Sample 1`] = `
             className=""
             disabled={false}
             hidden={false}
+            id={null}
             onClick={null}
             type="button"
           >
@@ -2587,6 +2614,7 @@ exports[`Storyshots Header Sample 1`] = `
             className=""
             disabled={false}
             hidden={false}
+            id={null}
             onClick={[Function]}
             type="button"
           >
@@ -2621,6 +2649,7 @@ exports[`Storyshots Progress Bar 3 steps 1`] = `
 Array [
   <div
     className=""
+    id={null}
   >
     <div
       className=""
@@ -2696,7 +2725,8 @@ exports[`Storyshots Switch Default Theme 1`] = `
     >
       <label
         className={undefined}
-        htmlFor="Cartão de Crédito"
+        htmlFor="creditcard-input"
+        id="creditcard"
         style={
           Object {
             "maxWidth": "50%",
@@ -2705,26 +2735,27 @@ exports[`Storyshots Switch Default Theme 1`] = `
       >
         <input
           checked={true}
-          id="Cartão de Crédito"
+          id="creditcard-input"
           name={undefined}
           onChange={[Function]}
           type="radio"
-          value="creaditcard"
+          value="creditcard"
         />
-        <span
+        <div
           className={undefined}
         >
-          <h1>
+          <h3>
             Cartão de Crédito
-          </h1>
+          </h3>
           <p>
             Em até 2x sem juros com 20% de desconto na primeira parcela
           </p>
-        </span>
+        </div>
       </label>
       <label
         className={undefined}
-        htmlFor="Boleto bancário"
+        htmlFor="boleto-input"
+        id="boleto"
         style={
           Object {
             "maxWidth": "50%",
@@ -2733,22 +2764,22 @@ exports[`Storyshots Switch Default Theme 1`] = `
       >
         <input
           checked={false}
-          id="Boleto bancário"
+          id="boleto-input"
           name={undefined}
           onChange={[Function]}
           type="radio"
-          value="bankbill"
+          value="boleto"
         />
-        <span
+        <div
           className={undefined}
         >
-          <h1>
+          <h3>
             Boleto bancário
-          </h1>
+          </h3>
           <p>
             10% de desconto
           </p>
-        </span>
+        </div>
       </label>
     </div>
     <div
@@ -2767,7 +2798,8 @@ exports[`Storyshots Switch Default Theme 1`] = `
     >
       <label
         className={undefined}
-        htmlFor="Cartão de Crédito"
+        htmlFor="creditcard-input"
+        id="creditcard"
         style={
           Object {
             "maxWidth": "25%",
@@ -2776,26 +2808,27 @@ exports[`Storyshots Switch Default Theme 1`] = `
       >
         <input
           checked={true}
-          id="Cartão de Crédito"
+          id="creditcard-input"
           name={undefined}
           onChange={[Function]}
           type="radio"
-          value="creaditcard"
+          value="creditcard"
         />
-        <span
+        <div
           className={undefined}
         >
-          <h1>
+          <h3>
             Cartão de Crédito
-          </h1>
+          </h3>
           <p>
             Em até 2x sem juros com 20% de desconto na primeira parcela
           </p>
-        </span>
+        </div>
       </label>
       <label
         className={undefined}
-        htmlFor="Voucher"
+        htmlFor="voucher-input"
+        id="voucher"
         style={
           Object {
             "maxWidth": "25%",
@@ -2804,26 +2837,27 @@ exports[`Storyshots Switch Default Theme 1`] = `
       >
         <input
           checked={false}
-          id="Voucher"
+          id="voucher-input"
           name={undefined}
           onChange={[Function]}
           type="radio"
           value="voucher"
         />
-        <span
+        <div
           className={undefined}
         >
-          <h1>
+          <h3>
             Voucher
-          </h1>
+          </h3>
           <p>
             20% de desconto
           </p>
-        </span>
+        </div>
       </label>
       <label
         className={undefined}
-        htmlFor="Boleto bancário"
+        htmlFor="bankbill-input"
+        id="bankbill"
         style={
           Object {
             "maxWidth": "25%",
@@ -2832,26 +2866,27 @@ exports[`Storyshots Switch Default Theme 1`] = `
       >
         <input
           checked={false}
-          id="Boleto bancário"
+          id="bankbill-input"
           name={undefined}
           onChange={[Function]}
           type="radio"
           value="bankbill"
         />
-        <span
+        <div
           className={undefined}
         >
-          <h1>
+          <h3>
             Boleto bancário
-          </h1>
+          </h3>
           <p>
             10% de desconto
           </p>
-        </span>
+        </div>
       </label>
       <label
         className={undefined}
-        htmlFor="Bitcoin"
+        htmlFor="bitcoin-input"
+        id="bitcoin"
         style={
           Object {
             "maxWidth": "25%",
@@ -2860,22 +2895,22 @@ exports[`Storyshots Switch Default Theme 1`] = `
       >
         <input
           checked={false}
-          id="Bitcoin"
+          id="bitcoin-input"
           name={undefined}
           onChange={[Function]}
           type="radio"
           value="bitcoin"
         />
-        <span
+        <div
           className={undefined}
         >
-          <h1>
+          <h3>
             Bitcoin
-          </h1>
+          </h3>
           <p>
             20% de desconto
           </p>
-        </span>
+        </div>
       </label>
     </div>
     <div

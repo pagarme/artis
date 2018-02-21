@@ -7,7 +7,7 @@ describe('Switch', () => {
   it('should mount with two options', () => {
     const paymentOptions = [
       {
-        name: 'creaditcard',
+        name: 'creditcard',
         title: 'Cartão de Crédito',
         subtitle: 'Em até 2x sem juros com 20% de desconto na primeira parcela',
       },
@@ -39,7 +39,7 @@ describe('Switch', () => {
   it('should mount with more than two options basic', () => {
     const paymentOptions = [
       {
-        name: 'creaditcard',
+        name: 'creditcard',
         title: 'Cartão de Crédito',
         subtitle: 'Em até 2x sem juros com 20% de desconto na primeira parcela',
       },

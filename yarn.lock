@@ -54,11 +54,11 @@
     global "^4.3.2"
     prop-types "^15.5.10"
 
-"@storybook/addon-storyshots@3.3.13":
-  version "3.3.13"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-storyshots/-/addon-storyshots-3.3.13.tgz#a441565e0f8fc550d87658209d2ded8f238c1c28"
+"@storybook/addon-storyshots@^3.3.14":
+  version "3.3.14"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-storyshots/-/addon-storyshots-3.3.14.tgz#7bef8e2eb5b62c4294ea016f4cfc5af39ebf5442"
   dependencies:
-    "@storybook/channels" "^3.3.13"
+    "@storybook/channels" "^3.3.14"
     babel-runtime "^6.26.0"
     glob "^7.1.2"
     global "^4.3.2"
@@ -82,7 +82,7 @@
     global "^4.3.2"
     json-stringify-safe "^5.0.1"
 
-"@storybook/channels@^3.3.13", "@storybook/channels@^3.3.14":
+"@storybook/channels@^3.3.14":
   version "3.3.14"
   resolved "https://registry.yarnpkg.com/@storybook/channels/-/channels-3.3.14.tgz#b43f767f7775bb17cec5ab0696f918a475043df9"
 
