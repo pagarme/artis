@@ -5,7 +5,6 @@ import 'core-js/es6/promise'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ThemeProvider } from 'react-css-themr'
 import ReactGA from 'react-ga'
 import { ThemeProvider } from 'react-css-themr'
 import { Provider } from 'react-redux'
@@ -20,13 +19,6 @@ import createStore from './store'
 import theme from './theme-pagarme'
 
 ReactGA.initialize('UA-113290482-1')
-
-const TempErrorComponent = () => (
-  <div>
-    <h1>Catch Exception</h1>
-    <a target="blank" href="https://sentry.io/share/issue/efdacacc55724040930018482a612de9/">See the log!</a>
-  </div>
-)
 
 const render = apiData => () => {
   const clientTarget = apiData.configs.target
