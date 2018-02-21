@@ -12,7 +12,13 @@
   text-transform: uppercase;
   letter-spacing: 1.4px;
   justify-content: center;
+  display: flex;
+  align-items: center;
   padding-bottom: var(--page-title-padding-bottom);
+}
+
+.titleIcon {
+  padding: 0 9px 0 0;
 }
 
 @media (--media-palm) {

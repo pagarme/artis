@@ -6,7 +6,10 @@ import { connect } from 'react-redux'
 import { Grid, Row, Col, Input } from '../components'
 
 import BillingPage from './Billing'
+
 import { addPageInfo } from '../actions'
+
+import titleIcon from '../images/avatar-line.svg'
 
 const applyThemr = themr('UICustomerPage')
 const defaultColSize = 12
@@ -55,6 +58,7 @@ class CustomerPage extends Component {
           tablet={sizeWithDesktop}
         >
           <Row className={theme.title} alignCenter>
+            <img src={titleIcon} alt="Customer icon" className={theme.titleIcon} />
             { this.props.title }
           </Row>
           <Row>
@@ -114,6 +118,7 @@ CustomerPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
+    titleIcon: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
   isBigScreen: PropTypes.bool.isRequired,

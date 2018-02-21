@@ -7,11 +7,16 @@ import { connect } from 'react-redux'
 
 import AddressForm from '../containers/AddressForm'
 
-import { Grid, Row, Col } from '../components/Grid'
-import Button from '../components/Button'
-import AddressOptions from '../components/AddressOptions'
+import {
+  Grid,
+  Row,
+  Col,
+  Button,
+  AddressOptions,
+} from '../components'
 
 import options from '../utils/data/states'
+
 import { addPageInfo, showFooterButton, showProgressBar } from '../actions'
 
 const largeColSize = 12
