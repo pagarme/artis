@@ -19,7 +19,9 @@ function requiredValidation (value) {
 }
 
 function lettersValidation (value) {
-  return validator.isAlpha(value, locale) ? '' : 'Esse campo só permite letras'
+  const valueToValidate = value ? value.replace(/ /g, '') : ''
+
+  return validator.isAlpha(valueToValidate, locale) ? '' : 'Esse campo só permite letras'
 }
 
 function numbersValidation (value) {

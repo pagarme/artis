@@ -97,6 +97,10 @@ class BillingPage extends Component {
       .catch(handleError)
   }
 
+  handleSubmit(event) { // eslint-disable-line
+    console.log('onSubmit billing') // eslint-disable-line
+  }
+
   render () {
     const {
       zipcode,
@@ -118,6 +122,7 @@ class BillingPage extends Component {
         })}
       >
         <Form
+          onSubmit={this.handleSubmit}
           validation={{
             zipcode: [
               requiredValidation,
@@ -152,6 +157,7 @@ class BillingPage extends Component {
             ],
           }}
         >
+          <input type="submit" />
           <Row className={theme.title}>
             {this.props.title}
           </Row>

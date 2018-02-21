@@ -30,18 +30,11 @@ class CustomerPage extends Component {
       ...props.customer,
     }
 
-    this.handleInputChange = this.handleInputChange.bind(this)
     this.handleOnChange = this.handleOnChange.bind(this)
   }
 
   componentWillUnmount () {
     this.props.handlePageChange('customer', this.state)
-  }
-
-  handleInputChange (e) {
-    const { name, value } = e.target
-
-    this.setState({ [name]: value })
   }
 
   handleSubmit(event) { // eslint-disable-line
@@ -61,7 +54,12 @@ class CustomerPage extends Component {
   }
 
   render () {
-    const name = 'jose'
+    const {
+      name,
+      email,
+      documentNumber,
+      phoneNumber,
+    } = this.state
 
     const { theme } = this.props
 
@@ -79,9 +77,6 @@ class CustomerPage extends Component {
           <Form
             onSubmit={this.handleSubmit}
             onChange={this.handleOnChange}
-            data={{
-              name,
-            }}
             validation={{
               name: [
                 requiredValidation,
@@ -102,11 +97,17 @@ class CustomerPage extends Component {
               phoneNumber: [
                 requiredValidation,
                 phoneValidation,
-                maxLengthValidation(9),
+                maxLengthValidation(11),
               ],
             }}
+            data={{
+              name,
+              email,
+              documentNumber,
+              phoneNumber,
+            }}
           >
-            <button>Enviar</button>
+            <input type="submit" />
             <Row>
               <Col
                 tv={defaultColSize}
