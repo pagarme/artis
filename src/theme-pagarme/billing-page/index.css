@@ -4,6 +4,10 @@
   margin: var(--page-margin-desktop);
 }
 
+.titleIcon {
+  padding: 0 9px 0 0;
+}
+
 .noMarginTop {
   margin-top: 0;
 }
@@ -16,6 +20,7 @@
   text-transform: uppercase;
   letter-spacing: 1.4px;
   justify-content: center;
+  align-items: center;
   padding-bottom: var(--page-title-padding-bottom);
 }
 
