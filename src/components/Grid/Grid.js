@@ -14,8 +14,8 @@ const classnames = ({ theme, className, hidden }) =>
     className
   )
 
-const Grid = ({ theme, children, className, hidden }) => (
-  <div className={classnames({ theme, className, hidden })}>
+const Grid = ({ theme, id, children, className, hidden }) => (
+  <div id={id} className={classnames({ theme, className, hidden })}>
     {children}
   </div>
 )
@@ -25,12 +25,14 @@ Grid.propTypes = {
     grid: PropTypes.string,
     hidden: PropTypes.string,
   }).isRequired,
+  id: PropTypes.string,
   children: PropTypes.node,
   className: PropTypes.string,
   hidden: PropTypes.bool,
 }
 
 Grid.defaultProps = {
+  id: null,
   children: null,
   className: null,
   hidden: false,

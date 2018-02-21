@@ -31,6 +31,7 @@ const Footer = ({
           alignEnd
         >
           <Button
+            id="footer-confirm-btn"
             hidden={nextButtonDisabled || !buttonVisible}
             disabled={nextButtonDisabled}
             size="extra-large"

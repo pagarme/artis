@@ -1,6 +1,10 @@
+import 'core-js/es6/symbol'
+import 'core-js/es6/number'
+import 'core-js/es7/object'
+import 'core-js/es6/promise'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Joi from 'joi-browser'
 import ReactGA from 'react-ga'
 import { ThemeProvider } from 'react-css-themr'
 import { Provider } from 'react-redux'
@@ -10,20 +14,11 @@ import ErrorBoundary from './components/ErrorBoundary'
 import ErrorPage from './pages/Error'
 
 import createElement from './utils/helpers/createElement'
-import apiDataSchema from './utils/schemas/apiData'
 import createStore from './store'
 
 import theme from './theme-pagarme'
 
 ReactGA.initialize('UA-113290482-1')
-
-const validateApiData = (apiData) => {
-  const { error } = Joi.validate(apiData, apiDataSchema)
-
-  if (error) throw new Error(error.stack)
-
-  return true
-}
 
 const render = apiData => () => {
   const clientTarget = apiData.configs.target
@@ -71,21 +66,17 @@ const integrations = {
         paymentMethod: button.dataset.paymentMethod,
       }
 
-      const apiData = { key, configs, params }
+      const open = render({ key, configs, params })
 
-      if (validateApiData(apiData)) {
-        const open = render({ key, configs, params })
-
-        button.addEventListener('click', (e) => {
-          e.preventDefault()
-          open()
-        })
-      }
+      button.addEventListener('click', (e) => {
+        e.preventDefault()
+        open()
+      })
     })
   },
   custom: () => {
-    window.Checkout = apiData => () => {
-      if (validateApiData(apiData)) render(apiData)()
+    window.Checkout = ({ key, configs, formData, transaction }) => () => {
+      render({ key, configs, formData, transaction })()
     }
   },
 }

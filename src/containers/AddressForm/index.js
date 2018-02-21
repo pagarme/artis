@@ -297,6 +297,7 @@ class AddressForm extends Component {
                 alignEnd
               >
                 <Button
+                  id="address-form-cancel-btn"
                   size={'extra-large'}
                   fill="outline"
                   full
@@ -313,6 +314,7 @@ class AddressForm extends Component {
                 palm={mediumColSize}
               >
                 <Button
+                  id="address-form-confirm-btn"
                   full
                   size={'extra-large'}
                   onClick={this.handleConfirm}

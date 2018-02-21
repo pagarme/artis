@@ -26,27 +26,30 @@ class Switch extends Component {
 
     return (
       items.map((item, index) => {
-        const id = item.title
+        const id = item.title === 'Cartão de Crédito'
+          ? 'creditcard'
+          : 'boleto'
 
         return (
           <label
+            id={id}
             key={id}
             className={theme.item}
-            htmlFor={id}
+            htmlFor={`${id}-input`}
             style={{ maxWidth: `${maxWidth}%` }}
           >
             <input
-              id={id}
+              id={`${id}-input`}
               name={item.name}
               value={item.value}
               type="radio"
               checked={this.state.selected === index}
               onChange={this.handleOnChange.bind(this, index)}
             />
-            <span className={theme.label}>
-              <h1>{item.title}</h1>
+            <div className={theme.label}>
+              <h3>{item.title}</h3>
               <p>{item.subtitle}</p>
-            </span>
+            </div>
           </label>
         )
       })
