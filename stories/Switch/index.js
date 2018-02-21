@@ -40,12 +40,12 @@ class SwitchContainer extends React.Component {
 
 const twoItems = [
   {
-    value: 'creaditcard',
+    value: 'creditcard',
     title: 'Cartão de Crédito',
     subtitle: 'Em até 2x sem juros com 20% de desconto na primeira parcela',
   },
   {
-    value: 'bankbill',
+    value: 'boleto',
     title: 'Boleto bancário',
     subtitle: '10% de desconto',
   },
@@ -53,7 +53,7 @@ const twoItems = [
 
 const FourItems = [
   {
-    value: 'creaditcard',
+    value: 'creditcard',
     title: 'Cartão de Crédito',
     subtitle: 'Em até 2x sem juros com 20% de desconto na primeira parcela',
   },

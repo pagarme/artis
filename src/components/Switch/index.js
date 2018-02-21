@@ -26,9 +26,11 @@ class Switch extends Component {
 
     return (
       items.map((item, index) => {
-        const id = item.title === 'Cartão de Crédito'
+        const { value, title } = item
+
+        const id = value || (title === 'Cartão de Crédito'
           ? 'creditcard'
-          : 'boleto'
+          : 'boleto')
 
         return (
           <label
