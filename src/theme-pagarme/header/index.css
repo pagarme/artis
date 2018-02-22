@@ -33,4 +33,12 @@
     font-size: var(--header-button-font-size-mobile);
     margin-top: 20px;
   }
+
+  .close {
+    margin-right: 22px;
+  }
+
+  .back {
+    margin-left: 22px;
+  }
 }

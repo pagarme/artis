@@ -27,7 +27,8 @@
 @media (--media-palm) {
 
   .page {
-    margin: var(--page-margin-mobile);
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
   }
 
   .title {

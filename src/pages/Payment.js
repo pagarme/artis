@@ -175,8 +175,8 @@ class PaymentPage extends Component {
               <Col
                 tv={7}
                 desk={7}
-                tablet={defaultColSize}
-                palm={defaultColSize}
+                tablet={mediumColSize}
+                palm={mediumColSize}
               >
                 <Input
                   name="expiration"
@@ -189,8 +189,8 @@ class PaymentPage extends Component {
               <Col
                 tv={5}
                 desk={5}
-                tablet={defaultColSize}
-                palm={defaultColSize}
+                tablet={mediumColSize}
+                palm={mediumColSize}
               >
                 <Input
                   name="cvv"
@@ -198,7 +198,10 @@ class PaymentPage extends Component {
                   value={cvv}
                   type="number"
                   mask="111"
-                  tolltip="O CVV são os três números que ficam na parte de trás do seu cartão."
+                  tolltip={
+                    isBigScreen &&
+                    'O CVV são os três números que ficam na parte de trás do seu cartão.'
+                  }
                   tolltipClassName={theme.cvvTolltip}
                   onChange={this.handleCreditcardtChange}
                   onFocus={this.handleFlipCard}

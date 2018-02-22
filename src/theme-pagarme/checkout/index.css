@@ -1,4 +1,3 @@
-@import "../animations.css";
 @import "./properties.css";
 
 .checkout {
@@ -35,4 +34,16 @@
 .darkContent {
   flex-grow: 0;
   background-color: var(--dark-content-background-color);
+}
+
+@media (--media-palm) {
+
+  .wrapper {
+    width: 100vw;
+  }
+
+  .darkContent {
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
+  }
 }
