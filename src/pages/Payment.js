@@ -171,7 +171,7 @@ class PaymentPage extends Component {
                 onChange={this.handleCreditcardtChange}
               />
             </Row>
-            <Row>
+            <Row overflowVisible>
               <Col
                 tv={7}
                 desk={7}
@@ -198,6 +198,8 @@ class PaymentPage extends Component {
                   value={cvv}
                   type="number"
                   mask="111"
+                  tolltip="O CVV são os três números que ficam na parte de trás do seu cartão."
+                  tolltipClassName={theme.cvvTolltip}
                   onChange={this.handleCreditcardtChange}
                   onFocus={this.handleFlipCard}
                   onBlur={this.handleFlipCard}
@@ -306,6 +308,7 @@ PaymentPage.propTypes = {
     barcodeImg: PropTypes.string,
     boletoAmount: PropTypes.string,
     boletoContainer: PropTypes.string,
+    cvvTolltip: PropTypes.string,
   }),
   isBigScreen: PropTypes.bool.isRequired,
   amount: PropTypes.number.isRequired,

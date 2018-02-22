@@ -1,9 +1,12 @@
 @import "./properties.css";
 
 .wrapper {
-  position: relative;
   height: 18px;
   width: 18px;
+}
+
+.position {
+  position: relative;
 }
 
 .content {

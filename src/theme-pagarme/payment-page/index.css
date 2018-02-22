@@ -54,6 +54,12 @@
   padding-bottom: 0;
 }
 
+.cvvTolltip {
+  position: absolute;
+  left: 20%;
+  top: 32%;
+}
+
 @media (--media-palm) {
 
   .boletoContainer {

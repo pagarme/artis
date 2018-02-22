@@ -1180,6 +1180,7 @@ exports[`Storyshots Forms Inputs 1`] = `
             >
               Nome
             </label>
+            
           </div>
           
         </div>
@@ -1217,6 +1218,7 @@ exports[`Storyshots Forms Inputs 1`] = `
             >
               E-mail
             </label>
+            
           </div>
           <p
             className={undefined}
@@ -1263,6 +1265,7 @@ exports[`Storyshots Forms Inputs 1`] = `
               
               <br />
             </div>
+            
           </div>
           
         </div>
@@ -1323,6 +1326,7 @@ exports[`Storyshots Forms Inputs 1`] = `
             >
               Com icone
             </label>
+            
           </div>
           
         </div>
@@ -1360,6 +1364,7 @@ exports[`Storyshots Forms Inputs 1`] = `
             >
               Senha
             </label>
+            
           </div>
           
         </div>
@@ -1397,6 +1402,61 @@ exports[`Storyshots Forms Inputs 1`] = `
             >
               Digite seu email
             </label>
+            
+          </div>
+          <p
+            className={undefined}
+          >
+            Texto de apoio
+          </p>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h3>
+        Tolltip
+      </h3>
+      <div
+        className=""
+      >
+        <div
+          className={undefined}
+        >
+          <div
+            className=""
+          >
+            <input
+              className=""
+              disabled={false}
+              id="email_disabled"
+              maxLength="200"
+              name="email_disabled"
+              onBlur={null}
+              onChange={[Function]}
+              placeholder="eae"
+              type="text"
+              value=""
+            />
+            
+            <label
+              className=""
+              htmlFor="email_disabled"
+            >
+              Digite seu email
+            </label>
+            <div
+              className="undefined"
+            >
+              <img
+                alt="Informação"
+                src="info.svg"
+              />
+              <div
+                className={undefined}
+              >
+                This is a tolltip :)
+              </div>
+            </div>
           </div>
           <p
             className={undefined}
@@ -2926,6 +2986,31 @@ exports[`Storyshots Switch Default Theme 1`] = `
       className=""
     />
   </section>
+</div>
+`;
+
+exports[`Storyshots Tolltip Sample 1`] = `
+<div
+  className={undefined}
+>
+  <p>
+    Hover me!
+  </p>
+  <div
+    className="undefined"
+  >
+    <img
+      alt="Informação"
+      src="info.svg"
+    />
+    <div
+      className={undefined}
+    >
+      Cras ultricies ligula sed magna dictum porta. Donec rutrum
+congueleo eget malesuada. Curabitur non nulla sit amet nisl tempus convallis
+quis ac lectus.
+    </div>
+  </div>
 </div>
 `;
 
