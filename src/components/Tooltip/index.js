@@ -5,9 +5,9 @@ import { themr } from 'react-css-themr'
 
 import icon from '../../images/info.svg'
 
-const applyThemr = themr('UITolltip')
+const applyThemr = themr('UITooltip')
 
-const Tolltip = ({ text, theme, className }) => (
+const Tooltip = ({ text, theme, className }) => (
   <div
     className={classNames(
       theme.wrapper,
@@ -22,7 +22,7 @@ const Tolltip = ({ text, theme, className }) => (
   </div>
 )
 
-Tolltip.propTypes = {
+Tooltip.propTypes = {
   theme: PropTypes.shape({
     wrapper: PropTypes.string,
     content: PropTypes.string,
@@ -31,9 +31,9 @@ Tolltip.propTypes = {
   className: PropTypes.string,
 }
 
-Tolltip.defaultProps = {
+Tooltip.defaultProps = {
   theme: {},
   className: null,
 }
 
-export default applyThemr(Tolltip)
+export default applyThemr(Tooltip)

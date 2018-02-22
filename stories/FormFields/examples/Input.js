@@ -130,14 +130,14 @@ const InputExamples = () => (
     </section>
 
     <section>
-      <h3>Tolltip</h3>
+      <h3>Tooltip</h3>
       <Input
         name="email_disabled"
         label="Digite seu email"
         hint="Texto de apoio"
         placeholder="eae"
         onChange={action('text changed')}
-        tolltip="This is a tolltip :)"
+        tooltip="This is a tooltip :)"
       />
     </section>
   </div>

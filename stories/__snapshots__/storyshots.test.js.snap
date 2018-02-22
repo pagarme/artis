@@ -1414,7 +1414,7 @@ exports[`Storyshots Forms Inputs 1`] = `
     </section>
     <section>
       <h3>
-        Tolltip
+        Tooltip
       </h3>
       <div
         className=""
@@ -1454,7 +1454,7 @@ exports[`Storyshots Forms Inputs 1`] = `
               <div
                 className={undefined}
               >
-                This is a tolltip :)
+                This is a tooltip :)
               </div>
             </div>
           </div>
@@ -2989,7 +2989,7 @@ exports[`Storyshots Switch Default Theme 1`] = `
 </div>
 `;
 
-exports[`Storyshots Tolltip Sample 1`] = `
+exports[`Storyshots Tooltip Sample 1`] = `
 <div
   className={undefined}
 >

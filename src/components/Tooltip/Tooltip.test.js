@@ -1,12 +1,12 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import Tolltip from './index'
+import Tooltip from './index'
 
-describe('Tolltip', () => {
+describe('Tooltip', () => {
   it('should be have a text', () => {
     const component = mount(
-      <Tolltip text="example text" />
+      <Tooltip text="example text" />
     )
 
     expect(component.contains('example text')).toBeTruthy()

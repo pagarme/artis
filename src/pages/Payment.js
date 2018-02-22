@@ -198,11 +198,11 @@ class PaymentPage extends Component {
                   value={cvv}
                   type="number"
                   mask="111"
-                  tolltip={
+                  tooltip={
                     isBigScreen &&
                     'O CVV são os três números que ficam na parte de trás do seu cartão.'
                   }
-                  tolltipClassName={theme.cvvTolltip}
+                  tooltipClassName={theme.cvvTooltip}
                   onChange={this.handleCreditcardtChange}
                   onFocus={this.handleFlipCard}
                   onBlur={this.handleFlipCard}
@@ -311,7 +311,7 @@ PaymentPage.propTypes = {
     barcodeImg: PropTypes.string,
     boletoAmount: PropTypes.string,
     boletoContainer: PropTypes.string,
-    cvvTolltip: PropTypes.string,
+    cvvTooltip: PropTypes.string,
   }),
   isBigScreen: PropTypes.bool.isRequired,
   amount: PropTypes.number.isRequired,

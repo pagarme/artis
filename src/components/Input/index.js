@@ -7,7 +7,7 @@ import MdVisibility from 'react-icons/lib/md/visibility'
 import MaskedInput from 'react-maskedinput'
 import { pick, merge } from 'ramda'
 
-import { Tolltip } from '..'
+import { Tooltip } from '..'
 
 const applyThemr = themr('UIInput')
 
@@ -67,8 +67,8 @@ class Input extends React.Component {
       mask,
       theme,
       maxLength,
-      tolltip,
-      tolltipClassName,
+      tooltip,
+      tooltipClassName,
     } = this.props
 
     let { onChange } = this.props
@@ -166,10 +166,10 @@ class Input extends React.Component {
               </div>
             }
             {
-              tolltip &&
-              <Tolltip
-                text={tolltip}
-                className={tolltipClassName || theme.tolltip}
+              tooltip &&
+              <Tooltip
+                text={tooltip}
+                className={tooltipClassName || theme.tooltip}
               />
             }
           </div>
@@ -198,7 +198,7 @@ Input.propTypes = {
     inputContainer: PropTypes.string,
     multiline: PropTypes.string,
     secondaryText: PropTypes.string,
-    tolltip: PropTypes.string,
+    tooltip: PropTypes.string,
   }),
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
@@ -221,8 +221,8 @@ Input.propTypes = {
   mask: PropTypes.string,
   inputRef: PropTypes.func,
   maxLength: PropTypes.string,
-  tolltip: PropTypes.string,
-  tolltipClassName: PropTypes.string,
+  tooltip: PropTypes.string,
+  tooltipClassName: PropTypes.string,
 }
 
 Input.defaultProps = {
@@ -240,8 +240,8 @@ Input.defaultProps = {
   inputRef: null,
   onBlur: null,
   maxLength: '200',
-  tolltip: '',
-  tolltipClassName: '',
+  tooltip: '',
+  tooltipClassName: '',
 }
 
 export default applyThemr(Input)
