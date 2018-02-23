@@ -152,24 +152,37 @@ class PaymentPage extends Component {
             overflowVisible
           >
             <Row>
-              <Input
-                name="cardNumber"
-                label="Número do cartão"
-                value={cardNumber}
-                type="number"
-                mask="1111 1111 1111 1111"
-                onChange={this.handleCreditcardtChange}
-              />
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                <Input
+                  name="cardNumber"
+                  label="Número do cartão"
+                  value={cardNumber}
+                  type="number"
+                  mask="1111 1111 1111 1111"
+                  onChange={this.handleCreditcardtChange}
+                />
+              </Col>
             </Row>
             <Row>
-              <Input
-                name="holderName"
-                label="Nome"
-                hint="(Igual no cartão)"
-                maxLength="24"
-                value={holderName}
-                onChange={this.handleCreditcardtChange}
-              />
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                <Input
+                  name="holderName"
+                  label="Nome (igual o do cartão)"
+                  maxLength="24"
+                  value={holderName}
+                  onChange={this.handleCreditcardtChange}
+                />
+              </Col>
             </Row>
             <Row overflowVisible>
               <Col
@@ -212,14 +225,21 @@ class PaymentPage extends Component {
             {
               installmentsOptions.length &&
               <Row overflowVisible>
-                <Dropdown
-                  options={installmentsOptions}
-                  name="installments"
-                  label="Quantidade de Parcelas"
-                  value={installments}
-                  onChange={this.handleInstallmentChange}
-                  title="Selecione"
-                />
+                <Col
+                  tv={defaultColSize}
+                  desk={defaultColSize}
+                  tablet={defaultColSize}
+                  palm={defaultColSize}
+                >
+                  <Dropdown
+                    options={installmentsOptions}
+                    name="installments"
+                    label="Quantidade de Parcelas"
+                    value={installments}
+                    onChange={this.handleInstallmentChange}
+                    title="Selecione"
+                  />
+                </Col>
               </Row>
             }
             <Row hidden={isBigScreen}>
