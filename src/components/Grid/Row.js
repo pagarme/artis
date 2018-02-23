@@ -16,6 +16,7 @@ const classnames = ({
   alignEnd,
   overflowVisible,
   fullSize,
+  noPadding,
 }) =>
   classNames(
     className,
@@ -29,6 +30,7 @@ const classnames = ({
       [theme.hidden]: hidden,
       [theme.overflowVisible]: overflowVisible,
       [theme.fullSize]: fullSize,
+      [theme.noPadding]: noPadding,
     }
   )
 
@@ -44,6 +46,7 @@ const Row = ({
   alignEnd,
   overflowVisible,
   fullSize,
+  noPadding,
 }) => (
   <div
     className={
@@ -58,6 +61,7 @@ const Row = ({
         alignEnd,
         overflowVisible,
         fullSize,
+        noPadding,
       })
     }
   >
@@ -85,6 +89,7 @@ Row.propTypes = {
   fullSize: PropTypes.bool,
   className: PropTypes.string,
   overflowVisible: PropTypes.bool,
+  noPadding: PropTypes.bool,
 }
 
 Row.defaultProps = {
@@ -98,6 +103,7 @@ Row.defaultProps = {
   fullSize: false,
   className: null,
   overflowVisible: null,
+  noPadding: null,
 }
 
 export default applyThemr(Row)
