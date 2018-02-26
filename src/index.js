@@ -14,6 +14,7 @@ import createElement from './utils/helpers/createElement'
 import createStore from './store'
 
 import theme from './theme-pagarme'
+import NormalizeCSS from './components/NormalizeCSS'
 
 ReactGA.initialize('UA-113290482-1')
 
@@ -36,10 +37,12 @@ const render = apiData => () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <ErrorBoundary CrashReportComponent={<ErrorPage />}>
-          <Checkout
-            apiData={apiData}
-            targetElement={target}
-          />
+          <NormalizeCSS>
+            <Checkout
+              apiData={apiData}
+              targetElement={target}
+            />
+          </NormalizeCSS>
         </ErrorBoundary>
       </ThemeProvider>
     </Provider>,
