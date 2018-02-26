@@ -1,6 +1,8 @@
 @import "../colors.css";
 @import "../typography.css";
 @import "../spacing.css";
+@import "../media.css";
+@import "../margin.css";
 
 :root {
   --page-margin: var(--spacing-medium) var(--spacing-small);

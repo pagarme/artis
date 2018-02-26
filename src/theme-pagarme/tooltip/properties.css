@@ -1,0 +1,12 @@
+@import "../colors.css";
+@import "../spacing.css";
+@import "../typography.css";
+@import "../media.css";
+
+:root {
+  --content-width: 380px;
+  --transition-time: 0.25s;
+  --content-box-shadow-color: rgba(0, 0, 0, 0.25);
+  --content-border-size-after: 10px;
+  --content-border-size-before: 11px;
+}

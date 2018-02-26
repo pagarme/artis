@@ -8,6 +8,7 @@ describe('checkout reduceres', () => {
         isBigScreen: true,
       },
       showFooterButton: true,
+      showProgressBar: true,
     })
   })
 

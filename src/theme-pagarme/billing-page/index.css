@@ -1,7 +1,11 @@
 @import "./properties.css";
 
 .page {
-  margin: var(--page-margin);
+  margin: var(--page-margin-desktop);
+}
+
+.titleIcon {
+  padding: 0 9px 0 0;
 }
 
 .noMarginTop {
@@ -16,10 +20,16 @@
   text-transform: uppercase;
   letter-spacing: 1.4px;
   justify-content: center;
+  align-items: center;
   padding-bottom: var(--page-title-padding-bottom);
 }
 
 @media (--media-palm) {
+
+  .page {
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
+  }
 
   .title {
     display: none;

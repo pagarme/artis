@@ -21,6 +21,7 @@ import UIActionList from './action-list/index.css'
 import UIEmailForm from './email-form/index.css'
 import UIBoletoOptions from './boleto-options/index.css'
 import UIErrorPage from './error-page/index.css'
+import UITooltip from './tooltip/index.css'
 
 export default {
   UIButton,
@@ -46,4 +47,5 @@ export default {
   UIEmailForm,
   UIBoletoOptions,
   UIErrorPage,
+  UITooltip,
 }

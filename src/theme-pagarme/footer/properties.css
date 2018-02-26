@@ -2,6 +2,7 @@
 @import "../spacing.css";
 @import "../colors.css";
 @import "../typography.css";
+@import "../margin.css";
 
 :root {
   --total-color: var(--color-greenish-100);

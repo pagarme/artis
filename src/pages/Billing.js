@@ -13,6 +13,7 @@ import { addPageInfo } from '../actions'
 import options from '../utils/data/states'
 import getAddress from '../utils/helpers/getAddress'
 import removeZipcodeMask from '../utils/helpers/removeZipcodeMask'
+import titleIcon from '../images/map-pin.svg'
 
 const applyThemr = themr('UIBillingPage')
 
@@ -113,6 +114,7 @@ class BillingPage extends Component {
         })}
       >
         <Row className={theme.title}>
+          <img src={titleIcon} alt="Billing icon" className={theme.titleIcon} />
           {this.props.title}
         </Row>
         <Row>
@@ -218,6 +220,7 @@ BillingPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
+    titleIcon: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
   isBigScreen: PropTypes.bool,

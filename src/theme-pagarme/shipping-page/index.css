@@ -22,3 +22,11 @@
   margin-right: 4px;
   margin-bottom: 4px;
 }
+
+@media (--media-palm) {
+
+  .page {
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
+  }
+}

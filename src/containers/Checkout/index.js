@@ -27,7 +27,6 @@ class Checkout extends Component {
 
     this.state = {
       activePage: 0,
-      showProgressbar: true,
       closingEffect: false,
     }
   }
@@ -119,12 +118,13 @@ class Checkout extends Component {
   render () {
     const {
       activePage,
-      showProgressbar,
     } = this.state
 
     const { apiData, theme, isBigScreen, isFooterButtonVisible } = this.props
 
     const { params = {}, configs = {} } = apiData
+
+    const isAddressForm = !(this.props.isProgressBarVisible || isBigScreen)
 
     const { pages } = statechart
     const omitOnBigScreen = when(always(isBigScreen), omit(['billing']))
@@ -154,11 +154,23 @@ class Checkout extends Component {
               this.handleNavigation.bind(this, 'PREV', pages, steps)
             }
             onClose={this.close.bind(this)}
-            prevButtonDisabled={activePage === 0 || activePage === 3}
+            prevButtonDisabled={
+              activePage === 0 || (
+                activePage === steps.length ||
+                isAddressForm
+              )
+            }
           />
-          <div className={theme.content}>
+          <div
+            className={classNames(
+              theme.content,
+              {
+                [theme.darkContent]: isAddressForm,
+              },
+            )}
+          >
             {
-              (showProgressbar || isBigScreen) &&
+              !isAddressForm &&
               <ProgressBar
                 steps={steps}
                 activePage={activePage}
@@ -219,6 +231,7 @@ Checkout.propTypes = {
   isBigScreen: PropTypes.bool.isRequired,
   footerButtonVisible: PropTypes.func.isRequired,
   isFooterButtonVisible: PropTypes.bool.isRequired,
+  isProgressBarVisible: PropTypes.bool.isRequired,
 }
 
 Checkout.defaultProps = {
@@ -231,9 +244,10 @@ Checkout.defaultProps = {
   },
 }
 
-const mapStateToProps = ({ screenSize, showFooterButton }) => ({ // eslint-disable-line
+const mapStateToProps = ({ screenSize, showFooterButton, showProgressBar }) => ({ // eslint-disable-line
   isBigScreen: screenSize.isBigScreen,
   isFooterButtonVisible: showFooterButton,
+  isProgressBarVisible: showProgressBar,
 })
 
 const mapDispatchToProps = dispatch => ({

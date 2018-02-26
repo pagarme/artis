@@ -124,7 +124,7 @@ class PaymentPage extends Component {
 
     return (
       <Grid className={theme.page}>
-        <Row>
+        <Row overflowVisible>
           <Col
             tv={mediumColSize}
             desk={mediumColSize}
@@ -149,33 +149,47 @@ class PaymentPage extends Component {
             desk={mediumColSize}
             tablet={mediumColSize}
             palm={defaultColSize}
+            overflowVisible
           >
             <Row>
-              <Input
-                name="cardNumber"
-                label="Número do cartão"
-                value={cardNumber}
-                type="number"
-                mask="1111 1111 1111 1111"
-                onChange={this.handleCreditcardtChange}
-              />
-            </Row>
-            <Row>
-              <Input
-                name="holderName"
-                label="Nome"
-                hint="(Igual no cartão)"
-                maxLength="24"
-                value={holderName}
-                onChange={this.handleCreditcardtChange}
-              />
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                <Input
+                  name="cardNumber"
+                  label="Número do cartão"
+                  value={cardNumber}
+                  type="number"
+                  mask="1111 1111 1111 1111"
+                  onChange={this.handleCreditcardtChange}
+                />
+              </Col>
             </Row>
             <Row>
               <Col
-                tv={7}
-                desk={7}
+                tv={defaultColSize}
+                desk={defaultColSize}
                 tablet={defaultColSize}
                 palm={defaultColSize}
+              >
+                <Input
+                  name="holderName"
+                  label="Nome (igual o do cartão)"
+                  maxLength="24"
+                  value={holderName}
+                  onChange={this.handleCreditcardtChange}
+                />
+              </Col>
+            </Row>
+            <Row overflowVisible>
+              <Col
+                tv={7}
+                desk={7}
+                tablet={mediumColSize}
+                palm={mediumColSize}
               >
                 <Input
                   name="expiration"
@@ -188,8 +202,8 @@ class PaymentPage extends Component {
               <Col
                 tv={5}
                 desk={5}
-                tablet={defaultColSize}
-                palm={defaultColSize}
+                tablet={mediumColSize}
+                palm={mediumColSize}
               >
                 <Input
                   name="cvv"
@@ -197,6 +211,11 @@ class PaymentPage extends Component {
                   value={cvv}
                   type="number"
                   mask="111"
+                  tooltip={
+                    isBigScreen &&
+                    'O CVV são os três números que ficam na parte de trás do seu cartão.'
+                  }
+                  tooltipClassName={theme.cvvTooltip}
                   onChange={this.handleCreditcardtChange}
                   onFocus={this.handleFlipCard}
                   onBlur={this.handleFlipCard}
@@ -205,15 +224,22 @@ class PaymentPage extends Component {
             </Row>
             {
               installmentsOptions.length &&
-              <Row>
-                <Dropdown
-                  options={installmentsOptions}
-                  name="installments"
-                  label="Quantidade de Parcelas"
-                  value={installments}
-                  onChange={this.handleInstallmentChange}
-                  title="Selecione"
-                />
+              <Row overflowVisible>
+                <Col
+                  tv={defaultColSize}
+                  desk={defaultColSize}
+                  tablet={defaultColSize}
+                  palm={defaultColSize}
+                >
+                  <Dropdown
+                    options={installmentsOptions}
+                    name="installments"
+                    label="Quantidade de Parcelas"
+                    value={installments}
+                    onChange={this.handleInstallmentChange}
+                    title="Selecione"
+                  />
+                </Col>
               </Row>
             }
             <Row hidden={isBigScreen}>
@@ -305,6 +331,7 @@ PaymentPage.propTypes = {
     barcodeImg: PropTypes.string,
     boletoAmount: PropTypes.string,
     boletoContainer: PropTypes.string,
+    cvvTooltip: PropTypes.string,
   }),
   isBigScreen: PropTypes.bool.isRequired,
   amount: PropTypes.number.isRequired,

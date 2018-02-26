@@ -5,6 +5,7 @@
 .back {
   font-size: var(--header-button-font-size);
   padding: 0;
+  margin-top: 22px;
 }
 
 .logo {
@@ -31,5 +32,13 @@
   .back {
     font-size: var(--header-button-font-size-mobile);
     margin-top: 20px;
+  }
+
+  .close {
+    margin-right: 22px;
+  }
+
+  .back {
+    margin-left: 22px;
   }
 }

@@ -128,6 +128,18 @@ const InputExamples = () => (
         disabled
       />
     </section>
+
+    <section>
+      <h3>Tooltip</h3>
+      <Input
+        name="email_disabled"
+        label="Digite seu email"
+        hint="Texto de apoio"
+        placeholder="eae"
+        onChange={action('text changed')}
+        tooltip="This is a tooltip :)"
+      />
+    </section>
   </div>
 )
 

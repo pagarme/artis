@@ -2,7 +2,8 @@
 
 .addressForm {
   background-color: var(--addressForm-background-color);
-  border: 2px dashed var(--addressForm-border-color);
+  border: 1px dashed var(--addressForm-border-color);
+  box-shadow: inset 0 0 0 2px var(--color-main-background);
   padding: 33px 24px 0 0;
   margin: auto;
 }
@@ -27,15 +28,8 @@
 }
 
 .buttonsWrapper {
-  margin-top: 26px;
+  margin-top: 22px;
   padding-bottom: 0;
-}
-
-@media (--media-palm) {
-
-  .actionButton {
-    padding: 17px 24px;
-  }
 }
 
 @media (--media-tablet) {
@@ -47,13 +41,14 @@
 
 @media (--media-palm) {
 
+  .actionButton {
+    padding: 17px 24px;
+  }
+
   .addressForm {
     border: 0;
     padding: 0;
-  }
-
-  .addressForm > * {
-    padding-left: 0;
+    box-shadow: none;
   }
 
   .title {

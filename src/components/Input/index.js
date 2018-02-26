@@ -5,8 +5,9 @@ import classnames from 'classnames'
 import MdVisibilityOff from 'react-icons/lib/md/visibility-off'
 import MdVisibility from 'react-icons/lib/md/visibility'
 import MaskedInput from 'react-maskedinput'
-
 import { pick, merge } from 'ramda'
+
+import { Tooltip } from '..'
 
 const applyThemr = themr('UIInput')
 
@@ -66,6 +67,8 @@ class Input extends React.Component {
       mask,
       theme,
       maxLength,
+      tooltip,
+      tooltipClassName,
     } = this.props
 
     let { onChange } = this.props
@@ -162,6 +165,13 @@ class Input extends React.Component {
                 <br />
               </div>
             }
+            {
+              tooltip &&
+              <Tooltip
+                text={tooltip}
+                className={tooltipClassName || theme.tooltip}
+              />
+            }
           </div>
           {(hint || error) &&
             <p className={theme.secondaryText}>
@@ -188,6 +198,7 @@ Input.propTypes = {
     inputContainer: PropTypes.string,
     multiline: PropTypes.string,
     secondaryText: PropTypes.string,
+    tooltip: PropTypes.string,
   }),
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
@@ -210,6 +221,8 @@ Input.propTypes = {
   mask: PropTypes.string,
   inputRef: PropTypes.func,
   maxLength: PropTypes.string,
+  tooltip: PropTypes.string,
+  tooltipClassName: PropTypes.string,
 }
 
 Input.defaultProps = {
@@ -227,6 +240,8 @@ Input.defaultProps = {
   inputRef: null,
   onBlur: null,
   maxLength: '200',
+  tooltip: '',
+  tooltipClassName: '',
 }
 
 export default applyThemr(Input)

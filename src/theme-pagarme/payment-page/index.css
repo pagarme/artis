@@ -54,6 +54,12 @@
   padding-bottom: 0;
 }
 
+.cvvTooltip {
+  position: absolute;
+  left: 20%;
+  top: 32%;
+}
+
 @media (--media-palm) {
 
   .boletoContainer {
@@ -64,5 +70,13 @@
 
   .barcodeImg {
     width: 70%;
+  }
+}
+
+@media (--media-palm) {
+
+  .page {
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
   }
 }

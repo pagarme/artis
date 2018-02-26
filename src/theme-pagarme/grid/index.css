@@ -75,3 +75,8 @@
   width: 100vh;
   height: 100vh;
 }
+
+.noPadding {
+  padding-left: 0;
+  padding-bottom: 0;
+}

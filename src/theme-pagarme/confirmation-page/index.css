@@ -7,7 +7,7 @@
     var(--spacing-xlarge)
     var(--spacing-small)
     var(--spacing-xlarge)
-    0;
+    var(--spacing-small);
 }
 
 .successIcon {
@@ -29,4 +29,11 @@
   padding: var(--confirmation-icon-default-padding);
   width: var(--confirmation-icon-size);
   height: var(--confirmation-icon-size);
+}
+
+@media (--media-palm) {
+
+  .page {
+    background-color: transparent;
+  }
 }

@@ -47,7 +47,8 @@
 
   .button {
     width: 100%;
-    margin-left: 16px;
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
   }
 
   .safe,
