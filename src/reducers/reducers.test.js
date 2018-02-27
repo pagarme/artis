@@ -7,6 +7,9 @@ describe('checkout reduceres', () => {
       screenSize: {
         isBigScreen: true,
       },
+      shippingPage: {
+        isFormVisible: false,
+      },
       showFooterButton: true,
       showProgressBar: true,
     })

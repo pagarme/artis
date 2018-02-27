@@ -1,4 +1,5 @@
 import UIButton from './button/index.css'
+import UIDropdownButton from './dropdown-button/index.css'
 import UIDropdown from './dropdown/index.css'
 import UIFooter from './footer/index.css'
 import UIGrid from './grid/index.css'
@@ -25,6 +26,7 @@ import UITooltip from './tooltip/index.css'
 
 export default {
   UIButton,
+  UIDropdownButton,
   UIDropdown,
   UIFooter,
   UIGrid,
