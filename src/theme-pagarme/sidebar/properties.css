@@ -1,0 +1,50 @@
+@import "../colors.css";
+@import "../media.css";
+
+:root {
+  --sidebar-width: 192px;
+  --sidebar-width-desk: 222px;
+  --sidebar-width-tv: 320px;
+
+  --sidebar-collapsed-width: 0;
+
+  --sidebar-background-color: var(--color-light-carbon-40);
+
+  --sidebar-header-height: 134px;
+  --sidebar-header-text-color: var(--color-white);
+  --sidebar-header-padding: 15px;
+  --sidebar-header-border-bottom: 1px solid var(--color-light-steel-200);
+
+  --sidebar-header-button-padding: 0;
+  --sidebar-header-button-color: var(--color-white);
+  --sidebar-header-button-border: none;
+  --sidebar-header-button-background: var(--color-light-carbon-40);
+  --sidebar-collapsed-header-button-color: var(--color-greenish);
+
+  --sidebar-content-padding-top: 15px;
+  --sidebar-content-padding-bottom: 15px;
+  --sidebar-header-button-icon-width: 25px;
+  --sidebar-header-button-icon-height: 25px;
+
+  --sidebar-title-color: var(--color-white);
+  --sidebar-title-font-size: 14px;
+  --sidebar-title-font-size-desk: 14px;
+  --sidebar-title-font-size-tv: 16px;
+  --sidebar-title-line-height: 1.5;
+  --sidebar-title-margin: 0;
+  --sidebar-title-text-transform: uppercase;
+
+  --sidebar-subtitle-color: var(--color-greenish);
+  --sidebar-subtitle-font-size: 12px;
+  --sidebar-subtitle-font-size-desk: 12px;
+  --sidebar-subtitle-font-size-tv: 14px;
+  --sidebar-subtitle-margin-top: 8px;
+  --sidebar-subtitle-margin-bottom: 0;
+  --sidebar-subtitle-text-transform: uppercase;
+
+  --sidebar-showsection-background-color: var(--color-grey-85);
+
+  --sidebar-section-height: calc(100vh - 56px);
+
+  --sidebar-user-select: none;
+}

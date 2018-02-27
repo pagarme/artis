@@ -1,0 +1,16 @@
+@import "../../src/theme-pagarme/index.css";
+
+.button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -44px;
+}
+
+.text {
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+  font-family: var(--primary-font-family);
+  font-weight: var(--title-font-weight);
+}

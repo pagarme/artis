@@ -1,0 +1,75 @@
+@import "../colors.css";
+@import "../media.css";
+@import "./properties.css";
+@import "./sidebar-header.css";
+@import "./sidebar-content.css";
+@import "./sidebar-footer.css";
+
+.sidebar,
+.sidebar * {
+  box-sizing: border-box;
+}
+
+.sidebar {
+  background-color: var(--sidebar-background-color);
+  display: block;
+  min-height: 100vh;
+  flex: 0 0 var(--sidebar-width);
+  width: var(--sidebar-width);
+  user-select: var(--sidebar-user-select);
+  transition: all 0.3s ease-out;
+  position: relative;
+}
+
+.section {
+  height: var(--sidebar-section-height);
+  overflow: auto;
+}
+
+.items {
+  position: relative;
+
+  & > ul {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.collapsed {
+  flex: 0 0 var(--sidebar-collapsed-width);
+  width: var(--sidebar-collapsed-width);
+
+  & header {
+    justify-content: center;
+  }
+
+  & header svg {
+    color: var(--sidebar-collapsed-header-button-color);
+  }
+}
+
+.collapsed > * {
+  opacity: 0;
+}
+
+@media (--media-desk) {
+
+  .sidebar {
+    width: var(--sidebar-width-desk);
+  }
+
+  .collapsed {
+    width: var(--sidebar-collapsed-width);
+  }
+}
+
+@media (--media-tv) {
+
+  .sidebar {
+    width: var(--sidebar-width-tv);
+  }
+
+  .collapsed {
+    width: var(--sidebar-collapsed-width);
+  }
+}

@@ -1,0 +1,28 @@
+@import "./properties.css";
+
+.header {
+  align-items: center;
+  display: flex;
+  height: var(--sidebar-header-height);
+  justify-content: space-between;
+  padding: var(--sidebar-header-padding);
+}
+
+.header :matches(h1, h2, h3, h4, h5) {
+  color: var(--sidebar-header-text-color);
+}
+
+.header img,
+.header svg {
+  display: block;
+}
+
+.header button {
+  background: var(--sidebar-header-button-background);
+  border: var(--sidebar-header-button-border);
+  color: var(--sidebar-header-button-color);
+  cursor: pointer;
+  outline: none;
+  padding: var(--sidebar-header-button-padding);
+}
+

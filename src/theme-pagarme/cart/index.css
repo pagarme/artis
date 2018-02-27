@@ -1,0 +1,63 @@
+@import "../colors.css";
+@import "../typography.css";
+
+.title {
+  font-family: var(--primary-font-family);
+  font-weight: 900;
+  letter-spacing: var(--letter-spacing);
+  font-size: var(--font-size-small);
+  color: var(--color-white);
+  text-transform: uppercase;
+  text-align: left;
+  margin-left: 20px;
+}
+
+.itemList {
+  padding-left: 0;
+}
+
+.item {
+  list-style-type: none;
+  background-color: var(--color-grey-77);
+  padding: 8px 10px 5px;
+  margin-bottom: 8px;
+}
+
+.item > h4 {
+  font-family: var(--primary-font-family);
+  font-weight: 900;
+  letter-spacing: var(--letter-spacing);
+  font-size: var(--font-size-small);
+  margin-top: 0;
+  color: var(--color-white);
+}
+
+.item > p {
+  font-family: var(--primary-font-family);
+  font-weight: 900;
+  letter-spacing: var(--letter-spacing);
+  font-size: var(--font-size-small);
+  margin-bottom: 0;
+  color: var(--color-greenish);
+}
+
+.total {
+  font-family: var(--primary-font-family);
+  font-weight: 900;
+  letter-spacing: var(--letter-spacing);
+  font-size: var(--font-size-small);
+  color: var(--color-white);
+  text-align: left;
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+.amount {
+  font-family: var(--primary-font-family);
+  font-weight: 900;
+  letter-spacing: var(--letter-spacing);
+  font-size: var(--font-size-xlarge);
+  margin-top: 0;
+  margin-left: 20px;
+  color: var(--color-greenish);
+}
