@@ -1,15 +1,7 @@
 @import "./properties.css";
 
 .page {
-  margin: var(--page-margin-desktop);
-}
-
-.titleIcon {
-  padding: 0 9px 0 0;
-}
-
-.noMarginTop {
-  margin-top: 0;
+  margin: var(--page-margin);
 }
 
 .title {
@@ -20,18 +12,32 @@
   text-transform: uppercase;
   letter-spacing: 1.4px;
   justify-content: center;
+  display: flex;
   align-items: center;
   padding-bottom: var(--page-title-padding-bottom);
 }
 
+.form {
+  width: 100%;
+}
+
+.noMarginTop {
+  margin-top: 0;
+}
+
+.titleIcon {
+  padding: 0 9px 0 0;
+}
+
 @media (--media-palm) {
+
+  .title {
+    display: none;
+  }
 
   .page {
     margin-left: var(--margin-page-mobile);
     margin-right: var(--margin-page-mobile);
   }
-
-  .title {
-    display: none;
-  }
 }
+

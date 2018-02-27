@@ -20,10 +20,21 @@ class Input extends React.Component {
     }
 
     this.handleDisplayPassword = this.handleDisplayPassword.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   handleDisplayPassword (display) {
     this.setState({ displayPassword: display })
+  }
+
+  handleChange (e) {
+    if (this.props.onAutocomplete) {
+      this.props.onAutocomplete(e)
+    }
+
+    if (!this.props.disabled) {
+      this.props.onChange(e)
+    }
   }
 
   renderPasswordVisibilityIcon () {
@@ -71,12 +82,6 @@ class Input extends React.Component {
       tooltipClassName,
     } = this.props
 
-    let { onChange } = this.props
-
-    if (disabled) {
-      onChange = null
-    }
-
     const inputContainer = classnames(
       theme.inputContainer,
       {
@@ -105,7 +110,7 @@ class Input extends React.Component {
       {
         ref: inputRef,
         onBlur,
-        onChange,
+        onChange: this.handleChange,
         maxLength,
       }
     )
@@ -203,6 +208,7 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onAutocomplete: PropTypes.func,
   onBlur: PropTypes.func,
   value: PropTypes.string.isRequired,
   multiline: PropTypes.bool,
@@ -239,6 +245,7 @@ Input.defaultProps = {
   mask: '',
   inputRef: null,
   onBlur: null,
+  onAutocomplete: null,
   maxLength: '200',
   tooltip: '',
   tooltipClassName: '',

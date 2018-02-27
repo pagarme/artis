@@ -11,7 +11,7 @@ import { changeScreenSize, showFooterButton } from '../../actions'
 
 import { ProgressBar, Header, Footer } from '../../components'
 
-import CustomerPage from '../../pages/Customer'
+import IdentificationPage from '../../pages/Identification'
 import BillingPage from '../../pages/Billing'
 import ShippingPage from '../../pages/Shipping'
 import PaymentPage from '../../pages/Payment'
@@ -85,10 +85,10 @@ class Checkout extends Component {
     return (
       <React.Fragment>
         <Action show="customer">
-          <CustomerPage title="Dados Pessoais" />
+          <IdentificationPage />
         </Action>
         <Action show="billing">
-          <BillingPage title="Endereço de Cobrança" />
+          <BillingPage />
         </Action>
         <Action show="shipping">
           <ShippingPage

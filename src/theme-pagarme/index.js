@@ -8,9 +8,7 @@ import UIInput from './input/index.css'
 import UIProgressBar from './progress-bar/index.css'
 import UICheckout from './checkout/index.css'
 import UIAddressForm from './address-form/index.css'
-import UIBillingPage from './billing-page/index.css'
 import UIPaymentPage from './payment-page/index.css'
-import UICustomerPage from './customer-page/index.css'
 import UIShippingPage from './shipping-page/index.css'
 import UIAddressOptions from './address-options/index.css'
 import UISwitch from './switch/index.css'
@@ -23,6 +21,7 @@ import UIEmailForm from './email-form/index.css'
 import UIBoletoOptions from './boleto-options/index.css'
 import UIErrorPage from './error-page/index.css'
 import UITooltip from './tooltip/index.css'
+import UIGeneralForm from './general-form/index.css'
 
 export default {
   UINormalizeCSS,
@@ -35,9 +34,7 @@ export default {
   UIProgressBar,
   UICheckout,
   UIAddressForm,
-  UIBillingPage,
   UIPaymentPage,
-  UICustomerPage,
   UIShippingPage,
   UIAddressOptions,
   UISwitch,
@@ -50,4 +47,5 @@ export default {
   UIBoletoOptions,
   UIErrorPage,
   UITooltip,
+  UIGeneralForm,
 }
