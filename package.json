@@ -20,7 +20,6 @@
     "prop-types": "15.6.0",
     "ramda": "0.25.0",
     "raven-js": "3.22.1",
-    "raw-loader": "^0.5.1",
     "react": "16.2.0",
     "react-automata": "1.0.0-3",
     "react-css-themr": "2.1.2",
