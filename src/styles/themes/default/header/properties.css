@@ -1,0 +1,14 @@
+@import "../../../spacing.css";
+
+:root {
+  --header-button-font-size: 30px;
+  --header-button-font-size-mobile: 35px;
+  --header-min-height: 90px;
+  --header-max-height: 90px;
+  --header-margin-bottom: var(--spacing-tiny);
+
+  --logo-margin-top: 31px;
+  --logo-margin-bottom: 33px;
+  --logo-max-width: 400px;
+  --logo-max-height: 26px;
+}

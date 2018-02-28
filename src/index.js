@@ -13,8 +13,8 @@ import ErrorPage from './pages/Error'
 import createElement from './utils/helpers/createElement'
 import createStore from './store'
 
-import theme from './theme-pagarme'
 import NormalizeCSS from './components/NormalizeCSS'
+import defaultTheme from './styles/themes/default'
 
 ReactGA.initialize('UA-113290482-1')
 
@@ -35,7 +35,7 @@ const render = apiData => () => {
 
   ReactDOM.render(
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={defaultTheme}>
         <ErrorBoundary CrashReportComponent={<ErrorPage />}>
           <NormalizeCSS>
             <Checkout

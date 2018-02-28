@@ -1,0 +1,35 @@
+@import "./properties.css";
+
+.page {
+  margin: var(--page-margin);
+}
+
+.title {
+  margin: var(--page-title-margin);
+  font-family: var(--page-title-font-family);
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-color);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  padding-bottom: var(--page-title-padding-bottom);
+}
+
+.titleIcon {
+  padding: 0 9px 0 0;
+}
+
+@media (--media-palm) {
+
+  .title {
+    display: none;
+  }
+
+  .page {
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
+  }
+}
+

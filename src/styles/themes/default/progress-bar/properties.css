@@ -1,0 +1,20 @@
+@import "../../../colors.css";
+@import "../../../spacing.css";
+@import "../../../typography.css";
+@import "../../../media.css";
+
+:root {
+  --wrapper-dark-background-color: var(--color-grey-68);
+  --wrapper-light-background-color: var(--color-grey-39);
+
+  --wrapper-box-shadow: 0 3px 6px var(--color-grey-84);
+
+  --progressbar-background-begin-color: var(--primary-color);
+  --progressbar-background-end-color: var(--secondary-color);
+
+  --step-font-family: var(--primary-font-family);
+  --step-font-size: var(--font-size-small);
+  --step-color: var(--color-grey-39);
+  --step-color-active: var(--primary-color);
+  --step-color-active-mobile: var(--color-white);
+}

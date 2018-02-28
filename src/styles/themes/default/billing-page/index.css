@@ -1,0 +1,37 @@
+@import "./properties.css";
+
+.page {
+  margin: var(--page-margin-desktop);
+}
+
+.titleIcon {
+  padding: 0 9px 0 0;
+}
+
+.noMarginTop {
+  margin-top: 0;
+}
+
+.title {
+  margin: var(--page-title-margin);
+  font-family: var(--page-title-font-family);
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-color);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: var(--page-title-padding-bottom);
+}
+
+@media (--media-palm) {
+
+  .page {
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
+  }
+
+  .title {
+    display: none;
+  }
+}

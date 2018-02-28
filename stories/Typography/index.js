@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import classNames from 'classnames'
 
-import { checkout } from '../../src/theme-pagarme/index.css'
+import { checkout } from '../../src/styles/index.css'
 import style from './style.css'
 
 storiesOf('Typography', module)

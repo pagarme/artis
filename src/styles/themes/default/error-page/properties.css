@@ -1,0 +1,9 @@
+@import "../../../colors.css";
+@import "../../../typography.css";
+
+:root {
+  --container-background-color: var(--color-main-background);
+  --text-font-family: var(--primary-font-family);
+  --title-color: var(--color-pink);
+  --subtitle-color: var(--color-grey-11);
+}

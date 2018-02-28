@@ -125,6 +125,12 @@ class Checkout extends Component {
 
     const { params = {}, configs = {} } = apiData
 
+    const themeName = configs.theme || 'default'
+    const themeBase = configs.themeBase || 'dark'
+    const themeColor = require(`../../styles/themes/${themeName}/${themeBase}.css`) // eslint-disable-line
+
+    const isAddressForm = !(this.props.isProgressBarVisible || isBigScreen)
+
     const { pages } = statechart
 
     const steps = Object.values(
@@ -134,6 +140,7 @@ class Checkout extends Component {
     return (
       <div
         className={classNames(
+          themeColor.theme,
           theme.checkout,
           {
             [theme.closingEffect]: this.state.closingEffect,
@@ -186,6 +193,7 @@ Checkout.propTypes = {
     configs: PropTypes.shape({
       companyName: PropTypes.string,
       image: PropTypes.string,
+      themeBase: PropTypes.string,
       primaryColor: PropTypes.string,
       seconryColor: PropTypes.string,
       postback: PropTypes.string,
@@ -214,7 +222,7 @@ Checkout.defaultProps = {
   apiData: {
     configs: {
       image: '',
-      theme: 'dark',
+      themeBase: 'dark',
     },
   },
 }

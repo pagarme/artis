@@ -1,0 +1,17 @@
+@import "../../../colors.css";
+@import "../../../typography.css";
+@import "../../../media.css";
+@import "../../../spacing.css";
+@import "../../../animations.css";
+
+:root {
+  --page-margin: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) 0;
+
+  --loading-title-font-size: var(--font-size-large);
+  --loading-title-color: var(--color-grey-33);
+  --loading-font-family: var(--primary-font-family);
+  --loading-border-color: var(--color-dark-primary-color);
+
+  --subtile-color: var(--color-grey-33);
+  --background-fill-color: var(--color-grey-83);
+}

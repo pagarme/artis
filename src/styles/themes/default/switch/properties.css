@@ -1,0 +1,18 @@
+@import "../../../colors.css";
+@import "../../../spacing.css";
+@import "../../../typography.css";
+@import "../../../media.css";
+
+:root {
+  --context-switch-checked-label-color: var(--color-dark-primary-color);
+  --context-switch-label-color: var(--color-white);
+  --context-switch-label-subtitle-color: var(--color-grey-33);
+  --context-switch-font-family: var(--title-font-family);
+  --context-switch-label-border-color: #3e3e3e;
+  --context-switch-label-border-right-color: var(--color-black);
+  --context-switch-label-backgound-color: var(--color-grey-84);
+  --context-switch-letter-spacing: var(--letter-spacing);
+  --context-switch-text-transform: uppercase;
+  --context-switch-label-font-size: var(--font-size-small);
+  --context-switch-label-subtitle-font-size: var(--font-size-tiny);
+}

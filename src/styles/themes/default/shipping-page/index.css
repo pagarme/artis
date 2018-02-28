@@ -1,0 +1,32 @@
+@import "./properties.css";
+
+.page {
+  margin: var(--page-margin);
+}
+
+.title {
+  margin: var(--page-title-margin);
+  font-family: var(--page-title-font-family);
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-color);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  padding-bottom: var(--page-title-padding-bottom);
+}
+
+.btnAddNewAddress {
+  width: 100%;
+}
+
+.btnAddNewAddress svg {
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+@media (--media-palm) {
+
+  .page {
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
+  }
+}
