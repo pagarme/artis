@@ -94,10 +94,10 @@ module.exports = {
       {
         oneOf: [
           {
-            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            test: /\.(bmp|gif|jpe|png|svg|woff|ttf|eot)$/,
             loader: require.resolve('url-loader'),
             options: {
-              limit: 10000,
+              limit: 1000000,
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
@@ -106,7 +106,6 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-
               compact: true,
             },
           },
