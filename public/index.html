@@ -8,8 +8,7 @@
   </head>
   <body>
     <a id="switch" href="/simple.html">Switch to simple</button>
-  
-    <script src="/static/js/bundle.js"></script>
+
     <script>
       const key = 'SOME_KEY'
 
@@ -19,9 +18,6 @@
         primaryColor: '323232',
         secondaryColor: '323232',
         postback: 'http://pagar.me',
-        onSuccess: function() {},
-        onError: function() {},
-        onClose: function() {},
       }
 
       const formData = {
@@ -94,14 +90,16 @@
         ],
       }
 
-      const open = Checkout({
-        key: key,
-        configs: configs,
-        formData: formData,
-        transaction: transaction,
-      })
+      window.onload = function () {
+        const open = Checkout({
+          key: key,
+          configs: configs,
+          formData: formData,
+          transaction: transaction,
+        })
 
-      open()
+        open()
+      }
     </script>
   </body>
 </html>

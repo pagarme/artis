@@ -1,7 +1,4 @@
-import 'core-js/es6/symbol'
-import 'core-js/es6/number'
-import 'core-js/es7/object'
-import 'core-js/es6/promise'
+import '@babel/polyfill'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
