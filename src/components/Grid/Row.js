@@ -14,7 +14,6 @@ const classnames = ({
   className,
   hidden,
   alignEnd,
-  overflowVisible,
   fullSize,
   noPadding,
 }) =>
@@ -28,7 +27,6 @@ const classnames = ({
       [theme.alignVerticalCenter]: alignVerticalCenter,
       [theme.alignEnd]: alignEnd,
       [theme.hidden]: hidden,
-      [theme.overflowVisible]: overflowVisible,
       [theme.fullSize]: fullSize,
       [theme.noPadding]: noPadding,
     }
@@ -44,7 +42,6 @@ const Row = ({
   className,
   hidden,
   alignEnd,
-  overflowVisible,
   fullSize,
   noPadding,
 }) => (
@@ -59,7 +56,6 @@ const Row = ({
         className,
         hidden,
         alignEnd,
-        overflowVisible,
         fullSize,
         noPadding,
       })
@@ -76,7 +72,6 @@ Row.propTypes = {
     stretch: PropTypes.string,
     alignVerticalCenter: PropTypes.string,
     hidden: PropTypes.string,
-    overflowVisible: PropTypes.string,
     fullSize: PropTypes.string,
   }).isRequired,
   alignEnd: PropTypes.bool,
@@ -88,7 +83,6 @@ Row.propTypes = {
   hidden: PropTypes.bool,
   fullSize: PropTypes.bool,
   className: PropTypes.string,
-  overflowVisible: PropTypes.bool,
   noPadding: PropTypes.bool,
 }
 
@@ -102,7 +96,6 @@ Row.defaultProps = {
   hidden: false,
   fullSize: false,
   className: null,
-  overflowVisible: null,
   noPadding: null,
 }
 

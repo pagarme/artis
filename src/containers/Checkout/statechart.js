@@ -2,49 +2,27 @@ export default {
   initial: 'customer',
   pages: {
     customer: 'Identificação',
-    billing: 'Endereço de Cobrança',
-    shipping: 'Endereço de Entrega',
+    addresses: 'Endereços',
     payment: 'Forma de Pagamento',
     confirmation: 'Confirmação',
   },
   states: {
     customer: {
       on: {
-        NEXT: {
-          billing: {
-            cond: extState => !extState.isBigScreen,
-          },
-          shipping: {
-            cond: extState => extState.isBigScreen,
-          },
-        },
+        NEXT: 'addresses',
       },
       onEntry: 'customer',
     },
-    billing: {
+    addresses: {
       on: {
         PREV: 'customer',
-        NEXT: 'shipping',
-      },
-      onEntry: 'billing',
-    },
-    shipping: {
-      on: {
-        PREV: {
-          billing: {
-            cond: extState => !extState.isBigScreen,
-          },
-          customer: {
-            cond: extState => extState.isBigScreen,
-          },
-        },
         NEXT: 'payment',
       },
-      onEntry: 'shipping',
+      onEntry: 'addresses',
     },
     payment: {
       on: {
-        PREV: 'shipping',
+        PREV: 'addresses',
         NEXT: 'confirmation',
       },
       onEntry: 'payment',

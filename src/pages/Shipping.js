@@ -51,8 +51,15 @@ class ShippingPage extends Component {
       )
     )
 
-    this.props.handlePageChange('shipping', selected)
-    this.props.handlePageChange('addresses', removeSelected(addresses))
+    this.props.handlePageChange({
+      page: 'shipping',
+      pageInfo: selected,
+    })
+
+    this.props.handlePageChange({
+      page: 'addresses',
+      pageInfo: removeSelected(addresses),
+    })
   }
 
   onChangeAddress (address) {
@@ -177,13 +184,8 @@ const mapStateToProps = ({ pageInfo }) => ({
   addresses: pageInfo.addresses,
 })
 
-const mapDispatchToProps = dispatch => ({
-  handlePageChange: (page, pageInfo) => {
-    dispatch(addPageInfo({ page, pageInfo }))
-  },
-  footerButtonVisible: isVisible => dispatch(showFooterButton(isVisible)),
-  progressBarVisible: isVisible => dispatch(showProgressBar(isVisible)),
-})
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(applyThemr(ShippingPage))
+export default connect(mapStateToProps, {
+  footerButtonVisible: showFooterButton,
+  progressBarVisible: showProgressBar,
+  handlePageChange: addPageInfo,
+})(applyThemr(ShippingPage))

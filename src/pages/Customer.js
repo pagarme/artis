@@ -10,7 +10,7 @@ import {
   Grid,
   Row,
   Col,
-  Button,
+  // Button,
   Input,
   Dropdown,
 } from '../components'
@@ -29,26 +29,26 @@ const bigColSize = 8
 
 const applyThemr = themr('UIGeneralForm')
 const defaultColSize = 12
-const mediumColSize = 6
+const mediumColSize = 7
 
 class IdentificationPage extends Component {
   constructor (props) {
     super(props)
 
-    const { customer = {}, billing = {} } = props
+    const { customer = {} } = props
 
-    this.state = { customer, billing }
+    this.state = { ...customer }
 
     this.handleNumberInputRef = this.handleNumberInputRef.bind(this)
     this.handleZipcodeChange = this.handleZipcodeChange.bind(this)
     this.autocompleteAddress = this.autocompleteAddress.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.renderCustomerForm = this.renderCustomerForm.bind(this)
-    this.renderBillingForm = this.renderBillingForm.bind(this)
+    this.handleChangeForm = this.handleChangeForm.bind(this)
   }
 
   componentWillUnmount () {
-    this.props.handlePageChange('customer', this.state)
+    this.handleSubmit(this.state)
   }
 
   handleZipcodeChange (e) {
@@ -60,25 +60,15 @@ class IdentificationPage extends Component {
     }
   }
 
-  handleSubmit (values) {
-    this.props.handlePageChange('customer', {
-      customer: pick(
-        ['name', 'email', 'documentNumber', 'phoneNumber'],
-        values
-      ),
-    })
+  handleChangeForm (values) {
+    this.setState(values)
+  }
 
-    this.props.handlePageChange('billing', {
-      billing: pick(
-        [
-          'zipcode',
-          'street',
-          'number',
-          'complement',
-          'city',
-          'state',
-          'neighborhood',
-        ],
+  handleSubmit (values) {
+    this.props.handlePageChange({
+      page: 'customer',
+      pageInfo: pick(
+        ['name', 'email', 'documentNumber', 'phoneNumber'],
         values
       ),
     })
@@ -93,21 +83,15 @@ class IdentificationPage extends Component {
         { zipcode: newZipcode }
       )
 
-      this.setState(prevState => ({
-        ...prevState,
-        billing: {
-          ...newAddress,
-        },
-      }))
+      this.setState(newAddress)
 
       this.numberInput.focus()
     }
 
     const handleError = error =>
-      this.setState(prevState => ({
-        ...prevState,
+      this.setState({
         error: error.message,
-      }))
+      })
 
     getAddress(zipcode)
       .then(updateAddress)
@@ -119,14 +103,10 @@ class IdentificationPage extends Component {
   }
 
   renderCustomerForm () {
-    const { theme, isBigScreen } = this.props
+    const { theme } = this.props
 
     return (
-      <Grid className={
-        classNames(theme.page, {
-          [theme.noMarginTop]: isBigScreen,
-        })}
-      >
+      <React.Fragment>
         <Row className={theme.title} alignCenter>
           <img src={titleIcon} alt="Customer icon" className={theme.titleIcon} />
           Dados pessoais
@@ -146,22 +126,34 @@ class IdentificationPage extends Component {
           />
         </Row>
         <Row>
-          <Input
-            name="documentNumber"
-            label="CPF"
-            mask="111.111.111-11"
-            placeholder="Digite seu CPF"
-          />
+          <Col
+            tv={smallColSize}
+            desk={smallColSize}
+            tablet={smallColSize}
+            palm={smallColSize}
+          >
+            <Input
+              name="documentNumber"
+              label="CPF"
+              mask="111.111.111-11"
+              placeholder="Digite seu CPF"
+            />
+          </Col>
+          <Col
+            tv={bigColSize}
+            desk={bigColSize}
+            tablet={bigColSize}
+            palm={bigColSize}
+          >
+            <Input
+              name="phoneNumber"
+              label="DDD + Telefone"
+              mask="(11) 11111-1111"
+              placeholder="Digite seu telefone"
+            />
+          </Col>
         </Row>
-        <Row>
-          <Input
-            name="phoneNumber"
-            label="DDD + Telefone"
-            mask="(11) 11111-1111"
-            placeholder="Digite seu telefone"
-          />
-        </Row>
-      </Grid>
+      </React.Fragment>
     )
   }
 
@@ -228,7 +220,7 @@ class IdentificationPage extends Component {
             placeholder="Digite o bairro"
           />
         </Row>
-        <Row overflowVisible>
+        <Row>
           <Col
             tv={bigColSize}
             desk={bigColSize}
@@ -246,11 +238,10 @@ class IdentificationPage extends Component {
             desk={smallColSize}
             tablet={smallColSize}
             palm={smallColSize}
-            overflowVisible
           >
             <Dropdown
               options={options}
-              id="state"
+              name="state"
               label="UF"
             />
           </Col>
@@ -268,7 +259,8 @@ class IdentificationPage extends Component {
 
     return (
       <Form
-        data={merge(this.state.customer, this.state.billing)}
+        data={this.state}
+        onChange={this.handleChangeForm}
         onSubmit={this.handleSubmit}
         customErrorProp="error"
         validation={{
@@ -292,14 +284,7 @@ class IdentificationPage extends Component {
           >
             { this.renderCustomerForm() }
           </Col>
-          <Col
-            tv={mediumColSize}
-            desk={mediumColSize}
-            tablet={mediumColSize}
-          >
-            { this.renderBillingForm() }
-          </Col>
-          <Row>
+          {/* <Row>
             <Col
               desk={defaultColSize}
               tv={defaultColSize}
@@ -309,7 +294,6 @@ class IdentificationPage extends Component {
             >
               <Button
                 id="footer-confirm-btn"
-                disabled={false}
                 size="extra-large"
                 relevance="normal"
                 type="submit"
@@ -318,7 +302,7 @@ class IdentificationPage extends Component {
                 Confirmar
               </Button>
             </Col>
-          </Row>
+          </Row> */}
         </Grid>
       </Form>
     )
@@ -338,35 +322,19 @@ IdentificationPage.propTypes = {
     documentNumber: PropTypes.string,
     phoneNumber: PropTypes.string,
   }),
-  billing: PropTypes.shape({
-    zipcode: PropTypes.string,
-    street: PropTypes.string,
-    number: PropTypes.string,
-    complement: PropTypes.string,
-    city: PropTypes.string,
-    state: PropTypes.string,
-    neighborhood: PropTypes.string,
-  }),
   handlePageChange: PropTypes.func.isRequired,
 }
 
 IdentificationPage.defaultProps = {
   theme: {},
   customer: {},
-  billing: {},
 }
 
 const mapStateToProps = ({ screenSize, pageInfo }) => ({
   isBigScreen: screenSize.isBigScreen,
   customer: pageInfo.customer,
-  billing: pageInfo.billing,
 })
 
-const mapDispatchToProps = dispatch => ({
-  handlePageChange: (page, pageInfo) => {
-    dispatch(addPageInfo({ page, pageInfo }))
-  },
-})
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(applyThemr(IdentificationPage))
+export default connect(mapStateToProps, {
+  handlePageChange: addPageInfo,
+})(applyThemr(IdentificationPage))

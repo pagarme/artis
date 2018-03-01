@@ -2,6 +2,7 @@
 
 .page {
   margin: var(--page-margin);
+  justify-content: center;
 }
 
 .title {

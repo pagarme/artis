@@ -360,388 +360,224 @@ exports[`Storyshots Forms Dropdown 1`] = `
         <div
           className=""
         >
-          <div
+          <select
             className={undefined}
-            id="shortid-mock"
-            onBlur={[Function]}
-            onClick={[Function]}
-            role="listbox"
-            tabIndex="0"
+            disabled={false}
+            id="pessoas-shortid-mock"
+            name="pessoas"
+            onChange={[Function]}
+            value=""
           >
-            <label
-              className={undefined}
-              htmlFor="shortid-mock"
+            <option
+              className=""
+              disabled={true}
+              hidden={true}
+              value="placeholder"
             >
-              Tartarugas ninjas
-            </label>
-            <div
-              className={undefined}
+              
+            </option>
+            <option
+              className=""
+              value="leonardo"
             >
-              <svg
-                fill="currentColor"
-                height="1em"
-                preserveAspectRatio="xMidYMid meet"
-                style={
-                  Object {
-                    "color": undefined,
-                    "verticalAlign": "middle",
-                  }
-                }
-                viewBox="0 0 40 40"
-                width="1em"
-              >
-                <g>
-                  <path
-                    d="m31 16.4q0 0.3-0.2 0.5l-10.4 10.4q-0.3 0.3-0.5 0.3t-0.6-0.3l-10.4-10.4q-0.2-0.2-0.2-0.5t0.2-0.5l1.2-1.1q0.2-0.2 0.5-0.2t0.5 0.2l8.8 8.8 8.7-8.8q0.3-0.2 0.5-0.2t0.6 0.2l1.1 1.1q0.2 0.2 0.2 0.5z"
-                  />
-                </g>
-              </svg>
-            </div>
-            
-          </div>
-          <div
-            className=""
-          >
-            <div
-              style={
-                Object {
-                  "height": 100,
-                  "overflow": "hidden",
-                  "position": "relative",
-                  "width": "100%",
-                }
+              Leonardo
+            </option>
+            <option
+              className=""
+              value="donatello"
+            >
+              Donatello
+            </option>
+            <option
+              className=""
+              value="raphael"
+            >
+              Raphael
+            </option>
+            <option
+              className=""
+              value="michelangelo"
+            >
+              Michelangelo
+            </option>
+          </select>
+          <svg
+            className={undefined}
+            fill="currentColor"
+            height="1em"
+            preserveAspectRatio="xMidYMid meet"
+            style={
+              Object {
+                "color": undefined,
+                "verticalAlign": "middle",
               }
-            >
-              <div
-                style={
-                  Object {
-                    "WebkitOverflowScrolling": "touch",
-                    "bottom": 0,
-                    "left": 0,
-                    "marginBottom": 0,
-                    "marginRight": 0,
-                    "overflow": "scroll",
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
-                  }
-                }
-              >
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={0}
-                >
-                  Leonardo
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={1}
-                >
-                  Donatello
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={2}
-                >
-                  Raphael
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={3}
-                >
-                  Michelangelo
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={4}
-                >
-                  Mr. Splinter
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={5}
-                >
-                  April O'Neil
-                </div>
-              </div>
-              <div
-                style={
-                  Object {
-                    "borderRadius": 3,
-                    "bottom": 2,
-                    "display": "none",
-                    "height": 6,
-                    "left": 2,
-                    "position": "absolute",
-                    "right": 2,
-                  }
-                }
-              >
-                <div
-                  style={
-                    Object {
-                      "backgroundColor": "rgba(0,0,0,.2)",
-                      "borderRadius": "inherit",
-                      "cursor": "pointer",
-                      "display": "block",
-                      "height": "100%",
-                      "position": "relative",
-                    }
-                  }
-                />
-              </div>
-              <div
-                style={
-                  Object {
-                    "borderRadius": 3,
-                    "bottom": 2,
-                    "display": "none",
-                    "position": "absolute",
-                    "right": 2,
-                    "top": 2,
-                    "width": 6,
-                  }
-                }
-              >
-                <div
-                  className={undefined}
-                />
-              </div>
-            </div>
-          </div>
+            }
+            viewBox="0 0 40 40"
+            width="1em"
+          >
+            <g>
+              <path
+                d="m11.6 16.6h16.8l-8.4 8.4z"
+              />
+            </g>
+          </svg>
+        </div>
+        <p>
+          Selecionado: 
           
-        </div>
-        <div>
-          <p>
-            <strong>
-              On change
-            </strong>
-          </p>
-          <p>
-            Name: 
-            
-          </p>
-          <p>
-            Value: 
-            
-          </p>
-        </div>
+        </p>
       </div>
     </section>
     <section>
       <h3>
-        Passing a selected value by default
+        With title
       </h3>
       <div>
         <div
           className=""
         >
-          <div
+          <select
             className={undefined}
-            id="shortid-mock"
-            onBlur={[Function]}
-            onClick={[Function]}
-            role="listbox"
-            tabIndex="0"
+            disabled={false}
+            id="pessoas-shortid-mock"
+            name="pessoas"
+            onChange={[Function]}
+            value=""
           >
-            <label
-              className={undefined}
-              htmlFor="shortid-mock"
+            <option
+              className=""
+              disabled={true}
+              hidden={true}
+              value="placeholder"
             >
-              Tartarugas ninjas
-            </label>
-            <div
-              className={undefined}
+              
+            </option>
+            <option
+              className=""
+              value="leonardo"
             >
-              <svg
-                fill="currentColor"
-                height="1em"
-                preserveAspectRatio="xMidYMid meet"
-                style={
-                  Object {
-                    "color": undefined,
-                    "verticalAlign": "middle",
-                  }
-                }
-                viewBox="0 0 40 40"
-                width="1em"
-              >
-                <g>
-                  <path
-                    d="m31 16.4q0 0.3-0.2 0.5l-10.4 10.4q-0.3 0.3-0.5 0.3t-0.6-0.3l-10.4-10.4q-0.2-0.2-0.2-0.5t0.2-0.5l1.2-1.1q0.2-0.2 0.5-0.2t0.5 0.2l8.8 8.8 8.7-8.8q0.3-0.2 0.5-0.2t0.6 0.2l1.1 1.1q0.2 0.2 0.2 0.5z"
-                  />
-                </g>
-              </svg>
-            </div>
-            <div
-              className={undefined}
+              Leonardo
+            </option>
+            <option
+              className=""
+              value="donatello"
+            >
+              Donatello
+            </option>
+            <option
+              className=""
+              value="raphael"
+            >
+              Raphael
+            </option>
+            <option
+              className=""
+              value="michelangelo"
             >
               Michelangelo
-            </div>
-          </div>
-          <div
-            className=""
-          >
-            <div
-              style={
-                Object {
-                  "height": 100,
-                  "overflow": "hidden",
-                  "position": "relative",
-                  "width": "100%",
-                }
+            </option>
+          </select>
+          <svg
+            className={undefined}
+            fill="currentColor"
+            height="1em"
+            preserveAspectRatio="xMidYMid meet"
+            style={
+              Object {
+                "color": undefined,
+                "verticalAlign": "middle",
               }
-            >
-              <div
-                style={
-                  Object {
-                    "WebkitOverflowScrolling": "touch",
-                    "bottom": 0,
-                    "left": 0,
-                    "marginBottom": 0,
-                    "marginRight": 0,
-                    "overflow": "scroll",
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
-                  }
-                }
-              >
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={0}
-                >
-                  Leonardo
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={1}
-                >
-                  Donatello
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={2}
-                >
-                  Raphael
-                </div>
-                <div
-                  aria-selected="true"
-                  className="undefined"
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={3}
-                >
-                  Michelangelo
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={4}
-                >
-                  Mr. Splinter
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={5}
-                >
-                  April O'Neil
-                </div>
-              </div>
-              <div
-                style={
-                  Object {
-                    "borderRadius": 3,
-                    "bottom": 2,
-                    "display": "none",
-                    "height": 6,
-                    "left": 2,
-                    "position": "absolute",
-                    "right": 2,
-                  }
-                }
-              >
-                <div
-                  style={
-                    Object {
-                      "backgroundColor": "rgba(0,0,0,.2)",
-                      "borderRadius": "inherit",
-                      "cursor": "pointer",
-                      "display": "block",
-                      "height": "100%",
-                      "position": "relative",
-                    }
-                  }
-                />
-              </div>
-              <div
-                style={
-                  Object {
-                    "borderRadius": 3,
-                    "bottom": 2,
-                    "display": "none",
-                    "position": "absolute",
-                    "right": 2,
-                    "top": 2,
-                    "width": 6,
-                  }
-                }
-              >
-                <div
-                  className={undefined}
-                />
-              </div>
-            </div>
-          </div>
+            }
+            viewBox="0 0 40 40"
+            width="1em"
+          >
+            <g>
+              <path
+                d="m11.6 16.6h16.8l-8.4 8.4z"
+              />
+            </g>
+          </svg>
+        </div>
+        <p>
+          Selecionado: 
           
+        </p>
+      </div>
+    </section>
+    <section>
+      <h3>
+        Disabled with title
+      </h3>
+      <div>
+        <div
+          className=""
+        >
+          <select
+            className={undefined}
+            disabled={true}
+            id="pessoas-shortid-mock"
+            name="pessoas"
+            onChange={[Function]}
+            value=""
+          >
+            <option
+              className=""
+              disabled={true}
+              hidden={true}
+              value="placeholder"
+            >
+              
+            </option>
+            <option
+              className=""
+              value="leonardo"
+            >
+              Leonardo
+            </option>
+            <option
+              className=""
+              value="donatello"
+            >
+              Donatello
+            </option>
+            <option
+              className=""
+              value="raphael"
+            >
+              Raphael
+            </option>
+            <option
+              className=""
+              value="michelangelo"
+            >
+              Michelangelo
+            </option>
+          </select>
+          <svg
+            className={undefined}
+            fill="currentColor"
+            height="1em"
+            preserveAspectRatio="xMidYMid meet"
+            style={
+              Object {
+                "color": undefined,
+                "verticalAlign": "middle",
+              }
+            }
+            viewBox="0 0 40 40"
+            width="1em"
+          >
+            <g>
+              <path
+                d="m11.6 16.6h16.8l-8.4 8.4z"
+              />
+            </g>
+          </svg>
         </div>
-        <div>
-          <p>
-            <strong>
-              On change
-            </strong>
-          </p>
-          <p>
-            Name: 
-            
-          </p>
-          <p>
-            Value: 
-            
-          </p>
-        </div>
+        <p>
+          Selecionado: 
+          
+        </p>
       </div>
     </section>
     <section>
@@ -752,190 +588,72 @@ exports[`Storyshots Forms Dropdown 1`] = `
         <div
           className=""
         >
-          <div
+          <select
             className={undefined}
-            id="shortid-mock"
-            onBlur={[Function]}
-            onClick={[Function]}
-            role="listbox"
-            tabIndex="0"
+            disabled={true}
+            id="pessoas-shortid-mock"
+            name="pessoas"
+            onChange={[Function]}
+            value=""
           >
-            <label
-              className={undefined}
-              htmlFor="shortid-mock"
+            <option
+              className=""
+              disabled={true}
+              hidden={true}
+              value="placeholder"
             >
-              Tartarugas ninjas
-            </label>
-            <div
-              className={undefined}
+              
+            </option>
+            <option
+              className=""
+              value="leonardo"
             >
-              <svg
-                fill="currentColor"
-                height="1em"
-                preserveAspectRatio="xMidYMid meet"
-                style={
-                  Object {
-                    "color": undefined,
-                    "verticalAlign": "middle",
-                  }
-                }
-                viewBox="0 0 40 40"
-                width="1em"
-              >
-                <g>
-                  <path
-                    d="m31 16.4q0 0.3-0.2 0.5l-10.4 10.4q-0.3 0.3-0.5 0.3t-0.6-0.3l-10.4-10.4q-0.2-0.2-0.2-0.5t0.2-0.5l1.2-1.1q0.2-0.2 0.5-0.2t0.5 0.2l8.8 8.8 8.7-8.8q0.3-0.2 0.5-0.2t0.6 0.2l1.1 1.1q0.2 0.2 0.2 0.5z"
-                  />
-                </g>
-              </svg>
-            </div>
-            
-          </div>
-          <div
-            className=""
-          >
-            <div
-              style={
-                Object {
-                  "height": 100,
-                  "overflow": "hidden",
-                  "position": "relative",
-                  "width": "100%",
-                }
+              Leonardo
+            </option>
+            <option
+              className=""
+              value="donatello"
+            >
+              Donatello
+            </option>
+            <option
+              className=""
+              value="raphael"
+            >
+              Raphael
+            </option>
+            <option
+              className=""
+              value="michelangelo"
+            >
+              Michelangelo
+            </option>
+          </select>
+          <svg
+            className={undefined}
+            fill="currentColor"
+            height="1em"
+            preserveAspectRatio="xMidYMid meet"
+            style={
+              Object {
+                "color": undefined,
+                "verticalAlign": "middle",
               }
-            >
-              <div
-                style={
-                  Object {
-                    "WebkitOverflowScrolling": "touch",
-                    "bottom": 0,
-                    "left": 0,
-                    "marginBottom": 0,
-                    "marginRight": 0,
-                    "overflow": "scroll",
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
-                  }
-                }
-              >
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={0}
-                >
-                  Leonardo
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={1}
-                >
-                  Donatello
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={2}
-                >
-                  Raphael
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={3}
-                >
-                  Michelangelo
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={4}
-                >
-                  Mr. Splinter
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={5}
-                >
-                  April O'Neil
-                </div>
-              </div>
-              <div
-                style={
-                  Object {
-                    "borderRadius": 3,
-                    "bottom": 2,
-                    "display": "none",
-                    "height": 6,
-                    "left": 2,
-                    "position": "absolute",
-                    "right": 2,
-                  }
-                }
-              >
-                <div
-                  style={
-                    Object {
-                      "backgroundColor": "rgba(0,0,0,.2)",
-                      "borderRadius": "inherit",
-                      "cursor": "pointer",
-                      "display": "block",
-                      "height": "100%",
-                      "position": "relative",
-                    }
-                  }
-                />
-              </div>
-              <div
-                style={
-                  Object {
-                    "borderRadius": 3,
-                    "bottom": 2,
-                    "display": "none",
-                    "position": "absolute",
-                    "right": 2,
-                    "top": 2,
-                    "width": 6,
-                  }
-                }
-              >
-                <div
-                  className={undefined}
-                />
-              </div>
-            </div>
-          </div>
+            }
+            viewBox="0 0 40 40"
+            width="1em"
+          >
+            <g>
+              <path
+                d="m11.6 16.6h16.8l-8.4 8.4z"
+              />
+            </g>
+          </svg>
+        </div>
+        <p>
+          Selecionado: 
           
-        </div>
-        <div>
-          <p>
-            <strong>
-              On change
-            </strong>
-          </p>
-          <p>
-            Name: 
-            
-          </p>
-          <p>
-            Value: 
-            
-          </p>
-        </div>
+        </p>
       </div>
     </section>
     <section>
@@ -946,194 +664,72 @@ exports[`Storyshots Forms Dropdown 1`] = `
         <div
           className="undefined"
         >
-          <div
+          <select
             className={undefined}
-            id="shortid-mock"
-            onBlur={[Function]}
-            onClick={[Function]}
-            role="listbox"
-            tabIndex="0"
+            disabled={false}
+            id="pessoas-shortid-mock"
+            name="pessoas"
+            onChange={[Function]}
+            value=""
           >
-            <label
-              className={undefined}
-              htmlFor="shortid-mock"
+            <option
+              className=""
+              disabled={true}
+              hidden={true}
+              value="placeholder"
             >
-              Tartarugas ninjas
-            </label>
-            <div
-              className={undefined}
+              
+            </option>
+            <option
+              className=""
+              value="leonardo"
             >
-              <svg
-                fill="currentColor"
-                height="1em"
-                preserveAspectRatio="xMidYMid meet"
-                style={
-                  Object {
-                    "color": undefined,
-                    "verticalAlign": "middle",
-                  }
-                }
-                viewBox="0 0 40 40"
-                width="1em"
-              >
-                <g>
-                  <path
-                    d="m31 16.4q0 0.3-0.2 0.5l-10.4 10.4q-0.3 0.3-0.5 0.3t-0.6-0.3l-10.4-10.4q-0.2-0.2-0.2-0.5t0.2-0.5l1.2-1.1q0.2-0.2 0.5-0.2t0.5 0.2l8.8 8.8 8.7-8.8q0.3-0.2 0.5-0.2t0.6 0.2l1.1 1.1q0.2 0.2 0.2 0.5z"
-                  />
-                </g>
-              </svg>
-            </div>
-            
-          </div>
-          <div
-            className=""
-          >
-            <div
-              style={
-                Object {
-                  "height": 100,
-                  "overflow": "hidden",
-                  "position": "relative",
-                  "width": "100%",
-                }
+              Leonardo
+            </option>
+            <option
+              className=""
+              value="donatello"
+            >
+              Donatello
+            </option>
+            <option
+              className=""
+              value="raphael"
+            >
+              Raphael
+            </option>
+            <option
+              className=""
+              value="michelangelo"
+            >
+              Michelangelo
+            </option>
+          </select>
+          <svg
+            className={undefined}
+            fill="currentColor"
+            height="1em"
+            preserveAspectRatio="xMidYMid meet"
+            style={
+              Object {
+                "color": undefined,
+                "verticalAlign": "middle",
               }
-            >
-              <div
-                style={
-                  Object {
-                    "WebkitOverflowScrolling": "touch",
-                    "bottom": 0,
-                    "left": 0,
-                    "marginBottom": 0,
-                    "marginRight": 0,
-                    "overflow": "scroll",
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
-                  }
-                }
-              >
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={0}
-                >
-                  Leonardo
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={1}
-                >
-                  Donatello
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={2}
-                >
-                  Raphael
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={3}
-                >
-                  Michelangelo
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={4}
-                >
-                  Mr. Splinter
-                </div>
-                <div
-                  aria-selected="false"
-                  className=""
-                  onClick={[Function]}
-                  role="option"
-                  tabIndex={5}
-                >
-                  April O'Neil
-                </div>
-              </div>
-              <div
-                style={
-                  Object {
-                    "borderRadius": 3,
-                    "bottom": 2,
-                    "display": "none",
-                    "height": 6,
-                    "left": 2,
-                    "position": "absolute",
-                    "right": 2,
-                  }
-                }
-              >
-                <div
-                  style={
-                    Object {
-                      "backgroundColor": "rgba(0,0,0,.2)",
-                      "borderRadius": "inherit",
-                      "cursor": "pointer",
-                      "display": "block",
-                      "height": "100%",
-                      "position": "relative",
-                    }
-                  }
-                />
-              </div>
-              <div
-                style={
-                  Object {
-                    "borderRadius": 3,
-                    "bottom": 2,
-                    "display": "none",
-                    "position": "absolute",
-                    "right": 2,
-                    "top": 2,
-                    "width": 6,
-                  }
-                }
-              >
-                <div
-                  className={undefined}
-                />
-              </div>
-            </div>
-          </div>
-          <span
-            className={undefined}
+            }
+            viewBox="0 0 40 40"
+            width="1em"
           >
-            Something is wrong
-          </span>
+            <g>
+              <path
+                d="m11.6 16.6h16.8l-8.4 8.4z"
+              />
+            </g>
+          </svg>
         </div>
-        <div>
-          <p>
-            <strong>
-              On change
-            </strong>
-          </p>
-          <p>
-            Name: 
-            
-          </p>
-          <p>
-            Value: 
-            
-          </p>
-        </div>
+        <p>
+          Selecionado: 
+          
+        </p>
       </div>
     </section>
   </div>

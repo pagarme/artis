@@ -70,7 +70,10 @@ class PaymentPage extends Component {
       ], this.state.creditcard)
     }
 
-    this.props.handlePageChange('payment', payment)
+    this.props.handlePageChange({
+      page: 'payment',
+      pageInfo: payment,
+    })
   }
 
   handleSwitchChange (choice) {
@@ -89,11 +92,13 @@ class PaymentPage extends Component {
     }))
   }
 
-  handleInstallmentChange ({ value }) {
+  handleInstallmentChange (e) {
+    const selectedInstallment = e.target.value
+
     this.setState(({ creditcard }) => ({
       creditcard: {
         ...creditcard,
-        installments: value,
+        installments: selectedInstallment,
       },
     }))
   }
@@ -124,7 +129,7 @@ class PaymentPage extends Component {
 
     return (
       <Grid className={theme.page}>
-        <Row overflowVisible>
+        <Row>
           <Col
             tv={mediumColSize}
             desk={mediumColSize}
@@ -149,7 +154,6 @@ class PaymentPage extends Component {
             desk={mediumColSize}
             tablet={mediumColSize}
             palm={defaultColSize}
-            overflowVisible
           >
             <Row>
               <Col
@@ -184,7 +188,7 @@ class PaymentPage extends Component {
                 />
               </Col>
             </Row>
-            <Row overflowVisible>
+            <Row>
               <Col
                 tv={7}
                 desk={7}
@@ -224,7 +228,7 @@ class PaymentPage extends Component {
             </Row>
             {
               installmentsOptions.length &&
-              <Row overflowVisible>
+              <Row>
                 <Col
                   tv={defaultColSize}
                   desk={defaultColSize}
@@ -232,10 +236,14 @@ class PaymentPage extends Component {
                   palm={defaultColSize}
                 >
                   <Dropdown
-                    options={installmentsOptions}
+                    options={
+                      installmentsOptions.map(option => (
+                        { ...option, value: option.value.toString() }
+                      ))
+                    }
                     name="installments"
                     label="Quantidade de Parcelas"
-                    value={installments}
+                    value={installments.toString()}
                     onChange={this.handleInstallmentChange}
                     title="Selecione"
                   />
@@ -349,10 +357,6 @@ const mapStateToProps = ({ screenSize }) => ({
   isBigScreen: screenSize.isBigScreen,
 })
 
-const mapDispatchToProps = dispatch => ({
-  handlePageChange: (page, pageInfo) => {
-    dispatch(addPageInfo({ page, pageInfo }))
-  },
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(applyThemr(PaymentPage))
+export default connect(mapStateToProps, {
+  handlePageChange: addPageInfo,
+})(applyThemr(PaymentPage))

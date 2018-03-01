@@ -5,14 +5,12 @@ import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import { Action, withStatechart } from 'react-automata'
-import { omit, when, always } from 'ramda'
 
 import { changeScreenSize, showFooterButton } from '../../actions'
 
 import { ProgressBar, Header, Footer } from '../../components'
 
-import IdentificationPage from '../../pages/Identification'
-import BillingPage from '../../pages/Billing'
+import CustomerPage from '../../pages/Customer'
 import ShippingPage from '../../pages/Shipping'
 import PaymentPage from '../../pages/Payment'
 import ConfirmationPage from '../../pages/Confirmation'
@@ -43,9 +41,7 @@ class Checkout extends Component {
   }
 
   handleNavigation (transitionTo, pages, steps) {
-    this.props.transition(transitionTo, {
-      isBigScreen: this.props.isBigScreen,
-    })
+    this.props.transition(transitionTo)
 
     const inc = transitionTo === 'NEXT' ? 1 : -1
     const activePage = steps.findIndex(page => (
@@ -85,14 +81,11 @@ class Checkout extends Component {
     return (
       <React.Fragment>
         <Action show="customer">
-          <IdentificationPage />
+          <CustomerPage />
         </Action>
-        <Action show="billing">
-          <BillingPage />
-        </Action>
-        <Action show="shipping">
+        <Action show="addresses">
           <ShippingPage
-            title="Selecione um endereço cadastrado"
+            title="Selecione os endereços para cobrança e entrega"
           />
         </Action>
         <Action show="payment">
@@ -127,10 +120,9 @@ class Checkout extends Component {
     const isAddressForm = !(this.props.isProgressBarVisible || isBigScreen)
 
     const { pages } = statechart
-    const omitOnBigScreen = when(always(isBigScreen), omit(['billing']))
 
     const steps = Object.values(
-      omitOnBigScreen(pages)
+      pages
     )
 
     const footerButtonText = this.props.machineState === 'payment'
@@ -250,12 +242,10 @@ const mapStateToProps = ({ screenSize, showFooterButton, showProgressBar }) => (
   isProgressBarVisible: showProgressBar,
 })
 
-const mapDispatchToProps = dispatch => ({
-  footerButtonVisible: isVisible => dispatch(showFooterButton(isVisible)),
-  changeScreenSize: payload => dispatch(changeScreenSize(payload)),
-})
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    footerButtonVisible: showFooterButton,
+    changeScreenSize,
+  }
 )(applyThemr(withStatechart(statechart)(Checkout)))
