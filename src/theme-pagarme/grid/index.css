@@ -1,6 +1,13 @@
 @import "./properties.css";
 @import "../media.css";
 
+.grid {
+  flex-direction: row;
+  align-content: stretch;
+  display: block;
+  width: 100%;
+}
+
 .grid,
 .row,
 .col {
@@ -13,11 +20,6 @@
 .stretch,
 .stretch > .col {
   align-items: stretch;
-}
-
-.grid {
-  flex-direction: row;
-  align-content: stretch;
 }
 
 .row {
