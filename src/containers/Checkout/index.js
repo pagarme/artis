@@ -9,7 +9,7 @@ import { isEmpty, isNil, reject } from 'ramda'
 
 import { changeScreenSize } from '../../actions'
 
-import { ProgressBar, Header, Footer } from '../../components'
+import { ProgressBar, Header, Footer, Cart } from '../../components'
 
 import CustomerPage from '../../pages/Customer'
 import AddressesPage from '../../pages/Addresses'
@@ -122,6 +122,19 @@ class Checkout extends Component {
     )
   }
 
+  renderCart () {
+    const { formData, transaction, configs } = this.props.apiData
+
+    const { items } = formData
+    const { enableCart } = configs
+
+    const {
+      amount,
+    } = transaction
+
+    return enableCart && <Cart items={items} amount={amount} />
+  }
+
   render () {
     const {
       activePage,
@@ -147,6 +160,7 @@ class Checkout extends Component {
           },
         )}
       >
+        { this.renderCart() }
         <div className={theme.wrapper}>
           <Header
             base={base}
@@ -200,6 +214,7 @@ Checkout.propTypes = {
       primaryColor: PropTypes.string,
       seconryColor: PropTypes.string,
       postback: PropTypes.string,
+      enableCart: PropTypes.bool,
       onSuccess: PropTypes.func,
       onError: PropTypes.func,
       onClose: PropTypes.func,

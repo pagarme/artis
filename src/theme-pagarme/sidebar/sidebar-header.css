@@ -1,8 +1,6 @@
 @import "./properties.css";
 
 .header {
-  align-items: center;
-  display: flex;
   height: var(--sidebar-header-height);
   justify-content: space-between;
   padding: var(--sidebar-header-padding);
@@ -25,4 +23,3 @@
   outline: none;
   padding: var(--sidebar-header-button-padding);
 }
-

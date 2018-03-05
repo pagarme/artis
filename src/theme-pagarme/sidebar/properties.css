@@ -5,6 +5,8 @@
   --sidebar-width: 192px;
   --sidebar-width-desk: 222px;
   --sidebar-width-tv: 320px;
+  --sidebar-width-palm: 80%;
+  --sidebar-width-tablet: 80%;
 
   --sidebar-collapsed-width: 0;
 

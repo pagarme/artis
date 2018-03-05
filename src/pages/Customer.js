@@ -18,6 +18,8 @@ import titleIcon from '../images/avatar-line.svg'
 import { required, isEmail } from '../utils/validations'
 import { addPageInfo } from '../actions'
 
+import CustomerIcon from '../images/avatar-line.svg'
+
 const smallColSize = 4
 const bigColSize = 8
 

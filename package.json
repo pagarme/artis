@@ -89,6 +89,7 @@
     "request": "2.83.0",
     "robrowser": "0.2.0",
     "shortid": "2.2.8",
+    "svgr": "1.8.1",    
     "style-loader": "0.19.1",
     "stylelint": "8.4.0",
     "stylelint-config-pagarme-react": "1.2.0",

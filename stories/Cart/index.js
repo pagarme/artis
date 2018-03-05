@@ -1,6 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
+import style from './style.css'
+
 import {
   Cart,
 } from '../../src/components'
@@ -24,9 +26,17 @@ const items = [
     quantity: 1,
     tangible: true,
   },
+  {
+    description: 'Name very very very very great!',
+    amount: 100,
+    quantity: 1,
+    tangible: true,
+  },
 ]
 
 storiesOf('Cart', module)
   .add('sample', () => (
-    <Cart items={items} amount={15000} />
+    <div className={style.container}>
+      <Cart items={items} amount={15100} />
+    </div>
   ))
