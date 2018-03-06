@@ -9,7 +9,7 @@ describe('Header', () => {
       <Header />
     )
 
-    expect(component.find('img')).toHaveLength(1)
+    expect(component.find('img')).toHaveLength(0)
     expect(component.find('button')).toHaveLength(2)
   })
 

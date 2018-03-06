@@ -6,6 +6,7 @@ import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import { Action, withStatechart } from 'react-automata'
 import { isEmpty, isNil, reject } from 'ramda'
+import ReactGA from 'react-ga'
 
 import { changeScreenSize } from '../../actions'
 
@@ -61,6 +62,11 @@ class Checkout extends Component {
 
   close () {
     const { targetElement } = this.props
+
+    ReactGA.event({
+      category: 'Header',
+      action: 'Click - Close Button',
+    })
 
     this.setState({ closingEffect: true })
 
