@@ -32,7 +32,7 @@ class Input extends React.Component {
       this.props.onAutocomplete(e)
     }
 
-    if (!this.props.disabled) {
+    if (!this.props.disabled && this.props.onChange) {
       this.props.onChange(e)
     }
   }
@@ -207,7 +207,7 @@ Input.propTypes = {
   }),
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   onAutocomplete: PropTypes.func,
   onBlur: PropTypes.func,
   value: PropTypes.string.isRequired,
@@ -245,6 +245,7 @@ Input.defaultProps = {
   mask: '',
   inputRef: null,
   onBlur: null,
+  onChange: null,
   onAutocomplete: null,
   maxLength: '200',
   tooltip: '',

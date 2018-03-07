@@ -1,19 +1,18 @@
 import { isNil } from 'ramda'
 
-const isNumber = value => (
-  (isNil(value) || value === '')
-    ? 'Should be a number'
-    : null
+const isNumber = value => (!/^[0-9]+$/gi.test(value)
+  ? 'Apenas números são permitidos'
+  : false
 )
 
 const required = value => (
   (isNil(value) || value === '')
-    ? 'This field is required'
+    ? 'Este campo é obrigatório'
     : false
 )
 
 const isEmail = value => (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-  ? 'Should be email'
+  ? 'Deve ser um email válido'
   : false
 )
 

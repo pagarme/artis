@@ -26,6 +26,10 @@
   margin-top: 34px;
 }
 
+.tooltipRow {
+  overflow: visible;
+}
+
 .boletoContainer {
   background-color: var(--generate-background-color);
   width: 100%;

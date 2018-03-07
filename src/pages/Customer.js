@@ -15,7 +15,6 @@ import {
 import titleIcon from '../images/avatar-line.svg'
 
 import { required, isEmail } from '../utils/validations'
-
 import { addPageInfo } from '../actions'
 
 const smallColSize = 4
@@ -25,18 +24,20 @@ const applyThemr = themr('UIGeneralForm')
 const defaultColSize = 12
 const mediumColSize = 7
 
-class IdentificationPage extends Component {
+class CustomerPage extends Component {
   constructor (props) {
     super(props)
 
     const { customer = {} } = props
 
     this.state = { ...customer }
-
-    this.handleChangeForm = this.handleChangeForm.bind(this)
   }
 
-  handleChangeForm (values) {
+  componentWillUnmount () {
+    this.props.handlePageChange('customer', this.state)
+  }
+
+  handleChangeForm = (values) => {
     this.setState(values)
   }
 
@@ -123,31 +124,29 @@ class IdentificationPage extends Component {
           >
             { this.renderCustomerForm() }
           </Col>
-          <Row>
-            <Col
-              desk={defaultColSize}
-              tv={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-              alignEnd
+          <Col
+            desk={defaultColSize}
+            tv={defaultColSize}
+            tablet={defaultColSize}
+            palm={defaultColSize}
+            alignEnd
+          >
+            <Button
+              size="extra-large"
+              relevance="normal"
+              type="submit"
+              className={theme.button}
             >
-              <Button
-                size="extra-large"
-                relevance="normal"
-                type="submit"
-                className={theme.button}
-              >
-                Confirmar
-              </Button>
-            </Col>
-          </Row>
+              Confirmar
+            </Button>
+          </Col>
         </Grid>
       </Form>
     )
   }
 }
 
-IdentificationPage.propTypes = {
+CustomerPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
     title: PropTypes.string,
@@ -161,9 +160,10 @@ IdentificationPage.propTypes = {
     phoneNumber: PropTypes.string,
   }),
   handleSubmit: PropTypes.func.isRequired,
+  handlePageChange: PropTypes.func.isRequired,
 }
 
-IdentificationPage.defaultProps = {
+CustomerPage.defaultProps = {
   theme: {},
   customer: {},
 }
@@ -175,4 +175,4 @@ const mapStateToProps = ({ screenSize, pageInfo }) => ({
 
 export default connect(mapStateToProps, {
   handlePageChange: addPageInfo,
-})(applyThemr(IdentificationPage))
+})(applyThemr(CustomerPage))

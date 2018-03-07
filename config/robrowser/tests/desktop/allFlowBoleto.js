@@ -11,6 +11,7 @@ module.exports = (wd, init, next, catchError) => {
   browser
     .saveScreenshot('1_initializing.png')
     .fillCustomerForm(2)
+    .fillBillingForm(3)
     .buttonClick(footerBtn)
     .fillShippingForm(4)
     .buttonClick(footerBtn)

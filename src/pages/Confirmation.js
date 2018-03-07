@@ -40,21 +40,17 @@ const hasAllData = allPass([
 ])
 
 class Confirmation extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.isRequesting = false
-
-    this.state = {
-      loading: true,
-      success: false,
-      barcode: '',
-    }
+  state = {
+    loading: true,
+    success: false,
+    barcode: '',
   }
 
   componentWillReceiveProps (newProps) {
     this.createATransaction(newProps)
   }
+
+  isRequesting = false
 
   createATransaction (transactionData) {
     if (hasAllData(transactionData) && !this.isRequesting) {

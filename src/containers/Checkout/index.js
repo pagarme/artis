@@ -5,14 +5,14 @@ import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import { Action, withStatechart } from 'react-automata'
-import { isEmpty } from 'ramda'
+import { isEmpty, isNil, reject } from 'ramda'
 
-import { changeScreenSize, addPageInfo } from '../../actions'
+import { changeScreenSize } from '../../actions'
 
 import { ProgressBar, Header, Footer } from '../../components'
 
 import CustomerPage from '../../pages/Customer'
-import ShippingPage from '../../pages/Shipping'
+import AddressesPage from '../../pages/Addresses'
 import PaymentPage from '../../pages/Payment'
 import ConfirmationPage from '../../pages/Confirmation'
 import defaultLogo from '../../images/logo_pagarme.png'
@@ -28,9 +28,6 @@ class Checkout extends Component {
       activePage: 0,
       closingEffect: false,
     }
-
-    this.handleFormSubmit = this.handleFormSubmit.bind(this)
-    this.handleBackButton = this.handleBackButton.bind(this)
   }
 
   componentDidMount () {
@@ -44,24 +41,19 @@ class Checkout extends Component {
       () => this.props.changeScreenSize(window.innerWidth))
   }
 
-  handleBackButton () {
+  handleBackButton = () => {
     const activePage = this.state.activePage - 1
 
     this.setState({ activePage })
     this.props.transition('PREV')
   }
 
-  handleFormSubmit (values, errors) {
-    if (isEmpty(values) || !isEmpty(errors)) {
+  handleFormSubmit = (values, errors) => {
+    if (isEmpty(values) || !isEmpty(reject(isNil, errors))) {
       return
     }
 
     const activePage = this.state.activePage + 1
-
-    this.props.addPageInfo({
-      page: this.props.machineState,
-      pageInfo: values,
-    })
 
     this.setState({ activePage })
     this.props.transition('NEXT')
@@ -99,8 +91,7 @@ class Checkout extends Component {
           <CustomerPage handleSubmit={this.handleFormSubmit} />
         </Action>
         <Action show="addresses">
-          <ShippingPage
-            title="Selecione os endereços para cobrança e entrega"
+          <AddressesPage
             handleSubmit={this.handleFormSubmit}
           />
         </Action>
@@ -130,11 +121,9 @@ class Checkout extends Component {
       activePage,
     } = this.state
 
-    const { apiData, theme, isBigScreen } = this.props
+    const { apiData, theme } = this.props
 
     const { params = {}, configs = {} } = apiData
-
-    const isAddressForm = !(this.props.isProgressBarVisible || isBigScreen)
 
     const { pages } = statechart
 
@@ -159,26 +148,19 @@ class Checkout extends Component {
             onClose={this.close.bind(this)}
             prevButtonDisabled={
               activePage === 0 || (
-                activePage === steps.length ||
-                isAddressForm
+                activePage === steps.length
               )
             }
           />
           <div
             className={classNames(
               theme.content,
-              {
-                [theme.darkContent]: isAddressForm,
-              },
             )}
           >
-            {
-              !isAddressForm &&
-              <ProgressBar
-                steps={steps}
-                activePage={activePage}
-              />
-            }
+            <ProgressBar
+              steps={steps}
+              activePage={activePage}
+            />
             {this.renderPages()}
           </div>
           <Footer
@@ -224,11 +206,7 @@ Checkout.propTypes = {
   }).isRequired,
   changeScreenSize: PropTypes.func.isRequired,
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
-  machineState: PropTypes.string.isRequired,
   transition: PropTypes.func.isRequired,
-  isBigScreen: PropTypes.bool.isRequired,
-  isProgressBarVisible: PropTypes.bool.isRequired,
-  addPageInfo: PropTypes.func.isRequired,
 }
 
 Checkout.defaultProps = {
@@ -241,15 +219,9 @@ Checkout.defaultProps = {
   },
 }
 
-const mapStateToProps = ({ screenSize, showProgressBar }) => ({
-  isBigScreen: screenSize.isBigScreen,
-  isProgressBarVisible: showProgressBar,
-})
-
 export default connect(
-  mapStateToProps,
+  null,
   {
     changeScreenSize,
-    addPageInfo,
   }
 )(applyThemr(withStatechart(statechart)(Checkout)))

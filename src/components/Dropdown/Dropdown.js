@@ -24,7 +24,7 @@ class Dropdown extends React.Component {
   handleChange (event) {
     const { disabled, onChange } = this.props
 
-    if (!disabled) {
+    if (!disabled && onChange) {
       onChange(event)
     }
   }
@@ -157,7 +157,7 @@ Dropdown.propTypes = {
       name: PropTypes.string,
     })
   ).isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   value: PropTypes.string,
   disabled: PropTypes.bool,
   placeholder: PropTypes.string,
@@ -171,6 +171,7 @@ Dropdown.defaultProps = {
   placeholder: '',
   error: '',
   label: '',
+  onChange: null,
 }
 
 export default Dropdown

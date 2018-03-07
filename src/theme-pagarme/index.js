@@ -9,7 +9,6 @@ import UIProgressBar from './progress-bar/index.css'
 import UICheckout from './checkout/index.css'
 import UIAddressForm from './address-form/index.css'
 import UIPaymentPage from './payment-page/index.css'
-import UIShippingPage from './shipping-page/index.css'
 import UIAddressOptions from './address-options/index.css'
 import UISwitch from './switch/index.css'
 import UIConfirmationPage from './confirmation-page/index.css'
@@ -35,7 +34,6 @@ export default {
   UICheckout,
   UIAddressForm,
   UIPaymentPage,
-  UIShippingPage,
   UIAddressOptions,
   UISwitch,
   UIConfirmationPage,
