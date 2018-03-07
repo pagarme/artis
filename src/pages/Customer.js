@@ -33,7 +33,6 @@ class IdentificationPage extends Component {
 
     this.state = { ...customer }
 
-    this.renderCustomerForm = this.renderCustomerForm.bind(this)
     this.handleChangeForm = this.handleChangeForm.bind(this)
   }
 
@@ -133,7 +132,6 @@ class IdentificationPage extends Component {
               alignEnd
             >
               <Button
-                id="footer-confirm-btn"
                 size="extra-large"
                 relevance="normal"
                 type="submit"

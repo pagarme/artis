@@ -28,6 +28,9 @@ class Checkout extends Component {
       activePage: 0,
       closingEffect: false,
     }
+
+    this.handleFormSubmit = this.handleFormSubmit.bind(this)
+    this.handleBackButton = this.handleBackButton.bind(this)
   }
 
   componentDidMount () {
@@ -41,7 +44,14 @@ class Checkout extends Component {
       () => this.props.changeScreenSize(window.innerWidth))
   }
 
-  handleNavigation (values, errors) {
+  handleBackButton () {
+    const activePage = this.state.activePage - 1
+
+    this.setState({ activePage })
+    this.props.transition('PREV')
+  }
+
+  handleFormSubmit (values, errors) {
     if (isEmpty(values) || !isEmpty(errors)) {
       return
     }
@@ -86,11 +96,12 @@ class Checkout extends Component {
     return (
       <React.Fragment>
         <Action show="customer">
-          <CustomerPage handleSubmit={this.handleNavigation.bind(this)} />
+          <CustomerPage handleSubmit={this.handleFormSubmit} />
         </Action>
         <Action show="addresses">
           <ShippingPage
             title="Selecione os endereços para cobrança e entrega"
+            handleSubmit={this.handleFormSubmit}
           />
         </Action>
         <Action show="payment">
@@ -98,6 +109,7 @@ class Checkout extends Component {
             title="Dados de Pagamento"
             paymentMethods={paymentMethods}
             amount={amount}
+            handleSubmit={this.handleFormSubmit}
           />
         </Action>
         <Action show="confirmation">
@@ -143,9 +155,7 @@ class Checkout extends Component {
           <Header
             logoAlt={configs.companyName}
             logoSrc={configs.image || defaultLogo}
-            onPrev={
-              this.handleNavigation.bind(this, 'PREV', pages, steps)
-            }
+            onPrev={this.handleBackButton}
             onClose={this.close.bind(this)}
             prevButtonDisabled={
               activePage === 0 || (

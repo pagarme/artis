@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import PlusIcon from 'react-icons/lib/go/plus'
 import { themr } from 'react-css-themr'
-import { equals, filter, isNil, not, pipe } from 'ramda'
+import { isNil } from 'ramda'
 import { connect } from 'react-redux'
+import Form from 'react-vanilla-form'
 
 import AddressForm from '../containers/AddressForm'
 
@@ -19,7 +20,7 @@ import options from '../utils/data/states'
 
 import { addPageInfo, showProgressBar } from '../actions'
 
-const largeColSize = 12
+const defaultColSize = 12
 const mediumColSize = 6
 
 const applyThemr = themr('UIShippingPage')
@@ -38,32 +39,16 @@ class ShippingPage extends Component {
 
     this.toggleOpenAddressForm = this.toggleOpenAddressForm.bind(this)
     this.addAddress = this.addAddress.bind(this)
+    this.handleChangeForm = this.handleChangeForm.bind(this)
     this.onChangeAddress = this.onChangeAddress.bind(this)
-  }
-
-  componentWillUnmount () {
-    const { selected, addresses } = this.state
-
-    const removeSelected = filter(
-      pipe(
-        equals(selected),
-        not
-      )
-    )
-
-    this.props.handlePageChange({
-      page: 'shipping',
-      pageInfo: selected,
-    })
-
-    this.props.handlePageChange({
-      page: 'addresses',
-      pageInfo: removeSelected(addresses),
-    })
   }
 
   onChangeAddress (address) {
     this.setState({ selected: address })
+  }
+
+  handleChangeForm (values) {
+    this.setState(values)
   }
 
   addAddress (address) {
@@ -94,40 +79,65 @@ class ShippingPage extends Component {
           options={options}
           onConfirm={this.addAddress}
         />
-        <Grid
-          hidden={this.state.openAddressForm}
+        <Form
+          data={this.state}
+          onChange={this.handleChangeForm}
+          onSubmit={this.props.handleSubmit}
+          customErrorProp="error"
         >
-          <Row className={theme.title}>
-            {this.props.title}
-          </Row>
-          <Row>
-            <AddressOptions
-              addresses={addresses}
-              selected={selected}
-              onChange={this.onChangeAddress}
-            />
-          </Row>
-          <Row>
-            <Col
-              tv={mediumColSize}
-              desk={mediumColSize}
-              tablet={mediumColSize}
-              palm={largeColSize}
-            >
-              <Button
-                id="shipping-page-add-address-btn"
-                size="extra-large"
-                fill="double"
-                relevance="low"
-                className={theme.btnAddNewAddress}
-                onClick={this.toggleOpenAddressForm}
+          <Grid
+            hidden={this.state.openAddressForm}
+          >
+            <Row className={theme.title}>
+              {this.props.title}
+            </Row>
+            <Row>
+              <AddressOptions
+                addresses={addresses}
+                selected={selected}
+                onChange={this.onChangeAddress}
+              />
+            </Row>
+            <Row>
+              <Col
+                tv={mediumColSize}
+                desk={mediumColSize}
+                tablet={mediumColSize}
+                palm={defaultColSize}
               >
-                <PlusIcon />
-                Cadastrar novo endereço de entrega
-              </Button>
-            </Col>
-          </Row>
-        </Grid>
+                <Button
+                  id="shipping-page-add-address-btn"
+                  size="extra-large"
+                  fill="double"
+                  relevance="low"
+                  className={theme.btnAddNewAddress}
+                  onClick={this.toggleOpenAddressForm}
+                >
+                  <PlusIcon />
+                  Cadastrar novo endereço de entrega
+                </Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col
+                desk={defaultColSize}
+                tv={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+                alignEnd
+              >
+                <Button
+                  size="extra-large"
+                  relevance="normal"
+                  type="submit"
+                  className={theme.button}
+                >
+                  Confirmar
+                </Button>
+              </Col>
+            </Row>
+          </Grid>
+        </Form>
       </div>
     )
   }
@@ -167,7 +177,7 @@ ShippingPage.propTypes = {
   })),
   title: PropTypes.string.isRequired,
   progressBarVisible: PropTypes.func.isRequired,
-  handlePageChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 }
 
 ShippingPage.defaultProps = {

@@ -47,6 +47,7 @@ class PaymentPage extends Component {
     this.handleSwitchChange = this.handleSwitchChange.bind(this)
     this.handleCreditcardtChange = this.handleCreditcardtChange.bind(this)
     this.renderBoleto = this.renderBoleto.bind(this)
+    this.renderCreditcard = this.renderCreditcard.bind(this)
     this.handleInstallmentChange = this.handleInstallmentChange.bind(this)
   }
 
@@ -309,8 +310,8 @@ class PaymentPage extends Component {
     const { paymentMethods } = this.props
 
     const renders = {
-      boleto: this.renderBoleto.bind(this),
-      creditcard: this.renderCreditcard.bind(this),
+      boleto: this.renderBoleto,
+      creditcard: this.renderCreditcard,
     }
 
     const paymentOptions = paymentMethods.map(payment => ({
