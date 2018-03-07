@@ -226,11 +226,11 @@ ShippingPage.defaultProps = {
   confirmMethod: null,
 }
 
-const mapStateToProps = ({ pageInfo, shippingPage }) => ({
+const mapStateToProps = ({ pageInfo, addressOptions }) => ({
   shipping: pageInfo.shipping,
   addresses: pageInfo.addresses,
-  isFormVisible: shippingPage.isFormVisible,
-  confirmMethod: shippingPage.confirmMethod,
+  isFormVisible: addressOptions.isFormVisible,
+  confirmMethod: addressOptions.confirmMethod,
 })
 
 const mapDispatchToProps = dispatch => ({

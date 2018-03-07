@@ -2,7 +2,7 @@ const defaultState = {
   isFormVisible: false,
 }
 
-const shippingPage = (state = defaultState, action) => {
+const addressOptions = (state = defaultState, action) => {
   const {
     isFormVisible,
     addressToUpdate,
@@ -34,4 +34,4 @@ const shippingPage = (state = defaultState, action) => {
   }
 }
 
-export default shippingPage
+export default addressOptions

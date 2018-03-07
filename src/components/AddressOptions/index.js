@@ -263,9 +263,9 @@ AddressOptions.defaultProps = {
   selected: {},
 }
 
-const mapStateToProps = ({ pageInfo, shippingPage }) => ({
+const mapStateToProps = ({ pageInfo, addressOptions }) => ({
   shipping: pageInfo.shipping,
-  isFormVisible: shippingPage.isFormVisible,
+  isFormVisible: addressOptions.isFormVisible,
 })
 
 const mapDispatchToProps = {

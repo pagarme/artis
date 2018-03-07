@@ -7,7 +7,7 @@ describe('checkout reduceres', () => {
       screenSize: {
         isBigScreen: true,
       },
-      shippingPage: {
+      addressOptions: {
         isFormVisible: false,
       },
       showFooterButton: true,

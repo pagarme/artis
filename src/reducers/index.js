@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import screenSize from './screenSize'
 import pageInfo from './pageInfo'
-import shippingPage from './shippingPage'
+import addressOptions from './addressOptions'
 import showFooterButton from './showFooterButton'
 import showProgressBar from './showProgressBar'
 
@@ -10,7 +10,7 @@ const checkoutReducer = combineReducers({
   pageInfo,
   showFooterButton,
   showProgressBar,
-  shippingPage,
+  addressOptions,
 })
 
 export default checkoutReducer

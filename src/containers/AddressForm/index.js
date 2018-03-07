@@ -388,9 +388,9 @@ AddressForm.defaultProps = {
   addressToUpdate: {},
 }
 
-const mapStateToProps = ({ screenSize, shippingPage }) => ({
+const mapStateToProps = ({ screenSize, addressOptions }) => ({
   isBigScreen: screenSize.isBigScreen,
-  addressToUpdate: shippingPage.addressToUpdate,
+  addressToUpdate: addressOptions.addressToUpdate,
 })
 
 export default connect(mapStateToProps)(applyThemr(AddressForm))

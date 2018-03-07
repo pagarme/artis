@@ -41,7 +41,7 @@ const store = mockStore({
       zipcode: '05170500',
     },
   },
-  shippingPage: {
+  addressOptions: {
     isFormVisible: false,
   },
 })
