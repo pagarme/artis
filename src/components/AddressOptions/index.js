@@ -71,9 +71,10 @@ class AddressOptions extends React.Component {
           : []
 
       const existInLocal =
-        localAddresses.reduce((prevVal, elem) =>
-          elem.name === addresses[arrayIndex].name && elem.street === addresses[arrayIndex].street,
-        0)
+        localAddresses.filter(elem =>
+          elem.name === addresses[arrayIndex].name &&
+          elem.street === addresses[arrayIndex].street
+        )
 
       if (existInLocal) {
         const addressesLocal = addresses.filter(elem => (
