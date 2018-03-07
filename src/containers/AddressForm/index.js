@@ -49,6 +49,12 @@ class AddressForm extends Component {
     this.cleanState = this.cleanState.bind(this)
   }
 
+  componentWillReceiveProps (props) {
+    this.setState({
+      ...props.addressToUpdate,
+    })
+  }
+
   handleCancel () {
     this.cleanState()
     this.props.onCancel()
@@ -66,22 +72,15 @@ class AddressForm extends Component {
       'state',
     ], this.state)
 
-    ReactGA.event({
-      category: 'Shipping',
-      action: 'Add new address',
-    })
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.event({
+        category: 'Shipping',
+        action: 'Add new address',
+      })
+    }
 
     this.cleanState()
     this.props.onConfirm(address)
-  }
-
-  cleanState () {
-    this.setState({
-      name: '',
-      zipcode: '',
-      zipcodeError: '',
-      ...defaultAddress,
-    })
   }
 
   handleStateChange (value) {
@@ -92,10 +91,6 @@ class AddressForm extends Component {
     const { name, value } = e.target
 
     this.setState({ [name]: value })
-  }
-
-  numberInputRef (input) {
-    this.streetNumberInput = input
   }
 
   handleZipcodeChange (e) {
@@ -111,6 +106,19 @@ class AddressForm extends Component {
 
   handleZipcodeBlur () {
     this.setState({ zipcodeError: '' })
+  }
+
+  cleanState () {
+    this.setState({
+      name: '',
+      zipcode: '',
+      zipcodeError: '',
+      ...defaultAddress,
+    })
+  }
+
+  numberInputRef (input) {
+    this.streetNumberInput = input
   }
 
   autocompleteAddress (zipcode) {
@@ -335,7 +343,7 @@ class AddressForm extends Component {
                   onClick={this.handleConfirm}
                   className={theme.actionButton}
                 >
-                  Cadastrar
+                  {name ? 'Atualizar' : 'Cadastrar'}
                 </Button>
               </Col>
             </Row>
@@ -361,16 +369,28 @@ AddressForm.propTypes = {
     value: PropTypes.string,
   })),
   isBigScreen: PropTypes.bool.isRequired,
+  addressToUpdate: PropTypes.shape({
+    name: PropTypes.string,
+    street: PropTypes.string,
+    number: PropTypes.string,
+    complement: PropTypes.string,
+    neighborhood: PropTypes.string,
+    zipcode: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+  }),
 }
 
 AddressForm.defaultProps = {
   visible: false,
   options: [],
   theme: {},
+  addressToUpdate: {},
 }
 
-const mapStateToProps = ({ screenSize }) => ({
+const mapStateToProps = ({ screenSize, addressOptions }) => ({
   isBigScreen: screenSize.isBigScreen,
+  addressToUpdate: addressOptions.addressToUpdate,
 })
 
 export default connect(mapStateToProps)(applyThemr(AddressForm))

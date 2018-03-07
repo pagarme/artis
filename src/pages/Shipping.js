@@ -17,7 +17,14 @@ import {
 
 import options from '../utils/data/states'
 
-import { addPageInfo, showFooterButton, showProgressBar } from '../actions'
+import {
+  addPageInfo,
+  showFooterButton,
+  showProgressBar,
+  showAddressForm,
+  changeConfirmMethod,
+  addAddressToUpdate,
+} from '../actions'
 
 const largeColSize = 12
 const mediumColSize = 6
@@ -31,14 +38,15 @@ class ShippingPage extends Component {
     const { shipping, addresses } = this.props
 
     this.state = {
-      addresses: !isNil(shipping) ? [...addresses, shipping] : addresses,
+      addresses: !isNil(shipping) ? [shipping, ...addresses] : addresses,
       selected: !isNil(shipping) ? shipping : {},
-      openAddressForm: false,
     }
 
     this.toggleOpenAddressForm = this.toggleOpenAddressForm.bind(this)
     this.addAddress = this.addAddress.bind(this)
+    this.removeAddress = this.removeAddress.bind(this)
     this.onChangeAddress = this.onChangeAddress.bind(this)
+    this.updateState = this.updateState.bind(this)
   }
 
   componentWillUnmount () {
@@ -56,10 +64,30 @@ class ShippingPage extends Component {
   }
 
   onChangeAddress (address) {
-    this.setState({ selected: address })
+    return () => (
+      this.setState({ selected: address })
+    )
+  }
+
+  updateState (addresses, selected) {
+    this.setState({
+      addresses,
+      selected,
+    })
+
+    this.toggleOpenAddressForm()
   }
 
   addAddress (address) {
+    const localAddresses =
+      localStorage.getItem('receiverAddresses')
+        ? JSON.parse(localStorage.getItem('receiverAddresses'))
+        : []
+
+    localAddresses.push(address)
+
+    localStorage.setItem('receiverAddresses', JSON.stringify(localAddresses))
+
     this.setState(({ addresses }) => ({
       addresses: [...addresses, address],
       selected: address,
@@ -68,28 +96,46 @@ class ShippingPage extends Component {
     this.toggleOpenAddressForm()
   }
 
-  toggleOpenAddressForm () {
-    const openAddressForm = !this.state.openAddressForm
+  removeAddress (addressesLocal, addressesState) {
+    localStorage.setItem('receiverAddresses', JSON.stringify(addressesLocal))
+    const selected = addressesState && addressesState[0]
 
-    this.props.progressBarVisible(!openAddressForm)
-    this.props.footerButtonVisible(!openAddressForm)
-    this.setState({ openAddressForm })
+    setTimeout(() => {
+      this.setState({
+        addresses: addressesState,
+        selected,
+      })
+    }, 1)
+  }
+
+  toggleOpenAddressForm () {
+    const { isFormVisible } = this.props
+
+    if (!isFormVisible) {
+      this.props.changeConfirmMethod(this.addAddress)
+    } else {
+      this.props.addAddressToUpdate(null)
+    }
+
+    this.props.progressBarVisible(!isFormVisible)
+    this.props.footerButtonVisible(isFormVisible)
+    this.props.addressFormVisible(!isFormVisible)
   }
 
   render () {
     const { addresses, selected } = this.state
-    const { theme } = this.props
+    const { theme, isFormVisible, confirmMethod } = this.props
 
     return (
       <div className={theme.page}>
         <AddressForm
-          visible={this.state.openAddressForm}
+          visible={isFormVisible}
           onCancel={this.toggleOpenAddressForm}
           options={options}
-          onConfirm={this.addAddress}
+          onConfirm={confirmMethod || this.addAddress}
         />
         <Grid
-          hidden={this.state.openAddressForm}
+          hidden={isFormVisible}
         >
           <Row className={theme.title}>
             {this.props.title}
@@ -99,6 +145,8 @@ class ShippingPage extends Component {
               addresses={addresses}
               selected={selected}
               onChange={this.onChangeAddress}
+              onUpdate={this.updateState}
+              onRemove={this.removeAddress}
             />
           </Row>
           <Row>
@@ -163,6 +211,11 @@ ShippingPage.propTypes = {
   progressBarVisible: PropTypes.func.isRequired,
   footerButtonVisible: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
+  isFormVisible: PropTypes.bool.isRequired,
+  addressFormVisible: PropTypes.func.isRequired,
+  changeConfirmMethod: PropTypes.func.isRequired,
+  addAddressToUpdate: PropTypes.func.isRequired,
+  confirmMethod: PropTypes.func,
 }
 
 ShippingPage.defaultProps = {
@@ -170,19 +223,25 @@ ShippingPage.defaultProps = {
   shipping: {},
   addresses: [],
   footerButtonVisible: null,
+  confirmMethod: null,
 }
 
-const mapStateToProps = ({ pageInfo }) => ({
+const mapStateToProps = ({ pageInfo, addressOptions }) => ({
   shipping: pageInfo.shipping,
   addresses: pageInfo.addresses,
+  isFormVisible: addressOptions.isFormVisible,
+  confirmMethod: addressOptions.confirmMethod,
 })
 
 const mapDispatchToProps = dispatch => ({
   handlePageChange: (page, pageInfo) => {
     dispatch(addPageInfo({ page, pageInfo }))
   },
-  footerButtonVisible: isVisible => dispatch(showFooterButton(isVisible)),
-  progressBarVisible: isVisible => dispatch(showProgressBar(isVisible)),
+  footerButtonVisible: isFormVisible => dispatch(showFooterButton(isFormVisible)),
+  progressBarVisible: isFormVisible => dispatch(showProgressBar(isFormVisible)),
+  addressFormVisible: isFormVisible => dispatch(showAddressForm(isFormVisible)),
+  changeConfirmMethod: method => dispatch(changeConfirmMethod(method)),
+  addAddressToUpdate: address => dispatch(addAddressToUpdate(address)),
 })
 
 

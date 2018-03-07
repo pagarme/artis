@@ -17,3 +17,19 @@ export const showProgressBar = payload => ({
   type: 'SHOW_PROGRESSBAR',
   payload,
 })
+
+export const showAddressForm = isFormVisible => ({
+  type: 'SHOW_ADDRESS_FORM',
+  isFormVisible,
+})
+
+export const addAddressToUpdate = addressToUpdate => ({
+  type: 'ADD_SELECTED_ADDRESS',
+  addressToUpdate,
+})
+
+export const changeConfirmMethod = confirmMethod => ({
+  type: 'CHANGE_CONFIRM_METHOD',
+  confirmMethod,
+})
+
