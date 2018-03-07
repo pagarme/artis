@@ -36,16 +36,14 @@ class AddressOptions extends React.Component {
     const { shipping, addresses, onRemove } = this.props
 
     return () => {
-      addresses.splice(arrayIndex, 1)
+      const clenedAddresses = addresses.filter((elem, index) => index !== arrayIndex)
 
-      const addressesLocal = addresses.filter(elem => (
+      const addressesLocal = clenedAddresses.filter(elem => (
         elem.street !== shipping.street &&
         elem.number !== shipping.number
       ))
 
-      const addressesState = addresses.slice()
-
-      onRemove(addressesLocal, addressesState)
+      onRemove(addressesLocal, clenedAddresses)
     }
   }
 

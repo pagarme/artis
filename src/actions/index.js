@@ -28,7 +28,6 @@ export const addAddressToUpdate = addressToUpdate => ({
   addressToUpdate,
 })
 
-// fala qual é o método que será usando no onConfirm do Form
 export const changeConfirmMethod = confirmMethod => ({
   type: 'CHANGE_CONFIRM_METHOD',
   confirmMethod,
