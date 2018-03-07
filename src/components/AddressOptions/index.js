@@ -268,12 +268,15 @@ const mapStateToProps = ({ pageInfo, shippingPage }) => ({
   isFormVisible: shippingPage.isFormVisible,
 })
 
-const mapDispatchToProps = dispatch => ({
-  footerButtonVisible: isFormVisible => dispatch(showFooterButton(isFormVisible)),
-  progressBarVisible: isFormVisible => dispatch(showProgressBar(isFormVisible)),
-  addressFormVisible: isFormVisible => dispatch(showAddressForm(isFormVisible)),
-  changeConfirmMethod: method => dispatch(changeConfirmMethod(method)),
-  addAddressToUpdate: address => dispatch(addAddressToUpdate(address)),
-})
+const mapDispatchToProps = {
+  footerButtonVisible: showFooterButton,
+  progressBarVisible: showProgressBar,
+  addressFormVisible: showAddressForm,
+  changeConfirmMethod,
+  addAddressToUpdate,
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(applyThemr(AddressOptions))
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(applyThemr(AddressOptions))

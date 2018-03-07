@@ -211,11 +211,11 @@ ShippingPage.propTypes = {
   progressBarVisible: PropTypes.func.isRequired,
   footerButtonVisible: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  isFormVisible: PropTypes.bool.isRequired, //eslint-disable-line
-  addressFormVisible: PropTypes.func.isRequired, //eslint-disable-line
-  changeConfirmMethod: PropTypes.func.isRequired, //eslint-disable-line
-  addAddressToUpdate: PropTypes.func.isRequired, //eslint-disable-line
-  confirmMethod: PropTypes.func, //eslint-disable-line
+  isFormVisible: PropTypes.bool.isRequired,
+  addressFormVisible: PropTypes.func.isRequired,
+  changeConfirmMethod: PropTypes.func.isRequired,
+  addAddressToUpdate: PropTypes.func.isRequired,
+  confirmMethod: PropTypes.func,
 }
 
 ShippingPage.defaultProps = {
