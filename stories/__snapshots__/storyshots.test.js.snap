@@ -291,24 +291,6 @@ exports[`Storyshots Footer Sample 1`] = `
         className=""
       >
         <div
-          className="undefined"
-        >
-          <button
-            className=""
-            disabled={false}
-            hidden={false}
-            id="footer-confirm-btn"
-            onClick={[Function]}
-            type="button"
-          >
-            Continuar
-          </button>
-        </div>
-      </div>
-      <div
-        className=""
-      >
-        <div
           className=""
         >
           <svg

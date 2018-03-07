@@ -8,11 +8,6 @@ export const addPageInfo = payload => ({
   payload,
 })
 
-export const showFooterButton = isVisible => ({
-  type: 'SHOW_FOOTER_BUTTON',
-  isVisible,
-})
-
 export const showProgressBar = payload => ({
   type: 'SHOW_PROGRESSBAR',
   payload,

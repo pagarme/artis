@@ -5,8 +5,9 @@ import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import { Action, withStatechart } from 'react-automata'
+import { isEmpty } from 'ramda'
 
-import { changeScreenSize, showFooterButton } from '../../actions'
+import { changeScreenSize, addPageInfo } from '../../actions'
 
 import { ProgressBar, Header, Footer } from '../../components'
 
@@ -40,16 +41,20 @@ class Checkout extends Component {
       () => this.props.changeScreenSize(window.innerWidth))
   }
 
-  handleNavigation (transitionTo, pages, steps) {
-    this.props.transition(transitionTo)
+  handleNavigation (values, errors) {
+    if (isEmpty(values) || !isEmpty(errors)) {
+      return
+    }
 
-    const inc = transitionTo === 'NEXT' ? 1 : -1
-    const activePage = steps.findIndex(page => (
-      page === pages[this.props.machineState]
-    )) + inc
+    const activePage = this.state.activePage + 1
+
+    this.props.addPageInfo({
+      page: this.props.machineState,
+      pageInfo: values,
+    })
 
     this.setState({ activePage })
-    this.props.footerButtonVisible(!(activePage === steps.length - 1))
+    this.props.transition('NEXT')
   }
 
   close () {
@@ -81,7 +86,7 @@ class Checkout extends Component {
     return (
       <React.Fragment>
         <Action show="customer">
-          <CustomerPage />
+          <CustomerPage handleSubmit={this.handleNavigation.bind(this)} />
         </Action>
         <Action show="addresses">
           <ShippingPage
@@ -113,7 +118,7 @@ class Checkout extends Component {
       activePage,
     } = this.state
 
-    const { apiData, theme, isBigScreen, isFooterButtonVisible } = this.props
+    const { apiData, theme, isBigScreen } = this.props
 
     const { params = {}, configs = {} } = apiData
 
@@ -124,10 +129,6 @@ class Checkout extends Component {
     const steps = Object.values(
       pages
     )
-
-    const footerButtonText = this.props.machineState === 'payment'
-      ? 'Finalizar compra'
-      : 'Confirmar'
 
     return (
       <div
@@ -172,12 +173,7 @@ class Checkout extends Component {
           </div>
           <Footer
             total={params.amount}
-            buttonText={footerButtonText}
-            buttonClick={
-              this.handleNavigation.bind(this, 'NEXT', pages, steps)
-            }
             companyName={configs.companyName}
-            buttonVisible={isFooterButtonVisible}
           />
         </div>
       </div>
@@ -221,9 +217,8 @@ Checkout.propTypes = {
   machineState: PropTypes.string.isRequired,
   transition: PropTypes.func.isRequired,
   isBigScreen: PropTypes.bool.isRequired,
-  footerButtonVisible: PropTypes.func.isRequired,
-  isFooterButtonVisible: PropTypes.bool.isRequired,
   isProgressBarVisible: PropTypes.bool.isRequired,
+  addPageInfo: PropTypes.func.isRequired,
 }
 
 Checkout.defaultProps = {
@@ -236,16 +231,15 @@ Checkout.defaultProps = {
   },
 }
 
-const mapStateToProps = ({ screenSize, showFooterButton, showProgressBar }) => ({ // eslint-disable-line
+const mapStateToProps = ({ screenSize, showProgressBar }) => ({
   isBigScreen: screenSize.isBigScreen,
-  isFooterButtonVisible: showFooterButton,
   isProgressBarVisible: showProgressBar,
 })
 
 export default connect(
   mapStateToProps,
   {
-    footerButtonVisible: showFooterButton,
     changeScreenSize,
+    addPageInfo,
   }
 )(applyThemr(withStatechart(statechart)(Checkout)))

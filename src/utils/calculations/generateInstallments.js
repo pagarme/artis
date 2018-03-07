@@ -58,8 +58,7 @@ const calculate = (creditcard, amount) => {
     return []
   }
 
-  const installments = Array.apply( // eslint-disable-line
-    null,
+  const installments = Array.from(
     { length: maxInstallments }
   ).map(Number.call, Number)
 

@@ -1,4 +1,4 @@
-const strategy = (data) => new Promise(resolve => { // eslint-disable-line
+const strategy = data => new Promise((resolve) => {
   setTimeout(() => resolve({ data }), 3000)
 })
 

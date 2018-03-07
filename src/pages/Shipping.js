@@ -17,7 +17,7 @@ import {
 
 import options from '../utils/data/states'
 
-import { addPageInfo, showFooterButton, showProgressBar } from '../actions'
+import { addPageInfo, showProgressBar } from '../actions'
 
 const largeColSize = 12
 const mediumColSize = 6
@@ -79,7 +79,6 @@ class ShippingPage extends Component {
     const openAddressForm = !this.state.openAddressForm
 
     this.props.progressBarVisible(!openAddressForm)
-    this.props.footerButtonVisible(!openAddressForm)
     this.setState({ openAddressForm })
   }
 
@@ -168,7 +167,6 @@ ShippingPage.propTypes = {
   })),
   title: PropTypes.string.isRequired,
   progressBarVisible: PropTypes.func.isRequired,
-  footerButtonVisible: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
 }
 
@@ -176,7 +174,6 @@ ShippingPage.defaultProps = {
   theme: {},
   shipping: {},
   addresses: [],
-  footerButtonVisible: null,
 }
 
 const mapStateToProps = ({ pageInfo }) => ({
@@ -185,7 +182,6 @@ const mapStateToProps = ({ pageInfo }) => ({
 })
 
 export default connect(mapStateToProps, {
-  footerButtonVisible: showFooterButton,
   progressBarVisible: showProgressBar,
   handlePageChange: addPageInfo,
 })(applyThemr(ShippingPage))

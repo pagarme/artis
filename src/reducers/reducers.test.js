@@ -7,7 +7,6 @@ describe('checkout reduceres', () => {
       screenSize: {
         isBigScreen: true,
       },
-      showFooterButton: true,
       showProgressBar: true,
     })
   })
@@ -97,28 +96,5 @@ describe('checkout reduceres', () => {
     ).toHaveProperty('pageInfo', {
       defaultPage: 'just a test',
     })
-  })
-
-  it('should handle SHOW_FOOTER_BUTTON', () => {
-    expect(
-      reducer({}, {
-        type: 'SHOW_FOOTER_BUTTON',
-        isVisible: true,
-      })
-    ).toHaveProperty('showFooterButton', true)
-
-    expect(
-      reducer({
-        showFooterButton: false,
-      }, {
-        type: 'SHOW_FOOTER_BUTTON',
-      })
-    ).toHaveProperty('showFooterButton', false)
-
-    expect(
-      reducer({}, {
-        type: 'SHOW_FOOTER_BUTTON',
-      })
-    ).toHaveProperty('showFooterButton', true)
   })
 })
