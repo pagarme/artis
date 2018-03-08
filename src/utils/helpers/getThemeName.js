@@ -13,6 +13,10 @@ const getLightPercentage = color => Colr
 const getBlackPercentage = color => 100 - getLightPercentage(color)
 
 const getThemeName = (color) => {
+  if (!color) {
+    return null
+  }
+
   const blackPercentage = getBlackPercentage(color)
 
   if (blackPercentage < percentageLimit) {

@@ -12,14 +12,37 @@ import ErrorPage from './pages/Error'
 
 import createElement from './utils/helpers/createElement'
 import createStore from './store'
+import setColors from './utils/helpers/setColors'
+import getThemeName from './utils/helpers/getThemeName'
 
 import NormalizeCSS from './components/NormalizeCSS'
 import defaultTheme from './styles/themes/default'
+
+const colors = {
+  light: {
+    primary: '#81cc04',
+    secondary: '#64a100',
+  },
+  dark: {
+    primary: '#7ad499',
+    secondary: '#46b67c',
+  },
+}
 
 ReactGA.initialize('UA-113290482-1')
 
 const render = apiData => () => {
   const clientTarget = apiData.configs.target
+
+  const theme = apiData.configs.themeBase ||
+    getThemeName(apiData.configs.primaryColor) ||
+    'dark'
+
+  if (apiData.configs.primaryColor) {
+    setColors(apiData.configs.primaryColor, apiData.configs.secondaryColor)
+  } else {
+    setColors(colors[theme].primary, colors[theme].secondary)
+  }
 
   const target = clientTarget
     ? document.getElementById(clientTarget)
