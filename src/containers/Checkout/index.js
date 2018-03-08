@@ -17,6 +17,7 @@ import PaymentPage from '../../pages/Payment'
 import ConfirmationPage from '../../pages/Confirmation'
 import defaultLogo from '../../images/logo_pagarme.png'
 import statechart from './statechart'
+import getThemeName from '../../utils/helpers/getThemeName'
 
 const applyThemr = themr('UICheckout')
 
@@ -126,7 +127,7 @@ class Checkout extends Component {
     const { params = {}, configs = {} } = apiData
 
     const themeName = configs.theme || 'default'
-    const themeBase = configs.themeBase || 'dark'
+    const themeBase = configs.themeBase || getThemeName(configs.primaryColor) || 'dark'
     const themeColor = require(`../../styles/themes/${themeName}/${themeBase}.css`) // eslint-disable-line
 
     const isAddressForm = !(this.props.isProgressBarVisible || isBigScreen)
