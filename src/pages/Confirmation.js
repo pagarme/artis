@@ -56,7 +56,9 @@ class Confirmation extends React.Component {
       this.isRequesting = true
 
       request(transactionData, strategies[strategyName])
-        .then(() => this.setState({ success: true, loading: false }))
+        .then(() => {
+          this.setState({ success: true, loading: false })
+        })
         .catch(() => this.setState({ success: false, loading: false }))
     }
   }
