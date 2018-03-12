@@ -17,7 +17,6 @@ import PaymentPage from '../../pages/Payment'
 import ConfirmationPage from '../../pages/Confirmation'
 import defaultLogo from '../../images/logo_pagarme.png'
 import statechart from './statechart'
-import getThemeName from '../../utils/helpers/getThemeName'
 
 const applyThemr = themr('UICheckout')
 
@@ -72,7 +71,7 @@ class Checkout extends Component {
     }, 500)
   }
 
-  renderPages () {
+  renderPages (base) {
     const { key, formData, transaction, configs } = this.props.apiData
 
     const { items } = formData
@@ -89,15 +88,20 @@ class Checkout extends Component {
     return (
       <React.Fragment>
         <Action show="customer">
-          <CustomerPage handleSubmit={this.handleFormSubmit} />
+          <CustomerPage
+            base={base}
+            handleSubmit={this.handleFormSubmit}
+          />
         </Action>
         <Action show="addresses">
           <AddressesPage
+            base={base}
             handleSubmit={this.handleFormSubmit}
           />
         </Action>
         <Action show="payment">
           <PaymentPage
+            base={base}
             title="Dados de Pagamento"
             paymentMethods={paymentMethods}
             amount={amount}
@@ -106,6 +110,7 @@ class Checkout extends Component {
         </Action>
         <Action show="confirmation">
           <ConfirmationPage
+            base={base}
             title="Confirmação"
             amount={amount}
             publickey={key}
@@ -122,15 +127,9 @@ class Checkout extends Component {
       activePage,
     } = this.state
 
-    const { apiData, theme } = this.props
+    const { apiData, theme, base } = this.props
 
     const { params = {}, configs = {} } = apiData
-
-    const themeName = configs.theme || 'default'
-    const themeBase = configs.themeBase || getThemeName(configs.primaryColor) || 'dark'
-    const themeColor = require(`../../styles/themes/${themeName}/${themeBase}.css`) // eslint-disable-line
-
-    const isAddressForm = !(this.props.isProgressBarVisible || isBigScreen)
 
     const { pages } = statechart
 
@@ -141,8 +140,8 @@ class Checkout extends Component {
     return (
       <div
         className={classNames(
-          themeColor.theme,
           theme.checkout,
+          theme[base],
           {
             [theme.closingEffect]: this.state.closingEffect,
           },
@@ -150,6 +149,7 @@ class Checkout extends Component {
       >
         <div className={theme.wrapper}>
           <Header
+            base={base}
             logoAlt={configs.companyName}
             logoSrc={configs.image || defaultLogo}
             onPrev={this.handleBackButton}
@@ -166,12 +166,14 @@ class Checkout extends Component {
             )}
           >
             <ProgressBar
+              base={base}
               steps={steps}
               activePage={activePage}
             />
-            {this.renderPages()}
+            {this.renderPages(base)}
           </div>
           <Footer
+            base={base}
             total={params.amount}
             companyName={configs.companyName}
           />
@@ -213,6 +215,7 @@ Checkout.propTypes = {
       paymentMethods: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
+  base: PropTypes.string,
   changeScreenSize: PropTypes.func.isRequired,
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
   transition: PropTypes.func.isRequired,
@@ -223,9 +226,9 @@ Checkout.defaultProps = {
   apiData: {
     configs: {
       image: '',
-      themeBase: 'dark',
     },
   },
+  base: 'dark',
 }
 
 export default connect(

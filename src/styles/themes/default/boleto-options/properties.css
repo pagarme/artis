@@ -1,9 +1,0 @@
-@import "../../../colors.css";
-@import "../../../typography.css";
-
-:root {
-  --amount-color: var(--color-dark-primary-color);
-  --amount-font-family: var(--primary-font-family);
-  --amount-font-weight: var(--title-font-bold);
-  --amount-font-size: var(--font-size-small);
-}

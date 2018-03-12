@@ -59,13 +59,13 @@ class Switch extends Component {
   }
 
   renderContent () {
-    const { theme, items } = this.props
+    const { theme, base, items } = this.props
 
     return items.map((item, index) => (
       <div
         key={item.title}
         className={
-          classNames(theme.content, {
+          classNames(theme[base], theme.content, {
             [theme.visible]: index === this.state.selected,
           })
         }
@@ -76,11 +76,11 @@ class Switch extends Component {
   }
 
   render () {
-    const { theme } = this.props
+    const { theme, base } = this.props
 
     return (
       <React.Fragment>
-        <div className={theme.switch}>
+        <div className={classNames(theme[base], theme.switch)}>
           {this.renderSwitch()}
         </div>
         {this.renderContent()}
@@ -95,7 +95,10 @@ Switch.propTypes = {
     content: PropTypes.string,
     item: PropTypes.string,
     label: PropTypes.string,
+    light: PropTypes.string,
+    dark: PropTypes.string,
   }),
+  base: PropTypes.string,
   items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
@@ -109,6 +112,7 @@ Switch.propTypes = {
 
 Switch.defaultProps = {
   theme: {},
+  base: 'dark',
 }
 
 export default applyThemr(Switch)

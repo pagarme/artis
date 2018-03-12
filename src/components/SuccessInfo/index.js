@@ -203,7 +203,13 @@ class SuccessInfo extends Component {
   }
 
   render () {
-    return this.props.barcode ? this.renderBoleto() : this.renderCreditcard()
+    const { theme, base } = this.props
+
+    return (
+      <div className={theme[base]}>
+        {this.props.barcode ? this.renderBoleto() : this.renderCreditcard()}
+      </div>
+    )
   }
 }
 
@@ -214,13 +220,17 @@ SuccessInfo.propTypes = {
     mediumSize: PropTypes.string,
     success: PropTypes.string,
     title: PropTypes.string,
+    light: PropTypes.string,
+    dark: PropTypes.string,
   }),
+  base: PropTypes.string,
   isBigScreen: PropTypes.bool.isRequired,
   barcode: PropTypes.string,
 }
 
 SuccessInfo.defaultProps = {
   theme: {},
+  base: 'dark',
   barcode: '',
 }
 

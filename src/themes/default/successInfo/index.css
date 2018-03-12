@@ -1,0 +1,50 @@
+@import "../colors.css";
+@import "../typography.css";
+@import "../spacing.css";
+@import "../media.css";
+
+.title {
+  font-family: var(--primary-font-family);
+  font-size: var(--font-size-xxlarge);
+  color: var(--color-white);
+}
+
+.light.title {
+  color: var(--color-grey-83);
+}
+
+.success {
+  color: var(--color-success);
+  margin: 0;
+}
+
+.field,
+.value {
+  font-family: var(--primary-font-family);
+}
+
+.field {
+  color: var(--color-grey-39);
+  margin-bottom: var(--spacing-tiny);
+  font-size: var(--font-size-small);
+}
+
+.value {
+  color: var(--color-white);
+  font-size: var(--font-size-medium);
+}
+
+.light .value {
+  color: var(--color-grey-83);
+}
+
+.mediumSize {
+  width: 80%;
+}
+
+@media (--media-palm) {
+
+  .success {
+    text-align: center;
+  }
+}

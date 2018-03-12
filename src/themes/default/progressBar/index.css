@@ -1,0 +1,60 @@
+@import "../colors.css";
+@import "../spacing.css";
+@import "../typography.css";
+@import "../media.css";
+
+.wrapper {
+  width: 100%;
+  box-shadow: 0 3px 6px var(--color-grey-84);
+  background-color: var(--color-grey-68);
+}
+
+.light .wrapper {
+  background-color: var(--color-grey-11);
+  box-shadow: none;
+}
+
+.progressBar {
+  width: 0;
+  height: 3px;
+  background: linear-gradient(to left, var(--checkout-secondary-color), var(--checkout-primary-color));
+  transition: all 0.25s ease-out;
+}
+
+.step {
+  font-family: var(--primary-font-family);
+  font-size: var(--font-size-small);
+  color: var(--color-grey-39);
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  justify-content: center;
+}
+
+.active {
+  color: var(--checkout-primary-color);
+}
+
+.passed {
+  color: var(--color-grey-39);
+  opacity: 0.6;
+}
+
+.stepIndex {
+  margin-right: 4px;
+}
+
+@media (--media-palm) {
+
+  .stepIndex {
+    display: none;
+  }
+
+  .active {
+    width: 100%;
+    color: var(--color-white);
+  }
+
+  .step:not(.active) {
+    display: none;
+  }
+}

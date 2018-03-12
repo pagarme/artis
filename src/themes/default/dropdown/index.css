@@ -1,0 +1,160 @@
+@import "../media.css";
+@import "../colors.css";
+@import "../typography.css";
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  font-family: var(--primary-font-family);
+  letter-spacing: var(--letter-spacing);
+}
+
+.wrapper.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dropdown {
+  box-sizing: border-box;
+  position: relative;
+  top: 34px;
+  width: 100%;
+  border-bottom: 1px solid var(--color-grey-68);
+  outline: none;
+  cursor: pointer;
+}
+
+.light .dropdown {
+  border-bottom: 1px solid var(--color-grey-11);
+}
+
+.error .dropdown {
+  border-bottom: 1px solid var(--color-error);
+}
+
+.label {
+  position: absolute;
+  top: -22px;
+  left: 0;
+  width: 100%;
+  color: var(--color-white);
+  font-size: var(--font-size-small);
+  line-height: var(--font-size-small);
+  transition: 0.1s ease all;
+  cursor: pointer;
+}
+
+.labelEffect .label {
+  top: -36px;
+  color: var(--color-grey-39);
+  font-size: var(--font-size-tiny);
+  line-height: var(--font-size-tiny);
+  cursor: default;
+}
+
+.disabled .label {
+  cursor: not-allowed;
+}
+
+.error .label {
+  color: var(--color-error);
+}
+
+.icon {
+  position: absolute;
+  top: -22px;
+  right: 0;
+  color: var(--color-grey-53);
+  z-index: 10;
+}
+
+.error .icon {
+  color: var(--color-error);
+}
+
+.optionsWrapper {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 0;
+  border-radius: 3px;
+  padding: var(--spacing-small) 0 var(--spacing-small);
+  background-color: var(--color-grey-85);
+  transition: 0.1s ease all;
+  z-index: 10;
+  display: none;
+}
+
+.light .optionsWrapper {
+  background-color: var(--color-grey-11);
+}
+
+.isOpen .optionsWrapper {
+  height: 100px;
+  display: block;
+}
+
+.option {
+  color: var(--color-white);
+  font-size: var(--font-size-small);
+  line-height: var(--font-size-small);
+  padding: 7px var(--spacing-medium) 7px;
+  cursor: pointer;
+  outline: none;
+  opacity: 0;
+}
+
+.light .option {
+  color: var(--color-grey-77);
+}
+
+.option:last-child {
+  margin-bottom: 5px;
+}
+
+.option.selected,
+.option:hover {
+  color: var(--checkout-primary-color);
+}
+
+.isOpen .option {
+  opacity: 1;
+}
+
+.selectedValue {
+  position: absolute;
+  top: -21px;
+  left: 0;
+  width: 100%;
+  font-size: var(--font-size-small);
+  color: var(--color-white);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.light .selectedValue {
+  color: var(--color-grey-77);
+}
+
+.scrollbarTrack {
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+
+.scrollbarThumb {
+  background-color: var(--checkout-primary-color);
+  border-radius: 5px;
+}
+
+.errorText {
+  position: absolute;
+  top: 39px;
+  left: 0;
+  font-size: var(--font-size-tiny);
+  color: var(--color-error);
+}

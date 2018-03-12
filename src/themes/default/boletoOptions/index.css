@@ -1,0 +1,16 @@
+@import "../typography.css";
+
+.optionsContainer {
+  margin-top: 27px;
+}
+
+.amount {
+  color: var(--checkout-primary-color);
+  letter-spacing: 1.6px;
+  font-family: var(--primary-font-family);
+  font-weight: var(--title-font-bold);
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+}

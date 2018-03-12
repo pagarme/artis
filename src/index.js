@@ -11,12 +11,12 @@ import ErrorBoundary from './components/ErrorBoundary'
 import ErrorPage from './pages/Error'
 
 import createElement from './utils/helpers/createElement'
-import createStore from './store'
-import setColors from './utils/helpers/setColors'
 import getThemeName from './utils/helpers/getThemeName'
+import setColors from './utils/helpers/setColors'
+import createStore from './store'
 
 import NormalizeCSS from './components/NormalizeCSS'
-import defaultTheme from './styles/themes/default'
+import defaultTheme from './themes/default'
 
 const colors = {
   light: {
@@ -32,7 +32,8 @@ const colors = {
 ReactGA.initialize('UA-113290482-1')
 
 const render = apiData => () => {
-  const clientTarget = apiData.configs.target
+  const { configs, formData, key } = apiData
+  const clientTarget = configs.target
 
   const theme = apiData.configs.themeBase ||
     getThemeName(apiData.configs.primaryColor) ||
@@ -51,21 +52,31 @@ const render = apiData => () => {
   ReactGA.event({
     category: 'API',
     action: 'Customer Key',
-    label: apiData.key,
+    label: key,
   })
 
-  const store = createStore(apiData.formData)
+  const store = createStore(formData)
+
+  const themeBase = configs.themeBase || getThemeName(configs.primaryColor) || 'dark'
 
   ReactDOM.render(
     <Provider store={store}>
       <ThemeProvider theme={defaultTheme}>
         <ErrorBoundary CrashReportComponent={<ErrorPage />}>
+<<<<<<< c861181b39ca7ede3c73a1c6e77548668fdbe6d4
           <NormalizeCSS>
             <Checkout
               apiData={apiData}
               targetElement={target}
             />
           </NormalizeCSS>
+=======
+          <Checkout
+            apiData={apiData}
+            targetElement={target}
+            base={themeBase}
+          />
+>>>>>>> themes: add light theme updates
         </ErrorBoundary>
       </ThemeProvider>
     </Provider>,
