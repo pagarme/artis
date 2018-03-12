@@ -27,6 +27,17 @@ const defaultColSize = 12
 
 const strategyName = 'pagarme'
 
+const errorMessages = {
+  error: {
+    errorTitle: 'Ocorreu um erro ao processar seu pagamento',
+    errorSubtitle: 'Tente novamente mais tarde ou entre em contato com seu banco.',
+  },
+  unauthorized: {
+    errorTitle: 'Seu pagamento foi recusado',
+    errorSubtitle: 'Tente novamente mais tarde ou entre em contato com seu banco.',
+  },
+}
+
 const hasAllData = allPass([
   prop('customer'),
   prop('billing'),
@@ -39,10 +50,18 @@ const hasAllData = allPass([
 ])
 
 class Confirmation extends React.Component {
-  state = {
-    loading: true,
-    success: false,
-    barcode: '',
+  constructor (props) {
+    super(props)
+
+    this.isRequesting = false
+
+    this.state = {
+      loading: true,
+      success: false,
+      errorTitle: '',
+      errorSubtitle: '',
+      barcode: '',
+    }
   }
 
   componentWillReceiveProps (newProps) {
@@ -56,16 +75,34 @@ class Confirmation extends React.Component {
       this.isRequesting = true
 
       request(transactionData, strategies[strategyName])
-        .then(() => {
-          this.setState({ success: true, loading: false })
+        .then((response) => {
+          if (response.status === 'authorized') {
+            return this.setState({ success: true, loading: false })
+          }
+
+          return this.setState({
+            ...errorMessages.unauthorized,
+            success: false,
+            loading: false,
+          })
         })
-        .catch(() => this.setState({ success: false, loading: false }))
+        .catch(() => this.setState({
+          success: false,
+          loading: false,
+          ...errorMessages.error,
+        }))
     }
   }
 
   render () {
     const { theme, base } = this.props
-    const { success, loading, barcode } = this.state
+    const {
+      success,
+      loading,
+      barcode,
+      errorTitle,
+      errorSubtitle,
+    } = this.state
 
     if (loading) return <LoadingInfo />
 
@@ -115,7 +152,10 @@ class Confirmation extends React.Component {
                   barcode={barcode}
                   base={base}
                 />
-                : <ErrorInfo />
+                : <ErrorInfo
+                  title={errorTitle}
+                  subtitle={errorSubtitle}
+                />
             }
           </Col>
         </Row>

@@ -69,6 +69,7 @@ const parseToPayload = applySpec({
       zipcode: path(['billing', 'zipcode']),
     }),
   }),
+  split_rules: path(['transaction', 'splitRules']),
 })
 
 const strategy = (data) => {
