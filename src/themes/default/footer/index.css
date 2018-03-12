@@ -4,6 +4,10 @@
 @import "../typography.css";
 @import "../margin.css";
 
+.wrapper {
+  width: 100%;
+}
+
 .safe {
   position: relative;
   justify-content: flex-end;
@@ -53,6 +57,13 @@
 
 .button {
   margin-right: 16px;
+  position: relative;
+}
+
+.cartIcon {
+  position: absolute;
+  left: 20px;
+  top: 10px;
 }
 
 @media (--media-palm) {
@@ -69,6 +80,27 @@
   }
 
   .safe:after {
+    display: none;
+  }
+}
+
+@media (--media-tablet) {
+
+  .cartButton {
+    display: none;
+  }
+}
+
+@media (--media-tv) {
+
+  .cartButton {
+    display: none;
+  }
+}
+
+@media (--media-desk) {
+
+  .cartButton {
     display: none;
   }
 }

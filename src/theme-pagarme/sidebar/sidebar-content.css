@@ -1,7 +1,0 @@
-@import "../colors.css";
-@import "./properties.css";
-
-.content {
-  padding-bottom: var(--sidebar-content-padding-bottom);
-  padding-top: var(--sidebar-content-padding-top);
-}

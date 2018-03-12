@@ -1,9 +1,0 @@
-@import "./properties.css";
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  padding-bottom: var(--sidebar-content-padding-bottom);
-  padding-top: var(--sidebar-content-padding-top);
-  width: 100%;
-}

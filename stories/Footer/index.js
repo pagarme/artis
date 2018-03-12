@@ -10,6 +10,7 @@ storiesOf('Footer', module)
       <Footer
         total={33000.15}
         companyName={'Pagar.me'}
+        cartButtonVisible={false}
       />
     </div>
   ))

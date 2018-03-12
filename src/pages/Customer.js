@@ -13,8 +13,6 @@ import {
   Input,
 } from '../components'
 
-import titleIcon from '../images/avatar-line.svg'
-
 import { required, isEmail } from '../utils/validations'
 import { addPageInfo } from '../actions'
 
@@ -53,7 +51,7 @@ class CustomerPage extends Component {
     return (
       <React.Fragment>
         <Row className={theme.title} alignCenter>
-          <img src={titleIcon} alt="Customer icon" className={theme.titleIcon} />
+          <CustomerIcon className={theme.titleIcon} />
           Dados pessoais
         </Row>
         <Row>

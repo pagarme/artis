@@ -1,93 +1,62 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import Proptypes from 'prop-types'
 import { themr } from 'react-css-themr'
-import CartIcon from 'emblematic-icons/svg/ShoppingCart32.svg'
+import classNames from 'classnames'
 import CloseIcon from 'emblematic-icons/svg/ClearClose32.svg'
+
+import { Button } from '..'
 
 import formatBRL from '../../utils/helpers/formatToBRL'
 
-import {
-  Sidebar,
-  SidebarHeader,
-  SidebarContent,
-  SidebarFooter,
-  Button,
-} from '..'
 
 const applyThemr = themr('UICart')
 
-class Cart extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      collapsed: true,
-    }
-
-    this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
-  }
-
-  handleToggleSidebar () {
-    this.setState(({ collapsed }) => ({ collapsed: !collapsed }))
-  }
-
-  render () {
-    const {
-      collapsed,
-    } = this.state
-
-    const {
-      theme,
-      items,
-      amount,
-    } = this.props
-
-    return (
-      <Fragment>
-        <Button
-          fill="clean"
-          relevance="low"
-          className={theme.open}
-          onClick={this.handleToggleSidebar}
-        >
-          <CartIcon />
-        </Button>
-        <Sidebar collapsed={collapsed}>
-          <SidebarHeader>
-            <Button
-              fill="clean"
-              relevance="low"
-              className={theme.close}
-              onClick={this.handleToggleSidebar}
+const Cart = ({
+  theme,
+  collapsed,
+  items,
+  amount,
+  onToggleCart,
+  showCloseButton,
+}) => (
+  <div
+    className={classNames(theme.cart, {
+      [theme.collapsed]: collapsed,
+    })}
+  >
+    <div className={theme.header}>
+      <Button
+        hidden={showCloseButton}
+        fill="clean"
+        relevance="low"
+        className={theme.close}
+        onClick={onToggleCart}
+      >
+        <CloseIcon />
+      </Button>
+    </div>
+    <div className={theme.content}>
+      <h2 className={theme.title}>Carrinho de compra</h2>
+      <ul className={theme.itemList}>
+        {
+          items.map(item => (
+            <li
+              key={item.title}
+              className={theme.item}
             >
-              <CloseIcon />
-            </Button>
-          </SidebarHeader>
-          <SidebarContent>
-            <h2 className={theme.title}>Carrinho de compra</h2>
-            <ul className={theme.itemList}>
-              {
-                items.map(item => (
-                  <li
-                    key={item.description}
-                    className={theme.item}
-                  >
-                    <h4>{item.description}</h4>
-                    <p>{formatBRL(item.amount)}</p>
-                  </li>
-                ))
-              }
-            </ul>
-          </SidebarContent>
-          <SidebarFooter>
-            <p className={theme.total}>Total</p>
-            <p className={theme.amount}>{formatBRL(amount)}</p>
-          </SidebarFooter>
-        </Sidebar>
-      </Fragment>
-    )
-  }
-}
+              <h4>{item.title}</h4>
+              <p>{formatBRL(item.unitPrice)}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div className={theme.footer}>
+      <p className={theme.total}>Total</p>
+      <p className={theme.amount}>{formatBRL(amount)}</p>
+    </div>
+  </div>
+)
 
 Cart.propTypes = {
   theme: Proptypes.shape({
@@ -99,6 +68,11 @@ Cart.propTypes = {
     open: Proptypes.string,
     close: Proptypes.string,
     closeIcon: Proptypes.string,
+    cart: Proptypes.string,
+    collapsed: Proptypes.string,
+    header: Proptypes.string,
+    content: Proptypes.string,
+    footer: Proptypes.string,
   }),
   items: Proptypes.arrayOf(Proptypes.shape({
     description: Proptypes.string,
@@ -106,6 +80,9 @@ Cart.propTypes = {
     value: Proptypes.number,
   })).isRequired,
   amount: Proptypes.number.isRequired,
+  collapsed: Proptypes.bool.isRequired,
+  onToggleCart: Proptypes.func.isRequired,
+  showCloseButton: Proptypes.bool.isRequired,
 }
 
 Cart.defaultProps = {

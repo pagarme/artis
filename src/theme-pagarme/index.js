@@ -21,7 +21,6 @@ import UIBoletoOptions from './boleto-options/index.css'
 import UIErrorPage from './error-page/index.css'
 import UITooltip from './tooltip/index.css'
 import UIGeneralForm from './general-form/index.css'
-import UISidebar from './sidebar/index.css'
 import UICart from './cart/index.css'
 
 export default {
@@ -48,6 +47,5 @@ export default {
   UIErrorPage,
   UITooltip,
   UIGeneralForm,
-  UISidebar,
   UICart,
 }

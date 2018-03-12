@@ -5,19 +5,18 @@ import Cart from './index'
 
 const items = [
   {
-    description: 'Item 1',
+    id: 1,
+    title: 'Red pill',
+    unitPrice: 5000,
     quantity: 1,
-    amount: 5000,
+    tangible: true,
   },
   {
-    description: 'Item 2',
+    id: 1,
+    title: 'Blue pill',
+    unitPrice: 10000,
     quantity: 1,
-    amount: 5000,
-  },
-  {
-    description: 'Item 3',
-    quantity: 1,
-    amount: 5000,
+    tangible: true,
   },
 ]
 
@@ -25,16 +24,32 @@ const amount = 15000
 
 describe('Cart', () => {
   it('should have three items', () => {
+    const onToggleCart = jest.fn()
+
     const component = mount(
-      <Cart items={items} amount={amount} />
+      <Cart
+        items={items}
+        amount={amount}
+        onToggleCart={onToggleCart}
+        collapsed={false}
+        showCloseButton={false}
+      />
     )
 
-    expect(component.find('li')).toHaveLength(3)
+    expect(component.find('li')).toHaveLength(2)
   })
 
   it('Must have three items', () => {
+    const onToggleCart = jest.fn()
+
     const component = mount(
-      <Cart items={items} amount={amount} />
+      <Cart
+        items={items}
+        amount={amount}
+        onToggleCart={onToggleCart}
+        showCloseButton
+        collapsed={false}
+      />
     )
 
     expect(component.find('p').last().text()).toBe('R$ 150,00')

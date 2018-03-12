@@ -5,7 +5,7 @@
 @import "../margin.css";
 
 .page {
-  margin: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) 0;
+  padding: var(--spacing-medium) var(--spacing-small);
   justify-content: center;
 }
 
@@ -87,8 +87,8 @@
   }
 
   .page {
-    margin-left: var(--margin-page-mobile);
-    margin-right: var(--margin-page-mobile);
+    padding-left: var(--margin-page-mobile);
+    padding-right: var(--margin-page-mobile);
   }
 }
 

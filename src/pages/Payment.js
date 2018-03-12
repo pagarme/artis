@@ -284,7 +284,7 @@ class PaymentPage extends Component {
           palm={defaultColSize}
         >
           <div className={classNames(theme[base], theme.boletoContainer)} >
-            <img src={Barcode} alt="barcode" className={theme.barcodeImg} />
+            <Barcode className={theme.barcodeImg} />
             <h4
               className={
                 classNames(

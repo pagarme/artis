@@ -11,6 +11,7 @@ import ReactGA from 'react-ga'
 import { changeScreenSize } from '../../actions'
 
 import { ProgressBar, Header, Footer, Cart } from '../../components'
+import { Grid, Row, Col } from '../../components/Grid'
 
 import CustomerPage from '../../pages/Customer'
 import AddressesPage from '../../pages/Addresses'
@@ -28,7 +29,10 @@ class Checkout extends Component {
     this.state = {
       activePage: 0,
       closingEffect: false,
+      collapsedCart: true,
     }
+
+    this.handleToggleCart = this.handleToggleCart.bind(this)
   }
 
   componentDidMount () {
@@ -38,7 +42,7 @@ class Checkout extends Component {
   }
 
   componentWillUnmount () {
-    window.addEventListener('resize',
+    window.removeEventListener('resize',
       () => this.props.changeScreenSize(window.innerWidth))
   }
 
@@ -58,6 +62,10 @@ class Checkout extends Component {
 
     this.setState({ activePage })
     this.props.transition('NEXT')
+  }
+
+  handleToggleCart () {
+    this.setState(({ collapsedCart }) => ({ collapsedCart: !collapsedCart }))
   }
 
   close () {
@@ -133,12 +141,26 @@ class Checkout extends Component {
 
     const { items } = formData
     const { enableCart } = configs
+    const { amount } = transaction
+    const { theme } = this.props
 
-    const {
-      amount,
-    } = transaction
-
-    return enableCart && <Cart items={items} amount={amount} />
+    return enableCart && (
+      <Col
+        tv={3}
+        desk={3}
+        tablet={3}
+        palm={0}
+        className={theme.cartWrapper}
+      >
+        <Cart
+          items={items}
+          amount={amount}
+          onToggleCart={this.handleToggleCart}
+          collapsed={this.props.isBigScreen ? false : this.state.collapsedCart}
+          showCloseButton={this.props.isBigScreen}
+        />
+      </Col>
+    )
   }
 
   render () {
@@ -146,7 +168,7 @@ class Checkout extends Component {
       activePage,
     } = this.state
 
-    const { apiData, theme, base } = this.props
+    const { apiData, theme, isBigScreen, base } = this.props
 
     const { params = {}, configs = {} } = apiData
 
@@ -155,6 +177,12 @@ class Checkout extends Component {
     const steps = Object.values(
       pages
     )
+
+    const isCartButtonVisible = configs.enableCart ?
+      !this.props.isBigScreen :
+      false
+
+    const checkoutColSize = configs.enableCart ? 9 : 12
 
     return (
       <div
@@ -166,37 +194,48 @@ class Checkout extends Component {
           },
         )}
       >
-        { this.renderCart() }
         <div className={theme.wrapper}>
-          <Header
-            base={base}
-            logoAlt={configs.companyName}
-            logoSrc={configs.image || defaultLogo}
-            onPrev={this.handleBackButton}
-            onClose={this.close.bind(this)}
-            prevButtonDisabled={
-              activePage === 0 || (
-                activePage === steps.length
-              )
-            }
-          />
-          <div
-            className={classNames(
-              theme.content,
-            )}
-          >
-            <ProgressBar
-              base={base}
-              steps={steps}
-              activePage={activePage}
-            />
-            {this.renderPages(base)}
-          </div>
-          <Footer
-            base={base}
-            total={params.amount}
-            companyName={configs.companyName}
-          />
+          <Grid className={theme.page}>
+            <Row stretch={isBigScreen}>
+              {this.renderCart()}
+              <Col
+                tv={checkoutColSize}
+                desk={checkoutColSize}
+                tablet={checkoutColSize}
+                palm={12}
+              >
+                <Header
+                  base={base}
+                  logoAlt={configs.companyName}
+                  logoSrc={configs.image || defaultLogo}
+                  onPrev={this.handleBackButton}
+                  onClose={this.close.bind(this)}
+                  prevButtonDisabled={
+                    activePage === 0 || (
+                      activePage === steps.length
+                    )
+                  }
+                />
+                <div
+                  className={theme.content}
+                >
+                  <ProgressBar
+                    base={base}
+                    steps={steps}
+                    activePage={activePage}
+                  />
+                  {this.renderPages()}
+                </div>
+                <Footer
+                  base={base}
+                  total={params.amount}
+                  onToggleCart={this.handleToggleCart}
+                  companyName={configs.companyName}
+                  cartButtonVisible={isCartButtonVisible}
+                />
+              </Col>
+            </Row>
+          </Grid>
         </div>
       </div>
     )
@@ -209,7 +248,8 @@ Checkout.propTypes = {
     wrapper: PropTypes.string,
     closingEffect: PropTypes.string,
     checkout: PropTypes.string,
-    darkContent: PropTypes.string,
+    cartWrapper: PropTypes.string,
+    checkoutWrapper: PropTypes.string,
   }),
   apiData: PropTypes.shape({
     key: PropTypes.string.isRequired,
@@ -240,6 +280,7 @@ Checkout.propTypes = {
   changeScreenSize: PropTypes.func.isRequired,
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
   transition: PropTypes.func.isRequired,
+  isBigScreen: PropTypes.bool,
 }
 
 Checkout.defaultProps = {
@@ -250,10 +291,15 @@ Checkout.defaultProps = {
     },
   },
   base: 'dark',
+  isBigScreen: false,
 }
 
+const mapStateToProps = ({ screenSize }) => ({
+  isBigScreen: screenSize.isBigScreen,
+})
+
 export default connect(
-  null,
+  mapStateToProps,
   {
     changeScreenSize,
   }
