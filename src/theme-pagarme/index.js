@@ -1,3 +1,4 @@
+import UINormalizeCSS from './normalize.css'
 import UIButton from './button/index.css'
 import UIDropdown from './dropdown/index.css'
 import UIFooter from './footer/index.css'
@@ -24,6 +25,7 @@ import UIErrorPage from './error-page/index.css'
 import UITooltip from './tooltip/index.css'
 
 export default {
+  UINormalizeCSS,
   UIButton,
   UIDropdown,
   UIFooter,
