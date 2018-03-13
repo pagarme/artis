@@ -34,7 +34,10 @@ class CustomerPage extends Component {
   }
 
   componentWillUnmount () {
-    this.props.handlePageChange('customer', this.state)
+    this.props.handlePageChange({
+      page: 'customer',
+      pageInfo: this.state,
+    })
   }
 
   handleChangeForm = (values) => {

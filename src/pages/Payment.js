@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
-import { pick } from 'ramda'
+import { pick, path, replace } from 'ramda'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 
@@ -26,6 +26,7 @@ const defaultColSize = 12
 const mediumColSize = 6
 
 const findCreditCard = paymentMethod => paymentMethod.type === 'creditcard'
+const removeMask = replace(/_/g, '')
 
 class PaymentPage extends Component {
   constructor (props) {
@@ -34,12 +35,11 @@ class PaymentPage extends Component {
     const creditcardMethod = props.paymentMethods.filter(findCreditCard)
     const installments = creditcardMethod.defaultInstallments || 1
 
+    const creditcard = path(['payment', 'info'], props)
+
     this.state = {
       creditcard: {
-        cardNumber: '',
-        holderName: '',
-        expiration: '',
-        cvv: '',
+        ...creditcard,
         installments,
         flipped: false,
       },
@@ -93,10 +93,10 @@ class PaymentPage extends Component {
 
   renderCreditcard = (creditcard) => {
     const {
-      cardNumber,
-      holderName,
-      expiration,
-      cvv,
+      cardNumber = '•••• •••• •••• ••••',
+      holderName = 'Nome Completo',
+      expiration = 'MM/AA',
+      cvv = '•••',
       flipped,
     } = this.state.creditcard
 
@@ -128,10 +128,10 @@ class PaymentPage extends Component {
               hidden={!isBigScreen}
             >
               <PaymentCard
-                number={cardNumber || '•••• •••• •••• ••••'}
-                cvv={cvv || '•••'}
-                holderName={holderName || 'Nome Completo'}
-                expiration={expiration || 'MM/AA'}
+                number={removeMask(cardNumber)}
+                cvv={removeMask(cvv)}
+                holderName={removeMask(holderName)}
+                expiration={removeMask(expiration)}
                 flipped={flipped}
               />
               <h4 className={theme.amount} >
@@ -377,8 +377,9 @@ PaymentPage.defaultProps = {
   creditcard: {},
 }
 
-const mapStateToProps = ({ screenSize }) => ({
+const mapStateToProps = ({ screenSize, pageInfo }) => ({
   isBigScreen: screenSize.isBigScreen,
+  payment: pageInfo.payment,
 })
 
 export default connect(mapStateToProps, {

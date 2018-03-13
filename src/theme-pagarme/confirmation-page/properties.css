@@ -4,7 +4,7 @@
 @import "../media.css";
 
 :root {
-  --page-margin: var(--spacing-medium) var(--spacing-small);
+  --page-margin: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) 0;
   --page-title-font-size: var(--font-size-xxlarge);
   --page-title-color: var(--color-white);
   --page-title-margin: 6px 0;

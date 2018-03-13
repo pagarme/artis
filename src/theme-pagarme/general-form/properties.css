@@ -5,7 +5,7 @@
 @import "../margin.css";
 
 :root {
-  --page-margin: var(--spacing-medium) var(--spacing-small);
+  --page-margin: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) 0;
   --page-title-font-family: var(--primary-font-family);
   --page-title-font-size: var(--font-size-small);
   --page-title-color: var(--color-white);

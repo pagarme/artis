@@ -5,7 +5,7 @@
 @import "../animations.css";
 
 :root {
-  --page-margin: var(--spacing-medium) var(--spacing-small);
+  --page-margin: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) 0;
 
   --loading-title-font-size: var(--font-size-large);
   --loading-title-color: var(--color-grey-33);
