@@ -28,11 +28,12 @@ var transaction = {
   paymentMethods: [
     {
       type: 'creditcard',
+      title: 'Cartão de crédito'
     }
   ],
 };</div>
     </div>
-    
+
     <div class="box box-full">
       <h2>Full API parameters</h2>
       <button id="btn-open-full" class="btn-open">Open</button>
@@ -91,32 +92,28 @@ var transaction = {
   paymentMethods: [
     {
       type: 'boleto',
-      config: {
-        title: 'Boleto',
-        subtitle: '25% de Desconto!',
-        instructions: 'Use this field to add instructions',
-        expirationAt: '2018-01-30',
-        discount: {
-          type: 'percentage',
-          value: 25,
-        },
+      title: 'Boleto',
+      subtitle: '25% de Desconto!',
+      instructions: 'Use this field to add instructions',
+      expirationAt: '2018-01-30',
+      discount: {
+        type: 'percentage',
+        value: 25,
       },
     },
     {
       type: 'creditcard',
-      config: {
-        title: 'Cartão de Crédito',
-        subtitle: 'em até 12x',
-        instructions: 'Use this field to add instructions',
-        maxInstallments: 6,
-        freeInstallments: 3,
-        defaultInstallments: 2,
-        interestRate: 25,
-      }
+      title: 'Cartão de Crédito',
+      subtitle: 'em até 12x',
+      instructions: 'Use this field to add instructions',
+      maxInstallments: 6,
+      freeInstallments: 3,
+      defaultInstallments: 2,
+      interestRate: 25,
     }
   ],
 };</div>
-    </div>    
+    </div>
 
   </body>
   <script src="assets/js/ace.js" type="text/javascript" charset="utf-8"></script>
