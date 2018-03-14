@@ -1,0 +1,85 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: #5e5e5e;
+  color: #5e5e5e;
+}
+
+h2 {
+  margin: 10px 0 0 10px;
+  padding: 0;
+  color: #a1a1a1;
+  float: left;
+}
+
+.box {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+}
+
+.box-full {
+  right: 0;
+}
+
+.box-custom {
+  left: 0;
+}
+
+.btn-open {
+  position: absolute;
+  top: 13px;
+  right: 30px;
+  border: none;
+  background-color: #333333;
+  color: #a1a1a1;
+  padding: 5px 20px;
+  cursor: pointer;
+}
+
+.btn-open:hover {
+  color: #333333;
+  background-color: #a1a1a1;
+}
+
+.btn-reset {
+  position: absolute;
+  top: 13px;
+  right: 120px;
+  border: none;
+  background-color: #3f3131;
+  color: #a1a1a1;
+  padding: 5px 20px;
+  cursor: pointer;
+}
+
+.btn-reset:hover {
+  color: #291a1a;
+  background-color: #6e4e4e;
+}
+
+
+#full {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 90%;
+  z-index: 0;
+}
+
+#custom {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 90%;
+  z-index: 0;
+}
+
