@@ -9,7 +9,13 @@ const postcssFlexbugsFixes = require('postcss-flexbugs-fixes')
 const postcssImport = require('postcss-import')
 const postcssSassEach = require('postcss-sass-each')
 const postcssUrl = require('postcss-url')({ url: postcssUrlRebase })
-const postcssNext = require('postcss-cssnext')
+const postcssNext = require('postcss-cssnext')({
+  features: {
+    customProperties: {
+      warnings: false,
+    },
+  },
+})
 
 const isTravis = 'TRAVIS' in process.env && 'CI' in process.env
 

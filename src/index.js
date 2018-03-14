@@ -11,7 +11,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 import ErrorPage from './pages/Error'
 
 import createElement from './utils/helpers/createElement'
-import getThemeName from './utils/helpers/getThemeName'
+import setTheme from './utils/helpers/setTheme'
 import setColors from './utils/helpers/setColors'
 import createStore from './store'
 
@@ -32,21 +32,28 @@ const colors = {
 ReactGA.initialize('UA-113290482-1')
 
 const render = apiData => () => {
-  const { configs, formData, key } = apiData
-  const clientTarget = configs.target
+  const {
+    configs,
+    formData,
+    key,
+  } = apiData
 
-  const theme = apiData.configs.themeBase ||
-    getThemeName(apiData.configs.primaryColor) ||
-    'dark'
+  const {
+    target,
+    themeBase,
+    primaryColor,
+    secondaryColor,
+  } = configs
 
-  if (apiData.configs.primaryColor) {
-    setColors(apiData.configs.primaryColor, apiData.configs.secondaryColor)
-  } else {
-    setColors(colors[theme].primary, colors[theme].secondary)
-  }
+  const theme = themeBase || setTheme(primaryColor) || 'dark'
 
-  const target = clientTarget
-    ? document.getElementById(clientTarget)
+  const pColor = primaryColor || colors[theme].primary
+  const sColor = secondaryColor || colors[theme].secondary
+
+  setColors(pColor, sColor)
+
+  const clientTarget = target
+    ? document.getElementById(target)
     : createElement('div', 'checkout-wrapper', 'body')
 
   ReactGA.event({
@@ -57,47 +64,47 @@ const render = apiData => () => {
 
   const store = createStore(formData)
 
-  const themeBase = configs.themeBase || getThemeName(configs.primaryColor) || 'dark'
+  const clientThemeBase = themeBase || setTheme(primaryColor) || 'dark'
 
   ReactDOM.render(
     <Provider store={store}>
       <ThemeProvider theme={defaultTheme}>
         <ErrorBoundary CrashReportComponent={<ErrorPage />}>
-<<<<<<< c861181b39ca7ede3c73a1c6e77548668fdbe6d4
           <NormalizeCSS>
             <Checkout
               apiData={apiData}
-              targetElement={target}
+              targetElement={clientTarget}
+              base={clientThemeBase}
             />
           </NormalizeCSS>
-=======
-          <Checkout
-            apiData={apiData}
-            targetElement={target}
-            base={themeBase}
-          />
->>>>>>> themes: add light theme updates
         </ErrorBoundary>
       </ThemeProvider>
     </Provider>,
-    target
+    clientTarget
   )
 }
 
 const integrations = {
   simple: (buttons) => {
     buttons.forEach((button) => {
-      const key = button.dataset.key
+      const {
+        key,
+        image,
+        locale,
+        theme,
+        amount,
+        paymentMethod,
+      } = button.dataset
 
       const configs = {
-        image: button.dataset.image,
-        locale: button.dataset.locale,
-        theme: button.dataset.theme,
+        image,
+        locale,
+        theme,
       }
 
       const params = {
-        amount: parseFloat(button.dataset.amount),
-        paymentMethod: button.dataset.paymentMethod,
+        amount: parseFloat(amount),
+        paymentMethod,
       }
 
       const open = render({ key, configs, params })

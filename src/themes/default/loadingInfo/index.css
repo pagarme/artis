@@ -6,7 +6,7 @@
 
 .page {
   position: relative;
-  margin: var(--spacing-medium) var(--spacing-small);
+  margin: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) 0;
   padding: var(--spacing-medium) 0 0 0;
   height: 80%;
 }

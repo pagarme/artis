@@ -14,32 +14,9 @@ const Footer = ({
   companyName,
   theme,
   base,
-  buttonVisible,
 }) => (
   <footer>
     <Grid className={theme[base]}>
-      <Row>
-        <Col
-          desk={buttonColSize}
-          tv={buttonColSize}
-          tablet={buttonColSize}
-          palm={palmColSize}
-          alignEnd
-        >
-          <Button
-            id="footer-confirm-btn"
-            hidden={nextButtonDisabled || !buttonVisible}
-            disabled={nextButtonDisabled}
-            size="extra-large"
-            relevance="normal"
-            onClick={buttonClick}
-            className={theme.button}
-            base={base}
-          >
-            {buttonText}
-          </Button>
-        </Col>
-      </Row>
       <Row>
         <Col
           desk={defaultColSize}
@@ -67,8 +44,6 @@ const Footer = ({
 
 Footer.defaultProps = {
   theme: {},
-  nextButtonDisabled: false,
-  buttonVisible: true,
   base: 'dark',
 }
 
@@ -83,8 +58,6 @@ Footer.propTypes = {
     dark: PropTypes.string,
   }),
   base: PropTypes.string,
-  buttonText: PropTypes.string.isRequired,
-  buttonClick: PropTypes.func.isRequired,
   companyName: PropTypes.string.isRequired,
 }
 

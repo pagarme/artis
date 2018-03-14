@@ -5,7 +5,7 @@
 @import "../margin.css";
 
 .page {
-  margin: var(--spacing-medium) var(--spacing-small) 0;
+  margin: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) 0;
 }
 
 .title {

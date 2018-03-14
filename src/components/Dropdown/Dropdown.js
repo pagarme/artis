@@ -79,11 +79,13 @@ class Dropdown extends React.Component {
       label,
       placeholder,
       theme,
+      base,
       value,
       name,
     } = this.props
 
     const rootClasses = classNames(
+      theme[base],
       theme.dropdown,
       {
         [theme.disabled]: disabled,
@@ -148,7 +150,10 @@ Dropdown.propTypes = {
     placeholder: PropTypes.string,
     secondaryText: PropTypes.string,
     success: PropTypes.string,
+    light: PropTypes.string,
+    dark: PropTypes.string,
   }),
+  base: PropTypes.string,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(
@@ -166,6 +171,7 @@ Dropdown.propTypes = {
 
 Dropdown.defaultProps = {
   theme: {},
+  base: 'dark',
   value: 'placeholder',
   disabled: false,
   placeholder: '',

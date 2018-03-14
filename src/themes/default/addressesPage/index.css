@@ -1,21 +1,29 @@
-@import "./properties.css";
+@import "../colors.css";
+@import "../typography.css";
+@import "../spacing.css";
+@import "../media.css";
+@import "../margin.css";
 
 .page {
-  margin: var(--page-margin);
+  margin: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) 0;
   justify-content: center;
 }
 
 .title {
-  margin: var(--page-title-margin);
-  font-family: var(--page-title-font-family);
-  font-size: var(--page-title-font-size);
-  color: var(--page-title-color);
+  margin: 6px 0;
+  font-family: var(--primary-font-family);
+  font-size: var(--font-size-small);
+  color: var(--color-white);
   text-transform: uppercase;
   letter-spacing: 1.4px;
   justify-content: center;
   display: flex;
   align-items: center;
-  padding-bottom: var(--page-title-padding-bottom);
+  padding-bottom: 24px;
+}
+
+.light .title {
+  color: var(--color-grey-77);
 }
 
 .form {

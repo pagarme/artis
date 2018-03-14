@@ -27,7 +27,7 @@
   border: none;
   border-radius: 3px;
   background: linear-gradient(to left, var(--checkout-secondary-color), var(--checkout-primary-color));
-  color: var(--button-text-color);
+  color: var(--color-grey-83);
   font-family: var(--primary-font-family);
   font-weight: var(--title-font-normal);
   letter-spacing: var(--letter-spacing);
@@ -143,17 +143,17 @@
 * LIGHT THEME
 */
 
-.light .button {
+.light.button {
   color: var(--color-white);
 }
 
-.light .clean,
-.light .clean:active,
-.light .clean:focus {
+.light.clean,
+.light.clean:active,
+.light.clean:focus {
   color: var(--checkout-primary-color);
 }
 
-.light .clean:hover {
+.light.clean:hover {
   background-color: transparent;
   color: var(--checkout-secondary-color);
 }

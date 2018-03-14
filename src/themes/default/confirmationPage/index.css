@@ -4,7 +4,7 @@
 @import "../media.css";
 
 .page {
-  margin: var(--spacing-medium) var(--spacing-small);
+  margin: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) 0;
   padding:
     var(--spacing-xlarge)
     var(--spacing-small)

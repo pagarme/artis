@@ -1,11 +1,16 @@
 @import "../media.css";
 @import "../spacing.css";
+@import "../colors.css";
 
 .close,
 .back {
   font-size: 30px;
   padding: 0;
   margin-top: 22px;
+}
+
+.back {
+  color: var(--color-white);
 }
 
 .logo {

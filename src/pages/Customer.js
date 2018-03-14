@@ -21,7 +21,7 @@ import { addPageInfo } from '../actions'
 const smallColSize = 4
 const bigColSize = 8
 
-const applyThemr = themr('UIGeneralForm')
+const applyThemr = themr('UICustomerPage')
 const defaultColSize = 12
 const mediumColSize = 7
 

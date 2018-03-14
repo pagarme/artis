@@ -1,6 +1,7 @@
 import Colr from 'colr'
 
 const percentageLimit = 61
+
 const themeNames = {
   light: 'light',
   dark: 'dark',
@@ -12,10 +13,8 @@ const getLightPercentage = color => Colr
 
 const getBlackPercentage = color => 100 - getLightPercentage(color)
 
-const getThemeName = (color) => {
-  if (!color) {
-    return null
-  }
+const setTheme = (color) => {
+  if (!color) return null
 
   const blackPercentage = getBlackPercentage(color)
 
@@ -26,4 +25,4 @@ const getThemeName = (color) => {
   return themeNames.light
 }
 
-export default getThemeName
+export default setTheme

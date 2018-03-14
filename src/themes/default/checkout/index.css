@@ -1,6 +1,7 @@
 @import "../media.css";
 @import "../spacing.css";
 @import "../colors.css";
+@import "../margin.css";
 
 .checkout {
   position: absolute;

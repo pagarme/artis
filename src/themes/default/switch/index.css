@@ -67,12 +67,12 @@
 }
 
 .item input:checked + .label {
-  color: var(--checkout-primary-color);
+  color: var(--checkout-primary-color); /* stylelint-disable-line */
   z-index: 1;
 }
 
 .item input:checked + .label > h3 {
-  color: var(--checkout-primary-color);
+  color: var(--checkout-primary-color); /* stylelint-disable-line */
   font-weight: 900;
   font-style: normal;
   font-stretch: normal;
@@ -85,7 +85,7 @@
   bottom: 0;
   height: 1px;
   width: 26.5%;
-  border-bottom: 1px solid var(--checkout-primary-color);
+  border-bottom: 1px solid var(--checkout-primary-color); /* stylelint-disable-line */
 }
 
 .item:last-child .label {

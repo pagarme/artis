@@ -35,7 +35,7 @@
 .content:after {
   border: solid transparent 10px;
   border-top: solid var(--color-grey-85) 10px;
-  bottom: calc(-1 * 10px);
+  bottom: -20px;
   content: " ";
   height: 0;
   left: 91%;
@@ -47,7 +47,7 @@
 .content:before {
   border: solid transparent 11px;
   border-top: solid var(--color-grey-68) 11px;
-  bottom: calc(-1 * 11px);
+  bottom: -23px;
   content: " ";
   height: 0;
   left: 90.7%;

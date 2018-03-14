@@ -1,6 +1,7 @@
 const setColors = (primaryColor, secondaryColor) => {
   const head = document.head || document.getElementsByTagName('head')[0]
   const style = document.createElement('style')
+
   const css = `:root {
     --checkout-primary-color: ${primaryColor};
     --checkout-secondary-color: ${secondaryColor || primaryColor};
