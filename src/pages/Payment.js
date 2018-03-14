@@ -3,19 +3,22 @@ import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
-import { pick } from 'ramda'
+import { pick, path, replace } from 'ramda'
 import { connect } from 'react-redux'
+import Form from 'react-vanilla-form'
 
 import { Grid, Row, Col } from './../components/Grid'
 import Switch from './../components/Switch'
 import Input from './../components/Input'
 import Dropdown from './../components/Dropdown'
+import Button from './../components/Button'
 
 import formatToBRL from './../utils/helpers/formatToBRL'
 import { applyDiscount, generateInstallmnets } from './../utils/calculations'
 
 import Barcode from './../images/barcode.svg'
 import { addPageInfo } from '../actions'
+import { required } from '../utils/validations'
 
 const applyThemr = themr('UIPaymentPage')
 
@@ -23,6 +26,7 @@ const defaultColSize = 12
 const mediumColSize = 6
 
 const findCreditCard = paymentMethod => paymentMethod.type === 'creditcard'
+const removeMask = replace(/_/g, '')
 
 class PaymentPage extends Component {
   constructor (props) {
@@ -31,23 +35,16 @@ class PaymentPage extends Component {
     const creditcardMethod = props.paymentMethods.filter(findCreditCard)
     const installments = creditcardMethod.defaultInstallments || 1
 
+    const creditcard = path(['payment', 'info'], props)
+
     this.state = {
       creditcard: {
-        cardNumber: '',
-        holderName: '',
-        expiration: '',
-        cvv: '',
+        ...creditcard,
         installments,
         flipped: false,
       },
       selectedPayment: 0,
     }
-
-    this.handleFlipCard = this.handleFlipCard.bind(this)
-    this.handleSwitchChange = this.handleSwitchChange.bind(this)
-    this.handleCreditcardtChange = this.handleCreditcardtChange.bind(this)
-    this.renderBoleto = this.renderBoleto.bind(this)
-    this.handleInstallmentChange = this.handleInstallmentChange.bind(this)
   }
 
   componentWillUnmount () {
@@ -70,35 +67,21 @@ class PaymentPage extends Component {
       ], this.state.creditcard)
     }
 
-    this.props.handlePageChange('payment', payment)
+    this.props.handlePageChange({
+      page: 'payment',
+      pageInfo: payment,
+    })
   }
 
-  handleSwitchChange (choice) {
+  handleSwitchChange = (choice) => {
     this.setState({ selectedPayment: choice })
   }
 
-  handleCreditcardtChange (e) {
-    const { name, value } = e.target
-
-    this.setState(previousState => ({
-      ...previousState,
-      creditcard: {
-        ...previousState.creditcard,
-        [name]: value,
-      },
-    }))
+  handleChangeForm = (values) => {
+    this.setState({ creditcard: values })
   }
 
-  handleInstallmentChange ({ value }) {
-    this.setState(({ creditcard }) => ({
-      creditcard: {
-        ...creditcard,
-        installments: value,
-      },
-    }))
-  }
-
-  handleFlipCard () {
+  handleFlipCard = () => {
     this.setState(previousState => ({
       ...previousState,
       creditcard: {
@@ -108,14 +91,13 @@ class PaymentPage extends Component {
     }))
   }
 
-  renderCreditcard (creditcard) {
+  renderCreditcard = (creditcard) => {
     const {
-      cardNumber,
-      holderName,
-      expiration,
-      cvv,
+      cardNumber = '•••• •••• •••• ••••',
+      holderName = 'Nome Completo',
+      expiration = 'MM/AA',
+      cvv = '•••',
       flipped,
-      installments,
     } = this.state.creditcard
 
     const { theme, amount, isBigScreen } = this.props
@@ -123,176 +105,225 @@ class PaymentPage extends Component {
     const installmentsOptions = generateInstallmnets(creditcard, amount)
 
     return (
-      <Grid className={theme.page}>
-        <Row overflowVisible>
-          <Col
-            tv={mediumColSize}
-            desk={mediumColSize}
-            tablet={mediumColSize}
-            palm={defaultColSize}
-            alignCenter
-            hidden={!isBigScreen}
-          >
-            <PaymentCard
-              number={cardNumber || '•••• •••• •••• ••••'}
-              cvv={cvv || '•••'}
-              holderName={holderName || 'Nome Completo'}
-              expiration={expiration || 'MM/AA'}
-              flipped={flipped}
-            />
-            <h4 className={theme.amount} >
-              Valor a pagar: {formatToBRL(amount)}
-            </h4>
-          </Col>
-          <Col
-            tv={mediumColSize}
-            desk={mediumColSize}
-            tablet={mediumColSize}
-            palm={defaultColSize}
-            overflowVisible
-          >
-            <Row>
-              <Col
-                tv={defaultColSize}
-                desk={defaultColSize}
-                tablet={defaultColSize}
-                palm={defaultColSize}
-              >
-                <Input
-                  name="cardNumber"
-                  label="Número do cartão"
-                  value={cardNumber}
-                  type="number"
-                  mask="1111 1111 1111 1111"
-                  onChange={this.handleCreditcardtChange}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col
-                tv={defaultColSize}
-                desk={defaultColSize}
-                tablet={defaultColSize}
-                palm={defaultColSize}
-              >
-                <Input
-                  name="holderName"
-                  label="Nome (igual o do cartão)"
-                  maxLength="24"
-                  value={holderName}
-                  onChange={this.handleCreditcardtChange}
-                />
-              </Col>
-            </Row>
-            <Row overflowVisible>
-              <Col
-                tv={7}
-                desk={7}
-                tablet={mediumColSize}
-                palm={mediumColSize}
-              >
-                <Input
-                  name="expiration"
-                  label="Data de validade"
-                  mask="11/11"
-                  value={expiration}
-                  onChange={this.handleCreditcardtChange}
-                />
-              </Col>
-              <Col
-                tv={5}
-                desk={5}
-                tablet={mediumColSize}
-                palm={mediumColSize}
-              >
-                <Input
-                  name="cvv"
-                  label="CVV"
-                  value={cvv}
-                  type="number"
-                  mask="111"
-                  tooltip={
-                    isBigScreen &&
-                    'O CVV são os três números que ficam na parte de trás do seu cartão.'
-                  }
-                  tooltipClassName={theme.cvvTooltip}
-                  onChange={this.handleCreditcardtChange}
-                  onFocus={this.handleFlipCard}
-                  onBlur={this.handleFlipCard}
-                />
-              </Col>
-            </Row>
-            {
-              installmentsOptions.length &&
-              <Row overflowVisible>
+      <Form
+        data={this.state.creditcard}
+        onChange={this.handleChangeForm}
+        onSubmit={this.props.handleSubmit}
+        customErrorProp="error"
+        validation={{
+          cardNumber: [required],
+          holderName: [required],
+          expiration: [required],
+          cvv: [required],
+        }}
+      >
+        <Grid className={theme.page}>
+          <Row>
+            <Col
+              tv={mediumColSize}
+              desk={mediumColSize}
+              tablet={mediumColSize}
+              palm={defaultColSize}
+              alignCenter
+              hidden={!isBigScreen}
+            >
+              <PaymentCard
+                number={removeMask(cardNumber)}
+                cvv={removeMask(cvv)}
+                holderName={removeMask(holderName)}
+                expiration={removeMask(expiration)}
+                flipped={flipped}
+              />
+              <h4 className={theme.amount} >
+                Valor a pagar: {formatToBRL(amount)}
+              </h4>
+            </Col>
+            <Col
+              tv={mediumColSize}
+              desk={mediumColSize}
+              tablet={mediumColSize}
+              palm={defaultColSize}
+            >
+              <Row>
                 <Col
                   tv={defaultColSize}
                   desk={defaultColSize}
                   tablet={defaultColSize}
                   palm={defaultColSize}
                 >
-                  <Dropdown
-                    options={installmentsOptions}
-                    name="installments"
-                    label="Quantidade de Parcelas"
-                    value={installments}
-                    onChange={this.handleInstallmentChange}
-                    title="Selecione"
+                  <Input
+                    name="cardNumber"
+                    label="Número do cartão"
+                    type="number"
+                    mask="1111 1111 1111 1111"
                   />
                 </Col>
               </Row>
-            }
-            <Row hidden={isBigScreen}>
-              <h4 className={theme.amount} >
-                Valor a pagar: {formatToBRL(amount)}
-              </h4>
-            </Row>
-          </Col>
-        </Row>
-      </Grid>
+              <Row>
+                <Col
+                  tv={defaultColSize}
+                  desk={defaultColSize}
+                  tablet={defaultColSize}
+                  palm={defaultColSize}
+                >
+                  <Input
+                    name="holderName"
+                    label="Nome (igual o do cartão)"
+                    maxLength="24"
+                  />
+                </Col>
+              </Row>
+              <Row
+                className={theme.tooltipRow}
+              >
+                <Col
+                  tv={7}
+                  desk={7}
+                  tablet={mediumColSize}
+                  palm={mediumColSize}
+                >
+                  <Input
+                    name="expiration"
+                    label="Data de validade"
+                    mask="11/11"
+                  />
+                </Col>
+                <Col
+                  tv={5}
+                  desk={5}
+                  tablet={mediumColSize}
+                  palm={mediumColSize}
+                >
+                  <Input
+                    name="cvv"
+                    label="CVV"
+                    type="number"
+                    mask="111"
+                    tooltip={
+                      isBigScreen &&
+                      'O CVV são os três números que ficam na parte de trás do seu cartão.'
+                    }
+                    tooltipClassName={theme.cvvTooltip}
+                    onFocus={this.handleFlipCard}
+                    onBlur={this.handleFlipCard}
+                  />
+                </Col>
+              </Row>
+              {
+                installmentsOptions.length &&
+                <Row>
+                  <Col
+                    tv={defaultColSize}
+                    desk={defaultColSize}
+                    tablet={defaultColSize}
+                    palm={defaultColSize}
+                  >
+                    <Dropdown
+                      options={
+                        installmentsOptions.map(option => (
+                          { ...option, value: option.value.toString() }
+                        ))
+                      }
+                      name="installments"
+                      label="Quantidade de Parcelas"
+                      title="Selecione"
+                    />
+                  </Col>
+                </Row>
+              }
+              <Row hidden={isBigScreen}>
+                <h4 className={theme.amount} >
+                  Valor a pagar: {formatToBRL(amount)}
+                </h4>
+              </Row>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              desk={defaultColSize}
+              tv={defaultColSize}
+              tablet={defaultColSize}
+              palm={defaultColSize}
+              alignEnd
+            >
+              <Button
+                size="extra-large"
+                relevance="normal"
+                type="submit"
+                className={theme.button}
+              >
+                Confirmar
+              </Button>
+            </Col>
+          </Row>
+        </Grid>
+      </Form>
     )
   }
 
-  renderBoleto () {
+  renderBoleto = () => {
     const { theme, paymentMethods, amount } = this.props
     const { discount } = paymentMethods
       .find(payment => payment.type === 'boleto')
 
     return (
-      <Col
-        tv={defaultColSize}
-        desk={defaultColSize}
-        tablet={defaultColSize}
-        palm={defaultColSize}
+      <Form
+        data={{ boleto: true }}
+        onSubmit={this.props.handleSubmit}
       >
-        <div className={theme.boletoContainer} >
-          <img src={Barcode} alt="barcode" className={theme.barcodeImg} />
-          <h4
-            className={
-              classNames(
-                theme.amount,
-                theme.boletoAmount,
-              )
-            }
-          >
-            Valor a pagar:
-            {
-              discount ?
-                formatToBRL(applyDiscount(discount.type, discount.value, amount)) :
-                formatToBRL(amount)
-            }
-          </h4>
-          <span className={theme.boletoInfo}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Mauris risus nunc, malesuada vitae libero venenatis,
-            vehicula luctus nulla. Aliquam erat volutpat.
-            Sed porttitor ex vestibulum augue fermentum molestie.
-            Sed id convallis augue. Nam id malesuada nisl.
-            Quisque quis orci eget.
-          </span>
+        <Col
+          tv={defaultColSize}
+          desk={defaultColSize}
+          tablet={defaultColSize}
+          palm={defaultColSize}
+        >
+          <div className={theme.boletoContainer} >
+            <img src={Barcode} alt="barcode" className={theme.barcodeImg} />
+            <h4
+              className={
+                classNames(
+                  theme.amount,
+                  theme.boletoAmount,
+                )
+              }
+            >
+              Valor a pagar:
+              {
+                discount ?
+                  formatToBRL(applyDiscount(discount.type, discount.value, amount)) :
+                  formatToBRL(amount)
+              }
+            </h4>
+            <span className={theme.boletoInfo}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Mauris risus nunc, malesuada vitae libero venenatis,
+              vehicula luctus nulla. Aliquam erat volutpat.
+              Sed porttitor ex vestibulum augue fermentum molestie.
+              Sed id convallis augue. Nam id malesuada nisl.
+              Quisque quis orci eget.
+            </span>
 
-        </div>
-      </Col>
+          </div>
+        </Col>
+        <Row>
+          <Col
+            desk={defaultColSize}
+            tv={defaultColSize}
+            tablet={defaultColSize}
+            palm={defaultColSize}
+            alignEnd
+          >
+            <Button
+              size="extra-large"
+              relevance="normal"
+              type="submit"
+              className={theme.button}
+            >
+              Confirmar
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     )
   }
 
@@ -301,8 +332,8 @@ class PaymentPage extends Component {
     const { paymentMethods } = this.props
 
     const renders = {
-      boleto: this.renderBoleto.bind(this),
-      creditcard: this.renderCreditcard.bind(this),
+      boleto: this.renderBoleto,
+      creditcard: this.renderCreditcard,
     }
 
     const paymentOptions = paymentMethods.map(payment => ({
@@ -336,6 +367,7 @@ PaymentPage.propTypes = {
   isBigScreen: PropTypes.bool.isRequired,
   amount: PropTypes.number.isRequired,
   paymentMethods: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
 }
 
@@ -345,14 +377,11 @@ PaymentPage.defaultProps = {
   creditcard: {},
 }
 
-const mapStateToProps = ({ screenSize }) => ({
+const mapStateToProps = ({ screenSize, pageInfo }) => ({
   isBigScreen: screenSize.isBigScreen,
+  payment: pageInfo.payment,
 })
 
-const mapDispatchToProps = dispatch => ({
-  handlePageChange: (page, pageInfo) => {
-    dispatch(addPageInfo({ page, pageInfo }))
-  },
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(applyThemr(PaymentPage))
+export default connect(mapStateToProps, {
+  handlePageChange: addPageInfo,
+})(applyThemr(PaymentPage))

@@ -5,7 +5,7 @@ import { themr } from 'react-css-themr'
 
 const applyThemr = themr('UIButton')
 
-function Button ({
+const Button = ({
   base,
   id,
   children,
@@ -20,31 +20,27 @@ function Button ({
   fill,
   className,
   textAlign,
-}) {
-  const buttonClasses = classNames(
-    className,
-    theme.button,
-    theme[textAlign],
-    theme[fill],
-    theme[base],
-    theme[`${relevance}Relevance`],
-    theme[size],
-    { [theme.full]: full }
-  )
-
-  return (
-    <button
-      id={id}
-      disabled={disabled}
-      hidden={hidden}
-      className={buttonClasses}
-      onClick={onClick}
-      type={type}
-    >
-      {children}
-    </button>
-  )
-}
+}) => (
+  <button
+    id={id}
+    disabled={disabled}
+    hidden={hidden}
+    className={classNames(
+      className,
+      theme.button,
+      theme[textAlign],
+      theme[fill],
+      theme[base],
+      theme[`${relevance}Relevance`],
+      theme[size],
+      { [theme.full]: full }
+    )}
+    onClick={onClick}
+    type={type}
+  >
+    {children}
+  </button>
+)
 
 Button.propTypes = {
   theme: PropTypes.shape({

@@ -1,4 +1,4 @@
-import { changeScreenSize, addPageInfo, showFooterButton } from './'
+import { changeScreenSize, addPageInfo } from './'
 
 describe('actions', () => {
   it('should create an action to change screen size', () => {
@@ -26,16 +26,5 @@ describe('actions', () => {
     }
 
     expect(addPageInfo(payload)).toEqual(expectedAction)
-  })
-
-  it('should create an action to handle footer button', () => {
-    const isVisible = false
-
-    const expectedAction = {
-      type: 'SHOW_FOOTER_BUTTON',
-      isVisible,
-    }
-
-    expect(showFooterButton(isVisible)).toEqual(expectedAction)
   })
 })

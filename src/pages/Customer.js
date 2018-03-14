@@ -2,114 +2,149 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
+import Form from 'react-vanilla-form'
 
-import { Grid, Row, Col, Input } from '../components'
-
-import BillingPage from './Billing'
-
-import { addPageInfo } from '../actions'
+import {
+  Grid,
+  Row,
+  Col,
+  Button,
+  Input,
+} from '../components'
 
 import titleIcon from '../images/avatar-line.svg'
 
-const applyThemr = themr('UICustomerPage')
+import { required, isEmail } from '../utils/validations'
+import { addPageInfo } from '../actions'
+
+const smallColSize = 4
+const bigColSize = 8
+
+const applyThemr = themr('UIGeneralForm')
 const defaultColSize = 12
-const mediumColSize = 6
+const mediumColSize = 7
 
 class CustomerPage extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      ...props.customer,
-    }
+    const { customer = {} } = props
 
-    this.handleInputChange = this.handleInputChange.bind(this)
+    this.state = { ...customer }
   }
 
   componentWillUnmount () {
-    this.props.handlePageChange('customer', this.state)
+    this.props.handlePageChange({
+      page: 'customer',
+      pageInfo: this.state,
+    })
   }
 
-  handleInputChange (e) {
-    const { name, value } = e.target
-
-    this.setState({ [name]: value })
+  handleChangeForm = (values) => {
+    this.setState(values)
   }
 
-  render () {
-    const {
-      name,
-      email,
-      documentNumber,
-      phoneNumber,
-    } = this.state
-
+  renderCustomerForm () {
     const { theme } = this.props
 
-    const sizeWithDesktop = this.props.isBigScreen
-      ? mediumColSize
-      : defaultColSize
-
     return (
-      <Grid className={theme.page}>
-        <Col
-          tv={sizeWithDesktop}
-          desk={sizeWithDesktop}
-          tablet={sizeWithDesktop}
-        >
-          <Row className={theme.title} alignCenter>
-            <img src={titleIcon} alt="Customer icon" className={theme.titleIcon} />
-            { this.props.title }
-          </Row>
-          <Row>
-            <Input
-              name="name"
-              label="Nome"
-              value={name}
-              placeholder="Digite seu nome"
-              onChange={this.handleInputChange}
-            />
-          </Row>
-          <Row>
-            <Input
-              name="email"
-              label="E-mail"
-              value={email}
-              placeholder="Digite seu e-mail"
-              onChange={this.handleInputChange}
-            />
-          </Row>
-          <Row>
+      <React.Fragment>
+        <Row className={theme.title} alignCenter>
+          <img src={titleIcon} alt="Customer icon" className={theme.titleIcon} />
+          Dados pessoais
+        </Row>
+        <Row>
+          <Input
+            name="name"
+            label="Nome"
+            placeholder="Digite seu nome"
+          />
+        </Row>
+        <Row>
+          <Input
+            name="email"
+            label="E-mail"
+            placeholder="Digite seu e-mail"
+          />
+        </Row>
+        <Row>
+          <Col
+            tv={smallColSize}
+            desk={smallColSize}
+            tablet={smallColSize}
+            palm={smallColSize}
+          >
             <Input
               name="documentNumber"
               label="CPF"
               mask="111.111.111-11"
-              value={documentNumber}
               placeholder="Digite seu CPF"
-              onChange={this.handleInputChange}
             />
-          </Row>
-          <Row>
+          </Col>
+          <Col
+            tv={bigColSize}
+            desk={bigColSize}
+            tablet={bigColSize}
+            palm={bigColSize}
+          >
             <Input
               name="phoneNumber"
               label="DDD + Telefone"
               mask="(11) 11111-1111"
-              value={phoneNumber}
               placeholder="Digite seu telefone"
-              onChange={this.handleInputChange}
             />
-          </Row>
-        </Col>
-        {this.props.isBigScreen &&
-          <Col
-            tv={mediumColSize}
-            desk={mediumColSize}
-            tablet={mediumColSize}
-          >
-            <BillingPage title="Endereço de Cobrança" />
           </Col>
-        }
-      </Grid>
+        </Row>
+      </React.Fragment>
+    )
+  }
+
+  render () {
+    const { theme, isBigScreen } = this.props
+
+    const sizeWithDesktop = isBigScreen
+      ? mediumColSize
+      : defaultColSize
+
+    return (
+      <Form
+        data={this.state}
+        onChange={this.handleChangeForm}
+        onSubmit={this.props.handleSubmit}
+        customErrorProp="error"
+        validation={{
+          name: [required],
+          email: [required, isEmail],
+          documentNumber: [required],
+          phoneNumber: [required],
+        }}
+      >
+        <Grid className={theme.page}>
+          <Col
+            tv={sizeWithDesktop}
+            desk={sizeWithDesktop}
+            tablet={sizeWithDesktop}
+          >
+            { this.renderCustomerForm() }
+          </Col>
+          <Col
+            desk={defaultColSize}
+            tv={defaultColSize}
+            tablet={defaultColSize}
+            palm={defaultColSize}
+            alignEnd
+          >
+            <Button
+              size="extra-large"
+              relevance="normal"
+              type="submit"
+              className={theme.button}
+            >
+              Confirmar
+            </Button>
+          </Col>
+        </Grid>
+      </Form>
     )
   }
 }
@@ -120,7 +155,6 @@ CustomerPage.propTypes = {
     title: PropTypes.string,
     titleIcon: PropTypes.string,
   }),
-  title: PropTypes.string.isRequired,
   isBigScreen: PropTypes.bool.isRequired,
   customer: PropTypes.shape({
     name: PropTypes.string,
@@ -128,12 +162,12 @@ CustomerPage.propTypes = {
     documentNumber: PropTypes.string,
     phoneNumber: PropTypes.string,
   }),
+  handleSubmit: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
 }
 
 CustomerPage.defaultProps = {
   theme: {},
-  billingData: {},
   customer: {},
 }
 
@@ -142,11 +176,6 @@ const mapStateToProps = ({ screenSize, pageInfo }) => ({
   customer: pageInfo.customer,
 })
 
-const mapDispatchToProps = dispatch => ({
-  handlePageChange: (page, pageInfo) => {
-    dispatch(addPageInfo({ page, pageInfo }))
-  },
-})
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(applyThemr(CustomerPage))
+export default connect(mapStateToProps, {
+  handlePageChange: addPageInfo,
+})(applyThemr(CustomerPage))

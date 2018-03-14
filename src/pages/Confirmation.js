@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
@@ -39,21 +40,17 @@ const hasAllData = allPass([
 ])
 
 class Confirmation extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.isRequesting = false
-
-    this.state = {
-      loading: true,
-      success: false,
-      barcode: '',
-    }
+  state = {
+    loading: true,
+    success: false,
+    barcode: '',
   }
 
   componentWillReceiveProps (newProps) {
     this.createATransaction(newProps)
   }
+
+  isRequesting = false
 
   createATransaction (transactionData) {
     if (hasAllData(transactionData) && !this.isRequesting) {
@@ -133,9 +130,9 @@ Confirmation.propTypes = {
     alignSelfCenter: PropTypes.string,
     confirmationIcon: PropTypes.string,
   }),
-  publickey: PropTypes.string.isRequired, // eslint-disable-line
-  amount: PropTypes.number.isRequired, // eslint-disable-line
-  postback: PropTypes.string.isRequired, // eslint-disable-line
+  publickey: PropTypes.string.isRequired,
+  amount: PropTypes.number.isRequired,
+  postback: PropTypes.string.isRequired,
 }
 
 Confirmation.defaultProps = {

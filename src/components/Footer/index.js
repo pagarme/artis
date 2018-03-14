@@ -4,45 +4,18 @@ import LockIcon from 'react-icons/lib/md/lock-outline'
 import { themr } from 'react-css-themr'
 
 import { Grid, Row, Col } from '../Grid'
-import Button from '../Button'
 
 const applyThemr = themr('UIFooter')
 
 const palmColSize = 12
-const buttonColSize = 12
 const defaultColSize = 6
 
 const Footer = ({
-  buttonText,
-  buttonClick,
   companyName,
-  nextButtonDisabled,
   theme,
-  buttonVisible,
 }) => (
   <footer>
     <Grid>
-      <Row>
-        <Col
-          desk={buttonColSize}
-          tv={buttonColSize}
-          tablet={buttonColSize}
-          palm={palmColSize}
-          alignEnd
-        >
-          <Button
-            id="footer-confirm-btn"
-            hidden={nextButtonDisabled || !buttonVisible}
-            disabled={nextButtonDisabled}
-            size="extra-large"
-            relevance="normal"
-            onClick={buttonClick}
-            className={theme.button}
-          >
-            {buttonText}
-          </Button>
-        </Col>
-      </Row>
       <Row>
         <Col
           desk={defaultColSize}
@@ -82,11 +55,7 @@ Footer.propTypes = {
     total: PropTypes.string,
     value: PropTypes.string,
   }),
-  buttonText: PropTypes.string.isRequired,
-  buttonClick: PropTypes.func.isRequired,
   companyName: PropTypes.string.isRequired,
-  nextButtonDisabled: PropTypes.bool,
-  buttonVisible: PropTypes.bool.isRequired,
 }
 
 export default applyThemr(Footer)

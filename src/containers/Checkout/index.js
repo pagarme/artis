@@ -5,15 +5,14 @@ import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import { Action, withStatechart } from 'react-automata'
-import { omit, when, always } from 'ramda'
+import { isEmpty, isNil, reject } from 'ramda'
 
-import { changeScreenSize, showFooterButton } from '../../actions'
+import { changeScreenSize } from '../../actions'
 
 import { ProgressBar, Header, Footer } from '../../components'
 
 import CustomerPage from '../../pages/Customer'
-import BillingPage from '../../pages/Billing'
-import ShippingPage from '../../pages/Shipping'
+import AddressesPage from '../../pages/Addresses'
 import PaymentPage from '../../pages/Payment'
 import ConfirmationPage from '../../pages/Confirmation'
 import defaultLogo from '../../images/logo_pagarme.png'
@@ -42,18 +41,22 @@ class Checkout extends Component {
       () => this.props.changeScreenSize(window.innerWidth))
   }
 
-  handleNavigation (transitionTo, pages, steps) {
-    this.props.transition(transitionTo, {
-      isBigScreen: this.props.isBigScreen,
-    })
-
-    const inc = transitionTo === 'NEXT' ? 1 : -1
-    const activePage = steps.findIndex(page => (
-      page === pages[this.props.machineState]
-    )) + inc
+  handleBackButton = () => {
+    const activePage = this.state.activePage - 1
 
     this.setState({ activePage })
-    this.props.footerButtonVisible(!(activePage === steps.length - 1))
+    this.props.transition('PREV')
+  }
+
+  handleFormSubmit = (values, errors) => {
+    if (isEmpty(values) || !isEmpty(reject(isNil, errors))) {
+      return
+    }
+
+    const activePage = this.state.activePage + 1
+
+    this.setState({ activePage })
+    this.props.transition('NEXT')
   }
 
   close () {
@@ -85,14 +88,11 @@ class Checkout extends Component {
     return (
       <React.Fragment>
         <Action show="customer">
-          <CustomerPage title="Dados Pessoais" />
+          <CustomerPage handleSubmit={this.handleFormSubmit} />
         </Action>
-        <Action show="billing">
-          <BillingPage title="Endereço de Cobrança" />
-        </Action>
-        <Action show="shipping">
-          <ShippingPage
-            title="Selecione um endereço cadastrado"
+        <Action show="addresses">
+          <AddressesPage
+            handleSubmit={this.handleFormSubmit}
           />
         </Action>
         <Action show="payment">
@@ -100,6 +100,7 @@ class Checkout extends Component {
             title="Dados de Pagamento"
             paymentMethods={paymentMethods}
             amount={amount}
+            handleSubmit={this.handleFormSubmit}
           />
         </Action>
         <Action show="confirmation">
@@ -120,22 +121,15 @@ class Checkout extends Component {
       activePage,
     } = this.state
 
-    const { apiData, theme, isBigScreen, isFooterButtonVisible } = this.props
+    const { apiData, theme } = this.props
 
     const { params = {}, configs = {} } = apiData
 
-    const isAddressForm = !(this.props.isProgressBarVisible || isBigScreen)
-
     const { pages } = statechart
-    const omitOnBigScreen = when(always(isBigScreen), omit(['billing']))
 
     const steps = Object.values(
-      omitOnBigScreen(pages)
+      pages
     )
-
-    const footerButtonText = this.props.machineState === 'payment'
-      ? 'Finalizar compra'
-      : 'Confirmar'
 
     return (
       <div
@@ -150,42 +144,28 @@ class Checkout extends Component {
           <Header
             logoAlt={configs.companyName}
             logoSrc={configs.image || defaultLogo}
-            onPrev={
-              this.handleNavigation.bind(this, 'PREV', pages, steps)
-            }
+            onPrev={this.handleBackButton}
             onClose={this.close.bind(this)}
             prevButtonDisabled={
               activePage === 0 || (
-                activePage === steps.length ||
-                isAddressForm
+                activePage === steps.length
               )
             }
           />
           <div
             className={classNames(
               theme.content,
-              {
-                [theme.darkContent]: isAddressForm,
-              },
             )}
           >
-            {
-              !isAddressForm &&
-              <ProgressBar
-                steps={steps}
-                activePage={activePage}
-              />
-            }
+            <ProgressBar
+              steps={steps}
+              activePage={activePage}
+            />
             {this.renderPages()}
           </div>
           <Footer
             total={params.amount}
-            buttonText={footerButtonText}
-            buttonClick={
-              this.handleNavigation.bind(this, 'NEXT', pages, steps)
-            }
             companyName={configs.companyName}
-            buttonVisible={isFooterButtonVisible}
           />
         </div>
       </div>
@@ -226,12 +206,7 @@ Checkout.propTypes = {
   }).isRequired,
   changeScreenSize: PropTypes.func.isRequired,
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
-  machineState: PropTypes.string.isRequired,
   transition: PropTypes.func.isRequired,
-  isBigScreen: PropTypes.bool.isRequired,
-  footerButtonVisible: PropTypes.func.isRequired,
-  isFooterButtonVisible: PropTypes.bool.isRequired,
-  isProgressBarVisible: PropTypes.bool.isRequired,
 }
 
 Checkout.defaultProps = {
@@ -244,18 +219,9 @@ Checkout.defaultProps = {
   },
 }
 
-const mapStateToProps = ({ screenSize, showFooterButton, showProgressBar }) => ({ // eslint-disable-line
-  isBigScreen: screenSize.isBigScreen,
-  isFooterButtonVisible: showFooterButton,
-  isProgressBarVisible: showProgressBar,
-})
-
-const mapDispatchToProps = dispatch => ({
-  footerButtonVisible: isVisible => dispatch(showFooterButton(isVisible)),
-  changeScreenSize: payload => dispatch(changeScreenSize(payload)),
-})
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  null,
+  {
+    changeScreenSize,
+  }
 )(applyThemr(withStatechart(statechart)(Checkout)))

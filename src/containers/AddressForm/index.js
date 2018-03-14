@@ -84,8 +84,10 @@ class AddressForm extends Component {
     })
   }
 
-  handleStateChange (value) {
-    this.setState({ state: value })
+  handleStateChange (event) {
+    const state = event.target.value
+
+    this.setState({ state })
   }
 
   handleInputChange (e) {
@@ -162,7 +164,7 @@ class AddressForm extends Component {
           })
         }
       >
-        <Grid overflowVisible>
+        <Grid>
           <Row className={theme.title}>
             <span>
               Cadastrar novo endereço
@@ -170,7 +172,6 @@ class AddressForm extends Component {
           </Row>
           <Row
             className={theme.addressForm}
-            overflowVisible
           >
             <Row noPadding={!isBigScreen}>
               <Col
@@ -252,7 +253,6 @@ class AddressForm extends Component {
             </Row>
             <Row
               noPadding={!isBigScreen}
-              overflowVisible
             >
               <Col
                 tv={mediumColSize}
@@ -263,7 +263,6 @@ class AddressForm extends Component {
                 <Input
                   name="neighborhood"
                   label="Bairro"
-                  hint=""
                   value={neighborhood}
                   placeholder="Digite o bairro"
                   onChange={this.handleInputChange}
@@ -288,7 +287,6 @@ class AddressForm extends Component {
                 desk={tinyColSize}
                 tablet={tinyColSize}
                 palm={smallColSize}
-                overflowVisible
               >
                 <Dropdown
                   options={options}
