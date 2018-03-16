@@ -1,4 +1,5 @@
 import UIButton from './button/index.css'
+import UICart from './cart/index.css'
 import UIDropdown from './dropdown/index.css'
 import UIFooter from './footer/index.css'
 import UIGrid from './grid/index.css'
@@ -27,6 +28,7 @@ import UINormalizeCSS from './normalize.css'
 
 export default {
   UIButton,
+  UICart,
   UIDropdown,
   UIFooter,
   UIGrid,

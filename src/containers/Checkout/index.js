@@ -31,19 +31,19 @@ class Checkout extends Component {
       closingEffect: false,
       collapsedCart: true,
     }
-
-    this.handleToggleCart = this.handleToggleCart.bind(this)
   }
 
   componentDidMount () {
     this.props.changeScreenSize(window.innerWidth)
-    window.addEventListener('resize',
-      () => this.props.changeScreenSize(window.innerWidth))
+    window.addEventListener('resize', this.handleNewScreenSize)
   }
 
   componentWillUnmount () {
-    window.removeEventListener('resize',
-      () => this.props.changeScreenSize(window.innerWidth))
+    window.removeEventListener('resize', this.handleNewScreenSize)
+  }
+
+  handleNewScreenSize = () => {
+    this.props.changeScreenSize(window.innerWidth)
   }
 
   handleBackButton = () => {
@@ -64,7 +64,7 @@ class Checkout extends Component {
     this.props.transition('NEXT')
   }
 
-  handleToggleCart () {
+  handleToggleCart = () => {
     this.setState(({ collapsedCart }) => ({ collapsedCart: !collapsedCart }))
   }
 
@@ -142,7 +142,7 @@ class Checkout extends Component {
     const { items } = formData
     const { enableCart } = configs
     const { amount } = transaction
-    const { theme } = this.props
+    const { theme, base } = this.props
 
     return enableCart && (
       <Col
@@ -153,6 +153,7 @@ class Checkout extends Component {
         className={theme.cartWrapper}
       >
         <Cart
+          base={base}
           items={items}
           amount={amount}
           onToggleCart={this.handleToggleCart}

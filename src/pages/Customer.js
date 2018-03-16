@@ -19,11 +19,11 @@ import { addPageInfo } from '../actions'
 import CustomerIcon from '../images/avatar-line.svg'
 
 const smallColSize = 4
+const mediumColSize = 7
 const bigColSize = 8
+const defaultColSize = 12
 
 const applyThemr = themr('UICustomerPage')
-const defaultColSize = 12
-const mediumColSize = 7
 
 class CustomerPage extends Component {
   constructor (props) {
@@ -49,26 +49,40 @@ class CustomerPage extends Component {
     const { theme, base } = this.props
 
     return (
-      <React.Fragment>
+      <Grid>
         <Row className={theme.title} alignCenter>
           <CustomerIcon className={theme.titleIcon} />
           Dados pessoais
         </Row>
         <Row>
-          <Input
-            base={base}
-            name="name"
-            label="Nome"
-            placeholder="Digite seu nome"
-          />
+          <Col
+            tv={defaultColSize}
+            desk={defaultColSize}
+            tablet={defaultColSize}
+            palm={defaultColSize}
+          >
+            <Input
+              base={base}
+              name="name"
+              label="Nome"
+              placeholder="Digite seu nome"
+            />
+          </Col>
         </Row>
         <Row>
-          <Input
-            base={base}
-            name="email"
-            label="E-mail"
-            placeholder="Digite seu e-mail"
-          />
+          <Col
+            tv={defaultColSize}
+            desk={defaultColSize}
+            tablet={defaultColSize}
+            palm={defaultColSize}
+          >
+            <Input
+              base={base}
+              name="email"
+              label="E-mail"
+              placeholder="Digite seu e-mail"
+            />
+          </Col>
         </Row>
         <Row>
           <Col
@@ -100,7 +114,7 @@ class CustomerPage extends Component {
             />
           </Col>
         </Row>
-      </React.Fragment>
+      </Grid>
     )
   }
 
@@ -149,6 +163,7 @@ class CustomerPage extends Component {
               relevance="normal"
               type="submit"
               className={theme.button}
+              full={!isBigScreen}
             >
               Confirmar
             </Button>

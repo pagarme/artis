@@ -430,6 +430,7 @@ class AddressesPage extends Component {
                 relevance="normal"
                 type="submit"
                 className={theme.button}
+                full={!isBigScreen}
               >
                   Confirmar
               </Button>

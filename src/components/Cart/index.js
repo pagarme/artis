@@ -1,5 +1,5 @@
 import React from 'react'
-import Proptypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import CloseIcon from 'emblematic-icons/svg/ClearClose32.svg'
@@ -7,7 +7,6 @@ import CloseIcon from 'emblematic-icons/svg/ClearClose32.svg'
 import { Button } from '..'
 
 import formatBRL from '../../utils/helpers/formatToBRL'
-
 
 const applyThemr = themr('UICart')
 
@@ -18,11 +17,16 @@ const Cart = ({
   amount,
   onToggleCart,
   showCloseButton,
+  base,
 }) => (
   <div
-    className={classNames(theme.cart, {
-      [theme.collapsed]: collapsed,
-    })}
+    className={classNames(
+      theme.cart,
+      theme[base],
+      {
+        [theme.collapsed]: collapsed,
+      }
+    )}
   >
     <div className={theme.header}>
       <Button
@@ -31,6 +35,7 @@ const Cart = ({
         relevance="low"
         className={theme.close}
         onClick={onToggleCart}
+        base={base}
       >
         <CloseIcon />
       </Button>
@@ -59,34 +64,36 @@ const Cart = ({
 )
 
 Cart.propTypes = {
-  theme: Proptypes.shape({
-    title: Proptypes.string,
-    itemList: Proptypes.string,
-    item: Proptypes.string,
-    total: Proptypes.string,
-    amount: Proptypes.string,
-    open: Proptypes.string,
-    close: Proptypes.string,
-    closeIcon: Proptypes.string,
-    cart: Proptypes.string,
-    collapsed: Proptypes.string,
-    header: Proptypes.string,
-    content: Proptypes.string,
-    footer: Proptypes.string,
+  theme: PropTypes.shape({
+    title: PropTypes.string,
+    itemList: PropTypes.string,
+    item: PropTypes.string,
+    total: PropTypes.string,
+    amount: PropTypes.string,
+    open: PropTypes.string,
+    close: PropTypes.string,
+    closeIcon: PropTypes.string,
+    cart: PropTypes.string,
+    collapsed: PropTypes.string,
+    header: PropTypes.string,
+    content: PropTypes.string,
+    footer: PropTypes.string,
   }),
-  items: Proptypes.arrayOf(Proptypes.shape({
-    description: Proptypes.string,
-    quantity: Proptypes.number,
-    value: Proptypes.number,
+  items: PropTypes.arrayOf(PropTypes.shape({
+    description: PropTypes.string,
+    quantity: PropTypes.number,
+    value: PropTypes.number,
   })).isRequired,
-  amount: Proptypes.number.isRequired,
-  collapsed: Proptypes.bool.isRequired,
-  onToggleCart: Proptypes.func.isRequired,
-  showCloseButton: Proptypes.bool.isRequired,
+  base: PropTypes.string,
+  amount: PropTypes.number.isRequired,
+  collapsed: PropTypes.bool.isRequired,
+  onToggleCart: PropTypes.func.isRequired,
+  showCloseButton: PropTypes.bool.isRequired,
 }
 
 Cart.defaultProps = {
   theme: {},
+  base: 'dark',
 }
 
 export default applyThemr(Cart)
