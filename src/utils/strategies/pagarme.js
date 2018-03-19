@@ -5,6 +5,7 @@ import {
   defaultTo,
   equals,
   identity,
+  merge,
   of,
   path,
   pipe,
@@ -17,9 +18,9 @@ import errorHandle from './requestErrorHandle'
 
 const url = 'https://api.pagar.me/1/transactions'
 
-const parseToPayload = applySpec({
-  encryption_key: prop('publickey'),
-  amount: prop('amount'),
+const getPaymentMethodType = path(['payment', 'method', 'type'])
+
+const parseCreditcardData = applySpec({
   card_number: path(['payment', 'info', 'cardNumber']),
   card_cvv: path(['payment', 'info', 'cvv']),
   card_expiration_date: pipe(
@@ -28,8 +29,18 @@ const parseToPayload = applySpec({
   ),
   soft_descriptor: path(['payment', 'method', 'statementDescriptor']),
   card_holder_name: path(['payment', 'info', 'holderName']),
+})
+
+const parseBoletoData = applySpec({
+  boleto_expiration_date: path(['payment', 'method', 'instructions']),
+  boleto_instructions: path(['payment', 'method', 'expirationAt']),
+})
+
+const parseToPayload = applySpec({
+  encryption_key: prop('publickey'),
+  amount: prop('amount'),
   payment_method: pipe(
-    path(['payment', 'method', 'type']),
+    getPaymentMethodType,
     cond([
       [equals('creditcard'), always('credit_card')],
       [T, identity],
@@ -46,6 +57,7 @@ const parseToPayload = applySpec({
       ),
       country: always('br'),
       email: prop('email'),
+      document_number: prop('documentNumber'),
       documents: pipe(
         applySpec({
           type: always('cpf'),
@@ -72,8 +84,21 @@ const parseToPayload = applySpec({
   split_rules: path(['transaction', 'splitRules']),
 })
 
+const getPaymentMethodData = (data) => {
+  switch (getPaymentMethodType(data)) {
+    case 'boleto':
+      return parseBoletoData(data)
+    case 'creditcard':
+      return parseCreditcardData(data)
+    default:
+      throw new Error('Payment method not supported.')
+  }
+}
+
 const strategy = (data) => {
   const payload = parseToPayload(data)
+  const paymentData = getPaymentMethodData(data)
+  const fullPayload = merge(paymentData, payload)
 
   return fetch(url, {
     headers: {
@@ -81,7 +106,7 @@ const strategy = (data) => {
       'Content-Type': 'application/json',
     },
     method: 'POST',
-    body: JSON.stringify(payload),
+    body: JSON.stringify(fullPayload),
   })
     .then(errorHandle)
     .then(response => response.json())

@@ -3839,10 +3839,13 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+<<<<<<< HEAD
 emblematic-icons@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.2.0.tgz#f4851d1ac098752d0cdfb8d91f81e67629374076"
 
+=======
+>>>>>>> f93073b... transaction: add support for all versions of api
 emoji-regex@^6.1.0:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.5.1.tgz#9baea929b155565c11ea41c6626eaa65cef992c2"
