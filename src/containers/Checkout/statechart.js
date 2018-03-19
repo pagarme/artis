@@ -11,14 +11,14 @@ export default {
       on: {
         NEXT: 'addresses',
       },
-      onEntry: 'customer',
+      onEntry: ['checkRequiredData', 'customer'],
     },
     addresses: {
       on: {
         PREV: 'customer',
         NEXT: 'payment',
       },
-      onEntry: 'addresses',
+      onEntry: ['checkRequiredData', 'addresses'],
     },
     payment: {
       on: {

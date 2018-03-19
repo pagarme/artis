@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import { Action, withStatechart } from 'react-automata'
-import { isEmpty, isNil, reject } from 'ramda'
+import { isEmpty, isNil, reject, pathOr, has, allPass } from 'ramda'
 import ReactGA from 'react-ga'
 
 import { changeScreenSize } from '../../actions'
@@ -46,11 +46,59 @@ class Checkout extends Component {
     this.props.changeScreenSize(window.innerWidth)
   }
 
-  handleBackButton = () => {
+  checkRequiredData () {
+    const { machineState } = this.props
+
+    if (machineState === 'customer') {
+      const customer = pathOr({}, ['apiData', 'formData', 'customer'], this.props)
+
+      const customerHasAllProps = allPass([
+        has('name'),
+        has('documentNumber'),
+        has('email'),
+        has('phoneNumber'),
+      ])
+
+      if (customerHasAllProps(customer)) {
+        this.navigateNextPage()
+      }
+    }
+
+    if (machineState === 'addresses') {
+      const billing = pathOr({}, ['apiData', 'formData', 'billing'], this.props)
+      const shipping = pathOr({}, ['apiData', 'formData', 'shipping'], this.props)
+
+      const addressHasAllProps = allPass([
+        has('street'),
+        has('number'),
+        has('neighborhood'),
+        has('city'),
+        has('state'),
+        has('zipcode'),
+      ])
+
+      if (addressHasAllProps(billing) && addressHasAllProps(shipping)) {
+        this.navigateNextPage()
+      }
+    }
+  }
+
+  navigatePreviousPage = () => {
     const activePage = this.state.activePage - 1
 
     this.setState({ activePage })
     this.props.transition('PREV')
+  }
+
+  navigateNextPage = () => {
+    const activePage = this.state.activePage + 1
+
+    this.setState({ activePage })
+    this.props.transition('NEXT')
+  }
+
+  handleBackButton = () => {
+    this.navigatePreviousPage()
   }
 
   handleFormSubmit = (values, errors) => {
@@ -58,10 +106,7 @@ class Checkout extends Component {
       return
     }
 
-    const activePage = this.state.activePage + 1
-
-    this.setState({ activePage })
-    this.props.transition('NEXT')
+    this.navigateNextPage()
   }
 
   handleToggleCart = () => {
@@ -267,7 +312,7 @@ Checkout.propTypes = {
       onClose: PropTypes.func,
     }).isRequired,
     formData: PropTypes.shape({
-      curtomer: PropTypes.object,
+      customer: PropTypes.object,
       billing: PropTypes.object,
       shipping: PropTypes.object,
       items: PropTypes.arrayOf(PropTypes.object),
@@ -282,6 +327,7 @@ Checkout.propTypes = {
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
   transition: PropTypes.func.isRequired,
   isBigScreen: PropTypes.bool,
+  machineState: PropTypes.string.isRequired,
 }
 
 Checkout.defaultProps = {
