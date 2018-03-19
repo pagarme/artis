@@ -154,6 +154,8 @@ class Checkout extends Component {
 
     const {
       postback,
+      onSuccess,
+      onError,
     } = configs
 
     return (
@@ -186,6 +188,8 @@ class Checkout extends Component {
             amount={amount}
             publickey={key}
             postback={postback}
+            onSuccess={onSuccess}
+            onError={onError}
             items={items}
           />
         </State>

@@ -45,8 +45,12 @@ var configs = {
   secondaryColor: '#46b67c',
   postback: 'http://pagar.me',
   enableCart: true,
-  onSuccess: () => {},
-  onError: () => {},
+  onSuccess: (data) => {
+    console.log('Success call', JSON.stringify(data, null, 2))
+  },
+  onError: (error) => {
+    console.log('Error call', JSON.stringify(error, null, 2))
+  },
   onClose: () => {},
 };
 

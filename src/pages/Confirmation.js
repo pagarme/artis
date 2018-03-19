@@ -62,35 +62,58 @@ class Confirmation extends React.Component {
       errorSubtitle: '',
       barcode: '',
     }
+
+    this.onRequestSuccess = this.onRequestSuccess.bind(this)
+    this.onRequestError = this.onRequestError.bind(this)
   }
 
   componentWillReceiveProps (newProps) {
     this.createATransaction(newProps)
   }
 
-  isRequesting = false
+  onRequestSuccess (response) {
+    const { onSuccess, onError } = this.props
+
+    if (response.status === 'authorized') {
+      if (onSuccess) {
+        onSuccess(response)
+      }
+
+      return this.setState({ success: true, loading: false })
+    }
+
+    if (onError) {
+      onError(response)
+    }
+
+    return this.setState({
+      ...errorMessages.unauthorized,
+      success: false,
+      loading: false,
+    })
+  }
+
+  onRequestError (error) {
+    const { onError } = this.props
+
+    if (onError) {
+      onError(error)
+    }
+
+    this.setState({
+      success: false,
+      loading: false,
+      ...errorMessages.error,
+    })
+  }
 
   createATransaction (transactionData) {
     if (hasAllData(transactionData) && !this.isRequesting) {
       this.isRequesting = true
 
       request(transactionData, strategies[strategyName])
-        .then((response) => {
-          if (response.status === 'authorized') {
-            return this.setState({ success: true, loading: false })
-          }
-
-          return this.setState({
-            ...errorMessages.unauthorized,
-            success: false,
-            loading: false,
-          })
-        })
-        .catch(() => this.setState({
-          success: false,
-          loading: false,
-          ...errorMessages.error,
-        }))
+        .then(this.onRequestSuccess)
+        .catch(this.onRequestError)
     }
   }
 
@@ -175,11 +198,15 @@ Confirmation.propTypes = {
     dark: PropTypes.string,
   }),
   base: PropTypes.string,
+  onSuccess: PropTypes.func,
+  onError: PropTypes.func,
 }
 
 Confirmation.defaultProps = {
   theme: {},
   base: 'dark',
+  onSuccess: null,
+  onError: null,
 }
 
 const mapStateToProps = ({ pageInfo }) => ({
