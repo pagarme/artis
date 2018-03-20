@@ -13,9 +13,10 @@ const defaultColSize = 6
 const Footer = ({
   companyName,
   theme,
+  base,
 }) => (
   <footer>
-    <Grid>
+    <Grid className={theme[base]}>
       <Row>
         <Col
           desk={defaultColSize}
@@ -43,8 +44,7 @@ const Footer = ({
 
 Footer.defaultProps = {
   theme: {},
-  nextButtonDisabled: false,
-  buttonVisible: true,
+  base: 'dark',
 }
 
 Footer.propTypes = {
@@ -54,7 +54,10 @@ Footer.propTypes = {
     safe: PropTypes.string,
     total: PropTypes.string,
     value: PropTypes.string,
+    light: PropTypes.string,
+    dark: PropTypes.string,
   }),
+  base: PropTypes.string,
   companyName: PropTypes.string.isRequired,
 }
 

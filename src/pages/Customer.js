@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
@@ -20,7 +21,7 @@ import { addPageInfo } from '../actions'
 const smallColSize = 4
 const bigColSize = 8
 
-const applyThemr = themr('UIGeneralForm')
+const applyThemr = themr('UICustomerPage')
 const defaultColSize = 12
 const mediumColSize = 7
 
@@ -45,7 +46,7 @@ class CustomerPage extends Component {
   }
 
   renderCustomerForm () {
-    const { theme } = this.props
+    const { theme, base } = this.props
 
     return (
       <React.Fragment>
@@ -55,6 +56,7 @@ class CustomerPage extends Component {
         </Row>
         <Row>
           <Input
+            base={base}
             name="name"
             label="Nome"
             placeholder="Digite seu nome"
@@ -62,6 +64,7 @@ class CustomerPage extends Component {
         </Row>
         <Row>
           <Input
+            base={base}
             name="email"
             label="E-mail"
             placeholder="Digite seu e-mail"
@@ -75,6 +78,7 @@ class CustomerPage extends Component {
             palm={smallColSize}
           >
             <Input
+              base={base}
               name="documentNumber"
               label="CPF"
               mask="111.111.111-11"
@@ -88,6 +92,7 @@ class CustomerPage extends Component {
             palm={bigColSize}
           >
             <Input
+              base={base}
               name="phoneNumber"
               label="DDD + Telefone"
               mask="(11) 11111-1111"
@@ -100,7 +105,7 @@ class CustomerPage extends Component {
   }
 
   render () {
-    const { theme, isBigScreen } = this.props
+    const { theme, base, isBigScreen } = this.props
 
     const sizeWithDesktop = isBigScreen
       ? mediumColSize
@@ -119,7 +124,11 @@ class CustomerPage extends Component {
           phoneNumber: [required],
         }}
       >
-        <Grid className={theme.page}>
+        <Grid
+          className={
+            classNames(theme[base], theme.page)
+          }
+        >
           <Col
             tv={sizeWithDesktop}
             desk={sizeWithDesktop}
@@ -135,6 +144,7 @@ class CustomerPage extends Component {
             alignEnd
           >
             <Button
+              base={base}
               size="extra-large"
               relevance="normal"
               type="submit"
@@ -154,7 +164,10 @@ CustomerPage.propTypes = {
     page: PropTypes.string,
     title: PropTypes.string,
     titleIcon: PropTypes.string,
+    light: PropTypes.string,
+    dark: PropTypes.string,
   }),
+  base: PropTypes.string,
   isBigScreen: PropTypes.bool.isRequired,
   customer: PropTypes.shape({
     name: PropTypes.string,
@@ -169,6 +182,7 @@ CustomerPage.propTypes = {
 CustomerPage.defaultProps = {
   theme: {},
   customer: {},
+  base: 'dark',
 }
 
 const mapStateToProps = ({ screenSize, pageInfo }) => ({

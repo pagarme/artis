@@ -76,9 +76,7 @@ Button.propTypes = {
     'double',
     'flat',
   ]),
-  base: PropTypes.oneOf([
-    'dark', 'light',
-  ]),
+  base: PropTypes.string,
   relevance: PropTypes.oneOf([
     'high',
     'low',

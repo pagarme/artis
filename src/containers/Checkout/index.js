@@ -71,7 +71,7 @@ class Checkout extends Component {
     }, 500)
   }
 
-  renderPages () {
+  renderPages (base) {
     const { key, formData, transaction, configs } = this.props.apiData
 
     const { items } = formData
@@ -88,15 +88,20 @@ class Checkout extends Component {
     return (
       <React.Fragment>
         <Action show="customer">
-          <CustomerPage handleSubmit={this.handleFormSubmit} />
+          <CustomerPage
+            base={base}
+            handleSubmit={this.handleFormSubmit}
+          />
         </Action>
         <Action show="addresses">
           <AddressesPage
+            base={base}
             handleSubmit={this.handleFormSubmit}
           />
         </Action>
         <Action show="payment">
           <PaymentPage
+            base={base}
             title="Dados de Pagamento"
             paymentMethods={paymentMethods}
             amount={amount}
@@ -105,6 +110,7 @@ class Checkout extends Component {
         </Action>
         <Action show="confirmation">
           <ConfirmationPage
+            base={base}
             title="Confirmação"
             amount={amount}
             publickey={key}
@@ -121,7 +127,7 @@ class Checkout extends Component {
       activePage,
     } = this.state
 
-    const { apiData, theme } = this.props
+    const { apiData, theme, base } = this.props
 
     const { params = {}, configs = {} } = apiData
 
@@ -135,6 +141,7 @@ class Checkout extends Component {
       <div
         className={classNames(
           theme.checkout,
+          theme[base],
           {
             [theme.closingEffect]: this.state.closingEffect,
           },
@@ -142,6 +149,7 @@ class Checkout extends Component {
       >
         <div className={theme.wrapper}>
           <Header
+            base={base}
             logoAlt={configs.companyName}
             logoSrc={configs.image || defaultLogo}
             onPrev={this.handleBackButton}
@@ -158,12 +166,14 @@ class Checkout extends Component {
             )}
           >
             <ProgressBar
+              base={base}
               steps={steps}
               activePage={activePage}
             />
-            {this.renderPages()}
+            {this.renderPages(base)}
           </div>
           <Footer
+            base={base}
             total={params.amount}
             companyName={configs.companyName}
           />
@@ -186,6 +196,7 @@ Checkout.propTypes = {
     configs: PropTypes.shape({
       companyName: PropTypes.string,
       image: PropTypes.string,
+      themeBase: PropTypes.string,
       primaryColor: PropTypes.string,
       seconryColor: PropTypes.string,
       postback: PropTypes.string,
@@ -204,6 +215,7 @@ Checkout.propTypes = {
       paymentMethods: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
+  base: PropTypes.string,
   changeScreenSize: PropTypes.func.isRequired,
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
   transition: PropTypes.func.isRequired,
@@ -214,9 +226,9 @@ Checkout.defaultProps = {
   apiData: {
     configs: {
       image: '',
-      theme: 'dark',
     },
   },
+  base: 'dark',
 }
 
 export default connect(

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
@@ -28,7 +29,7 @@ const mediumColSize = 6
 const smallColSize = 4
 const bigColSize = 8
 
-const applyThemr = themr('UIGeneralForm')
+const applyThemr = themr('UIAddressesPage')
 
 const radioOptions = [
   {
@@ -166,7 +167,7 @@ class AddressesPage extends Component {
 
   render () {
     const { sameAddressForShipping } = this.state
-    const { theme, isBigScreen } = this.props
+    const { theme, base, isBigScreen } = this.props
 
     const sizeWithDesktop = isBigScreen
       ? mediumColSize
@@ -194,7 +195,9 @@ class AddressesPage extends Component {
         }}
       >
         <Grid
-          className={theme.page}
+          className={
+            classNames(theme[base], theme.page)
+          }
           hidden={this.state.openAddressForm}
         >
           <Row alignCenter stretch>
@@ -209,6 +212,7 @@ class AddressesPage extends Component {
               </Row>
               <Row>
                 <Input
+                  base={base}
                   name="zipcode"
                   label="CEP"
                   mask="11111-111"
@@ -218,6 +222,7 @@ class AddressesPage extends Component {
               </Row>
               <Row>
                 <Input
+                  base={base}
                   name="street"
                   label="Rua"
                   placeholder="Digite o endereço"
@@ -231,6 +236,7 @@ class AddressesPage extends Component {
                   palm={smallColSize}
                 >
                   <Input
+                    base={base}
                     inputRef={this.handleNumberInputRef}
                     name="number"
                     label="Nº"
@@ -244,6 +250,7 @@ class AddressesPage extends Component {
                   palm={bigColSize}
                 >
                   <Input
+                    base={base}
                     name="complement"
                     label="Complemento"
                     placeholder="Digite o complemento do endereço"
@@ -252,6 +259,7 @@ class AddressesPage extends Component {
               </Row>
               <Row>
                 <Input
+                  base={base}
                   name="neighborhood"
                   label="Bairro"
                   placeholder="Digite o bairro"
@@ -265,6 +273,7 @@ class AddressesPage extends Component {
                   palm={bigColSize}
                 >
                   <Input
+                    base={base}
                     name="city"
                     label="Cidade"
                     placeholder="Digite a cidade"
@@ -278,6 +287,7 @@ class AddressesPage extends Component {
                   overflowVisible
                 >
                   <Dropdown
+                    base={base}
                     options={options}
                     name="state"
                     label="UF"
@@ -324,6 +334,7 @@ class AddressesPage extends Component {
                 </Row>
                 <Row>
                   <Input
+                    base={base}
                     name="shippingZipcode"
                     label="CEP"
                     mask="11111-111"
@@ -346,6 +357,7 @@ class AddressesPage extends Component {
                     palm={smallColSize}
                   >
                     <Input
+                      base={base}
                       inputRef={this.handleShippingNumberInputRef}
                       name="shippingNumber"
                       label="Nº"
@@ -359,6 +371,7 @@ class AddressesPage extends Component {
                     palm={bigColSize}
                   >
                     <Input
+                      base={base}
                       name="shippingComplement"
                       label="Complemento"
                       placeholder="Digite o complemento do endereço"
@@ -367,6 +380,7 @@ class AddressesPage extends Component {
                 </Row>
                 <Row>
                   <Input
+                    base={base}
                     name="shippingNeighborhood"
                     label="Bairro"
                     placeholder="Digite o bairro"
@@ -380,6 +394,7 @@ class AddressesPage extends Component {
                     palm={bigColSize}
                   >
                     <Input
+                      base={base}
                       name="shippingCity"
                       label="Cidade"
                       placeholder="Digite a cidade"
@@ -433,7 +448,10 @@ AddressesPage.propTypes = {
     title: PropTypes.string,
     btnAddNewAddress: PropTypes.string,
     label: PropTypes.string,
+    light: PropTypes.string,
+    dark: PropTypes.string,
   }),
+  base: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   isBigScreen: PropTypes.bool.isRequired,
@@ -469,6 +487,7 @@ AddressesPage.defaultProps = {
   theme: {},
   shipping: {},
   billing: {},
+  base: 'dark',
 }
 
 const mapStateToProps = ({ screenSize, pageInfo }) => ({

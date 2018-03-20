@@ -1,0 +1,29 @@
+@import "../colors.css";
+@import "../typography.css";
+
+.title {
+  font-family: var(--primary-font-family);
+  font-size: var(--font-size-xxlarge);
+  color: var(--color-white);
+}
+
+.textAlignedCenter {
+  text-align: center;
+}
+
+.alignSelfCenter {
+  align-self: center;
+}
+
+.error {
+  color: var(--color-error);
+  margin: 0;
+}
+
+.info {
+  font-size: var(--font-size-large);
+}
+
+.mediumSize {
+  width: 80%;
+}

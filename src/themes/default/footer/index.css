@@ -1,0 +1,74 @@
+@import "../media.css";
+@import "../spacing.css";
+@import "../colors.css";
+@import "../typography.css";
+@import "../margin.css";
+
+.safe {
+  position: relative;
+  justify-content: flex-end;
+  color: var(--color-white);
+  font-size: var(--font-size-tiny);
+  font-family: var(--primary-font-family);
+  text-transform: uppercase;
+  padding-bottom: var(--spacing-tiny);
+}
+
+.light .safe {
+  color: var(--color-grey-83);
+}
+
+.safe > svg {
+  margin-right: 5px;
+  margin-bottom: 3px;
+}
+
+.safe:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: -12px;
+  width: 1px;
+  height: 12px;
+  background-color: var(--color-black);
+  border-right: 1px solid var(--color-grey-68);
+}
+
+.light .safe:after {
+  background-color: var(--color-grey-11);
+}
+
+.powered {
+  color: var(--color-grey-53);
+  font-size: var(--font-size-tiny);
+  font-family: var(--primary-font-family);
+  text-transform: lowercase;
+  padding-bottom: var(--spacing-tiny);
+}
+
+.hidden {
+  display: none;
+}
+
+.button {
+  margin-right: 16px;
+}
+
+@media (--media-palm) {
+
+  .button {
+    width: 100%;
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
+  }
+
+  .safe,
+  .powered {
+    justify-content: center;
+  }
+
+  .safe:after {
+    display: none;
+  }
+}

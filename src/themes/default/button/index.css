@@ -1,0 +1,159 @@
+@import "../colors.css";
+@import "../typography.css";
+
+:root {
+  --button-padding-top-tiny: 8px;
+  --button-padding-left-tiny: 8px;
+
+  --button-padding-top-small: 8px;
+  --button-padding-left-small: 16px;
+
+  --button-padding-top-default: 9px;
+  --button-padding-left-default: 24px;
+
+  --button-padding-top-large: 9px;
+  --button-padding-left-large: 32px;
+
+  --button-padding-top-extra-large: 17px;
+  --button-padding-left-extra-large: 48px;
+}
+
+/*
+* Default
+*/
+
+.button {
+  position: relative;
+  border: none;
+  border-radius: 3px;
+  background: linear-gradient(to left, var(--checkout-secondary-color), var(--checkout-primary-color));
+  color: var(--color-grey-83);
+  font-family: var(--primary-font-family);
+  font-weight: var(--title-font-normal);
+  letter-spacing: var(--letter-spacing);
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+}
+
+.button:active {
+  transform: scale(0.95);
+  background-color: var(--checkout-primary-color);
+}
+
+.button:focus {
+  background-color: var(--checkout-primary-color);
+}
+
+.button:disabled {
+  color: var(--color-grey-39);
+  cursor: not-allowed;
+  background-color: var(--color-grey-11);
+}
+
+/*
+* Fill
+*/
+
+.clean,
+.clean:active,
+.clean:hover,
+.clean:focus {
+  background-color: transparent;
+  background-image: none;
+  color: var(--checkout-primary-color);
+}
+
+.outline,
+.outline:active,
+.outline:focus {
+  color: var(--checkout-primary-color);
+  box-shadow: inset 0 0 0 1px var(--checkout-primary-color);
+  background: transparent;
+}
+
+.outline:hover {
+  background: var(--checkout-primary-color);
+  color: var(--color-black);
+}
+
+.double,
+.double:hover,
+.double:active,
+.double:focus,
+.double:disabled {
+  box-shadow: inset 0 0 0 2px var(--color-grey-83);
+  border-radius: 0;
+  margin-top: 2px;
+  color: var(--color-white);
+  border: 2px solid  var(--color-grey-68);
+  background: var(--color-grey-68);
+  text-transform: initial;
+}
+
+.double:disabled {
+  opacity: 0.6;
+}
+
+/*
+* Sizes
+*/
+
+.tiny {
+  padding: var(--button-padding-top-tiny) var(--button-padding-left-tiny);
+  font-size: var(--font-size-tiny);
+  text-transform: none;
+  line-height: 10px;
+}
+
+.small {
+  padding: var(--button-padding-top-small) var(--button-padding-left-small);
+  font-size: var(--font-size-small);
+  line-height: 10px;
+}
+
+.default {
+  padding: var(--button-padding-top-default) var(--button-padding-left-default);
+  font-size: var(--font-size-small);
+  line-height: var(--font-size-small);
+  line-height: 10px;
+}
+
+.large {
+  padding: var(--button-padding-top-large) var(--button-padding-left-large);
+  font-size: var(--font-size-small);
+  line-height: 10px;
+}
+
+.extra-large {
+  padding: var(--button-padding-top-extra-large) var(--button-padding-left-extra-large);
+  font-size: var(--font-size-medium);
+  line-height: 12px;
+}
+
+.full {
+  width: 100%;
+}
+
+.left {
+  text-align: left;
+}
+
+/*
+* LIGHT THEME
+*/
+
+.light.button {
+  color: var(--color-white);
+}
+
+.light.clean,
+.light.clean:active,
+.light.clean:focus {
+  color: var(--checkout-primary-color);
+}
+
+.light.clean:hover {
+  background-color: transparent;
+  color: var(--checkout-secondary-color);
+}

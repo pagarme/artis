@@ -1,0 +1,94 @@
+@import "../colors.css";
+@import "../typography.css";
+@import "../spacing.css";
+@import "../media.css";
+@import "../margin.css";
+
+.page {
+  margin: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) 0;
+  justify-content: center;
+}
+
+.title {
+  margin: 6px 0;
+  font-family: var(--primary-font-family);
+  font-size: var(--font-size-small);
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  padding-bottom: 24px;
+}
+
+.light .title {
+  color: var(--color-grey-77);
+}
+
+.form {
+  width: 100%;
+}
+
+.noMarginTop {
+  margin-top: 0;
+}
+
+.titleIcon {
+  padding: 0 9px 0 0;
+}
+
+.label {
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.radio span {
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.radio input {
+  position: relative;
+  appearance: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid;
+  border-color: #ffffff;
+  transition: border-color 150ms ease-in;
+  outline: none;
+  pointer-events: none;
+}
+
+.radio input:before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+  position: absolute;
+  transition: -webkit-transform 150ms ease-in;
+  transition: transform 150ms ease-in;
+  transition: transform 150ms ease-in, -webkit-transform 150ms ease-in;
+  transform: scale(0);
+  background-color: #ffffff;
+}
+
+.radio input:checked:before {
+  transform: scale(1);
+}
+
+@media (--media-palm) {
+
+  .title {
+    display: none;
+  }
+
+  .page {
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
+  }
+}
+

@@ -63,7 +63,7 @@ class Confirmation extends React.Component {
   }
 
   render () {
-    const { theme } = this.props
+    const { theme, base } = this.props
     const { success, loading, barcode } = this.state
 
     if (loading) return <LoadingInfo />
@@ -71,7 +71,7 @@ class Confirmation extends React.Component {
     return (
       <Grid
         id="confirmation-page"
-        className={theme.page}
+        className={classNames(theme[base], theme.page)}
       >
         <Row stretch>
           <Col
@@ -112,6 +112,7 @@ class Confirmation extends React.Component {
               success
                 ? <SuccessInfo
                   barcode={barcode}
+                  base={base}
                 />
                 : <ErrorInfo />
             }
@@ -129,7 +130,10 @@ Confirmation.propTypes = {
     errorIcon: PropTypes.string,
     alignSelfCenter: PropTypes.string,
     confirmationIcon: PropTypes.string,
+    light: PropTypes.string,
+    dark: PropTypes.string,
   }),
+  base: PropTypes.string,
   publickey: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
   postback: PropTypes.string.isRequired,
@@ -137,6 +141,7 @@ Confirmation.propTypes = {
 
 Confirmation.defaultProps = {
   theme: {},
+  base: 'dark',
 }
 
 const mapStateToProps = ({ pageInfo }) => ({

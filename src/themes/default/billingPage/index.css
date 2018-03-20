@@ -1,0 +1,45 @@
+@import "../colors.css";
+@import "../typography.css";
+@import "../spacing.css";
+@import "../media.css";
+@import "../margin.css";
+
+.page {
+  margin: var(--spacing-medium) 0 var(--spacing-medium) var(--spacing-small);
+}
+
+.titleIcon {
+  padding: 0 9px 0 0;
+}
+
+.noMarginTop {
+  margin-top: 0;
+}
+
+.title {
+  margin: 6px 0;
+  font-family: var(--primary-font-family);
+  font-size: var(--font-size-small);
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 24px;
+}
+
+.light .title {
+  color: var(--color-grey-77);
+}
+
+@media (--media-palm) {
+
+  .page {
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
+  }
+
+  .title {
+    display: none;
+  }
+}

@@ -11,59 +11,100 @@ import ErrorBoundary from './components/ErrorBoundary'
 import ErrorPage from './pages/Error'
 
 import createElement from './utils/helpers/createElement'
+import setTheme from './utils/helpers/setTheme'
+import setColors from './utils/helpers/setColors'
 import createStore from './store'
 
-import theme from './theme-pagarme'
 import NormalizeCSS from './components/NormalizeCSS'
+import defaultTheme from './themes/default'
+
+const colors = {
+  light: {
+    primary: '#81cc04',
+    secondary: '#64a100',
+  },
+  dark: {
+    primary: '#7ad499',
+    secondary: '#46b67c',
+  },
+}
 
 ReactGA.initialize('UA-113290482-1')
 
 const render = apiData => () => {
-  const clientTarget = apiData.configs.target
+  const {
+    configs,
+    formData,
+    key,
+  } = apiData
 
-  const target = clientTarget
-    ? document.getElementById(clientTarget)
+  const {
+    target,
+    themeBase,
+    primaryColor,
+    secondaryColor,
+  } = configs
+
+  const theme = themeBase || setTheme(primaryColor) || 'dark'
+
+  const pColor = primaryColor || colors[theme].primary
+  const sColor = secondaryColor || colors[theme].secondary
+
+  setColors(pColor, sColor)
+
+  const clientTarget = target
+    ? document.getElementById(target)
     : createElement('div', 'checkout-wrapper', 'body')
 
   ReactGA.event({
     category: 'API',
     action: 'Customer Key',
-    label: apiData.key,
+    label: key,
   })
 
-  const store = createStore(apiData.formData)
+  const store = createStore(formData)
+
+  const clientThemeBase = themeBase || setTheme(primaryColor) || 'dark'
 
   ReactDOM.render(
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={defaultTheme}>
         <ErrorBoundary CrashReportComponent={<ErrorPage />}>
           <NormalizeCSS>
             <Checkout
               apiData={apiData}
-              targetElement={target}
+              targetElement={clientTarget}
+              base={clientThemeBase}
             />
           </NormalizeCSS>
         </ErrorBoundary>
       </ThemeProvider>
     </Provider>,
-    target
+    clientTarget
   )
 }
 
 const integrations = {
   simple: (buttons) => {
     buttons.forEach((button) => {
-      const key = button.dataset.key
+      const {
+        key,
+        image,
+        locale,
+        theme,
+        amount,
+        paymentMethod,
+      } = button.dataset
 
       const configs = {
-        image: button.dataset.image,
-        locale: button.dataset.locale,
-        theme: button.dataset.theme,
+        image,
+        locale,
+        theme,
       }
 
       const params = {
-        amount: parseFloat(button.dataset.amount),
-        paymentMethod: button.dataset.paymentMethod,
+        amount: parseFloat(amount),
+        paymentMethod,
       }
 
       const open = render({ key, configs, params })

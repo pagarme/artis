@@ -1,0 +1,96 @@
+@import "../colors.css";
+@import "../typography.css";
+@import "../spacing.css";
+@import "../media.css";
+@import "../margin.css";
+
+.page {
+  margin: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) 0;
+}
+
+.title {
+  margin: 6px 0;
+  font-family: var(--primary-font-family);
+  font-size: var(--font-size-small);
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+
+.light .title {
+  color: var(--color-grey-77);
+}
+
+.boletoInfo {
+  font-family: var(--primary-font-family);
+  font-weight: var(--title-font-bold);
+  color: var(--color-grey-33);
+  margin-bottom: 29px;
+}
+
+.barcodeImg {
+  width: 300px;
+  height: 70px;
+  margin-top: 34px;
+}
+
+.tooltipRow {
+  overflow: visible;
+}
+
+.boletoContainer {
+  background-color: var(--color-grey-84);
+  width: 100%;
+  margin: 27px 24px;
+  padding-left: 30px;
+  padding-right: 30px;
+  opacity: 0.7;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.light.boletoContainer {
+  background-color: var(--color-grey-10);
+}
+
+.amount {
+  color: var(--checkout-primary-color);
+  letter-spacing: 1.6px;
+  font-family: var(--primary-font-family);
+  font-weight: var(--title-font-bold);
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+  padding-bottom: 0;
+}
+
+.cvvTooltip {
+  position: absolute;
+  left: 20%;
+  top: 32%;
+}
+
+@media (--media-palm) {
+
+  .boletoContainer {
+    background-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .barcodeImg {
+    width: 70%;
+  }
+}
+
+@media (--media-palm) {
+
+  .page {
+    margin-left: var(--margin-page-mobile);
+    margin-right: var(--margin-page-mobile);
+  }
+}

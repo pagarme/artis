@@ -1,0 +1,138 @@
+@import "../colors.css";
+@import "../spacing.css";
+@import "../typography.css";
+@import "../media.css";
+
+.switch {
+  display: inline-flex;
+  user-select: none;
+  width: 100%;
+}
+
+.content {
+  display: none;
+  width: 100%;
+}
+
+.item {
+  flex-grow: 1;
+  position: relative;
+  text-align: center;
+}
+
+.item > input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  outline: none;
+}
+
+.label {
+  color: var(--color-white);
+  background-color: var(--color-grey-84);
+  border: 1px solid var(--color-grey-74);
+  border-right: 1px solid var(--color-black);
+  padding: 0;
+  cursor: pointer;
+  display: block;
+  letter-spacing: var(--letter-spacing);
+  font-family: var(--primary-font-family);
+  font-size: var(--font-size-small);
+  position: relative;
+  height: 100%;
+  z-index: 0;
+}
+
+.light .label {
+  color: var(--color-grey-83);
+  background-color: var(--color-grey-10);
+  border: 1px solid var(--color-grey-11);
+  border-right: 1px solid var(--color-grey-10);
+}
+
+.label > h3 {
+  font-size: var(--font-size-small);
+  margin-top: 23px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+.label > p {
+  font-size: var(--font-size-tiny);
+  margin-top: 0;
+  margin-bottom: 14px;
+  color: var(--color-grey-33);
+}
+
+.item input:checked + .label {
+  color: var(--checkout-primary-color); /* stylelint-disable-line */
+  z-index: 1;
+}
+
+.item input:checked + .label > h3 {
+  color: var(--checkout-primary-color); /* stylelint-disable-line */
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+.item input:checked + :before {
+  content: "";
+  position: absolute;
+  left: 36.75%;
+  bottom: 0;
+  height: 1px;
+  width: 26.5%;
+  border-bottom: 1px solid var(--checkout-primary-color); /* stylelint-disable-line */
+}
+
+.item:last-child .label {
+  border-right: 1px solid var(--color-grey-74);
+}
+
+.light .item:last-child .label {
+  border-right: 1px solid var(--color-grey-11);
+}
+
+.item input:checked + .label:after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 8px);
+  bottom: -8px;
+  height: 0;
+  vertical-align: middle;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--checkout-primary-color);
+}
+
+@media (--media-tablet) {
+
+  .item input:checked + :before {
+    left: 19%;
+    width: 62%;
+  }
+
+  .label > h3 {
+    font-size: var(--font-size-tiny);
+  }
+}
+
+@media (--media-palm) {
+
+  .item input:checked + :before {
+    left: 19%;
+    width: 62%;
+  }
+
+  .label > h3 {
+    font-size: var(--font-size-tiny);
+  }
+}
+
+.visible {
+  display: block;
+  width: 100%;
+}

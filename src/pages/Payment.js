@@ -100,7 +100,7 @@ class PaymentPage extends Component {
       flipped,
     } = this.state.creditcard
 
-    const { theme, amount, isBigScreen } = this.props
+    const { theme, base, amount, isBigScreen } = this.props
 
     const installmentsOptions = generateInstallmnets(creditcard, amount)
 
@@ -152,6 +152,7 @@ class PaymentPage extends Component {
                   palm={defaultColSize}
                 >
                   <Input
+                    base={base}
                     name="cardNumber"
                     label="Número do cartão"
                     type="number"
@@ -167,6 +168,7 @@ class PaymentPage extends Component {
                   palm={defaultColSize}
                 >
                   <Input
+                    base={base}
                     name="holderName"
                     label="Nome (igual o do cartão)"
                     maxLength="24"
@@ -183,6 +185,7 @@ class PaymentPage extends Component {
                   palm={mediumColSize}
                 >
                   <Input
+                    base={base}
                     name="expiration"
                     label="Data de validade"
                     mask="11/11"
@@ -195,6 +198,7 @@ class PaymentPage extends Component {
                   palm={mediumColSize}
                 >
                   <Input
+                    base={base}
                     name="cvv"
                     label="CVV"
                     type="number"
@@ -219,6 +223,7 @@ class PaymentPage extends Component {
                     palm={defaultColSize}
                   >
                     <Dropdown
+                      base={base}
                       options={
                         installmentsOptions.map(option => (
                           { ...option, value: option.value.toString() }
@@ -247,6 +252,7 @@ class PaymentPage extends Component {
               alignEnd
             >
               <Button
+                base={base}
                 size="extra-large"
                 relevance="normal"
                 type="submit"
@@ -262,7 +268,7 @@ class PaymentPage extends Component {
   }
 
   renderBoleto = () => {
-    const { theme, paymentMethods, amount } = this.props
+    const { theme, base, paymentMethods, amount } = this.props
     const { discount } = paymentMethods
       .find(payment => payment.type === 'boleto')
 
@@ -277,7 +283,7 @@ class PaymentPage extends Component {
           tablet={defaultColSize}
           palm={defaultColSize}
         >
-          <div className={theme.boletoContainer} >
+          <div className={classNames(theme[base], theme.boletoContainer)} >
             <img src={Barcode} alt="barcode" className={theme.barcodeImg} />
             <h4
               className={
@@ -329,7 +335,7 @@ class PaymentPage extends Component {
 
   render () {
     const { selectedPayment } = this.state
-    const { paymentMethods } = this.props
+    const { base, paymentMethods } = this.props
 
     const renders = {
       boleto: this.renderBoleto,
@@ -345,6 +351,7 @@ class PaymentPage extends Component {
 
     return (
       <Switch
+        base={base}
         onChange={this.handleSwitchChange}
         items={paymentOptions}
         selected={selectedPayment}
@@ -363,7 +370,10 @@ PaymentPage.propTypes = {
     boletoAmount: PropTypes.string,
     boletoContainer: PropTypes.string,
     cvvTooltip: PropTypes.string,
+    light: PropTypes.string,
+    dark: PropTypes.string,
   }),
+  base: PropTypes.string,
   isBigScreen: PropTypes.bool.isRequired,
   amount: PropTypes.number.isRequired,
   paymentMethods: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -373,6 +383,7 @@ PaymentPage.propTypes = {
 
 PaymentPage.defaultProps = {
   theme: {},
+  base: 'dark',
   payment: {},
   creditcard: {},
 }

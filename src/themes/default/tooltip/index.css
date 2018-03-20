@@ -1,0 +1,63 @@
+@import "../colors.css";
+@import "../spacing.css";
+@import "../typography.css";
+@import "../media.css";
+
+.wrapper {
+  height: 18px;
+  width: 18px;
+}
+
+.position {
+  position: relative;
+}
+
+.content {
+  background-color: var(--color-grey-85);
+  border: 1px solid var(--color-grey-68);
+  color: var(--color-white);
+  font-family: var(--primary-font-family);
+  font-size: var(--font-size-tiny);
+  font-weight: var(--title-font-normal);
+  position: absolute;
+  padding: 17px;
+  width: 380px;
+  max-width: 380px;
+  bottom: 180%;
+  right: -180%;
+  box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.25s ease-out;
+  pointer-events: none;
+}
+
+.content:after {
+  border: solid transparent 10px;
+  border-top: solid var(--color-grey-85) 10px;
+  bottom: -20px;
+  content: " ";
+  height: 0;
+  left: 91%;
+  margin-left: -13px;
+  position: absolute;
+  width: 0;
+}
+
+.content:before {
+  border: solid transparent 11px;
+  border-top: solid var(--color-grey-68) 11px;
+  bottom: -23px;
+  content: " ";
+  height: 0;
+  left: 90.7%;
+  margin-left: -13px;
+  position: absolute;
+  width: 0;
+}
+
+.wrapper:hover .content {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}

@@ -63,6 +63,7 @@ class Input extends React.Component {
 
   render () {
     const {
+      base,
       disabled,
       error,
       hint,
@@ -91,6 +92,7 @@ class Input extends React.Component {
     )
 
     const containerClasses = classnames(
+      theme[base],
       theme.container,
       {
         [theme.active]: !disabled && value !== '',
@@ -204,7 +206,10 @@ Input.propTypes = {
     multiline: PropTypes.string,
     secondaryText: PropTypes.string,
     tooltip: PropTypes.string,
+    light: PropTypes.string,
+    dark: PropTypes.string,
   }),
+  base: PropTypes.string,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func,
@@ -233,6 +238,7 @@ Input.propTypes = {
 
 Input.defaultProps = {
   theme: {},
+  base: 'dark',
   type: 'text',
   placeholder: '',
   hint: '',

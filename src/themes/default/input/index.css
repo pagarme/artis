@@ -1,0 +1,216 @@
+@import "../typography.css";
+@import "../colors.css";
+
+:root {
+  --input-font-family: var(--primary-font-family);
+  --input-font-size: var(--font-size-small);
+
+  --input-label-color-focus: var(--color-grey-39);
+  --input-label-font-size-focus: 12px;
+
+  --input-textarea-disabled-background: var(--color-grey-53);
+  --input-textarea-padding-bottom: var(--spacing-tiny);
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+.container,
+.container * {
+  box-sizing: border-box;
+}
+
+.boxContainer {
+  flex: 1;
+}
+
+.disabled {
+  cursor: not-allowed;
+}
+
+.disabled .inputContainer {
+  border-bottom: 1px solid var(--color-grey-11);
+  border-radius: 0;
+}
+
+.disabled .secondaryText {
+  color: var(--color-grey-11);
+}
+
+.inputContainer {
+  position: relative;
+}
+
+.inputContainer * {
+  font-family: var(--input-font-family);
+  letter-spacing: var(--letter-spacing);
+}
+
+.inputContainer > textarea,
+.inputContainer > input {
+  display: block;
+  min-width: 100%;
+  width: 100%;
+  resize: none;
+  border: none;
+  border-bottom: 1px solid var(--color-grey-68);
+  border-radius: 0;
+  font-size: var(--input-font-size);
+  color: var(--color-white);
+  padding-top: var(--spacing-small);
+  caret-color: var(--color-white);
+  background: none;
+}
+
+.light .inputContainer > input {
+  color: var(--color-grey-77);
+  border-bottom: 1px solid var(--color-grey-11);
+  caret-color: var(--color-grey-83);
+}
+
+.inputContainer > textarea {
+  padding: 0;
+  margin: 0;
+  resize: none;
+  z-index: 1;
+  position: absolute;
+  height: calc(100% - var(--spacing-medium));
+  overflow: hidden;
+  outline: none;
+}
+
+.inputContainer > textarea:disabled,
+.inputContainer > input:disabled {
+  border: none;
+  cursor: not-allowed;
+}
+
+.inputContainer > textarea:disabled ~ label,
+.inputContainer > input:disabled ~ label {
+  color: var(--color-grey-39);
+  cursor: not-allowed;
+}
+
+.inputContainer > textarea::placeholder,
+.inputContainer > input::placeholder {
+  opacity: 0;
+}
+
+.inputContainer > textarea:focus::placeholder,
+.inputContainer > input:focus::placeholder {
+  opacity: 1;
+  color: var(--color-grey-34);
+  font-size: var(--input-font-size);
+}
+
+.inputContainer > label {
+  color: var(--color-white);
+  font-size: var(--input-font-size);
+  white-space: nowrap;
+  position: absolute;
+  top: 14px;
+  pointer-events: none;
+  transition: 0.1s ease all;
+}
+
+.light .inputContainer > label {
+  color: var(--color-grey-77);
+}
+
+.inputContainer > textarea:focus,
+.inputContainer > input:focus {
+  border-bottom: 1px solid var(--color-grey-68);
+  border-radius: 0;
+  transition: border-color 100ms ease;
+  outline: none;
+}
+
+.light .inputContainer > textarea:focus,
+.light .inputContainer > input:focus {
+  border-bottom: 1px solid var(--color-grey-39);
+}
+
+.inputContainer > textarea:focus ~ label,
+.inputContainer > input:focus ~ label {
+  top: 2px;
+  font-size: var(--input-label-font-size-focus);
+  color: var(--input-label-color-focus);
+}
+
+.inputContainer .contentPresent {
+  top: 2px;
+  font-size: var(--input-label-font-size-focus);
+  color: var(--input-label-color-focus);
+}
+
+.icon {
+  padding-top: 22px;
+  margin-right: 15px;
+  color: var(--color-grey-53);
+}
+
+.disabled .icon {
+  color: var(--color-grey-34);
+}
+
+.active .icon {
+  color: var(--color-grey-85);
+}
+
+.displayPasswordIcon {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  cursor: pointer;
+}
+
+.secondaryText {
+  width: 100%;
+  font-family: var(--input-font-family);
+  font-size: 12px;
+  text-align: left;
+  margin: 0;
+  margin-top: 5px;
+  color: var(--color-grey-53);
+}
+
+.multiline {
+  height: auto;
+  padding-top: var(--spacing-medium);
+}
+
+.multiline > .expander {
+  white-space: pre-wrap;
+  visibility: hidden;
+  min-height: 25px;
+  word-wrap: break-word;
+}
+
+.multiline .expander,
+.multiline textarea {
+  font-size: 14px;
+  line-height: 20px;
+  padding-bottom: 6px;
+  padding-left: 16px;
+  padding-right: 16px;
+  word-break: break-word;
+}
+
+.error ~ .secondaryText {
+  color: var(--color-error);
+}
+
+.error > textarea,
+.error > input,
+.error > textarea:focus,
+.error > input:focus {
+  border-bottom: 2px solid var(--color-error);
+}
+
+.tooltip {
+  position: absolute;
+  right: 0;
+  top: 32%;
+}

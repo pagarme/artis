@@ -112,7 +112,13 @@ module.exports = {
                     require('postcss-import'),
                     require('postcss-mixins'),
                     require('postcss-url')({ url: postcssUrlRebase }),
-                    require('postcss-cssnext'),
+                    require('postcss-cssnext')({
+                      features: {
+                        customProperties: {
+                          warnings: false,
+                        },
+                      },
+                    }),
                   ],
                 },
               },

@@ -1,0 +1,49 @@
+@import "../media.css";
+@import "../spacing.css";
+@import "../colors.css";
+
+.close,
+.back {
+  font-size: 30px;
+  padding: 0;
+  margin-top: 22px;
+}
+
+.back {
+  color: var(--color-white);
+}
+
+.logo {
+  max-width: 400px;
+  max-height: 26px;
+  margin-top: 31px;
+}
+
+.header {
+  min-height: 90px;
+  max-height: 90px;
+  margin-bottom: var(--spacing-tiny);
+  display: flex;
+}
+
+.header > * {
+  align-items: center;
+  flex: 1;
+}
+
+@media (--media-palm) {
+
+  .close,
+  .back {
+    font-size: 35px;
+    margin-top: 20px;
+  }
+
+  .close {
+    margin-right: 22px;
+  }
+
+  .back {
+    margin-left: 22px;
+  }
+}

@@ -1,21 +1,12 @@
 import React from 'react'
 import { themr } from 'react-css-themr'
-import {
-  string,
-  func,
-  bool,
-  shape,
-} from 'prop-types'
+import PropTypes from 'prop-types'
 import CloseIcon from 'react-icons/lib/io/android-close'
 import BackIcon from 'react-icons/lib/io/android-arrow-back'
 import ReactGA from 'react-ga'
 
 import Button from '../Button'
-import {
-  Grid,
-  Row,
-  Col,
-} from './../Grid'
+import { Grid, Row, Col } from './../Grid'
 
 const applyThemr = themr('UIHeader')
 
@@ -41,6 +32,7 @@ const Header = ({
   onClose,
   prevButtonDisabled,
   theme,
+  base,
 }) => (
   <header className={theme.header}>
     <Grid>
@@ -52,6 +44,7 @@ const Header = ({
           palm={buttonPalmColSize}
         >
           <Button
+            base={base}
             className={theme.back}
             fill="clean"
             onClick={onPrev}
@@ -79,6 +72,7 @@ const Header = ({
           alignEnd
         >
           <Button
+            base={base}
             className={theme.close}
             fill="clean"
             onClick={handleOnClose.bind(this, onClose)}
@@ -93,21 +87,23 @@ const Header = ({
 )
 
 Header.propTypes = {
-  theme: shape({
-    close: string,
-    logo: string,
-    back: string,
-    header: string,
+  theme: PropTypes.shape({
+    close: PropTypes.string,
+    logo: PropTypes.string,
+    back: PropTypes.string,
+    header: PropTypes.string,
   }),
-  logoSrc: string,
-  logoAlt: string,
-  onPrev: func,
-  onClose: func,
-  prevButtonDisabled: bool,
+  base: PropTypes.string,
+  logoSrc: PropTypes.string,
+  logoAlt: PropTypes.string,
+  onPrev: PropTypes.func,
+  onClose: PropTypes.func,
+  prevButtonDisabled: PropTypes.bool,
 }
 
 Header.defaultProps = {
   theme: {},
+  base: 'dark',
   logoSrc: '',
   logoAlt: '',
   onPrev: null,

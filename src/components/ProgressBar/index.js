@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { clamp } from 'ramda'
@@ -42,6 +42,7 @@ const ProgressBar = ({
   steps,
   activePage,
   theme,
+  base,
 }) => {
   const totalSteps = steps.length
   const activeStep = activePage + 1
@@ -52,14 +53,14 @@ const ProgressBar = ({
   const width = `${totalPercent}%`
 
   return (
-    <Fragment>
+    <div className={theme[base]}>
       { shouldRenderSteps &&
         renderSteps(steps, activePage, theme)
       }
       <div className={theme.wrapper}>
         <div className={theme.progressBar} style={{ width }} />
       </div>
-    </Fragment>
+    </div>
   )
 }
 
@@ -72,13 +73,17 @@ ProgressBar.propTypes = {
     index: PropTypes.string,
     active: PropTypes.string,
     passed: PropTypes.string,
+    light: PropTypes.string,
+    dark: PropTypes.string,
   }),
+  base: PropTypes.string,
   steps: PropTypes.arrayOf(PropTypes.string).isRequired,
   activePage: PropTypes.number.isRequired,
 }
 
 ProgressBar.defaultProps = {
   theme: {},
+  base: 'dark',
 }
 
 export default applyThemr(ProgressBar)
