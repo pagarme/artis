@@ -11,27 +11,25 @@ export default {
       on: {
         NEXT: 'addresses',
       },
-      onEntry: ['checkRequiredData', 'customer'],
+      onEntry: ['navigateToPage'],
     },
     addresses: {
       on: {
         PREV: 'customer',
         NEXT: 'payment',
       },
-      onEntry: ['checkRequiredData', 'addresses'],
+      onEntry: ['navigateToPage'],
     },
     payment: {
       on: {
         PREV: 'addresses',
         NEXT: 'confirmation',
       },
-      onEntry: 'payment',
     },
     confirmation: {
       on: {
         PREV: 'payment',
       },
-      onEntry: 'confirmation',
     },
   },
 }

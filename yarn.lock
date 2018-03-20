@@ -5527,6 +5527,12 @@ invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2:
   dependencies:
     loose-envify "^1.0.0"
 
+invariant@^2.2.3:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
+  dependencies:
+    loose-envify "^1.0.0"
+
 invert-kv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
@@ -8770,14 +8776,15 @@ react-addons-shallow-compare@15.6.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-automata@1.0.0-3:
-  version "1.0.0-3"
-  resolved "https://registry.yarnpkg.com/react-automata/-/react-automata-1.0.0-3.tgz#f079a73a3a22a138a0232a20e8a2a0c537e21ef3"
+react-automata@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-automata/-/react-automata-2.0.0.tgz#5d65fca6100ee514b7aef532f2c6845a7e4b34ff"
   dependencies:
+    invariant "^2.2.3"
     minimatch "^3.0.4"
     prop-types "^15.6.0"
     react-test-renderer "^16.2.0"
-    xstate "^3.0.1"
+    xstate "^3.0.4"
 
 react-click-outside@3.0.0:
   version "3.0.0"
@@ -11400,7 +11407,7 @@ xmlbuilder@^4.1.0:
   dependencies:
     lodash "^4.0.0"
 
-xstate@^3.0.1:
+xstate@^3.0.4:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-3.1.0.tgz#93e29563ab331ea1cb6271760698bd56cc2f6931"
 

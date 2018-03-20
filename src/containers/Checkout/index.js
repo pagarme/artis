@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
-import { Action, withStatechart } from 'react-automata'
+import { State, withStatechart } from 'react-automata'
 import { isEmpty, isNil, reject, pathOr, has, allPass } from 'ramda'
 import ReactGA from 'react-ga'
 
@@ -27,7 +27,6 @@ class Checkout extends Component {
     super(props)
 
     this.state = {
-      activePage: 0,
       closingEffect: false,
       collapsedCart: true,
     }
@@ -46,10 +45,17 @@ class Checkout extends Component {
     this.props.changeScreenSize(window.innerWidth)
   }
 
-  checkRequiredData () {
+  navigateToPage () {
     const { machineState } = this.props
+    const { value } = machineState
 
-    if (machineState === 'customer') {
+    if (this.hasRequiredData(value)) {
+      this.navigateNextPage()
+    }
+  }
+
+  hasRequiredData = (page) => {
+    if (page === 'customer') {
       const customer = pathOr({}, ['apiData', 'formData', 'customer'], this.props)
 
       const customerHasAllProps = allPass([
@@ -59,12 +65,10 @@ class Checkout extends Component {
         has('phoneNumber'),
       ])
 
-      if (customerHasAllProps(customer)) {
-        this.navigateNextPage()
-      }
+      return customerHasAllProps(customer)
     }
 
-    if (machineState === 'addresses') {
+    if (page === 'addresses') {
       const billing = pathOr({}, ['apiData', 'formData', 'billing'], this.props)
       const shipping = pathOr({}, ['apiData', 'formData', 'shipping'], this.props)
 
@@ -77,23 +81,17 @@ class Checkout extends Component {
         has('zipcode'),
       ])
 
-      if (addressHasAllProps(billing) && addressHasAllProps(shipping)) {
-        this.navigateNextPage()
-      }
+      return addressHasAllProps(billing) && addressHasAllProps(shipping)
     }
+
+    return false
   }
 
   navigatePreviousPage = () => {
-    const activePage = this.state.activePage - 1
-
-    this.setState({ activePage })
     this.props.transition('PREV')
   }
 
   navigateNextPage = () => {
-    const activePage = this.state.activePage + 1
-
-    this.setState({ activePage })
     this.props.transition('NEXT')
   }
 
@@ -146,19 +144,19 @@ class Checkout extends Component {
 
     return (
       <React.Fragment>
-        <Action show="customer">
+        <State value="customer">
           <CustomerPage
             base={base}
             handleSubmit={this.handleFormSubmit}
           />
-        </Action>
-        <Action show="addresses">
+        </State>
+        <State value="addresses">
           <AddressesPage
             base={base}
             handleSubmit={this.handleFormSubmit}
           />
-        </Action>
-        <Action show="payment">
+        </State>
+        <State value="payment">
           <PaymentPage
             base={base}
             title="Dados de Pagamento"
@@ -166,8 +164,8 @@ class Checkout extends Component {
             amount={amount}
             handleSubmit={this.handleFormSubmit}
           />
-        </Action>
-        <Action show="confirmation">
+        </State>
+        <State value="confirmation">
           <ConfirmationPage
             base={base}
             title="Confirmação"
@@ -176,7 +174,7 @@ class Checkout extends Component {
             postback={postback}
             items={items}
           />
-        </Action>
+        </State>
       </React.Fragment>
     )
   }
@@ -210,19 +208,14 @@ class Checkout extends Component {
   }
 
   render () {
-    const {
-      activePage,
-    } = this.state
+    const { theme, machineState, isBigScreen, base } = this.props
 
-    const { apiData, theme, isBigScreen, base } = this.props
-
-    const { params = {}, configs = {} } = apiData
+    const params = pathOr({}, ['apiData', 'params'], this.props)
+    const configs = pathOr({}, ['apiData', 'configs'], this.props)
 
     const { pages } = statechart
 
-    const steps = Object.values(
-      pages
-    )
+    const stepsNames = Object.values(pages)
 
     const isCartButtonVisible = configs.enableCart ?
       !this.props.isBigScreen :
@@ -257,9 +250,8 @@ class Checkout extends Component {
                   onPrev={this.handleBackButton}
                   onClose={this.close.bind(this)}
                   prevButtonDisabled={
-                    activePage === 0 || (
-                      activePage === steps.length
-                    )
+                    machineState.value === statechart.initial ||
+                    machineState.value === 'confirmation'
                   }
                 />
                 <div
@@ -267,8 +259,8 @@ class Checkout extends Component {
                 >
                   <ProgressBar
                     base={base}
-                    steps={steps}
-                    activePage={activePage}
+                    steps={stepsNames}
+                    activePage={statechart.pages[machineState.value]}
                   />
                   {this.renderPages()}
                 </div>
