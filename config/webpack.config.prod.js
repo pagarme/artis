@@ -18,6 +18,7 @@ const postcssNext = require('postcss-cssnext')({
 })
 
 const isTravis = 'TRAVIS' in process.env && 'CI' in process.env
+const isCircle = 'CIRCLECI' in process.env && 'CI' in process.env
 
 const plugins = [
   new webpack.DefinePlugin({
@@ -47,7 +48,7 @@ const plugins = [
   }),
 ]
 
-if (!isTravis) {
+if (!isTravis && !isCircle) {
   plugins.push(new BundleAnalyzer())
 }
 
