@@ -5,7 +5,7 @@ describe('checkout reduceres', () => {
     expect(reducer(undefined, {})).toEqual({
       pageInfo: {},
       screenSize: {
-        isBigScreen: true,
+        isBigScreen: false,
       },
       showProgressBar: true,
     })

@@ -24,6 +24,7 @@
   max-height: 90px;
   margin-bottom: var(--spacing-tiny);
   display: flex;
+  width: 100%;
 }
 
 .header > * {

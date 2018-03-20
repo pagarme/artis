@@ -17,7 +17,7 @@ import {
 } from '../components'
 
 import options from '../utils/data/states'
-import titleIcon from '../images/map-pin.svg'
+import BillingIcon from '../images/map-pin.svg'
 import removeZipcodeMask from '../utils/helpers/removeZipcodeMask'
 import getAddress from '../utils/helpers/getAddress'
 
@@ -207,7 +207,7 @@ class AddressesPage extends Component {
               tablet={sizeWithDesktop}
             >
               <Row className={theme.title}>
-                <img src={titleIcon} alt="Billing icon" className={theme.titleIcon} />
+                <BillingIcon className={theme.titleIcon} />
                 Endereço de cobrança
               </Row>
               <Row>
@@ -329,7 +329,7 @@ class AddressesPage extends Component {
                 tablet={sizeWithDesktop}
               >
                 <Row className={theme.title}>
-                  <img src={titleIcon} alt="Billing icon" className={theme.titleIcon} />
+                  <BillingIcon className={theme.titleIcon} />
                   Endereço de entrega
                 </Row>
                 <Row>
@@ -430,6 +430,7 @@ class AddressesPage extends Component {
                 relevance="normal"
                 type="submit"
                 className={theme.button}
+                full={!isBigScreen}
               >
                   Confirmar
               </Button>

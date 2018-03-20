@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
@@ -134,9 +133,6 @@ Confirmation.propTypes = {
     dark: PropTypes.string,
   }),
   base: PropTypes.string,
-  publickey: PropTypes.string.isRequired,
-  amount: PropTypes.number.isRequired,
-  postback: PropTypes.string.isRequired,
 }
 
 Confirmation.defaultProps = {

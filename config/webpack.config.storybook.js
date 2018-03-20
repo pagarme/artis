@@ -67,11 +67,35 @@ module.exports = {
         ],
       },
       {
-        test: /\.(woff|woff2|eot|ttf|svg|png)$/,
+        test: /\.(woff|woff2|eot|ttf|png)$/,
         loader: require.resolve('file-loader'),
         options: {
           name: 'static/media/[name].[hash:8].[ext]',
         },
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: require.resolve('babel-loader'),
+            options: {
+              // @remove-on-eject-begin
+              babelrc: false,
+              presets: [require.resolve('babel-preset-react-app')],
+              // @remove-on-eject-end
+              compact: true,
+            },
+          },
+          {
+            loader: require.resolve('svgr/webpack'),
+            options: {
+              replaceAttrValues: [
+                ['#000', 'currentColor'],
+                ['#000000', 'currentColor'],
+              ],
+            },
+          },
+        ],
       },
     ],
   },

@@ -44,6 +44,7 @@ var configs = {
   primaryColor: '#7ad499',
   secondaryColor: '#46b67c',
   postback: 'http://pagar.me',
+  enableCart: true,
   onSuccess: () => {},
   onError: () => {},
   onClose: () => {},
@@ -78,6 +79,13 @@ var formData = {
     {
       id: 1,
       title: 'Red pill',
+      unitPrice: 5000,
+      quantity: 1,
+      tangible: true,
+    },
+    {
+      id: 1,
+      title: 'Blue pill',
       unitPrice: 5000,
       quantity: 1,
       tangible: true,

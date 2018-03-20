@@ -20,5 +20,6 @@ module.exports = {
   ],
   moduleNameMapper: {
     '^react-native$': 'react-native-web',
+    '\\.(jpg|gif|ttf|eot|svg)$': '<rootDir>/config/jest/imageMock.js',
   },
 }

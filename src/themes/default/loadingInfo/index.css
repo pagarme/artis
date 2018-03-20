@@ -11,12 +11,6 @@
   height: 80%;
 }
 
-.page > div {
-  position: relative;
-  top: 40%;
-  transform: translateY(-50%);
-}
-
 .loadingWrapper {
   width: 190px;
   height: 190px;

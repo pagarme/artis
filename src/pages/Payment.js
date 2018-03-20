@@ -257,6 +257,7 @@ class PaymentPage extends Component {
                 relevance="normal"
                 type="submit"
                 className={theme.button}
+                full={!isBigScreen}
               >
                 Confirmar
               </Button>
@@ -268,7 +269,7 @@ class PaymentPage extends Component {
   }
 
   renderBoleto = () => {
-    const { theme, base, paymentMethods, amount } = this.props
+    const { base, theme, paymentMethods, amount, isBigScreen } = this.props
     const { discount } = paymentMethods
       .find(payment => payment.type === 'boleto')
 
@@ -277,58 +278,61 @@ class PaymentPage extends Component {
         data={{ boleto: true }}
         onSubmit={this.props.handleSubmit}
       >
-        <Col
-          tv={defaultColSize}
-          desk={defaultColSize}
-          tablet={defaultColSize}
-          palm={defaultColSize}
-        >
-          <div className={classNames(theme[base], theme.boletoContainer)} >
-            <img src={Barcode} alt="barcode" className={theme.barcodeImg} />
-            <h4
-              className={
-                classNames(
-                  theme.amount,
-                  theme.boletoAmount,
-                )
-              }
+        <Grid className={theme.page}>
+          <Row>
+            <Col
+              tv={defaultColSize}
+              desk={defaultColSize}
+              tablet={defaultColSize}
+              palm={defaultColSize}
             >
-              Valor a pagar:
-              {
-                discount ?
-                  formatToBRL(applyDiscount(discount.type, discount.value, amount)) :
-                  formatToBRL(amount)
-              }
-            </h4>
-            <span className={theme.boletoInfo}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Mauris risus nunc, malesuada vitae libero venenatis,
-              vehicula luctus nulla. Aliquam erat volutpat.
-              Sed porttitor ex vestibulum augue fermentum molestie.
-              Sed id convallis augue. Nam id malesuada nisl.
-              Quisque quis orci eget.
-            </span>
+              <div className={classNames(theme[base], theme.boletoContainer)}>
+                <Barcode className={theme.barcodeImg} />
+                <h4
+                  className={
+                    classNames(
+                      theme.amount,
+                      theme.boletoAmount,
+                    )
+                  }
+                >
+                  Valor a pagar:
+                  {
+                    discount ?
+                      formatToBRL(applyDiscount(discount.type, discount.value, amount)) :
+                      formatToBRL(amount)
+                  }
+                </h4>
+                <span className={theme.boletoInfo}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Mauris risus nunc, malesuada vitae libero venenatis,
+                  vehicula luctus nulla. Aliquam erat volutpat.
+                  Sed porttitor ex vestibulum augue fermentum molestie.
+                  Sed id convallis augue. Nam id malesuada nisl.
+                  Quisque quis orci eget.
+                </span>
 
-          </div>
-        </Col>
-        <Row>
-          <Col
-            desk={defaultColSize}
-            tv={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-            alignEnd
-          >
-            <Button
-              size="extra-large"
-              relevance="normal"
-              type="submit"
-              className={theme.button}
+              </div>
+            </Col>
+            <Col
+              desk={defaultColSize}
+              tv={defaultColSize}
+              tablet={defaultColSize}
+              palm={defaultColSize}
+              alignEnd
             >
-              Confirmar
-            </Button>
-          </Col>
-        </Row>
+              <Button
+                size="extra-large"
+                relevance="normal"
+                type="submit"
+                className={theme.button}
+                full={!isBigScreen}
+              >
+                Confirmar
+              </Button>
+            </Col>
+          </Row>
+        </Grid>
       </Form>
     )
   }

@@ -1,5 +1,5 @@
 const defaultState = {
-  isBigScreen: true,
+  isBigScreen: false,
 }
 
 const screenSize = (state = defaultState, action) => {

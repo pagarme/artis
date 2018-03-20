@@ -7,6 +7,7 @@ describe('Footer', () => {
   const component = mount(
     <Footer
       companyName={'Tesla Motors'}
+      cartButtonVisible
     />
   )
 

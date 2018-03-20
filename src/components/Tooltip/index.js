@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 
-import icon from '../../images/info.svg'
+import InfoIcon from '../../images/info.svg'
 
 const applyThemr = themr('UITooltip')
 
@@ -15,7 +15,7 @@ const Tooltip = ({ text, theme, className }) => (
       { [theme.position]: !className }
     )}
   >
-    <img src={icon} alt={'Informação'} />
+    <InfoIcon />
     <div className={theme.content}>
       {text}
     </div>
