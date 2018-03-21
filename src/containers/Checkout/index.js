@@ -50,6 +50,7 @@ class Checkout extends Component {
     const { value } = machineState
 
     if (this.hasRequiredData(value)) {
+      delete statechart.pages[value]
       this.navigateNextPage()
     }
   }
