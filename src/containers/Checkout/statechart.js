@@ -1,11 +1,5 @@
 export default {
   initial: 'customer',
-  pages: {
-    customer: 'Identificação',
-    addresses: 'Endereços',
-    payment: 'Forma de Pagamento',
-    confirmation: 'Confirmação',
-  },
   states: {
     customer: {
       on: {

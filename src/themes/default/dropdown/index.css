@@ -22,6 +22,16 @@
   }
 }
 
+.option {
+  color: var(--color-grey-77);
+  cursor: pointer;
+  appearance: none;
+}
+
+.active {
+  color: var(--color-black);
+}
+
 .select {
   appearance: none;
   background: transparent;

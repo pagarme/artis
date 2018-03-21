@@ -98,6 +98,7 @@ class PaymentPage extends Component {
       expiration = 'MM/AA',
       cvv = '•••',
       flipped,
+      installments = 1,
     } = this.state.creditcard
 
     const { theme, base, amount, isBigScreen } = this.props
@@ -106,7 +107,7 @@ class PaymentPage extends Component {
 
     return (
       <Form
-        data={this.state.creditcard}
+        data={{ ...this.state.creditcard, installments: installments.toString() }}
         onChange={this.handleChangeForm}
         onSubmit={this.props.handleSubmit}
         customErrorProp="error"

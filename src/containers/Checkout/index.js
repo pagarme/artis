@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import { State, withStatechart } from 'react-automata'
-import { isEmpty, isNil, reject, pathOr, has, allPass } from 'ramda'
+import { isEmpty, isNil, reject, pathOr, has, allPass, pickBy } from 'ramda'
 import ReactGA from 'react-ga'
 
 import { changeScreenSize } from '../../actions'
@@ -19,6 +19,13 @@ import PaymentPage from '../../pages/Payment'
 import ConfirmationPage from '../../pages/Confirmation'
 import defaultLogo from '../../images/logo_pagarme.png'
 import statechart from './statechart'
+
+const stepsTitles = {
+  customer: 'Identificação',
+  addresses: 'Endereços',
+  payment: 'Forma de Pagamento',
+  confirmation: 'Confirmação',
+}
 
 const applyThemr = themr('UICheckout')
 
@@ -47,12 +54,18 @@ class Checkout extends Component {
 
   navigateToPage () {
     const { machineState } = this.props
-    const { value } = machineState
+    const { value, history } = machineState
 
-    if (this.hasRequiredData(value)) {
-      delete statechart.pages[value]
-      this.navigateNextPage()
+    if (!this.hasRequiredData(value)) {
+      return
     }
+
+    if (pathOr('', ['value'], history) === 'payment') {
+      this.navigatePreviousPage()
+      return
+    }
+
+    this.navigateNextPage()
   }
 
   hasRequiredData = (page) => {
@@ -214,8 +227,9 @@ class Checkout extends Component {
     const params = pathOr({}, ['apiData', 'params'], this.props)
     const configs = pathOr({}, ['apiData', 'configs'], this.props)
 
-    const { pages } = statechart
+    const pages = pickBy((value, key) => !this.hasRequiredData(key), stepsTitles)
 
+    const stepsKeys = Object.keys(pages)
     const stepsNames = Object.values(pages)
 
     const isCartButtonVisible = configs.enableCart ?
@@ -251,7 +265,7 @@ class Checkout extends Component {
                   onPrev={this.handleBackButton}
                   onClose={this.close.bind(this)}
                   prevButtonDisabled={
-                    machineState.value === statechart.initial ||
+                    machineState.value === stepsKeys[0] ||
                     machineState.value === 'confirmation'
                   }
                 />
@@ -261,7 +275,7 @@ class Checkout extends Component {
                   <ProgressBar
                     base={base}
                     steps={stepsNames}
-                    activePage={statechart.pages[machineState.value]}
+                    activePage={pages[machineState.value]}
                   />
                   {this.renderPages()}
                 </div>
@@ -320,7 +334,7 @@ Checkout.propTypes = {
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
   transition: PropTypes.func.isRequired,
   isBigScreen: PropTypes.bool,
-  machineState: PropTypes.string.isRequired,
+  machineState: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
 }
 
 Checkout.defaultProps = {
