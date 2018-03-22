@@ -1,4 +1,4 @@
-# Artis Checkout | [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/pagarme/artis/blob/master/LICENSE) [![Travis CI Status](https://travis-ci.org/pagarme/artis.svg?branch=master)](https://travis-ci.org/pagarme/artis)
+# Artis Checkout | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/pagarme/artis/blob/master/LICENSE) [![CircleCI](https://circleci.com/gh/pagarme/artis.svg?style=svg)](https://circleci.com/gh/pagarme/artis)
 > Projeto em desenvolvimento em parceria entre Mundipagg e Pagar.me.
 
 Este repositório está em fase de desenvolvimento, então muitas mudanças ainda podem acontecer. A ideia é construirmos um Checkout que possa ser facilmente integrado em diversos e-commerces do Brasil, de forma segura e confiável.
