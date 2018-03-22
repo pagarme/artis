@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { allPass, prop } from 'ramda'
+import { allPass, prop, merge, pathOr } from 'ramda'
 
 import {
   Grid,
@@ -30,7 +30,7 @@ const strategyName = 'pagarme'
 const errorMessages = {
   error: {
     errorTitle: 'Ocorreu um erro ao processar seu pagamento',
-    errorSubtitle: 'Tente novamente mais tarde ou entre em contato com seu banco.',
+    errorSubtitle: 'Tente novamente mais tarde ou entre em contato.',
   },
   unauthorized: {
     errorTitle: 'Seu pagamento foi recusado',
@@ -49,6 +49,14 @@ const hasAllData = allPass([
   prop('items'),
 ])
 
+const getFileName = pathOr('boleto.pdf', ['method', 'fileName'])
+
+const getErrorMessage = response => (
+  (response.status === 'unauthorized') ?
+    errorMessages.unauthorized :
+    errorMessages.error
+)
+
 class Confirmation extends React.Component {
   constructor (props) {
     super(props)
@@ -60,26 +68,36 @@ class Confirmation extends React.Component {
       success: false,
       errorTitle: '',
       errorSubtitle: '',
-      barcode: '',
+      boletoBarcode: '',
+      boletoUrl: '',
     }
-
-    this.onRequestSuccess = this.onRequestSuccess.bind(this)
-    this.onRequestError = this.onRequestError.bind(this)
   }
 
   componentWillReceiveProps (newProps) {
     this.createATransaction(newProps)
   }
 
-  onRequestSuccess (response) {
+  onRequest = (response) => {
     const { onSuccess, onError } = this.props
 
     if (response.status === 'authorized') {
+      let successState = { success: true, loading: false }
+
       if (onSuccess) {
         onSuccess(response)
       }
 
-      return this.setState({ success: true, loading: false })
+      if (response.boleto_barcode || response.boleto_url) {
+        successState = merge(
+          successState,
+          {
+            boletoUrl: response.boleto_url,
+            boletoBarcode: response.boleto_barcode,
+          }
+        )
+      }
+
+      return this.setState(successState)
     }
 
     if (onError) {
@@ -87,23 +105,9 @@ class Confirmation extends React.Component {
     }
 
     return this.setState({
-      ...errorMessages.unauthorized,
       success: false,
       loading: false,
-    })
-  }
-
-  onRequestError (error) {
-    const { onError } = this.props
-
-    if (onError) {
-      onError(error)
-    }
-
-    this.setState({
-      success: false,
-      loading: false,
-      ...errorMessages.error,
+      ...getErrorMessage(response),
     })
   }
 
@@ -112,17 +116,18 @@ class Confirmation extends React.Component {
       this.isRequesting = true
 
       request(transactionData, strategies[strategyName])
-        .then(this.onRequestSuccess)
-        .catch(this.onRequestError)
+        .then(this.onRequest)
+        .catch((e) => { throw e })
     }
   }
 
   render () {
-    const { theme, base } = this.props
+    const { theme, base, payment } = this.props // eslint-disable-line
     const {
       success,
       loading,
-      barcode,
+      boletoBarcode,
+      boletoUrl,
       errorTitle,
       errorSubtitle,
     } = this.state
@@ -172,7 +177,9 @@ class Confirmation extends React.Component {
             {
               success
                 ? <SuccessInfo
-                  barcode={barcode}
+                  boletoBarcode={boletoBarcode}
+                  boletoUrl={boletoUrl}
+                  boletoName={getFileName(payment)}
                   base={base}
                 />
                 : <ErrorInfo
@@ -205,6 +212,7 @@ Confirmation.propTypes = {
 Confirmation.defaultProps = {
   theme: {},
   base: 'dark',
+  boletoName: '',
   onSuccess: null,
   onError: null,
 }

@@ -2,19 +2,22 @@ import {
   always,
   applySpec,
   cond,
+  concat,
   defaultTo,
   equals,
   identity,
   merge,
+  map,
   of,
   path,
+  pathOr,
   pipe,
   prop,
+  propOr,
   replace,
   T,
+  toString,
 } from 'ramda'
-
-import errorHandle from './requestErrorHandle'
 
 const url = 'https://api.pagar.me/1/transactions'
 
@@ -49,7 +52,10 @@ const parseToPayload = applySpec({
   customer: pipe(
     prop('customer'),
     applySpec({
-      external_id: prop('externalId'),
+      external_id: pipe(
+        propOr('#1', 'externalId'),
+        toString,
+      ),
       name: prop('name'),
       type: pipe(
         prop('type'),
@@ -57,7 +63,6 @@ const parseToPayload = applySpec({
       ),
       country: always('br'),
       email: prop('email'),
-      document_number: prop('documentNumber'),
       documents: pipe(
         applySpec({
           type: always('cpf'),
@@ -67,11 +72,29 @@ const parseToPayload = applySpec({
       ),
       phone_numbers: pipe(
         prop('phoneNumber'),
+        concat('+55'),
         of,
       ),
     }),
   ),
+  items: pipe(
+    prop('items'),
+    map(
+      applySpec({
+        id: pipe(
+          prop('id'),
+          toString
+        ),
+        title: prop('title'),
+        unit_price: prop('unitPrice'),
+        quantity: prop('quantity'),
+        category: propOr('none', 'category'),
+        tangible: prop('tangible'),
+      })
+    )
+  ),
   billing: applySpec({
+    name: pathOr('Billing Address', ['billing', 'name']),
     address: applySpec({
       state: path(['billing', 'state']),
       city: path(['billing', 'city']),
@@ -79,6 +102,7 @@ const parseToPayload = applySpec({
       street: path(['billing', 'street']),
       street_number: path(['billing', 'number']),
       zipcode: path(['billing', 'zipcode']),
+      country: pathOr('br', ['billing', 'country']),
     }),
   }),
   split_rules: path(['transaction', 'splitRules']),
@@ -95,21 +119,46 @@ const getPaymentMethodData = (data) => {
   }
 }
 
+/*
+* Use this method to mock boleto_barcode and boleto_url.
+* Remove this after merge PR 883 in pagarme-core.
+* https://github.com/pagarme/pagarme-core/pull/883
+* Methods: mergeBoletoParams and mockBoletoData.
+*/
+const mockBoletoData = paymentType => (data) => {
+  if (data.boleto_barcode && data.boleto_url) {
+    return data
+  }
+
+  if (paymentType === 'boleto') {
+    return merge(
+      data,
+      {
+        boleto_url: './boleto.pdf',
+        boleto_barcode: '123456789123456789',
+      },
+    )
+  }
+
+  return data
+}
+
 const strategy = (data) => {
-  const payload = parseToPayload(data)
+  const commonPayload = parseToPayload(data)
   const paymentData = getPaymentMethodData(data)
-  const fullPayload = merge(paymentData, payload)
+  const fullPayload = merge(paymentData, commonPayload)
 
   return fetch(url, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      'X-PagarMe-Version': '2017-08-28',
     },
     method: 'POST',
     body: JSON.stringify(fullPayload),
   })
-    .then(errorHandle)
     .then(response => response.json())
+    .then(mockBoletoData(getPaymentMethodType(data)))
 }
 
 export default strategy

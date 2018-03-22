@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -30,7 +30,7 @@ const handleCopyBarCode = (barcode) => {
   copy(barcode)
 }
 
-class SuccessInfo extends Component {
+class SuccessInfo extends React.Component {
   constructor (props) {
     super(props)
 
@@ -49,7 +49,9 @@ class SuccessInfo extends Component {
   renderBoleto () {
     const {
       theme,
-      barcode,
+      boletoBarcode,
+      boletoUrl,
+      boletoName,
       isBigScreen,
     } = this.props
 
@@ -112,6 +114,8 @@ class SuccessInfo extends Component {
             : <ActionList buttons={[
               {
                 text: 'Salvar arquivo',
+                download: boletoName || 'boleto.pdf',
+                href: boletoUrl,
               },
               {
                 text: 'Encaminhar por e-mail',
@@ -119,7 +123,7 @@ class SuccessInfo extends Component {
               },
               {
                 text: 'Copiar código de barras',
-                onClick: handleCopyBarCode.bind(this, barcode),
+                onClick: handleCopyBarCode.bind(this, boletoBarcode),
               },
             ]}
             />
@@ -203,11 +207,15 @@ class SuccessInfo extends Component {
   }
 
   render () {
-    const { theme, base } = this.props
+    const { theme, base, boletoBarcode, boletoUrl } = this.props
 
     return (
       <div className={theme[base]}>
-        {this.props.barcode ? this.renderBoleto() : this.renderCreditcard()}
+        {
+          boletoBarcode || boletoUrl ?
+            this.renderBoleto() :
+            this.renderCreditcard()
+        }
       </div>
     )
   }
@@ -225,13 +233,17 @@ SuccessInfo.propTypes = {
   }),
   base: PropTypes.string,
   isBigScreen: PropTypes.bool.isRequired,
-  barcode: PropTypes.string,
+  boletoBarcode: PropTypes.string,
+  boletoUrl: PropTypes.string,
+  boletoName: PropTypes.string,
 }
 
 SuccessInfo.defaultProps = {
   theme: {},
   base: 'dark',
-  barcode: '',
+  boletoBarcode: '',
+  boletoUrl: '',
+  boletoName: '',
 }
 
 const mapStateToProps = ({ screenSize }) => ({

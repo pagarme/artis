@@ -7,40 +7,63 @@ const applyThemr = themr('UIButton')
 
 const Button = ({
   base,
-  id,
+  className,
   children,
-  relevance,
   disabled,
+  download,
+  full,
+  fill,
+  hidden,
+  href,
+  id,
   onClick,
+  relevance,
   size,
   theme,
   type,
-  hidden,
-  full,
-  fill,
-  className,
   textAlign,
-}) => (
-  <button
-    id={id}
-    disabled={disabled}
-    hidden={hidden}
-    className={classNames(
-      className,
-      theme.button,
-      theme[textAlign],
-      theme[fill],
-      theme[base],
-      theme[`${relevance}Relevance`],
-      theme[size],
-      { [theme.full]: full }
-    )}
-    onClick={onClick}
-    type={type}
-  >
-    {children}
-  </button>
-)
+}) => {
+  const classes = classNames(
+    className,
+    theme.button,
+    theme[textAlign],
+    theme[fill],
+    theme[base],
+    theme[`${relevance}Relevance`],
+    theme[size],
+    { [theme.full]: full }
+  )
+
+  if (type === 'link') {
+    return (
+      <a
+        id={id}
+        disabled={disabled}
+        hidden={hidden}
+        className={classes}
+        onClick={onClick}
+        type={type}
+        href={href}
+        download={download}
+      >
+        {children}
+      </a>
+    )
+  }
+
+  return (
+    <button
+      id={id}
+      disabled={disabled}
+      hidden={hidden}
+      className={classes}
+      onClick={onClick}
+      type={type}
+    >
+      {children}
+    </button>
+  )
+}
 
 Button.propTypes = {
   theme: PropTypes.shape({
@@ -63,6 +86,7 @@ Button.propTypes = {
     'button',
     'submit',
     'reset',
+    'link',
   ]),
   textAlign: PropTypes.oneOf([
     'center',
@@ -98,6 +122,8 @@ Button.propTypes = {
   hidden: PropTypes.bool,
   full: PropTypes.bool,
   className: PropTypes.string,
+  download: PropTypes.string,
+  href: PropTypes.string,
 }
 
 Button.defaultProps = {
@@ -114,6 +140,8 @@ Button.defaultProps = {
   full: false,
   className: '',
   onClick: null,
+  download: '',
+  href: '',
 }
 
 export default applyThemr(Button)
