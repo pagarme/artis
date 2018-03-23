@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
-import { Action, withStatechart } from 'react-automata'
-import { isEmpty, isNil, reject } from 'ramda'
+import { State, withStatechart } from 'react-automata'
+import { isEmpty, isNil, reject, pathOr, has, allPass, pickBy } from 'ramda'
 import ReactGA from 'react-ga'
 
 import { changeScreenSize } from '../../actions'
@@ -20,6 +20,13 @@ import ConfirmationPage from '../../pages/Confirmation'
 import defaultLogo from '../../images/logo_pagarme.png'
 import statechart from './statechart'
 
+const stepsTitles = {
+  customer: 'Identificação',
+  addresses: 'Endereços',
+  payment: 'Forma de Pagamento',
+  confirmation: 'Confirmação',
+}
+
 const applyThemr = themr('UICheckout')
 
 class Checkout extends Component {
@@ -27,7 +34,6 @@ class Checkout extends Component {
     super(props)
 
     this.state = {
-      activePage: 0,
       closingEffect: false,
       collapsedCart: true,
     }
@@ -46,11 +52,65 @@ class Checkout extends Component {
     this.props.changeScreenSize(window.innerWidth)
   }
 
-  handleBackButton = () => {
-    const activePage = this.state.activePage - 1
+  navigateToPage () {
+    const { machineState } = this.props
+    const { value, history } = machineState
 
-    this.setState({ activePage })
+    if (!this.hasRequiredData(value)) {
+      return
+    }
+
+    if (pathOr('', ['value'], history) === 'payment') {
+      this.navigatePreviousPage()
+      return
+    }
+
+    this.navigateNextPage()
+  }
+
+  hasRequiredData = (page) => {
+    if (page === 'customer') {
+      const customer = pathOr({}, ['apiData', 'formData', 'customer'], this.props)
+
+      const customerHasAllProps = allPass([
+        has('name'),
+        has('documentNumber'),
+        has('email'),
+        has('phoneNumber'),
+      ])
+
+      return customerHasAllProps(customer)
+    }
+
+    if (page === 'addresses') {
+      const billing = pathOr({}, ['apiData', 'formData', 'billing'], this.props)
+      const shipping = pathOr({}, ['apiData', 'formData', 'shipping'], this.props)
+
+      const addressHasAllProps = allPass([
+        has('street'),
+        has('number'),
+        has('neighborhood'),
+        has('city'),
+        has('state'),
+        has('zipcode'),
+      ])
+
+      return addressHasAllProps(billing) && addressHasAllProps(shipping)
+    }
+
+    return false
+  }
+
+  navigatePreviousPage = () => {
     this.props.transition('PREV')
+  }
+
+  navigateNextPage = () => {
+    this.props.transition('NEXT')
+  }
+
+  handleBackButton = () => {
+    this.navigatePreviousPage()
   }
 
   handleFormSubmit = (values, errors) => {
@@ -58,10 +118,7 @@ class Checkout extends Component {
       return
     }
 
-    const activePage = this.state.activePage + 1
-
-    this.setState({ activePage })
-    this.props.transition('NEXT')
+    this.navigateNextPage()
   }
 
   handleToggleCart = () => {
@@ -101,19 +158,19 @@ class Checkout extends Component {
 
     return (
       <React.Fragment>
-        <Action show="customer">
+        <State value="customer">
           <CustomerPage
             base={base}
             handleSubmit={this.handleFormSubmit}
           />
-        </Action>
-        <Action show="addresses">
+        </State>
+        <State value="addresses">
           <AddressesPage
             base={base}
             handleSubmit={this.handleFormSubmit}
           />
-        </Action>
-        <Action show="payment">
+        </State>
+        <State value="payment">
           <PaymentPage
             base={base}
             title="Dados de Pagamento"
@@ -121,8 +178,8 @@ class Checkout extends Component {
             amount={amount}
             handleSubmit={this.handleFormSubmit}
           />
-        </Action>
-        <Action show="confirmation">
+        </State>
+        <State value="confirmation">
           <ConfirmationPage
             base={base}
             title="Confirmação"
@@ -131,7 +188,7 @@ class Checkout extends Component {
             postback={postback}
             items={items}
           />
-        </Action>
+        </State>
       </React.Fragment>
     )
   }
@@ -165,19 +222,15 @@ class Checkout extends Component {
   }
 
   render () {
-    const {
-      activePage,
-    } = this.state
+    const { theme, machineState, isBigScreen, base } = this.props
 
-    const { apiData, theme, isBigScreen, base } = this.props
+    const params = pathOr({}, ['apiData', 'params'], this.props)
+    const configs = pathOr({}, ['apiData', 'configs'], this.props)
 
-    const { params = {}, configs = {} } = apiData
+    const pages = pickBy((value, key) => !this.hasRequiredData(key), stepsTitles)
 
-    const { pages } = statechart
-
-    const steps = Object.values(
-      pages
-    )
+    const stepsKeys = Object.keys(pages)
+    const stepsNames = Object.values(pages)
 
     const isCartButtonVisible = configs.enableCart ?
       !this.props.isBigScreen :
@@ -212,9 +265,8 @@ class Checkout extends Component {
                   onPrev={this.handleBackButton}
                   onClose={this.close.bind(this)}
                   prevButtonDisabled={
-                    activePage === 0 || (
-                      activePage === steps.length
-                    )
+                    machineState.value === stepsKeys[0] ||
+                    machineState.value === 'confirmation'
                   }
                 />
                 <div
@@ -222,8 +274,8 @@ class Checkout extends Component {
                 >
                   <ProgressBar
                     base={base}
-                    steps={steps}
-                    activePage={activePage}
+                    steps={stepsNames}
+                    activePage={pages[machineState.value]}
                   />
                   {this.renderPages()}
                 </div>
@@ -267,7 +319,7 @@ Checkout.propTypes = {
       onClose: PropTypes.func,
     }).isRequired,
     formData: PropTypes.shape({
-      curtomer: PropTypes.object,
+      customer: PropTypes.object,
       billing: PropTypes.object,
       shipping: PropTypes.object,
       items: PropTypes.arrayOf(PropTypes.object),
@@ -282,6 +334,7 @@ Checkout.propTypes = {
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
   transition: PropTypes.func.isRequired,
   isBigScreen: PropTypes.bool,
+  machineState: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
 }
 
 Checkout.defaultProps = {

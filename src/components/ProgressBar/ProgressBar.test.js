@@ -9,7 +9,7 @@ describe('ProgressBar', () => {
     const component = shallow(
       <ProgressBar
         steps={[]}
-        activePage={0}
+        activePage={''}
       />
     )
 
@@ -25,7 +25,7 @@ describe('ProgressBar', () => {
           'Steps',
           'Behold',
         ]}
-        activePage={0}
+        activePage={'Im'}
       />
     ).dive()
 
@@ -39,7 +39,7 @@ describe('ProgressBar', () => {
           'Still',
           'Some Steps',
         ]}
-        activePage={1}
+        activePage={'Still'}
       />
     )
 
@@ -53,7 +53,7 @@ describe('ProgressBar', () => {
           'Long',
           'Journey',
         ]}
-        activePage={552}
+        activePage={'Journey'}
       />
     )
 

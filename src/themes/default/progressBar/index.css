@@ -35,7 +35,7 @@
 }
 
 .passed {
-  color: var(--color-grey-39);
+  color: var(--checkout-primary-color);
   opacity: 0.6;
 }
 

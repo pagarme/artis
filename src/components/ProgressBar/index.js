@@ -8,7 +8,7 @@ import { Grid, Row, Col } from '../Grid'
 
 const applyThemr = themr('UIProgressBar')
 
-const renderSteps = (steps, activePage, theme) => {
+const renderSteps = (steps, activeStep, theme) => {
   const colSize = 12 / steps.length
 
   return (
@@ -23,8 +23,8 @@ const renderSteps = (steps, activePage, theme) => {
               tablet={colSize}
               className={
                 classNames(theme.step, {
-                  [theme.active]: index === activePage,
-                  [theme.passed]: index < activePage,
+                  [theme.active]: index === activeStep - 1,
+                  [theme.passed]: index < activeStep - 1,
                 })
               }
             >
@@ -45,7 +45,7 @@ const ProgressBar = ({
   base,
 }) => {
   const totalSteps = steps.length
-  const activeStep = activePage + 1
+  const activeStep = steps.indexOf(activePage) + 1
   const shouldRenderSteps = totalSteps > 0
 
   const totalCalc = (100 / totalSteps) * activeStep
@@ -55,7 +55,7 @@ const ProgressBar = ({
   return (
     <div className={theme[base]}>
       { shouldRenderSteps &&
-        renderSteps(steps, activePage, theme)
+        renderSteps(steps, activeStep, theme)
       }
       <div className={theme.wrapper}>
         <div className={theme.progressBar} style={{ width }} />
@@ -78,12 +78,13 @@ ProgressBar.propTypes = {
   }),
   base: PropTypes.string,
   steps: PropTypes.arrayOf(PropTypes.string).isRequired,
-  activePage: PropTypes.number.isRequired,
+  activePage: PropTypes.string,
 }
 
 ProgressBar.defaultProps = {
   theme: {},
   base: 'dark',
+  activePage: '',
 }
 
 export default applyThemr(ProgressBar)
