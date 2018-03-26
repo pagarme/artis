@@ -38,17 +38,17 @@
 
 .button:active {
   transform: scale(0.95);
-  background-color: var(--checkout-primary-color);
+  background: var(--checkout-primary-color);
 }
 
 .button:focus {
-  background-color: var(--checkout-primary-color);
+  background: var(--checkout-primary-color);
 }
 
 .button:disabled {
   color: var(--color-grey-39);
   cursor: not-allowed;
-  background-color: var(--color-grey-11);
+  background: var(--color-grey-11);
 }
 
 /*

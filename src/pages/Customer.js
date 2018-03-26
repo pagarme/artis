@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
+import { isEmpty, reject, isNil } from 'ramda'
 
 import {
   Grid,
@@ -41,8 +42,11 @@ class CustomerPage extends Component {
     })
   }
 
-  handleChangeForm = (values) => {
-    this.setState(values)
+  handleChangeForm = (values, errors) => {
+    this.setState({
+      ...values,
+      formValid: isEmpty(reject(isNil, errors)),
+    })
   }
 
   renderCustomerForm () {
@@ -163,6 +167,7 @@ class CustomerPage extends Component {
               relevance="normal"
               type="submit"
               className={theme.button}
+              disabled={!this.state.formValid}
               full={!isBigScreen}
             >
               Confirmar

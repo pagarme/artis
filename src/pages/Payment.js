@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
-import { pick, path, replace } from 'ramda'
+import { pick, path, replace, isNil, reject, isEmpty } from 'ramda'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 
@@ -77,8 +77,11 @@ class PaymentPage extends Component {
     this.setState({ selectedPayment: choice })
   }
 
-  handleChangeForm = (values) => {
-    this.setState({ creditcard: values })
+  handleChangeForm = (values, errors) => {
+    this.setState({
+      creditcard: values,
+      formValid: isEmpty(reject(isNil, errors)),
+    })
   }
 
   handleFlipCard = () => {
@@ -259,8 +262,9 @@ class PaymentPage extends Component {
                 type="submit"
                 className={theme.button}
                 full={!isBigScreen}
+                disabled={!this.state.formValid}
               >
-                Confirmar
+                Finalizar compra
               </Button>
             </Col>
           </Row>
@@ -329,7 +333,7 @@ class PaymentPage extends Component {
                 className={theme.button}
                 full={!isBigScreen}
               >
-                Confirmar
+                Finalizar compra
               </Button>
             </Col>
           </Row>

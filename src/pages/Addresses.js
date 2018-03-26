@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
-import { merge, omit } from 'ramda'
+import { merge, omit, isNil, reject, isEmpty } from 'ramda'
 import { RadioGroup } from 'former-kit'
 
 import {
@@ -105,10 +105,6 @@ class AddressesPage extends Component {
     }
   }
 
-  onChangeAddress = (address) => {
-    this.setState({ selected: address })
-  }
-
   handleZipcodeChange = (e) => {
     const { name, value } = e.target
     const zipcode = removeZipcodeMask(value)
@@ -161,8 +157,11 @@ class AddressesPage extends Component {
     this.shippingNumberInput = input
   }
 
-  handleChangeForm = (values) => {
-    this.setState(values)
+  handleChangeForm = (values, errors) => {
+    this.setState({
+      ...values,
+      formValid: isEmpty(reject(isNil, errors)),
+    })
   }
 
   render () {
@@ -431,6 +430,7 @@ class AddressesPage extends Component {
                 type="submit"
                 className={theme.button}
                 full={!isBigScreen}
+                disabled={!this.state.formValid}
               >
                   Confirmar
               </Button>
