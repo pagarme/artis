@@ -1,16 +1,5 @@
 @font-face {
   font-family: "Avenir";
-  src: url("AvenirLTStd-Light.eot");
-  src:
-    url("AvenirLTStd-Light.eot?#iefix") format("embedded-opentype"),
-    url("AvenirLTStd-Light.woff") format("woff"),
-    url("AvenirLTStd-Light.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Avenir";
   src: url("AvenirLTStd-Book.eot");
   src:
     url("AvenirLTStd-Book.eot?#iefix") format("embedded-opentype"),
