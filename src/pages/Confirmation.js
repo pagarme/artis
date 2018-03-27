@@ -15,6 +15,7 @@ import {
 } from '../components'
 
 import { request, strategies } from '../utils/parsers/request'
+import { addPageInfo } from '../actions'
 
 import successIcon from '../images/success-icon.png'
 import errorIcon from '../images/error-icon.png'
@@ -58,19 +59,17 @@ const getErrorMessage = response => (
 )
 
 class Confirmation extends React.Component {
-  constructor (props) {
-    super(props)
+  state = {
+    loading: true,
+    success: false,
+    errorTitle: '',
+    errorSubtitle: '',
+    boletoBarcode: '',
+    boletoUrl: '',
+  }
 
-    this.isRequesting = false
-
-    this.state = {
-      loading: true,
-      success: false,
-      errorTitle: '',
-      errorSubtitle: '',
-      boletoBarcode: '',
-      boletoUrl: '',
-    }
+  componentWillMount () {
+    this.pageChangeCallback()
   }
 
   componentWillReceiveProps (newProps) {
@@ -97,7 +96,7 @@ class Confirmation extends React.Component {
         )
       }
 
-      return this.setState(successState)
+      return this.setState(successState, this.pageChangeCallback)
     }
 
     if (onError) {
@@ -108,8 +107,15 @@ class Confirmation extends React.Component {
       success: false,
       loading: false,
       ...getErrorMessage(response),
-    })
+    }, this.pageChangeCallback)
   }
+
+  isRequesting = false
+
+  pageChangeCallback = () => this.props.handlePageChange({
+    page: 'confirmation',
+    pageInfo: this.state,
+  })
 
   createATransaction (transactionData) {
     if (hasAllData(transactionData) && !this.isRequesting) {
@@ -207,6 +213,7 @@ Confirmation.propTypes = {
   base: PropTypes.string,
   onSuccess: PropTypes.func,
   onError: PropTypes.func,
+  handlePageChange: PropTypes.func.isRequired,
 }
 
 Confirmation.defaultProps = {
@@ -224,4 +231,6 @@ const mapStateToProps = ({ pageInfo }) => ({
   payment: pageInfo.payment,
 })
 
-export default connect(mapStateToProps)(applyThemr(Confirmation))
+export default connect(mapStateToProps, {
+  handlePageChange: addPageInfo,
+})(applyThemr(Confirmation))

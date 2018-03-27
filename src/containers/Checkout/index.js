@@ -270,7 +270,7 @@ class Checkout extends Component {
                   onClose={this.close.bind(this)}
                   prevButtonDisabled={
                     machineState.value === stepsKeys[0] ||
-                    machineState.value === 'confirmation'
+                    (machineState.value === 'confirmation' && (this.props.confirmation.loading || this.props.confirmation.success))
                   }
                 />
                 <div
@@ -339,6 +339,10 @@ Checkout.propTypes = {
   transition: PropTypes.func.isRequired,
   isBigScreen: PropTypes.bool,
   machineState: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  confirmation: PropTypes.shape({
+    success: PropTypes.bool,
+    loading: PropTypes.bool,
+  }),
 }
 
 Checkout.defaultProps = {
@@ -350,10 +354,15 @@ Checkout.defaultProps = {
   },
   base: 'dark',
   isBigScreen: false,
+  confirmation: {
+    success: false,
+    loading: true,
+  },
 }
 
-const mapStateToProps = ({ screenSize }) => ({
+const mapStateToProps = ({ screenSize, pageInfo }) => ({
   isBigScreen: screenSize.isBigScreen,
+  confirmation: pageInfo.confirmation,
 })
 
 export default connect(
