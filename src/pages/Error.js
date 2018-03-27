@@ -10,9 +10,8 @@ const applyThemr = themr('UIErrorPage')
 const ErrorPage = ({ theme }) => (
   <Grid className={theme.page}>
     <Row
-      fullSize
+      className={theme.selfAlign}
       alignCenter
-      alignVerticalCenter
     >
       <Col
         tv={5}
@@ -20,18 +19,14 @@ const ErrorPage = ({ theme }) => (
         tablet={5}
         palm={5}
       >
-        <Row
-          fullSize
-          alignCenter
-          alignVerticalCenter
-        >
+        <Row>
           <Col
             tv={3}
             desk={3}
             tablet={3}
             palm={3}
           >
-            <img src={SadEmoji} alt="Pessoa triste" className={theme.image} />
+            <SadEmoji className={theme.image} />
           </Col>
           <Col
             tv={9}

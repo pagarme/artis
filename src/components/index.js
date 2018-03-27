@@ -1,5 +1,4 @@
 export { default as ActionList } from './ActionList'
-export { default as AddressOptions } from './AddressOptions'
 export { default as Button } from './Button'
 export { default as Dropdown } from './Dropdown'
 export { default as ErrorBoundary } from './ErrorBoundary'

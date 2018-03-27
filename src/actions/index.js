@@ -7,8 +7,3 @@ export const addPageInfo = payload => ({
   type: 'ADD_PAGE_INFO',
   payload,
 })
-
-export const showProgressBar = payload => ({
-  type: 'SHOW_PROGRESSBAR',
-  payload,
-})

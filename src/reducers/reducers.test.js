@@ -7,7 +7,6 @@ describe('checkout reduceres', () => {
       screenSize: {
         isBigScreen: false,
       },
-      showProgressBar: true,
     })
   })
 

@@ -28,3 +28,7 @@
 .image {
   width: 150px;
 }
+
+.selfAlign {
+  align-self: center;
+}

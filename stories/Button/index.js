@@ -14,7 +14,7 @@ storiesOf('Buttons', module)
     <div className={style.container}>
       <div>
         <h2>Default Button</h2>
-        <Button>Label</Button>
+        <Button base="dark">Label</Button>
       </div>
 
       <div>

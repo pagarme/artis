@@ -10,11 +10,9 @@ const classnames = ({
   flex,
   stretch,
   alignCenter,
-  alignVerticalCenter,
   className,
   hidden,
   alignEnd,
-  fullSize,
   noPadding,
 }) =>
   classNames(
@@ -24,10 +22,8 @@ const classnames = ({
       [theme.flex]: flex,
       [theme.stretch]: stretch,
       [theme.alignCenter]: alignCenter,
-      [theme.alignVerticalCenter]: alignVerticalCenter,
       [theme.alignEnd]: alignEnd,
       [theme.hidden]: hidden,
-      [theme.fullSize]: fullSize,
       [theme.noPadding]: noPadding,
     }
   )
@@ -38,11 +34,9 @@ const Row = ({
   flex,
   stretch,
   alignCenter,
-  alignVerticalCenter,
   className,
   hidden,
   alignEnd,
-  fullSize,
   noPadding,
 }) => (
   <div
@@ -52,11 +46,9 @@ const Row = ({
         flex,
         stretch,
         alignCenter,
-        alignVerticalCenter,
         className,
         hidden,
         alignEnd,
-        fullSize,
         noPadding,
       })
     }
@@ -70,18 +62,14 @@ Row.propTypes = {
     row: PropTypes.string,
     flex: PropTypes.string,
     stretch: PropTypes.string,
-    alignVerticalCenter: PropTypes.string,
     hidden: PropTypes.string,
-    fullSize: PropTypes.string,
   }).isRequired,
   alignEnd: PropTypes.bool,
   alignCenter: PropTypes.bool,
-  alignVerticalCenter: PropTypes.bool,
   children: PropTypes.node,
   flex: PropTypes.bool,
   stretch: PropTypes.bool,
   hidden: PropTypes.bool,
-  fullSize: PropTypes.bool,
   className: PropTypes.string,
   noPadding: PropTypes.bool,
 }
@@ -89,12 +77,10 @@ Row.propTypes = {
 Row.defaultProps = {
   alignEnd: false,
   alignCenter: false,
-  alignVerticalCenter: false,
   children: null,
   flex: false,
   stretch: false,
   hidden: false,
-  fullSize: false,
   className: null,
   noPadding: null,
 }

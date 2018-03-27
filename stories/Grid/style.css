@@ -1,4 +1,4 @@
-@import "../../../src/styles/media.css";
+@import "../../src/themes/default/index.css";
 
 .background {
   background-color: #eeeeee;

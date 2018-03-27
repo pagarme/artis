@@ -1,4 +1,4 @@
-@import "../../../src/styles/index.css";
+@import "../../src/themes/default/index.css";
 
 .wrapper > div {
   display: flex;
