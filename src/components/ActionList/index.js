@@ -31,6 +31,9 @@ const ActionList = ({ theme, buttons }) => (
               size="extra-large"
               className={theme.actionButton}
               onClick={buttonInfo.onClick}
+              type={buttonInfo.href ? 'link' : 'button'}
+              href={buttonInfo.href}
+              download={buttonInfo.download}
             >
               {buttonInfo.text}
             </Button>
@@ -50,6 +53,8 @@ ActionList.propTypes = {
       disabled: PropTypes.bool,
       text: PropTypes.string,
       onClick: PropTypes.func,
+      href: PropTypes.func,
+      download: PropTypes.func,
     })
   ).isRequired,
 }

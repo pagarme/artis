@@ -8,7 +8,12 @@ import { Row } from '../Grid'
 
 const applyThemr = themr('UIErrorInfo')
 
-const ErrorInfo = ({ theme, isBigScreen }) => (
+const ErrorInfo = ({
+  theme,
+  isBigScreen,
+  title,
+  subtitle,
+}) => (
   <div className={
     classNames(
       theme.alignSelfCenter,
@@ -27,7 +32,7 @@ const ErrorInfo = ({ theme, isBigScreen }) => (
           theme.error,
         )}
       >
-        Seu pagamento foi recusado
+        {title}
       </h4>
       <p className={
         classNames(
@@ -37,8 +42,7 @@ const ErrorInfo = ({ theme, isBigScreen }) => (
           theme.info,
         )}
       >
-        Ocorreu um erro ao processar sua transação,
-        tente novamente mais tarde ou entre em contato com seu banco.
+        {subtitle}
       </p>
     </Row>
   </div>
@@ -54,10 +58,14 @@ ErrorInfo.propTypes = {
     error: PropTypes.string,
   }),
   isBigScreen: PropTypes.bool.isRequired,
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
 }
 
 ErrorInfo.defaultProps = {
   theme: {},
+  title: 'Seu pagamento foi recusado',
+  subtitle: 'Ocorreu um erro ao processar sua transação, tente novamente mais tarde ou entre em contato com seu banco.',
 }
 
 const mapStateToProps = ({ screenSize }) => ({

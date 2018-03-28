@@ -45,15 +45,19 @@ var configs = {
   secondaryColor: '#46b67c',
   postback: 'http://pagar.me',
   enableCart: true,
-  onSuccess: () => {},
-  onError: () => {},
+  onSuccess: (data) => {
+    console.log('Success call', JSON.stringify(data, null, 2))
+  },
+  onError: (error) => {
+    console.log('Error call', JSON.stringify(error, null, 2))
+  },
   onClose: () => {},
 };
 
 var formData = {
   customer: {
     name: 'Dan Abramov',
-    documentNumber: '44455522299',
+    documentNumber: '19981596639',
     email: 'mercurio@pagar.me',
     phoneNumber: '1130442277',
   },
@@ -84,7 +88,7 @@ var formData = {
       tangible: true,
     },
     {
-      id: 1,
+      id: 2,
       title: 'Blue pill',
       unitPrice: 5000,
       quantity: 1,
@@ -102,6 +106,7 @@ var transaction = {
       subtitle: '25% de Desconto!',
       instructions: 'Use this field to add instructions',
       expirationAt: '2018-01-30',
+      fileName: 'boleto_pagarme.pdf',
       discount: {
         type: 'percentage',
         value: 25,
@@ -111,7 +116,7 @@ var transaction = {
       type: 'creditcard',
       title: 'Cartão de Crédito',
       subtitle: 'em até 12x',
-      instructions: 'Use this field to add instructions',
+      statementDescriptor: 'Mercurio :)',
       maxInstallments: 6,
       freeInstallments: 3,
       defaultInstallments: 2,
