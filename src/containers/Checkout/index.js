@@ -142,8 +142,9 @@ class Checkout extends Component {
     }, 500)
   }
 
-  renderPages (base) {
+  renderPages () {
     const { key, formData, transaction, configs } = this.props.apiData
+    const { base } = this.props
 
     const { items } = formData
 

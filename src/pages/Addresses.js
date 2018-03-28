@@ -291,6 +291,7 @@ class AddressesPage extends Component {
                     options={options}
                     name="state"
                     label="UF"
+                    placeholder="Escolha a UF"
                   />
                 </Col>
               </Row>
@@ -411,6 +412,7 @@ class AddressesPage extends Component {
                       options={options}
                       name="shippingState"
                       label="UF"
+                      placeholder="Escolha a UF"
                     />
                   </Col>
                 </Row>
