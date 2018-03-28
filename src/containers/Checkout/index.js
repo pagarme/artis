@@ -201,9 +201,9 @@ class Checkout extends Component {
     const { formData, transaction, configs } = this.props.apiData
 
     const { items } = formData
-    const { enableCart } = configs
+    const { enableCart, freightValue } = configs
     const { amount } = transaction
-    const { theme, base } = this.props
+    const { theme, base, shipping, customer } = this.props
 
     return enableCart && (
       <Col
@@ -217,6 +217,9 @@ class Checkout extends Component {
           base={base}
           items={items}
           amount={amount}
+          shipping={shipping}
+          customer={customer}
+          freight={freightValue}
           onToggleCart={this.handleToggleCart}
           collapsed={this.props.isBigScreen ? false : this.state.collapsedCart}
           showCloseButton={this.props.isBigScreen}
@@ -337,12 +340,17 @@ Checkout.propTypes = {
   changeScreenSize: PropTypes.func.isRequired,
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
   transition: PropTypes.func.isRequired,
+  shipping: PropTypes.object.isRequired, // eslint-disable-line
+  customer: PropTypes.object.isRequired, // eslint-disable-line
   isBigScreen: PropTypes.bool,
-  machineState: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   confirmation: PropTypes.shape({
     success: PropTypes.bool,
     loading: PropTypes.bool,
   }),
+  machineState: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]).isRequired,
 }
 
 Checkout.defaultProps = {
@@ -363,6 +371,8 @@ Checkout.defaultProps = {
 const mapStateToProps = ({ screenSize, pageInfo }) => ({
   isBigScreen: screenSize.isBigScreen,
   confirmation: pageInfo.confirmation,
+  shipping: pageInfo.shipping,
+  customer: pageInfo.customer,
 })
 
 export default connect(

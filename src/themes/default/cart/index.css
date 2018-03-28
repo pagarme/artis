@@ -84,7 +84,7 @@
 .footer {
   position: absolute;
   bottom: 0;
-  padding-bottom: var(--cart-footer-padding);
+  padding-bottom: 0;
   padding-top: var(--cart-footer-padding);
   width: 100%;
 }
@@ -153,6 +153,32 @@
   margin-top: 0;
   margin-left: 20px;
   color: var(--checkout-primary-color);
+  padding-bottom: var(--cart-footer-padding);
+}
+
+.clientData {
+  font-family: var(--primary-font-family);
+  letter-spacing: var(--letter-spacing);
+  font-size: var(--font-size-tiny);
+  font-weight: 900;
+  background: var(--color-grey-77);
+  color: var(--color-white);
+  padding: 8px 10px 5px;
+}
+
+.clientData svg {
+  padding-right: 10px;
+}
+
+.clientData > p {
+  display: flex;
+  align-items: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.clientData > p:first-child {
+  font-size: var(--font-size-small);
 }
 
 .close {
