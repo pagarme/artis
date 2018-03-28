@@ -79,6 +79,10 @@
     justify-content: center;
   }
 
+  .powered {
+    padding-bottom: 0;
+  }
+
   .safe:after {
     display: none;
   }

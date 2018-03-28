@@ -41,5 +41,11 @@
 
   .page {
     background-color: transparent;
+    margin: var(--spacing-medium) 0 0 0;
+    padding:
+      var(--spacing-small)
+      var(--spacing-small)
+      0
+      var(--spacing-small);
   }
 }
