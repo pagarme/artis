@@ -20,6 +20,7 @@
 .cart {
   display: block;
   background: var(--color-grey-78);
+  border: 8px solid var(--color-grey-78);
   flex: 0 0 var(--cart-width);
   width: var(--cart-width);
   user-select: none;
@@ -143,6 +144,7 @@
   text-align: left;
   margin-left: 20px;
   margin-bottom: 5px;
+  padding-top: 15px;
 }
 
 .amount {
@@ -193,7 +195,8 @@
 }
 
 .light.cart {
-  background: var(--color-grey-11);
+  background: var(--color-grey-07);
+  border: 8px solid var(--color-grey-07);
 }
 
 .light {
@@ -203,7 +206,7 @@
   }
 
   & .item {
-    background-color: var(--color-grey-33);
+    background-color: var(--color-white);
   }
 
   & .item > h4 {
@@ -217,20 +220,14 @@
   & .header button {
     background: transparent;
   }
+
+  & .clientData {
+    background: var(--color-white);
+    color: var(--color-grey-78);
+  }
 }
 
 @media (--media-palm) {
-
-  .light.cart {
-    background: var(--color-white);
-  }
-
-  .light {
-
-    & .item {
-      background-color: var(--color-grey-11);
-    }
-  }
 
   .title {
     font-size: var(--font-size-large);

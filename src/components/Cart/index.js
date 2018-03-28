@@ -145,10 +145,10 @@ class Cart extends React.Component {
               </li>
             }
           </ul>
-        </div>
-        <div className={theme.footer}>
           <p className={theme.total}>Total</p>
           <p className={theme.amount}>{formatBRL(amount)}</p>
+        </div>
+        <div className={theme.footer}>
           { shouldRenderClientData && this.renderClientData() }
         </div>
       </div>
