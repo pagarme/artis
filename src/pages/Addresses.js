@@ -21,7 +21,7 @@ import BillingIcon from '../images/map-pin.svg'
 import removeZipcodeMask from '../utils/helpers/removeZipcodeMask'
 import getAddress from '../utils/helpers/getAddress'
 
-import { addPageInfo, showProgressBar } from '../actions'
+import { addPageInfo } from '../actions'
 import { required, isNumber } from '../utils/validations'
 
 const defaultColSize = 12
@@ -197,7 +197,6 @@ class AddressesPage extends Component {
           className={
             classNames(theme[base], theme.page)
           }
-          hidden={this.state.openAddressForm}
         >
           <Row alignCenter stretch>
             <Col
@@ -498,6 +497,5 @@ const mapStateToProps = ({ screenSize, pageInfo }) => ({
 })
 
 export default connect(mapStateToProps, {
-  progressBarVisible: showProgressBar,
   handlePageChange: addPageInfo,
 })(applyThemr(AddressesPage))
