@@ -20,6 +20,7 @@
 .cart {
   display: block;
   background: var(--color-grey-78);
+  border: 8px solid var(--color-grey-78);
   flex: 0 0 var(--cart-width);
   width: var(--cart-width);
   user-select: none;
@@ -84,7 +85,7 @@
 .footer {
   position: absolute;
   bottom: 0;
-  padding-bottom: var(--cart-footer-padding);
+  padding-bottom: 0;
   padding-top: var(--cart-footer-padding);
   width: 100%;
 }
@@ -143,6 +144,7 @@
   text-align: left;
   margin-left: 20px;
   margin-bottom: 5px;
+  padding-top: 15px;
 }
 
 .amount {
@@ -153,6 +155,32 @@
   margin-top: 0;
   margin-left: 20px;
   color: var(--checkout-primary-color);
+  padding-bottom: var(--cart-footer-padding);
+}
+
+.clientData {
+  font-family: var(--primary-font-family);
+  letter-spacing: var(--letter-spacing);
+  font-size: var(--font-size-tiny);
+  font-weight: 900;
+  background: var(--color-grey-77);
+  color: var(--color-white);
+  padding: 8px 10px 5px;
+}
+
+.clientData svg {
+  padding-right: 10px;
+}
+
+.clientData > p {
+  display: flex;
+  align-items: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.clientData > p:first-child {
+  font-size: var(--font-size-small);
 }
 
 .close {
@@ -167,7 +195,8 @@
 }
 
 .light.cart {
-  background: var(--color-grey-11);
+  background: var(--color-grey-07);
+  border: 8px solid var(--color-grey-07);
 }
 
 .light {
@@ -177,7 +206,7 @@
   }
 
   & .item {
-    background-color: var(--color-grey-33);
+    background-color: var(--color-white);
   }
 
   & .item > h4 {
@@ -191,20 +220,14 @@
   & .header button {
     background: transparent;
   }
+
+  & .clientData {
+    background: var(--color-white);
+    color: var(--color-grey-78);
+  }
 }
 
 @media (--media-palm) {
-
-  .light.cart {
-    background: var(--color-white);
-  }
-
-  .light {
-
-    & .item {
-      background-color: var(--color-grey-11);
-    }
-  }
 
   .title {
     font-size: var(--font-size-large);
