@@ -5,7 +5,6 @@ import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import { merge, omit, isNil, reject, isEmpty } from 'ramda'
-import { RadioGroup } from 'former-kit'
 
 import {
   Grid,
@@ -15,6 +14,8 @@ import {
   Input,
   Dropdown,
 } from '../components'
+
+import RadioGroup from '../components/RadioGroup'
 
 import options from '../utils/data/states'
 import BillingIcon from '../images/map-pin.svg'
@@ -270,7 +271,7 @@ class AddressesPage extends Component {
                   placeholder="Digite o bairro"
                 />
               </Row>
-              <Row overflowVisible>
+              <Row>
                 <Col
                   tv={bigColSize}
                   desk={bigColSize}
@@ -289,7 +290,6 @@ class AddressesPage extends Component {
                   desk={smallColSize}
                   tablet={smallColSize}
                   palm={smallColSize}
-                  overflowVisible
                 >
                   <Dropdown
                     base={base}
@@ -313,11 +313,10 @@ class AddressesPage extends Component {
               </Row>
               <Row>
                 <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                  className={theme.radio}
+                  tv={mediumColSize}
+                  desk={mediumColSize}
+                  tablet={mediumColSize}
+                  palm={mediumColSize}
                 >
                   <RadioGroup
                     name="sameAddressForShipping"
@@ -392,7 +391,7 @@ class AddressesPage extends Component {
                     placeholder="Digite o bairro"
                   />
                 </Row>
-                <Row overflowVisible>
+                <Row>
                   <Col
                     tv={bigColSize}
                     desk={bigColSize}
@@ -411,7 +410,6 @@ class AddressesPage extends Component {
                     desk={smallColSize}
                     tablet={smallColSize}
                     palm={smallColSize}
-                    overflowVisible
                   >
                     <Dropdown
                       options={options}
