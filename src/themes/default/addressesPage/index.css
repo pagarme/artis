@@ -5,7 +5,7 @@
 @import "../margin.css";
 
 .page {
-  padding: var(--spacing-medium) var(--spacing-small);
+  padding: var(--spacing-medium) var(--spacing-small) 0 var(--spacing-small);
   justify-content: center;
 }
 
