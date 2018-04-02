@@ -83,7 +83,9 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
 
   setColors(pColor, sColor)
 
-  const clientTarget = createElement('div', target, 'body')
+  const clientTarget = target
+    ? document.getElementById(target)
+    : createElement('div', 'checkout-wrapper', 'body')
 
   ReactGA.event({
     category: 'API',
