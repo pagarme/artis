@@ -41,6 +41,7 @@ jobs:
             mkdir -p versions/${CIRCLE_TAG}
             mv index.js versions/${CIRCLE_TAG}
             aws s3 sync . s3://checkout.stg.pagarme.net
+            aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID --paths "/latest/index.js"
   deploy_prd:
     machine:
         enabled: true
@@ -57,6 +58,7 @@ jobs:
             mkdir -p versions/${CIRCLE_TAG}
             mv index.js versions/${CIRCLE_TAG}
             AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws s3 sync . s3://checkout.prd.pagarme.net
+            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws cloudfront create-invalidation --distribution-id $PRD_CDN_DISTRIBUTION_ID --paths "/latest/index.js"
 workflows:
   version: 2
   build-and-deploy:
