@@ -1,76 +1,92 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
 import Switch from './index'
 
+const render = () => null
+
 describe('Switch', () => {
   it('should mount with two options', () => {
-    const paymentOptions = [
+    const items = [
       {
-        name: 'creditcard',
-        title: 'Cartão de Crédito',
-        subtitle: 'Em até 2x sem juros com 20% de desconto na primeira parcela',
+        id: 'boleto',
+        name: 'boleto',
+        value: 'boleto',
+        title: 'Boleto',
+        subtitle: 'Desconto de 10%',
+        content: render(),
       },
       {
-        name: 'bankbill',
-        title: 'Boleto bancário',
-        subtitle: '10% de desconto',
+        id: 'creditcard',
+        name: 'creditcard',
+        value: 'creditcard',
+        title: 'Cartão de crédito',
+        subtitle: 'Em até 3x sem juros',
+        content: render(),
       },
     ]
 
-    const onChange = jest.fn()
+    const onClick = jest.fn()
 
-    const component = shallow(
+    const component = mount(
       <Switch
-        items={paymentOptions}
-        selected={paymentOptions[1]}
-        onChange={onChange}
+        items={items}
+        selected={'boleto'}
+        handleSwitchPayment={onClick}
         name="live-test"
       />
-    ).dive()
+    )
 
-    component.find('input')
+    component.find('[role="button"]')
       .first()
-      .simulate('change')
+      .simulate('click')
 
-    expect(onChange).toHaveBeenCalledWith(0)
+    expect(onClick).toHaveBeenCalledWith('boleto')
   })
 
   it('should mount with more than two options basic', () => {
-    const paymentOptions = [
+    const items = [
       {
+        id: 'boleto',
+        name: 'boleto',
+        value: 'boleto',
+        title: 'Boleto',
+        subtitle: 'Desconto de 10%',
+        content: render(),
+      },
+      {
+        id: 'creditcard',
         name: 'creditcard',
-        title: 'Cartão de Crédito',
-        subtitle: 'Em até 2x sem juros com 20% de desconto na primeira parcela',
+        value: 'creditcard',
+        title: 'Cartão de crédito',
+        subtitle: 'Em até 3x sem juros',
+        content: render(),
       },
       {
-        name: 'bankbill',
-        title: 'Boleto bancário',
-        subtitle: '10% de desconto',
-      },
-      {
+        id: 'bitcoin',
         name: 'bitcoin',
-        title: 'Bitcoin',
-        subtitle: '20% de desconto',
+        value: 'bitcoin',
+        title: 'Bitcoin rules',
+        subtitle: '0.0025 de desconto',
+        content: render(),
       },
     ]
 
-    const onChange = jest.fn()
+    const onClick = jest.fn()
 
-    const component = shallow(
+    const component = mount(
       <Switch
-        items={paymentOptions}
-        onChange={onChange}
-        selected={paymentOptions[1]}
+        items={items}
+        selected={'bitcoin'}
+        handleSwitchPayment={onClick}
         name="live-test"
       />
-    ).dive()
+    )
 
-    component.find('input')
+    component.find('[role="button"]')
       .last()
-      .simulate('change')
+      .simulate('click')
 
-    expect(onChange).toHaveBeenCalledWith(2)
-    expect(component.state('selected')).toBe(2)
+    expect(onClick).toHaveBeenCalledWith('bitcoin')
   })
 })

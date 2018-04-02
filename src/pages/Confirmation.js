@@ -69,31 +69,30 @@ class Confirmation extends React.Component {
   }
 
   componentWillMount () {
-    this.pageChangeCallback()
-  }
-
-  componentWillReceiveProps (newProps) {
-    this.createATransaction(newProps)
+    this.createATransaction(this.props)
   }
 
   onRequest = (response) => {
     const { onSuccess, onError } = this.props
 
-    if (response.status === 'authorized') {
+    const {
+      status,
+      boleto_barcode: boletoUrl,
+      boleto_url: boletoBarcode,
+    } = response
+
+    if (status === 'authorized') {
       let successState = { success: true, loading: false }
+
+      if (boletoBarcode || boletoUrl) {
+        successState = merge(successState, {
+          boletoUrl,
+          boletoBarcode,
+        })
+      }
 
       if (onSuccess) {
         onSuccess(response)
-      }
-
-      if (response.boleto_barcode || response.boleto_url) {
-        successState = merge(
-          successState,
-          {
-            boletoUrl: response.boleto_url,
-            boletoBarcode: response.boleto_barcode,
-          }
-        )
       }
 
       return this.setState(successState, this.pageChangeCallback)
@@ -112,10 +111,11 @@ class Confirmation extends React.Component {
 
   isRequesting = false
 
-  pageChangeCallback = () => this.props.handlePageChange({
-    page: 'confirmation',
-    pageInfo: this.state,
-  })
+  pageChangeCallback = () =>
+    this.props.handlePageChange({
+      page: 'confirmation',
+      pageInfo: this.state,
+    })
 
   createATransaction (transactionData) {
     if (hasAllData(transactionData) && !this.isRequesting) {
@@ -123,7 +123,7 @@ class Confirmation extends React.Component {
 
       request(transactionData, strategies[strategyName])
         .then(this.onRequest)
-        .catch((e) => { throw e })
+        .catch((e) => { throw e }) // TO DO: tratar esse catch
     }
   }
 

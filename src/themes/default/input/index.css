@@ -70,11 +70,13 @@
   caret-color: var(--color-grey-83);
 }
 
+/* stylelint-disable */
 .inputContainer input[type="number"]::-webkit-inner-spin-button, 
 .inputContainer input[type="number"]::-webkit-outer-spin-button {
   appearance: none;
   margin: 0;
 }
+/* stylelint-enable */
 
 .inputContainer > textarea {
   padding: 0;

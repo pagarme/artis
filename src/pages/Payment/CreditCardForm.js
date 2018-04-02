@@ -185,7 +185,7 @@ const CreditCard = ({
                   options={installmentsOptions}
                   name={`${prefix}installments`}
                   label="Quantidade de Parcelas"
-                  title="Selecione"
+                  placeholder="Selecione"
                   value={installments[0].initial}
                   icon={!isBigScreen && <FaPieChart size={20} />}
                 />

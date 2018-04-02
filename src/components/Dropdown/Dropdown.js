@@ -99,11 +99,13 @@ class Dropdown extends React.Component {
 
     return (
       <div className={rootClasses}>
-        {icon &&
+        {
+          icon &&
           <div className={theme.icon}>{icon}</div>
         }
         <div>
-          {hasLabel &&
+          {
+            hasLabel &&
             <label
               htmlFor={this.instanceId}
               className={theme.label}
@@ -135,7 +137,8 @@ class Dropdown extends React.Component {
             className={theme.arrowIcon}
           />
 
-          {hasSecondaryText &&
+          {
+            hasSecondaryText &&
             <p className={theme.secondaryText}>
               {error}
             </p>
@@ -190,7 +193,7 @@ Dropdown.defaultProps = {
   error: '',
   label: '',
   onChange: null,
-  icon: '',
+  icon: false,
 }
 
 export default Dropdown

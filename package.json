@@ -82,6 +82,7 @@
     "postcss-mixins": "6.2.0",
     "postcss-sass-each": "0.1.0",
     "postcss-url": "7.3.0",
+    "redux-logger": "3.0.6",
     "react-dev-utils": "5.0.0",
     "react-test-renderer": "16.2.0",
     "request": "2.85.0",
