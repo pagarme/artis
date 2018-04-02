@@ -18,6 +18,7 @@ import setTheme from './utils/helpers/setTheme'
 import setColors from './utils/helpers/setColors'
 import DEFAULT_COLORS from './utils/data/colors'
 
+import { getStrategyName } from './utils/strategies'
 import createStore from './store'
 
 import NormalizeCSS from './components/NormalizeCSS'
@@ -50,6 +51,7 @@ const render = apiData => () => {
   setColors(pColor, sColor)
 
   const clientTarget = createElement('div', target, 'body')
+  const acquirer = getStrategyName(apiData)
 
   ReactGA.event({
     category: 'API',
@@ -79,6 +81,7 @@ const render = apiData => () => {
             <NormalizeCSS>
               <Checkout
                 apiData={apiDataWithDefaults}
+                acquirer={acquirer}
                 targetElement={clientTarget}
                 base={clientThemeBase}
               />

@@ -1,4 +1,130 @@
 /* eslint-disable */
+const pagarmeApi = `var configs = {
+  key: 'SOME_KEY',
+  configs: {
+    companyName: 'Pagar.me',
+    image: './pagarme.png',
+    themeBase: 'dark',
+    primaryColor: '#7ad499',
+    secondaryColor: '#46b67c',
+    postback: 'http://pagar.me',
+    enableCart: true,
+    onSuccess: (data) => {
+      console.log('Success call', JSON.stringify(data, null, 2))
+    },
+    onError: (error) => {
+      console.log('Error call', JSON.stringify(error, null, 2))
+    },
+    freightValue: 1599,
+    onClose: () => {},
+  },
+  formData: {
+    customer: {
+      name: 'Dan Abramov',
+      documentNumber: '19981596639',
+      email: 'mercurio@pagar.me',
+      phoneNumber: '1130442277',
+    },
+    billing: {
+      street: 'Rua Fidêncio Ramos',
+      number: '308',
+      additionalInfo: 'Pagar.me',
+      neighborhood: 'Vila Olimpia',
+      city: 'São Paulo',
+      state: 'SP',
+      zipcode: '04551010',
+    },
+    shipping: {
+      street: 'Rua Fidêncio Ramos',
+      number: '308',
+      additionalInfo: 'Pagar.me',
+      neighborhood: 'Vila Olimpia',
+      city: 'São Paulo',
+      state: 'SP',
+      zipcode: '04551010',
+    },
+    items: [
+      {
+        id: 1,
+        title: 'Red pill',
+        unitPrice: 5000,
+        quantity: 1,
+        tangible: true,
+      },
+      {
+        id: 1,
+        title: 'Red pill',
+        unitPrice: 5000,
+        quantity: 1,
+        tangible: true,
+      },
+    ],
+  },
+  transaction: {
+    amount: 10000,
+    multipayment: [
+      ['creditcard', 'creditcard'],
+      ['creditcard', 'boleto'],
+    ],
+    defaultMethod: 'creditcard',
+    paymentMethods: {
+      boleto: {
+        subtitle: '25% de Desconto!',
+        instructions: 'Use this field to add instructions',
+        expirationAt: '2018-01-30',
+        fileName: 'boleto_pagarme.pdf',
+        discount: {
+          type: 'percentage',
+          value: 25,
+        },
+      },
+      creditcard: {
+        subtitle: '25% de Desconto!',
+        statementDescriptor: 'Use this field to add instructions',
+        installments: [
+          {
+            initial: 2,
+            max: 10,
+            free: 3,
+            interestRate: [
+              {
+                installment: 3,
+                type: 'percentage',
+                value: 10,
+              },
+              {
+                installment: 6,
+                type: 'amount',
+                value: 12000,
+              },
+            ]
+          },
+          {
+            initial: 3,
+            max: 6,
+            free: 1,
+            interestRate: [
+              {
+                installment: 3,
+                type: 'percentage',
+                value: 10,
+              },
+              {
+                installment: 6,
+                type: 'amount',
+                value: 12000,
+              },
+            ]
+          },
+        ]
+      },
+    }
+  }
+};`
+
+const mundiApi = `var configs = {
+  token: 'chk_bg0XP8FjgFGaXWMj',
+};`
 
 /** Custom Panel **/
 const custom = ace.edit('custom');

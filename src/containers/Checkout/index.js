@@ -42,8 +42,6 @@ import MultipleCreditCardsPage from '../../pages/Payment/MultipleCreditCards'
 
 import statechart from './statechart'
 
-const strategyName = 'pagarme'
-
 const stepsTitles = [
   {
     page: 'customer',
@@ -216,7 +214,7 @@ class Checkout extends Component {
     const transactionData = transactionModel(this.props)
 
     if (hasAllTransactionData(transactionData)) {
-      request(transactionData, strategies[strategyName])
+      request(transactionData, strategies[this.props.acquirer])
         .then(response =>
           this.onTransactionReturn(
             response,
@@ -438,6 +436,7 @@ Checkout.propTypes = {
     cartWrapper: PropTypes.string,
     checkoutWrapper: PropTypes.string,
   }),
+  acquirer: PropTypes.string.isRequired,
   apiData: PropTypes.shape({
     key: PropTypes.string.isRequired,
     configs: PropTypes.shape({
