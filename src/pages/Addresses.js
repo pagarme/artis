@@ -124,13 +124,19 @@ class AddressesPage extends Component {
           shippingNeighborhood: address.neighborhood,
           shippingCity: address.city,
           shippingState: address.state,
+          shippingNumber: '',
+          shippingComplement: '',
         })
 
         this.shippingNumberInput.focus()
       } else {
         const newAddress = merge(
           omit(['cep'], address),
-          { zipcode: newZipcode }
+          {
+            zipcode: newZipcode,
+            number: '',
+            complement: '',
+          }
         )
 
         this.setState(newAddress)
@@ -239,6 +245,7 @@ class AddressesPage extends Component {
                     name="number"
                     label="Nº"
                     placeholder="Digite o número"
+                    type="number"
                   />
                 </Col>
                 <Col
@@ -360,6 +367,7 @@ class AddressesPage extends Component {
                       name="shippingNumber"
                       label="Nº"
                       placeholder="Digite o número"
+                      type="number"
                     />
                   </Col>
                   <Col
