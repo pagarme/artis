@@ -99,11 +99,13 @@ var formData = {
 };
 
 var transaction = {
-  amount: 5000,
-  paymentMethods: [
-    {
-      type: 'boleto',
-      title: 'Boleto',
+  amount: 10000,
+  multipayment: [
+    ['creditcard', 'creditcard'],
+    ['creditcard', 'boleto'],
+  ],
+  paymentMethods: {
+    boleto: {
       subtitle: '25% de Desconto!',
       instructions: 'Use this field to add instructions',
       expirationAt: '2018-01-30',
@@ -113,17 +115,47 @@ var transaction = {
         value: 25,
       },
     },
-    {
-      type: 'creditcard',
-      title: 'Cartão de Crédito',
-      subtitle: 'em até 12x',
-      statementDescriptor: 'Mercurio :)',
-      maxInstallments: 6,
-      freeInstallments: 3,
-      defaultInstallments: 2,
-      interestRate: 25,
-    }
-  ],
+    creditcard: {
+      subtitle: '25% de Desconto!',
+      statementDescriptor: 'Use this field to add instructions',
+      installments: [
+        {
+          initial: 2,
+          max: 10,
+          free: 3,
+          interestRate: [
+            {
+              installment: 3,
+              type: 'percentage',
+              value: 10,
+            },
+            {
+              installment: 6,
+              type: 'amount',
+              value: 12000,
+            },
+          ]
+        },
+        {
+          initial: 3,
+          max: 6,
+          free: 1,
+          interestRate: [
+            {
+              installment: 3,
+              type: 'percentage',
+              value: 10,
+            },
+            {
+              installment: 6,
+              type: 'amount',
+              value: 12000,
+            },
+          ]
+        },
+      ]
+    },
+  }
 };</div>
     </div>
 

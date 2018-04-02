@@ -60,6 +60,18 @@
   color: var(--color-grey-77);
 }
 
+.icon {
+  position: relative;
+  top: 11px;
+  color: #515151;
+  border-bottom: 1px solid #515151;
+  box-sizing: border-box;
+  display: inline;
+  padding-bottom: 13px;
+  padding-left: 8px;
+  padding-right: 9px;
+}
+
 .placeholder {
   opacity: 0.6;
 }
@@ -70,6 +82,14 @@
 
 .disabled:active + .arrow {
   color: var(--color-grey-68);
+}
+
+.arrowIcon {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  color: var(--icon-color);
+  z-index: 10;
 }
 
 .arrow {

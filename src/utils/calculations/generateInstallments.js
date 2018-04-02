@@ -1,68 +1,107 @@
+import {
+  filter,
+  gte,
+  last,
+  pipe,
+  prop,
+} from 'ramda'
+
 import formatToBRL from '../helpers/formatToBRL'
 
-const isFree = (freeInstallments, value) => value > freeInstallments
+const generateArray = length => Array.from(
+  { length }
+).map(Number.call, Number)
+
+const isFree = (free, value) => value > free
 
 const getInstallmentAmount = (amount, installments) => (amount / installments).toFixed(0)
 
-const getInterest = (amount, interest) => (amount * (interest / 100))
+const getInterestPercentage = (amount, interest) => (amount * (interest / 100))
 
-const getInterestInstallment = (index, amount, interestRate) => {
-  const interest = getInterest(amount, interestRate)
-  const newAmount = amount + interest
-  const installmentAmount = getInstallmentAmount(newAmount, index)
-  const parsedAmount = formatToBRL(installmentAmount)
+const getInterestAmount = (amount, interest) => interest // eslint-disable-line
 
-  return {
-    interest,
-    installmentAmount,
-    value: index,
-    name: `${index}x de ${parsedAmount} com juros.`,
-    amount: newAmount,
-  }
+const interestCalculateFunctions = {
+  percentage: getInterestPercentage,
+  amount: getInterestAmount,
 }
 
-const getFreeInstallment = (index, amount) => {
+const getInterestOption = index => pipe(
+  filter(
+    pipe(
+      prop('installment'),
+      gte(index)
+    )
+  ),
+  last
+)
+
+
+const generateFreeInstallment = (index, amount) => {
   const installmentAmount = getInstallmentAmount(amount, index)
   const parsedAmount = formatToBRL(installmentAmount)
 
   return {
     amount,
     installmentAmount,
-    value: index,
+    value: index.toString(),
     name: `${index}x de ${parsedAmount} sem juros.`,
+  }
+}
+
+const getInterestInstallment = (interestRate, index, amount) => {
+  const interest = getInterestOption(index)(interestRate)
+
+  if (!interest) {
+    return generateFreeInstallment(index, amount)
+  }
+
+  const calculateFunction = interestCalculateFunctions[interest.type]
+
+  const interestValue = calculateFunction(amount, interest.value)
+  const newAmount = amount + interestValue
+  const installmentAmount = getInstallmentAmount(newAmount, index)
+  const parsedAmount = formatToBRL(installmentAmount)
+
+  return {
+    installmentAmount,
+    interest: interestValue,
+    value: index.toString(),
+    name: `${index}x de ${parsedAmount} com juros.`,
+    amount: newAmount,
   }
 }
 
 const calculateInstallmentAmount = (
   interestRate,
-  freeInstallments,
+  free,
   amount,
 ) => (value) => {
   const index = value + 1
 
-  if (isFree(freeInstallments, index)) {
-    return getInterestInstallment(index, amount, interestRate)
+  if (isFree(free, index)) {
+    return getInterestInstallment(interestRate, index, amount)
   }
 
-  return getFreeInstallment(index, amount)
+  return generateFreeInstallment(index, amount)
 }
 
-const calculate = (creditcard, amount) => {
+const calculate = (amount, installmentConfig) => {
   const {
-    maxInstallments,
+    max,
+    free,
     interestRate,
-    freeInstallments,
-  } = creditcard
+  } = installmentConfig
 
-  if (!maxInstallments) {
+  if (!max) {
     return []
   }
 
-  const installments = Array.from(
-    { length: maxInstallments }
-  ).map(Number.call, Number)
-
-  const generateInstallments = calculateInstallmentAmount(interestRate, freeInstallments, amount)
+  const installments = generateArray(max)
+  const generateInstallments = calculateInstallmentAmount(
+    interestRate,
+    free,
+    amount
+  )
 
   return installments.map(generateInstallments)
 }
