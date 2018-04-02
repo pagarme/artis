@@ -5,7 +5,15 @@ import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import { State, withStatechart } from 'react-automata'
-import { isEmpty, isNil, reject, pathOr, has, allPass, pickBy } from 'ramda'
+import {
+  isEmpty,
+  isNil,
+  reject,
+  pathOr,
+  has,
+  allPass,
+  filter,
+} from 'ramda'
 import ReactGA from 'react-ga'
 
 import { changeScreenSize } from '../../actions'
@@ -16,16 +24,48 @@ import { Grid, Row, Col } from '../../components/Grid'
 import CustomerPage from '../../pages/Customer'
 import AddressesPage from '../../pages/Addresses'
 import PaymentPage from '../../pages/Payment'
+import SwitchPayment from '../../pages/Payment/SwitchPayment'
 import ConfirmationPage from '../../pages/Confirmation'
+import CreditCardAndBoletoPage from '../../pages/Payment/CreditCardAndBoleto'
+import MultipleCreditCardsPage from '../../pages/Payment/MultipleCreditCards'
+
 import defaultLogo from '../../images/logo_pagarme.png'
 import statechart from './statechart'
 
-const stepsTitles = {
-  customer: 'Identificação',
-  addresses: 'Endereços',
-  payment: 'Forma de Pagamento',
-  confirmation: 'Confirmação',
-}
+const stepsTitles = [
+  {
+    page: 'customer',
+    title: 'Identificação',
+    visible: true,
+  },
+  {
+    page: 'addresses',
+    title: 'Endereços',
+    visible: true,
+  },
+  {
+    page: 'payment',
+    title: 'Forma de Pagamento',
+    visible: true,
+  },
+  {
+    page: 'singleCreditCard',
+    visible: false,
+  },
+  {
+    page: 'singleBoleto',
+    visible: false,
+  },
+  {
+    page: 'creditCardAndBoleto',
+    visible: false,
+  },
+  {
+    page: 'confirmation',
+    title: 'Confirmação',
+    visible: true,
+  },
+]
 
 const applyThemr = themr('UICheckout')
 
@@ -37,6 +77,8 @@ class Checkout extends Component {
       closingEffect: false,
       collapsedCart: true,
     }
+
+    this.handlePageTransition = this.handlePageTransition.bind(this)
   }
 
   componentDidMount () {
@@ -125,6 +167,12 @@ class Checkout extends Component {
     this.setState(({ collapsedCart }) => ({ collapsedCart: !collapsedCart }))
   }
 
+  handlePageTransition (page) {
+    return () => {
+      this.props.transition(page)
+    }
+  }
+
   close () {
     const { targetElement } = this.props
 
@@ -150,7 +198,6 @@ class Checkout extends Component {
 
     const {
       amount,
-      paymentMethods,
     } = transaction
 
     const {
@@ -177,9 +224,9 @@ class Checkout extends Component {
           <PaymentPage
             base={base}
             title="Dados de Pagamento"
-            paymentMethods={paymentMethods}
-            amount={amount}
+            transaction={transaction}
             handleSubmit={this.handleFormSubmit}
+            handlePageTransition={this.handlePageTransition}
           />
         </State>
         <State value="confirmation">
@@ -192,6 +239,32 @@ class Checkout extends Component {
             onSuccess={onSuccess}
             onError={onError}
             items={items}
+          />
+        </State>
+        <State value="singleCreditCard">
+          <SwitchPayment
+            transaction={transaction}
+            paymentType={'creditcard'}
+            handleSubmit={this.handleFormSubmit}
+          />
+        </State>
+        <State value="singleBoleto">
+          <SwitchPayment
+            transaction={transaction}
+            paymentType={'boleto'}
+            handleSubmit={this.handleFormSubmit}
+          />
+        </State>
+        <State value="creditCardAndBoleto">
+          <CreditCardAndBoletoPage
+            transaction={transaction}
+            handleSubmit={this.handleFormSubmit}
+          />
+        </State>
+        <State value="multipleCreditCards">
+          <MultipleCreditCardsPage
+            transaction={transaction}
+            handleSubmit={this.handleFormSubmit}
           />
         </State>
       </React.Fragment>
@@ -235,10 +308,9 @@ class Checkout extends Component {
     const params = pathOr({}, ['apiData', 'params'], this.props)
     const configs = pathOr({}, ['apiData', 'configs'], this.props)
 
-    const pages = pickBy((value, key) => !this.hasRequiredData(key), stepsTitles)
+    const pages = filter(value => !this.hasRequiredData(value.page), stepsTitles)
 
     const stepsKeys = Object.keys(pages)
-    const stepsNames = Object.values(pages)
 
     const isCartButtonVisible = configs.enableCart ?
       !this.props.isBigScreen :
@@ -282,8 +354,8 @@ class Checkout extends Component {
                 >
                   <ProgressBar
                     base={base}
-                    steps={stepsNames}
-                    activePage={pages[machineState.value]}
+                    steps={pages}
+                    activePage={machineState.value}
                   />
                   {this.renderPages()}
                 </div>
@@ -334,7 +406,7 @@ Checkout.propTypes = {
     }),
     transaction: PropTypes.shape({
       amount: PropTypes.number.isRequired,
-      paymentMethods: PropTypes.arrayOf(PropTypes.object),
+      paymentMethods: PropTypes.shape(),
     }),
   }).isRequired,
   base: PropTypes.string,
