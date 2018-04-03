@@ -300,20 +300,29 @@ class Checkout extends Component {
   }
 
   render () {
-    const { theme, machineState, isBigScreen, base } = this.props
+    const {
+      theme,
+      machineState,
+      isBigScreen,
+      base,
+      confirmation,
+    } = this.props
 
     const params = pathOr({}, ['apiData', 'params'], this.props)
     const configs = pathOr({}, ['apiData', 'configs'], this.props)
 
     const pages = filter(value => !this.hasRequiredData(value.page), stepsTitles)
-
-    const stepsKeys = Object.keys(pages)
+    const firstPage = pages[0].page
 
     const isCartButtonVisible = configs.enableCart ?
-      !this.props.isBigScreen :
+      !isBigScreen :
       false
 
     const checkoutColSize = configs.enableCart ? 9 : 12
+
+    const shouldDisablePrevButton = machineState.value === firstPage
+      || (machineState.value === 'confirmation'
+      && (confirmation.loading || confirmation.success))
 
     return (
       <div
@@ -341,10 +350,7 @@ class Checkout extends Component {
                   logoSrc={configs.image || defaultLogo}
                   onPrev={this.handleBackButton}
                   onClose={this.close.bind(this)}
-                  prevButtonDisabled={
-                    machineState.value === stepsKeys[0] ||
-                    (machineState.value === 'confirmation' && (this.props.confirmation.loading || this.props.confirmation.success))
-                  }
+                  prevButtonDisabled={shouldDisablePrevButton}
                 />
                 <div
                   className={theme.content}
