@@ -39,18 +39,14 @@ const stepsTitles = [
   },
 ]
 
-const active = {
-  page: 'customer',
-  title: 'Identificação',
-  visible: true,
-}
+const active = 'customer'
 
 describe('ProgressBar', () => {
   it('should not render with steps', () => {
     const component = shallow(
       <ProgressBar
         steps={[]}
-        activePage={{}}
+        activePage={''}
       />
     )
 

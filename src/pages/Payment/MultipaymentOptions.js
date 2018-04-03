@@ -38,7 +38,7 @@ const MultipaymentOptions = ({
   const hasThisPaymentType = paymentType =>
     multipayment.find(item => equals(item, paymentType))
 
-  const multipaymentButtons = allowedOptions.map((option) => {
+  const multipaymentButtons = allowedOptions.map((option, index) => {
     const {
       paymentType,
       title,
@@ -49,8 +49,10 @@ const MultipaymentOptions = ({
       return null
     }
 
+    const key = `${theme.paymentTitle}${index}`
+
     return (
-      <Row alignCenter>
+      <Row alignCenter key={key}>
         <Col
           tv={mediumColSize}
           desk={mediumColSize}

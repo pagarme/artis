@@ -93,13 +93,13 @@ ProgressBar.propTypes = {
   }),
   base: PropTypes.string,
   steps: PropTypes.arrayOf(PropTypes.object).isRequired,
-  activePage: PropTypes.shape(),
+  activePage: PropTypes.string,
 }
 
 ProgressBar.defaultProps = {
   theme: {},
   base: 'dark',
-  activePage: {},
+  activePage: '',
 }
 
 export default applyThemr(ProgressBar)
