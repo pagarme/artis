@@ -11,17 +11,22 @@ const PaymentPage = ({
   transaction,
   handleSubmit,
   handlePageTransition,
-}) => (
-  transaction.multipayment
-    ? <MultipaymentOptions
-      transaction={transaction}
-      handlePageTransition={handlePageTransition}
-    />
-    : <SwitchPayment
-      transaction={transaction}
-      handleSubmit={handleSubmit}
-    />
-)
+}) => {
+  const { defaultMethod } = transaction
+
+  return (
+    transaction.multipayment
+      ? <MultipaymentOptions
+        transaction={transaction}
+        handlePageTransition={handlePageTransition}
+      />
+      : <SwitchPayment
+        transaction={transaction}
+        handleSubmit={handleSubmit}
+        defaultMethod={defaultMethod}
+      />
+  )
+}
 
 PaymentPage.propTypes = {
   transaction: PropTypes.shape().isRequired,

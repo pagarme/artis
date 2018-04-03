@@ -77,24 +77,13 @@ const createSwitchItems = ({
   return makeSwitchItems(choosedPaymentOptions)
 }
 
-const getFirstPaymentMethod = ({ transaction, paymentType }) => (
-  paymentType || Object.keys(transaction.paymentMethods)[0]
-)
-
 class SwitchPayment extends Component {
-  constructor (props) {
+  constructor () {
     super()
-
-    const { transaction, paymentType } = props
-
-    const selectedPaymentType = getFirstPaymentMethod({
-      transaction,
-      paymentType,
-    })
 
     this.state = {
       formData: {},
-      selectedPaymentType,
+      selectedPaymentType: null,
       flipped: false,
     }
   }
@@ -149,6 +138,7 @@ class SwitchPayment extends Component {
 
   render () {
     const {
+      defaultMethod,
       theme,
       paymentType,
       transaction,
@@ -186,7 +176,7 @@ class SwitchPayment extends Component {
         {Switch({
           theme,
           name: 'paymentOptions',
-          selected: selectedPaymentType,
+          selected: selectedPaymentType || defaultMethod,
           items: createSwitchItems({
             theme,
             isBigScreen,
@@ -219,6 +209,7 @@ SwitchPayment.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isBigScreen: PropTypes.bool.isRequired,
   handlePageChange: PropTypes.func.isRequired,
+  defaultMethod: PropTypes.string.isRequired,
 }
 
 SwitchPayment.defaultProps = {

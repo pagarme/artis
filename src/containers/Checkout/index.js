@@ -77,8 +77,6 @@ class Checkout extends Component {
       closingEffect: false,
       collapsedCart: true,
     }
-
-    this.handlePageTransition = this.handlePageTransition.bind(this)
   }
 
   componentDidMount () {
@@ -167,11 +165,7 @@ class Checkout extends Component {
     this.setState(({ collapsedCart }) => ({ collapsedCart: !collapsedCart }))
   }
 
-  handlePageTransition (page) {
-    return () => {
-      this.props.transition(page)
-    }
-  }
+  handlePageTransition = page => () => this.props.transition(page)
 
   close () {
     const { targetElement } = this.props
@@ -192,6 +186,7 @@ class Checkout extends Component {
 
   renderPages () {
     const { key, formData, transaction, configs } = this.props.apiData
+
     const { base } = this.props
 
     const { items } = formData
@@ -246,6 +241,7 @@ class Checkout extends Component {
             transaction={transaction}
             paymentType={'creditcard'}
             handleSubmit={this.handleFormSubmit}
+            defaultMethod={'creditcard'}
           />
         </State>
         <State value="singleBoleto">
@@ -253,6 +249,7 @@ class Checkout extends Component {
             transaction={transaction}
             paymentType={'boleto'}
             handleSubmit={this.handleFormSubmit}
+            defaultMethod={'boleto'}
           />
         </State>
         <State value="creditCardAndBoleto">
@@ -406,6 +403,7 @@ Checkout.propTypes = {
     }),
     transaction: PropTypes.shape({
       amount: PropTypes.number.isRequired,
+      defaultMethod: PropTypes.string.isRequired,
       paymentMethods: PropTypes.shape(),
     }),
   }).isRequired,

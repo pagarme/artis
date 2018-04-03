@@ -43,12 +43,12 @@ const Switch = ({
   }
 
   const renderContent = () =>
-    items.map((item, index) => (
+    items.map(item => (
       <div
         key={item.title}
         className={
           classNames(theme[base], theme.content, {
-            [theme.visible]: selected === item.value || selected === index,
+            [theme.visible]: selected === item.value,
           })
         }
       >
@@ -84,14 +84,13 @@ Switch.propTypes = {
     value: PropTypes.string,
     content: PropTypes.element,
   })).isRequired,
-  selected: PropTypes.string,
+  selected: PropTypes.string.isRequired,
   handleSwitchPayment: PropTypes.func.isRequired,
 }
 
 Switch.defaultProps = {
   theme: {},
   base: 'dark',
-  selected: 0,
 }
 
 export default Switch
