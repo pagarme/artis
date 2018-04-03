@@ -235,7 +235,7 @@ class PaymentPage extends Component {
                       }
                       name="installments"
                       label="Quantidade de Parcelas"
-                      title="Selecione"
+                      placeholder="Selecione"
                     />
                   </Col>
                 </Row>
