@@ -94,6 +94,13 @@ class Dropdown extends React.Component {
       }
     )
 
+    const iconClass = classNames(
+      theme.icon,
+      {
+        [theme.iconError]: error,
+      }
+    )
+
     const hasSecondaryText = theme.secondaryText && error
     const hasLabel = theme.label && label
 
@@ -101,9 +108,9 @@ class Dropdown extends React.Component {
       <div className={rootClasses}>
         {
           icon &&
-          <div className={theme.icon}>{icon}</div>
+          <div className={iconClass}>{icon}</div>
         }
-        <div>
+        <div className={theme.boxContainer}>
           {
             hasLabel &&
             <label

@@ -197,15 +197,17 @@ class SwitchPayment extends Component {
           }),
           handleSwitchPayment: this.handleSwitchPayment,
         })}
-        <Button
-          alignEnd
-          className={theme.confirmBtn}
-          relevance="normal"
-          size="extra-large"
-          type="submit"
-        >
-          Confirmar
-        </Button>
+        <div className={theme.footerPadding}>
+          <Button
+            alignEnd
+            className={theme.confirmBtn}
+            relevance="normal"
+            size="extra-large"
+            type="submit"
+          >
+            Confirmar
+          </Button>
+        </div>
       </Form>
     )
   }

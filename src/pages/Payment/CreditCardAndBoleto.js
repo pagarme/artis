@@ -147,24 +147,17 @@ class CreditCardAndBoleto extends Component {
               })}
             </Col>
           </Row>
-          <Row>
-            <Col
-              desk={defaultColSize}
-              tv={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-              alignEnd
+          <div className={theme.footerNoPadding}>
+            <Button
+              className={theme.confirmBtn}
+              size="extra-large"
+              relevance="normal"
+              type="submit"
+              disabled={!formValid}
             >
-              <Button
-                size="extra-large"
-                relevance="normal"
-                type="submit"
-                disabled={!formValid}
-              >
-                Confirmar
-              </Button>
-            </Col>
-          </Row>
+              Confirmar
+            </Button>
+          </div>
         </Grid>
       </Form>
     )

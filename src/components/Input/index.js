@@ -131,7 +131,8 @@ class Input extends React.Component {
 
     return (
       <div className={containerClasses}>
-        {icon &&
+        {
+          icon &&
           <div className={iconClass}>{icon}</div>
         }
         <div className={theme.boxContainer}>

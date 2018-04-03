@@ -196,23 +196,16 @@ class MultipleCreditCards extends Component {
               </Col>
             </Col>
           </Row>
-          <Row>
-            <Col
-              desk={defaultColSize}
-              tv={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-              alignEnd
+          <div className={theme.footerNoPadding}>
+            <Button
+              className={theme.confirmBtn}
+              size="extra-large"
+              relevance="normal"
+              type="submit"
             >
-              <Button
-                size="extra-large"
-                relevance="normal"
-                type="submit"
-              >
                 Confirmar
-              </Button>
-            </Col>
-          </Row>
+            </Button>
+          </div>
         </Grid>
       </Form>
     )

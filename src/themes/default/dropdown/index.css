@@ -9,12 +9,12 @@
 
 .dropdown {
   width: 100%;
-  position: relative;
+  display: flex;
   cursor: pointer;
   color: var(--color-white);
 
   &.error .select {
-    border-bottom: 1px solid var(--color-error);
+    border-bottom: 2px solid var(--color-error);
   }
 
   &.error {
@@ -36,7 +36,7 @@
   appearance: none;
   background: transparent;
   border: none;
-  border-bottom: 1px solid var(--color-grey-68);
+  border-bottom: 2px solid var(--color-grey-68);
   border-radius: 0;
   cursor: inherit;
   color: var(--color-white);
@@ -56,20 +56,27 @@
 }
 
 .light .select {
-  border-bottom: 1px solid var(--color-grey-11);
+  border-bottom: 2px solid var(--color-grey-11);
   color: var(--color-grey-77);
 }
 
+.boxContainer {
+  flex: 1;
+}
+
 .icon {
-  position: relative;
-  top: 11px;
-  color: #515151;
-  border-bottom: 1px solid #515151;
-  box-sizing: border-box;
-  display: inline;
-  padding-bottom: 13px;
+  height: 35.7px;
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
   padding-left: 8px;
-  padding-right: 9px;
+  color: var(--color-grey-53);
+  border-bottom: 2px solid var(--color-grey-68);
+}
+
+.iconError {
+  color: var(--color-error);
+  border-color: var(--color-error);
 }
 
 .placeholder {

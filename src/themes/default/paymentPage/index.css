@@ -96,6 +96,20 @@
     padding-left: var(--margin-page-mobile);
     padding-right: var(--margin-page-mobile);
   }
+
+  .confirmBtn {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .footerPadding {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .footerNoPadding {
+    width: 100%;
+  }
 }
 
 .multipaymentOptions {
