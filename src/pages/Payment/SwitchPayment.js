@@ -83,7 +83,7 @@ class SwitchPayment extends Component {
 
     this.state = {
       formData: {},
-      selectedPaymentType: null,
+      clickedPaymentType: null,
       flipped: false,
     }
   }
@@ -99,33 +99,47 @@ class SwitchPayment extends Component {
     }))
   }
 
-  handleSwitchPayment = selectedPaymentType => (
-    this.setState({ selectedPaymentType })
+  handleSwitchPayment = clickedPaymentType => (
+    this.setState({ clickedPaymentType })
   )
 
   handleFormSubmit = (formData, errors) => {
-    const { handleSubmit, handlePageChange, transaction } = this.props
-    const { selectedPaymentType } = this.state
+    const {
+      handleSubmit,
+      handlePageChange,
+      transaction,
+      defaultMethod,
+    } = this.props
+
+    let data = formData
+
+    const { clickedPaymentType } = this.state
     const { paymentMethods } = transaction
 
+    const paymentType = clickedPaymentType || defaultMethod
+
     const method = merge(
-      paymentMethods[selectedPaymentType],
-      { type: selectedPaymentType }
+      paymentMethods[paymentType],
+      { type: paymentType }
     )
 
     const payment = {
       method,
-      type: selectedPaymentType,
+      type: paymentType,
     }
 
-    if (selectedPaymentType === 'creditcard') {
+    if (paymentType === 'creditcard') {
       payment.info = pick([
         'cardNumber',
         'holderName',
         'cvv',
         'expiration',
         'installments',
-      ], formData)
+      ], data)
+    }
+
+    if (paymentType === 'boleto') {
+      data = { boleto: true }
     }
 
     handlePageChange({
@@ -133,7 +147,7 @@ class SwitchPayment extends Component {
       pageInfo: payment,
     })
 
-    handleSubmit(formData, errors)
+    handleSubmit(data, errors)
   }
 
   render () {
@@ -145,13 +159,13 @@ class SwitchPayment extends Component {
       isBigScreen,
     } = this.props
 
-    const { formData, flipped, selectedPaymentType } = this.state
+    const { formData, flipped, clickedPaymentType } = this.state
 
-    let data = {}
     let validation = null
 
+    const selectedPaymentType = clickedPaymentType || defaultMethod
+
     if (selectedPaymentType === 'creditcard') {
-      data = this.formData
       validation = {
         cardNumber: [required],
         holderName: [required],
@@ -161,13 +175,8 @@ class SwitchPayment extends Component {
       }
     }
 
-    if (selectedPaymentType === 'boleto') {
-      data = { boleto: true }
-    }
-
     return (
       <Form
-        data={{ ...data }}
         onChange={this.handleChangeForm}
         onSubmit={this.handleFormSubmit}
         customErrorProp="error"
@@ -176,7 +185,7 @@ class SwitchPayment extends Component {
         {Switch({
           theme,
           name: 'paymentOptions',
-          selected: selectedPaymentType || defaultMethod,
+          selected: clickedPaymentType || defaultMethod,
           items: createSwitchItems({
             theme,
             isBigScreen,

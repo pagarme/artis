@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { themr } from 'react-css-themr'
 import Form from 'react-vanilla-form'
+import { isEmpty, reject, isNil } from 'ramda'
 
 import {
   Grid,
@@ -28,6 +29,7 @@ class CreditCardAndBoleto extends Component {
 
     this.state = {
       formData: {},
+      formValid: false,
       inputAmountNames: {
         first: 'creditcard-amount',
         second: 'boleto-amount',
@@ -35,7 +37,7 @@ class CreditCardAndBoleto extends Component {
     }
   }
 
-  handleChangeForm = (newFormData) => {
+  handleChangeForm = (newFormData, errors) => {
     const { formData, inputAmountNames } = this.state
     const { transaction } = this.props
 
@@ -46,7 +48,10 @@ class CreditCardAndBoleto extends Component {
       transaction,
     })
 
-    this.setState({ formData: amounts })
+    this.setState({
+      formData: amounts,
+      formValid: isEmpty(reject(isNil, errors)),
+    })
   }
 
   render () {
@@ -58,6 +63,7 @@ class CreditCardAndBoleto extends Component {
 
     const {
       formData,
+      formValid,
       inputAmountNames,
     } = this.state
 
@@ -153,6 +159,7 @@ class CreditCardAndBoleto extends Component {
                 size="extra-large"
                 relevance="normal"
                 type="submit"
+                disabled={!formValid}
               >
                 Confirmar
               </Button>
