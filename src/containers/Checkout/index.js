@@ -340,7 +340,7 @@ Checkout.propTypes = {
   changeScreenSize: PropTypes.func.isRequired,
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
   transition: PropTypes.func.isRequired,
-  shipping: PropTypes.object.isRequired, // eslint-disable-line
+  shipping: PropTypes.object, // eslint-disable-line
   customer: PropTypes.object.isRequired, // eslint-disable-line
   isBigScreen: PropTypes.bool,
   confirmation: PropTypes.shape({
@@ -355,6 +355,7 @@ Checkout.propTypes = {
 
 Checkout.defaultProps = {
   theme: {},
+  shipping: {},
   apiData: {
     configs: {
       image: '',
