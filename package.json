@@ -16,7 +16,6 @@
     "copy-to-clipboard": "3.0.8",
     "dotenv": "5.0.1",
     "emblematic-icons": "0.2.0",
-    "former-kit": "0.2.0",
     "fs-extra": "5.0.0",
     "prop-types": "15.6.0",
     "ramda": "0.25.0",
@@ -30,7 +29,7 @@
     "react-maskedinput": "4.0.1",
     "react-payment-card-component": "0.1.0",
     "react-redux": "5.0.7",
-    "react-vanilla-form": "0.2.4",
+    "react-vanilla-form": "0.2.5",
     "redux": "3.7.2",
     "shortid": "2.2.8",
     "whatwg-fetch": "2.0.3"

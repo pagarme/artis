@@ -4,8 +4,7 @@ import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
-import { merge, omit, isNil, reject, isEmpty } from 'ramda'
-import { RadioGroup } from 'former-kit'
+import { merge, omit, isNil, reject, isEmpty, applySpec, pathOr, pick } from 'ramda'
 
 import {
   Grid,
@@ -15,6 +14,8 @@ import {
   Input,
   Dropdown,
 } from '../components'
+
+import RadioGroup from '../components/RadioGroup'
 
 import options from '../utils/data/states'
 import BillingIcon from '../images/map-pin.svg'
@@ -48,16 +49,30 @@ class AddressesPage extends Component {
 
     const { billing = {}, shipping = {} } = props
 
+    const shippingInfo = applySpec({
+      shippingStreet: pathOr('', ['street']),
+      shippingNumber: pathOr('', ['number']),
+      shippingComplement: pathOr('', ['complement']),
+      shippingNeighborhood: pathOr('', ['neighborhood']),
+      shippingCity: pathOr('', ['city']),
+      shippingState: pathOr('', ['state']),
+      shippingZipcode: pathOr('', ['zipcode']),
+    })
+
     this.state = {
       ...billing,
-      shippingStreet: shipping.street,
-      shippingNumber: shipping.number,
-      shippingComplement: shipping.complement,
-      shippingNeighborhood: shipping.neighborhood,
-      shippingCity: shipping.city,
-      shippingState: shipping.state,
-      shippingZipcode: shipping.zipcode,
+      ...shippingInfo(shipping),
       sameAddressForShipping: billing.sameAddressForShipping || 'true',
+    }
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (
+      prevState.sameAddressForShipping === 'true' &&
+      this.state.sameAddressForShipping === 'false') {
+      this.shippingZipcodeInput.focus()
+
+      this.setState({ formValid: removeZipcodeMask(this.state.shippingZipcode).length >= 8 }) // eslint-disable-line
     }
   }
 
@@ -66,16 +81,17 @@ class AddressesPage extends Component {
       sameAddressForShipping,
     } = this.state
 
-    const billingAddress = {
-      street: this.state.street,
-      number: this.state.number,
-      complement: this.state.complement,
-      neighborhood: this.state.neighborhood,
-      city: this.state.city,
-      state: this.state.state,
-      zipcode: this.state.zipcode,
-      sameAddressForShipping: this.state.sameAddressForShipping,
-    }
+    const billingAddress = pick([
+      'street',
+      'number',
+      'complement',
+      'neighborhood',
+      'city',
+      'state',
+      'zipcode',
+      'sameAddressForShipping',
+      'formValid',
+    ], this.state)
 
     this.props.handlePageChange({
       page: 'billing',
@@ -163,10 +179,45 @@ class AddressesPage extends Component {
     this.shippingNumberInput = input
   }
 
+  shippingZipcodeRef = (input) => {
+    this.shippingZipcodeInput = input
+  }
+
   handleChangeForm = (values, errors) => {
-    this.setState({
-      ...values,
-      formValid: isEmpty(reject(isNil, errors)),
+    this.setState((prevState) => {
+      let updatedShippingAddress = {}
+
+      const validatedErrors = omit(values.sameAddressForShipping === 'true'
+        ? ['shippingStreet',
+          'shippingNumber',
+          'shippingComplement',
+          'shippingNeighborhood',
+          'shippingCity',
+          'shippingState',
+          'shippingZipcode']
+        : [], reject(isNil, errors))
+
+      const formValid = isEmpty(validatedErrors) && removeZipcodeMask(values.zipcode || '').length >= 8
+
+      if (
+        prevState.sameAddressForShipping === 'true' &&
+        values.sameAddressForShipping === 'false') {
+        updatedShippingAddress = {
+          shippingStreet: '',
+          shippingNumber: '',
+          shippingComplement: '',
+          shippingNeighborhood: '',
+          shippingCity: '',
+          shippingState: '',
+          shippingZipcode: '',
+        }
+      }
+
+      return {
+        ...values,
+        ...updatedShippingAddress,
+        formValid,
+      }
     })
   }
 
@@ -270,7 +321,7 @@ class AddressesPage extends Component {
                   placeholder="Digite o bairro"
                 />
               </Row>
-              <Row overflowVisible>
+              <Row>
                 <Col
                   tv={bigColSize}
                   desk={bigColSize}
@@ -289,7 +340,6 @@ class AddressesPage extends Component {
                   desk={smallColSize}
                   tablet={smallColSize}
                   palm={smallColSize}
-                  overflowVisible
                 >
                   <Dropdown
                     base={base}
@@ -314,11 +364,10 @@ class AddressesPage extends Component {
               </Row>
               <Row>
                 <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                  className={theme.radio}
+                  tv={mediumColSize}
+                  desk={mediumColSize}
+                  tablet={mediumColSize}
+                  palm={mediumColSize}
                 >
                   <RadioGroup
                     name="sameAddressForShipping"
@@ -345,6 +394,7 @@ class AddressesPage extends Component {
                     label="CEP"
                     mask="11111-111"
                     placeholder="Digite o CEP"
+                    inputRef={this.shippingZipcodeRef}
                     onAutocomplete={this.handleZipcodeChange}
                   />
                 </Row>
@@ -393,7 +443,7 @@ class AddressesPage extends Component {
                     placeholder="Digite o bairro"
                   />
                 </Row>
-                <Row overflowVisible>
+                <Row>
                   <Col
                     tv={bigColSize}
                     desk={bigColSize}
@@ -412,7 +462,6 @@ class AddressesPage extends Component {
                     desk={smallColSize}
                     tablet={smallColSize}
                     palm={smallColSize}
-                    overflowVisible
                   >
                     <Dropdown
                       options={options}

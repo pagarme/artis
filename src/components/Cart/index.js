@@ -190,14 +190,14 @@ Cart.propTypes = {
   freight: PropTypes.number,
   shipping: PropTypes.shape({
     street: PropTypes.string,
-    number: PropTypes.oneOf([
+    number: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
     ]),
     neighborhood: PropTypes.string,
     city: PropTypes.string,
     state: PropTypes.string,
-    zipcode: PropTypes.number,
+    zipcode: PropTypes.string,
   }),
 }
 

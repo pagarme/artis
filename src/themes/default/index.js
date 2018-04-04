@@ -23,6 +23,7 @@ import UIBoletoOptions from './boletoOptions/index.css'
 import UIErrorPage from './errorPage/index.css'
 import UITooltip from './tooltip/index.css'
 import UINormalizeCSS from './normalize.css'
+import UIRadioGroup from './radio-group/index.css'
 
 export default {
   UIButton,
@@ -50,4 +51,5 @@ export default {
   UIErrorPage,
   UITooltip,
   UINormalizeCSS,
+  UIRadioGroup,
 }
