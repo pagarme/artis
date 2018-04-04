@@ -5,8 +5,6 @@ Este repositório está em fase de desenvolvimento, então muitas mudanças aind
 
 O desenvolvimento é *open source*, ou seja, todo o código fonte estará disponível para as pessoas que queiram conhecer, contribuir e melhorar este projeto.
 
-Veja online os componentes desenvolvidos no nosso [Storybook](https://pagarme.github.io/artis)
-
 ## Rodando o projeto
 
 Na pasta [webapp](webapp) você pode ver mais detalhes sobre como rodar o projeto.
@@ -47,22 +45,6 @@ $ `yarn start`
 - *npm*
 ```sh
 $ `npm start`
-```
-
-#### `storybook`
-
-O [Storybook](https://storybook.js.org/) é um ambiente de desenvolvimento para testes de UI. Utilizamos essa ferramenta para renderizar componentes e verificar seus comportamentos.
-
-Ao rodar o comando, acesse o Storybook pela URL http://localhost:6006.
-
-- **yarn**
-```sh
-$ `yarn storybook`
-```
-
-- **npm**
-```sh
-$ `npm run storybook`
 ```
 
 #### `coverage`
@@ -178,4 +160,4 @@ Este projeto está licenciado sob a [Licença MIT](./LICENSE), ou seja, você po
 ## Equipe
 
 | [<img src="https://avatars2.githubusercontent.com/u/12722087?v=4&s=115"><br><sub>Ieda Otero<br>Business Leader</sub>](https://github.com/IedaOtero) | [<img src="https://avatars1.githubusercontent.com/u/37185254?s=115&v=4"><br><sub>Karoline Morone<br>People Leader</sub>](https://github.com/morokaro) | [<img src="https://avatars0.githubusercontent.com/u/19213244?v=3&s=115"><br><sub>Thiago Medeiros<br>Developer</sub>](https://github.com/thiagommedeiros) | [<img src="https://avatars0.githubusercontent.com/u/10222646?v=3&s=115"><br><sub>Augusto Amaral<br>Developer</sub>](https://github.com/augusto-jm-amaral) | [<img src="https://avatars0.githubusercontent.com/u/14620121?v=3&s=115"><br><sub>Vitor Capretz<br>Developer</sub>](https://github.com/vcapretz) | [<img src="https://avatars1.githubusercontent.com/u/4103305?s=115&v=4"><br><sub>Allan Ramos<br>Developer</sub>](https://github.com/allangrds) |
-| :---: |  :---: |  :---: | :---: | :---: | :---: | 
+| :---: |  :---: |  :---: | :---: | :---: | :---: |

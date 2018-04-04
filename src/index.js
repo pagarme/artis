@@ -45,10 +45,10 @@ const render = apiData => () => {
     secondaryColor,
   } = configs
 
-  const theme = themeBase || setTheme(primaryColor) || 'dark'
+  const clientThemeBase = themeBase || setTheme(primaryColor) || 'dark'
 
-  const pColor = primaryColor || colors[theme].primary
-  const sColor = secondaryColor || colors[theme].secondary
+  const pColor = primaryColor || colors[clientThemeBase].primary
+  const sColor = secondaryColor || colors[clientThemeBase].secondary
 
   setColors(pColor, sColor)
 
@@ -63,8 +63,6 @@ const render = apiData => () => {
   })
 
   const store = createStore(formData)
-
-  const clientThemeBase = themeBase || setTheme(primaryColor) || 'dark'
 
   ReactDOM.render(
     <Provider store={store}>
