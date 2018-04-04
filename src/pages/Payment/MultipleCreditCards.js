@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { themr } from 'react-css-themr'
 import Form from 'react-vanilla-form'
+import { isEmpty, reject, isNil } from 'ramda'
 
 import {
   Grid,
@@ -15,6 +16,7 @@ import CreditCardForm from './CreditCardForm'
 
 import { required } from '../../utils/validations'
 import updateMultipleAmount from '../../utils/helpers/updateMultipleAmount'
+import formatToBRL from './../../utils/helpers/formatToBRL'
 
 const applyThemr = themr('UIPaymentPage')
 
@@ -69,12 +71,13 @@ class MultipleCreditCards extends Component {
 
     this.state = {
       formData: {},
+      formValid: false,
       inputPrefixes,
       inputAmountNames,
     }
   }
 
-  handleChangeForm = (newFormData) => {
+  handleChangeForm = (newFormData, errors) => {
     const { formData, inputAmountNames } = this.state
     const { transaction } = this.props
 
@@ -85,7 +88,10 @@ class MultipleCreditCards extends Component {
       transaction,
     })
 
-    this.setState({ formData: amounts })
+    this.setState({
+      formData: amounts,
+      formValid: isEmpty(reject(isNil, errors)),
+    })
   }
 
   render () {
@@ -97,6 +103,7 @@ class MultipleCreditCards extends Component {
 
     const {
       formData,
+      formValid,
       inputPrefixes,
       inputAmountNames,
     } = this.state
@@ -195,17 +202,41 @@ class MultipleCreditCards extends Component {
                 })}
               </Col>
             </Col>
-          </Row>
-          <div className={theme.footerNoPadding}>
-            <Button
-              className={theme.confirmBtn}
-              size="extra-large"
-              relevance="normal"
-              type="submit"
+            <Col
+              tv={mediumColSize}
+              desk={mediumColSize}
+              tablet={mediumColSize}
+              palm={defaultColSize}
             >
-                Confirmar
-            </Button>
-          </div>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                <h4 className={theme.amount} >
+                  Valor a pagar: {formatToBRL(amount)}
+                </h4>
+              </Col>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+                className={theme.footerNoPadding}
+              >
+                <Button
+                  className={theme.confirmBtn}
+                  size="extra-large"
+                  relevance="normal"
+                  type="submit"
+                  disabled={!formValid}
+                >
+                  Confirmar
+                </Button>
+              </Col>
+            </Col>
+          </Row>
         </Grid>
       </Form>
     )

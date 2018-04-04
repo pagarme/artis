@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { replace } from 'ramda'
@@ -192,7 +191,7 @@ const CreditCard = ({
               </Col>
             </Row>
           }
-          <Row hidden={isBigScreen}>
+          <Row hidden={isBigScreen || !showCreditCard}>
             <h4 className={theme.amount} >
               Valor a pagar: {formatToBRL(amount)}
             </h4>
@@ -231,7 +230,7 @@ CreditCard.defaultProps = {
   handleFlipCard: null,
   flipped: false,
   amountPrefixName: '',
-  inputPrefixName:'',
+  inputPrefixName: '',
 }
 
 export default CreditCard
