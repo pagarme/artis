@@ -1,92 +1,69 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { themr } from 'react-css-themr'
 
-const applyThemr = themr('UISwitch')
+const Switch = ({
+  theme,
+  base,
+  items,
+  selected,
+  handleSwitchPayment,
+}) => {
+  const renderSwitch = () => {
+    const width = (100 / items.length)
 
-class Switch extends Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      selected: 0,
-    }
-  }
-
-  handleOnChange (index) {
-    this.setState({ selected: index })
-    this.props.onChange(index)
-  }
-
-  renderSwitch () {
-    const { theme, items } = this.props
-
-    const maxWidth = (100 / items.length)
+    const handleOnClick = value => () =>
+      handleSwitchPayment(value)
 
     return (
       items.map((item, index) => {
-        const { value, title } = item
+        const { value, title, subtitle } = item
 
-        const id = value || (title === 'Cartão de Crédito'
-          ? 'creditcard'
-          : 'boleto')
+        const switchClasses = classNames(theme.switchButton, {
+          [theme.checked]: selected === item.name,
+        })
 
         return (
-          <label
-            id={id}
-            key={id}
-            className={theme.item}
-            htmlFor={`${id}-input`}
-            style={{ maxWidth: `${maxWidth}%` }}
+          <div
+            key={item.name}
+            className={
+              switchClasses
+            }
+            tabIndex={index}
+            onClick={handleOnClick(value)}
+            role="button"
+            style={{ width: `${width}%` }}
           >
-            <input
-              id={`${id}-input`}
-              name={item.name}
-              value={item.value}
-              type="radio"
-              checked={this.state.selected === index}
-              onChange={this.handleOnChange.bind(this, index)}
-            />
-            <div className={theme.label}>
-              <h3>{item.title}</h3>
-              <p>{item.subtitle}</p>
-            </div>
-          </label>
+            <h3>{title}</h3>
+            <p>{subtitle}</p>
+          </div>
         )
       })
     )
   }
 
-  renderContent () {
-    const { theme, base, items } = this.props
-
-    return items.map((item, index) => (
+  const renderContent = () =>
+    items.map(item => (
       <div
         key={item.title}
         className={
           classNames(theme[base], theme.content, {
-            [theme.visible]: index === this.state.selected,
+            [theme.visible]: selected === item.value,
           })
         }
       >
         {item.content}
       </div>
     ))
-  }
 
-  render () {
-    const { theme, base } = this.props
-
-    return (
-      <React.Fragment>
-        <div className={classNames(theme[base], theme.switch)}>
-          {this.renderSwitch()}
-        </div>
-        {this.renderContent()}
-      </React.Fragment>
-    )
-  }
+  return (
+    <React.Fragment>
+      <div className={classNames(theme[base], theme.switch)}>
+        {renderSwitch()}
+      </div>
+      {renderContent()}
+    </React.Fragment>
+  )
 }
 
 Switch.propTypes = {
@@ -107,7 +84,8 @@ Switch.propTypes = {
     value: PropTypes.string,
     content: PropTypes.element,
   })).isRequired,
-  onChange: PropTypes.func.isRequired,
+  selected: PropTypes.string.isRequired,
+  handleSwitchPayment: PropTypes.func.isRequired,
 }
 
 Switch.defaultProps = {
@@ -115,4 +93,4 @@ Switch.defaultProps = {
   base: 'dark',
 }
 
-export default applyThemr(Switch)
+export default Switch

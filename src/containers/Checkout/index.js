@@ -5,7 +5,15 @@ import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import { State, withStatechart } from 'react-automata'
-import { isEmpty, isNil, reject, pathOr, has, allPass, pickBy } from 'ramda'
+import {
+  isEmpty,
+  isNil,
+  reject,
+  pathOr,
+  has,
+  allPass,
+  filter,
+} from 'ramda'
 import ReactGA from 'react-ga'
 
 import { changeScreenSize } from '../../actions'
@@ -16,16 +24,48 @@ import { Grid, Row, Col } from '../../components/Grid'
 import CustomerPage from '../../pages/Customer'
 import AddressesPage from '../../pages/Addresses'
 import PaymentPage from '../../pages/Payment'
+import SwitchPayment from '../../pages/Payment/SwitchPayment'
 import ConfirmationPage from '../../pages/Confirmation'
+import CreditCardAndBoletoPage from '../../pages/Payment/CreditCardAndBoleto'
+import MultipleCreditCardsPage from '../../pages/Payment/MultipleCreditCards'
+
 import defaultLogo from '../../images/logo_pagarme.png'
 import statechart from './statechart'
 
-const stepsTitles = {
-  customer: 'Identificação',
-  addresses: 'Endereços',
-  payment: 'Forma de Pagamento',
-  confirmation: 'Confirmação',
-}
+const stepsTitles = [
+  {
+    page: 'customer',
+    title: 'Identificação',
+    visible: true,
+  },
+  {
+    page: 'addresses',
+    title: 'Endereços',
+    visible: true,
+  },
+  {
+    page: 'payment',
+    title: 'Forma de Pagamento',
+    visible: true,
+  },
+  {
+    page: 'singleCreditCard',
+    visible: false,
+  },
+  {
+    page: 'singleBoleto',
+    visible: false,
+  },
+  {
+    page: 'creditCardAndBoleto',
+    visible: false,
+  },
+  {
+    page: 'confirmation',
+    title: 'Confirmação',
+    visible: true,
+  },
+]
 
 const applyThemr = themr('UICheckout')
 
@@ -125,6 +165,8 @@ class Checkout extends Component {
     this.setState(({ collapsedCart }) => ({ collapsedCart: !collapsedCart }))
   }
 
+  handlePageTransition = page => () => this.props.transition(page)
+
   close () {
     const { targetElement } = this.props
 
@@ -144,13 +186,13 @@ class Checkout extends Component {
 
   renderPages () {
     const { key, formData, transaction, configs } = this.props.apiData
+
     const { base } = this.props
 
     const { items } = formData
 
     const {
       amount,
-      paymentMethods,
     } = transaction
 
     const {
@@ -177,9 +219,9 @@ class Checkout extends Component {
           <PaymentPage
             base={base}
             title="Dados de Pagamento"
-            paymentMethods={paymentMethods}
-            amount={amount}
+            transaction={transaction}
             handleSubmit={this.handleFormSubmit}
+            handlePageTransition={this.handlePageTransition}
           />
         </State>
         <State value="confirmation">
@@ -192,6 +234,34 @@ class Checkout extends Component {
             onSuccess={onSuccess}
             onError={onError}
             items={items}
+          />
+        </State>
+        <State value="singleCreditCard">
+          <SwitchPayment
+            transaction={transaction}
+            paymentType={'creditcard'}
+            handleSubmit={this.handleFormSubmit}
+            defaultMethod={'creditcard'}
+          />
+        </State>
+        <State value="singleBoleto">
+          <SwitchPayment
+            transaction={transaction}
+            paymentType={'boleto'}
+            handleSubmit={this.handleFormSubmit}
+            defaultMethod={'boleto'}
+          />
+        </State>
+        <State value="creditCardAndBoleto">
+          <CreditCardAndBoletoPage
+            transaction={transaction}
+            handleSubmit={this.handleFormSubmit}
+          />
+        </State>
+        <State value="multipleCreditCards">
+          <MultipleCreditCardsPage
+            transaction={transaction}
+            handleSubmit={this.handleFormSubmit}
           />
         </State>
       </React.Fragment>
@@ -230,21 +300,29 @@ class Checkout extends Component {
   }
 
   render () {
-    const { theme, machineState, isBigScreen, base } = this.props
+    const {
+      theme,
+      machineState,
+      isBigScreen,
+      base,
+      confirmation,
+    } = this.props
 
     const params = pathOr({}, ['apiData', 'params'], this.props)
     const configs = pathOr({}, ['apiData', 'configs'], this.props)
 
-    const pages = pickBy((value, key) => !this.hasRequiredData(key), stepsTitles)
-
-    const stepsKeys = Object.keys(pages)
-    const stepsNames = Object.values(pages)
+    const pages = filter(value => !this.hasRequiredData(value.page), stepsTitles)
+    const firstPage = pages[0].page
 
     const isCartButtonVisible = configs.enableCart ?
-      !this.props.isBigScreen :
+      !isBigScreen :
       false
 
     const checkoutColSize = configs.enableCart ? 9 : 12
+
+    const shouldDisablePrevButton = machineState.value === firstPage
+      || (machineState.value === 'confirmation'
+      && (confirmation.loading || confirmation.success))
 
     return (
       <div
@@ -272,18 +350,15 @@ class Checkout extends Component {
                   logoSrc={configs.image || defaultLogo}
                   onPrev={this.handleBackButton}
                   onClose={this.close.bind(this)}
-                  prevButtonDisabled={
-                    machineState.value === stepsKeys[0] ||
-                    (machineState.value === 'confirmation' && (this.props.confirmation.loading || this.props.confirmation.success))
-                  }
+                  prevButtonDisabled={shouldDisablePrevButton}
                 />
                 <div
                   className={theme.content}
                 >
                   <ProgressBar
                     base={base}
-                    steps={stepsNames}
-                    activePage={pages[machineState.value]}
+                    steps={pages}
+                    activePage={machineState.value}
                   />
                   {this.renderPages()}
                 </div>
@@ -334,7 +409,8 @@ Checkout.propTypes = {
     }),
     transaction: PropTypes.shape({
       amount: PropTypes.number.isRequired,
-      paymentMethods: PropTypes.arrayOf(PropTypes.object),
+      defaultMethod: PropTypes.string.isRequired,
+      paymentMethods: PropTypes.shape(),
     }),
   }).isRequired,
   base: PropTypes.string,

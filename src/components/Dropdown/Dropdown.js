@@ -82,6 +82,7 @@ class Dropdown extends React.Component {
       base,
       value,
       name,
+      icon,
     } = this.props
 
     const rootClasses = classNames(
@@ -93,48 +94,63 @@ class Dropdown extends React.Component {
       }
     )
 
+    const iconClass = classNames(
+      theme.icon,
+      {
+        [theme.iconError]: error,
+      }
+    )
+
     const hasSecondaryText = theme.secondaryText && error
     const hasLabel = theme.label && label
 
     return (
       <div className={rootClasses}>
-        {hasLabel &&
-          <label
-            htmlFor={this.instanceId}
-            className={theme.label}
-          >
-            {label}
-          </label>
+        {
+          icon &&
+          <div className={iconClass}>{icon}</div>
         }
+        <div className={theme.boxContainer}>
+          {
+            hasLabel &&
+            <label
+              htmlFor={this.instanceId}
+              className={theme.label}
+            >
+              {label}
+            </label>
+          }
 
-        <select
-          id={this.instanceId}
-          className={theme.select}
-          onChange={this.handleChange}
-          disabled={disabled}
-          value={value}
-          name={name}
-        >
-          <option
-            disabled
-            hidden
-            value="placeholder"
-            className={classNames(theme.option, theme.placeholder)}
+          <select
+            id={this.instanceId}
+            className={theme.select}
+            onChange={this.handleChange}
+            disabled={disabled}
+            value={value}
+            name={name}
           >
-            {placeholder}
-          </option>
-          {this.renderOptions()}
-        </select>
+            <option
+              disabled
+              hidden
+              value="placeholder"
+              className={classNames(theme.option, theme.placeholder)}
+            >
+              {placeholder}
+            </option>
+            {this.renderOptions()}
+          </select>
 
-        <MdArrowDropDown
-          className={theme.arrow}
-        />
+          <MdArrowDropDown
+            className={theme.arrowIcon}
+          />
 
-        {hasSecondaryText &&
-          <p className={theme.secondaryText}>
-            {error}
-          </p>
-        }
+          {
+            hasSecondaryText &&
+            <p className={theme.secondaryText}>
+              {error}
+            </p>
+          }
+        </div>
       </div>
     )
   }
@@ -152,6 +168,8 @@ Dropdown.propTypes = {
     success: PropTypes.string,
     light: PropTypes.string,
     dark: PropTypes.string,
+    arrowIcon: PropTypes.string,
+    icon: PropTypes.string,
   }),
   base: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -167,6 +185,10 @@ Dropdown.propTypes = {
   disabled: PropTypes.bool,
   placeholder: PropTypes.string,
   error: PropTypes.string,
+  icon: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.bool,
+  ]),
 }
 
 Dropdown.defaultProps = {
@@ -178,6 +200,7 @@ Dropdown.defaultProps = {
   error: '',
   label: '',
   onChange: null,
+  icon: false,
 }
 
 export default Dropdown

@@ -55,7 +55,7 @@
   width: 100%;
   resize: none;
   border: none;
-  border-bottom: 1px solid var(--color-grey-68);
+  border-bottom: 2px solid var(--color-grey-68);
   border-radius: 0;
   font-size: var(--input-font-size);
   color: var(--color-white);
@@ -66,9 +66,17 @@
 
 .light .inputContainer > input {
   color: var(--color-grey-77);
-  border-bottom: 1px solid var(--color-grey-11);
+  border-bottom: 2px solid var(--color-grey-11);
   caret-color: var(--color-grey-83);
 }
+
+/* stylelint-disable */
+.inputContainer input[type="number"]::-webkit-inner-spin-button, 
+.inputContainer input[type="number"]::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+/* stylelint-enable */
 
 .inputContainer > textarea {
   padding: 0;
@@ -146,17 +154,22 @@
 }
 
 .icon {
-  padding-top: 22px;
-  margin-right: 15px;
+  height: 35.7px;
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+  padding-left: 8px;
   color: var(--color-grey-53);
+  border-bottom: 2px solid var(--color-grey-68);
+}
+
+.iconError {
+  color: var(--color-error);
+  border-color: var(--color-pink);
 }
 
 .disabled .icon {
   color: var(--color-grey-34);
-}
-
-.active .icon {
-  color: var(--color-grey-85);
 }
 
 .displayPasswordIcon {
@@ -167,13 +180,13 @@
 }
 
 .secondaryText {
-  width: 100%;
+  color: var(--color-grey-53);
   font-family: var(--input-font-family);
   font-size: 12px;
   text-align: left;
   margin: 0;
   margin-top: 5px;
-  color: var(--color-grey-53);
+  width: 100%;
 }
 
 .multiline {

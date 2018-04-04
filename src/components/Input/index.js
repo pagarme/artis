@@ -122,10 +122,18 @@ class Input extends React.Component {
       : type
 
 
+    const iconClass = classnames(
+      theme.icon,
+      {
+        [theme.iconError]: error,
+      }
+    )
+
     return (
       <div className={containerClasses}>
-        {icon &&
-          <div className={theme.icon}>{icon}</div>
+        {
+          icon &&
+          <div className={iconClass}>{icon}</div>
         }
         <div className={theme.boxContainer}>
           <div className={inputContainer}>
@@ -227,7 +235,10 @@ Input.propTypes = {
   hint: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.string,
-  icon: PropTypes.element,
+  icon: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.bool,
+  ]),
   className: PropTypes.string,
   mask: PropTypes.string,
   inputRef: PropTypes.func,

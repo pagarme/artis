@@ -1,12 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { clamp } from 'ramda'
+import { prop, propEq, findIndex, filter, slice, length } from 'ramda'
 import { themr } from 'react-css-themr'
 
 import { Grid, Row, Col } from '../Grid'
 
 const applyThemr = themr('UIProgressBar')
+
+const getStepsPayload = (pages, active) => {
+  const visibleSteps = filter(prop('visible'), pages)
+  const activeStepIndex = findIndex(propEq('page', active), pages) + 1
+  const activeSteps = slice(1, activeStepIndex, pages)
+
+  const activeStep = filter(prop('visible'), activeSteps).length
+  const percentage = (100 / length(visibleSteps)) * (activeStep + 1)
+
+  return {
+    percentage,
+    activeStep,
+    stepsList: visibleSteps,
+  }
+}
 
 const renderSteps = (steps, activeStep, theme) => {
   const colSize = 12 / steps.length
@@ -23,13 +38,13 @@ const renderSteps = (steps, activeStep, theme) => {
               tablet={colSize}
               className={
                 classNames(theme.step, {
-                  [theme.active]: index === activeStep - 1,
-                  [theme.passed]: index < activeStep - 1,
+                  [theme.active]: index === activeStep,
+                  [theme.passed]: index < activeStep,
                 })
               }
             >
               <span className={theme.stepIndex}>{ `${index + 1}.` }</span>
-              { step }
+              { step.title }
             </Col>
           ))
         }
@@ -39,23 +54,23 @@ const renderSteps = (steps, activeStep, theme) => {
 }
 
 const ProgressBar = ({
-  steps,
-  activePage,
   theme,
   base,
+  steps,
+  activePage,
 }) => {
-  const totalSteps = steps.length
-  const activeStep = steps.indexOf(activePage) + 1
-  const shouldRenderSteps = totalSteps > 0
+  const {
+    stepsList,
+    activeStep,
+    percentage,
+  } = getStepsPayload(steps, activePage)
 
-  const totalCalc = (100 / totalSteps) * activeStep
-  const totalPercent = clamp(0, 100, totalCalc)
-  const width = `${totalPercent}%`
+  const width = `${percentage}%`
 
   return (
     <div className={theme[base]}>
-      { shouldRenderSteps &&
-        renderSteps(steps, activeStep, theme)
+      { stepsList.length &&
+        renderSteps(stepsList, activeStep, theme)
       }
       <div className={theme.wrapper}>
         <div className={theme.progressBar} style={{ width }} />
@@ -77,7 +92,7 @@ ProgressBar.propTypes = {
     dark: PropTypes.string,
   }),
   base: PropTypes.string,
-  steps: PropTypes.arrayOf(PropTypes.string).isRequired,
+  steps: PropTypes.arrayOf(PropTypes.object).isRequired,
   activePage: PropTypes.string,
 }
 

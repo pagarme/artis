@@ -3,18 +3,21 @@
 @import "../spacing.css";
 @import "../media.css";
 @import "../margin.css";
+@import "../switch/index.css";
 
 .page {
   padding: var(--spacing-medium) var(--spacing-small) 0 var(--spacing-small);
 }
 
 .title {
-  margin: 6px 0;
   font-family: var(--primary-font-family);
   font-size: var(--font-size-small);
   color: var(--color-white);
   text-transform: uppercase;
   letter-spacing: 1.4px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 }
 
 .light .title {
@@ -29,7 +32,7 @@
 }
 
 .barcodeImg {
-  width: 300px;
+  width: 100%;
   height: 70px;
 }
 
@@ -72,6 +75,11 @@
   top: 32%;
 }
 
+.titleSinglePaymentType,
+.subtitleSinglePaymentType {
+  width: 100%;
+}
+
 @media (--media-palm) {
 
   .boletoContainer {
@@ -83,12 +91,50 @@
   .barcodeImg {
     width: 70%;
   }
-}
-
-@media (--media-palm) {
 
   .page {
     padding-left: var(--margin-page-mobile);
     padding-right: var(--margin-page-mobile);
   }
+
+  .confirmBtn {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .footerPadding {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .footerNoPadding {
+    width: 100%;
+  }
+}
+
+.multipaymentOptions {
+  padding-top: 24px;
+}
+
+.paymentOption {
+  background: var(--color-grey-84);
+  border: 0;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.paymentTitle {
+  display: block;
+  color: var(--color-white);
+  margin-bottom: 10px;
+}
+
+.paymentSubtitle {
+  text-transform: capitalize;
+  display: block;
+  color: var(--color-grey-33);
+}
+
+.confirmBtn {
+  float: right;
 }

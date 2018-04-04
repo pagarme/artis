@@ -1,7 +1,9 @@
 import applyDiscount from './applyDiscount'
-import generateInstallmnets from './generateInstallments'
+import generateInstallments from './generateInstallments'
+import calcRestAmount from './calcRestAmount'
 
 export {
   applyDiscount,
-  generateInstallmnets,
+  generateInstallments,
+  calcRestAmount,
 }
