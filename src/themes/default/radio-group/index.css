@@ -52,7 +52,7 @@
   left: 2px;
   border-radius: 50%;
   position: absolute;
-  transition: transform 150ms ease-in, -webkit-transform 150ms ease-in;
+  transition: transform 150ms ease-in;
   transform: scale(0);
   background-color: var(--color-white);
 }
