@@ -203,16 +203,18 @@ class MultipleCreditCards extends Component {
               </Col>
             </Col>
             <Col
-              tv={mediumColSize}
-              desk={mediumColSize}
-              tablet={mediumColSize}
+              tv={defaultColSize}
+              desk={defaultColSize}
+              tablet={defaultColSize}
               palm={defaultColSize}
+              alignEnd
             >
               <Col
                 tv={defaultColSize}
                 desk={defaultColSize}
                 tablet={defaultColSize}
                 palm={defaultColSize}
+                alignEnd
               >
                 <h4 className={theme.amount} >
                   Valor a pagar: {formatToBRL(amount)}
@@ -224,6 +226,7 @@ class MultipleCreditCards extends Component {
                 tablet={defaultColSize}
                 palm={defaultColSize}
                 className={theme.footerNoPadding}
+                alignEnd
               >
                 <Button
                   className={theme.confirmBtn}

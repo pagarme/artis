@@ -17,6 +17,7 @@ import BoletoForm from './BoletoForm'
 
 import { required } from '../../utils/validations'
 import updateMultipleAmount from '../../utils/helpers/updateMultipleAmount'
+import formatToBRL from './../../utils/helpers/formatToBRL'
 
 const applyThemr = themr('UIPaymentPage')
 
@@ -97,7 +98,34 @@ class CreditCardAndBoleto extends Component {
               tablet={mediumColSize}
               palm={defaultColSize}
             >
-              <span className={theme.title}>Cartão de crédito</span>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                <span className={theme.title}>Cartão 1</span>
+              </Col>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                {CreditCardForm({
+                  theme,
+                  amount,
+                  data: creditcard,
+                  formData,
+                  isBigScreen,
+                  enableSplitAmount: true,
+                  installmentsIndex: 0,
+                  amountPrefixName: inputAmountNames.first,
+                  showCreditCard: false,
+                  confirmButtonVisible: false,
+                  handleSubmit: this.handleSubmit,
+                })}
+              </Col>
             </Col>
             <Col
               tv={mediumColSize}
@@ -105,59 +133,70 @@ class CreditCardAndBoleto extends Component {
               tablet={mediumColSize}
               palm={defaultColSize}
             >
-              <span className={theme.title}>Boleto</span>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                <span className={theme.title}>Boleto</span>
+              </Col>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                {BoletoForm({
+                  theme,
+                  amount,
+                  data: boleto,
+                  enableInputAmount: true,
+                  amountPrefixName: inputAmountNames.second,
+                  showBoletoDetails: false,
+                  confirmButtonVisible: false,
+                  handleSubmit: this.handleSubmit,
+                })}
+              </Col>
+            </Col>
+            <Col
+              tv={defaultColSize}
+              desk={defaultColSize}
+              tablet={defaultColSize}
+              palm={defaultColSize}
+              alignEnd
+            >
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+                alignEnd
+              >
+                <h4 className={theme.amount} >
+                  Valor a pagar: {formatToBRL(amount)}
+                </h4>
+              </Col>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+                alignEnd
+                className={theme.footerNoPadding}
+              >
+                <Button
+                  className={theme.confirmBtn}
+                  size="extra-large"
+                  relevance="normal"
+                  type="submit"
+                  disabled={!formValid}
+                >
+                  Confirmar
+                </Button>
+              </Col>
             </Col>
           </Row>
-          <Row>
-            <Col
-              tv={mediumColSize}
-              desk={mediumColSize}
-              tablet={mediumColSize}
-              palm={defaultColSize}
-            >
-              {CreditCardForm({
-                theme,
-                amount,
-                data: creditcard,
-                formData,
-                isBigScreen,
-                enableSplitAmount: true,
-                installmentsIndex: 0,
-                amountPrefixName: inputAmountNames.first,
-                showCreditCard: false,
-                confirmButtonVisible: false,
-                handleSubmit: this.handleSubmit,
-              })}
-            </Col>
-            <Col
-              tv={mediumColSize}
-              desk={mediumColSize}
-              tablet={mediumColSize}
-              palm={defaultColSize}
-            >
-              {BoletoForm({
-                theme,
-                amount,
-                data: boleto,
-                enableInputAmount: true,
-                amountPrefixName: inputAmountNames.second,
-                showBoletoDetails: false,
-                confirmButtonVisible: false,
-                handleSubmit: this.handleSubmit,
-              })}
-            </Col>
-          </Row>
-          <div className={theme.footerNoPadding}>
-            <Button
-              className={theme.confirmBtn}
-              size="extra-large"
-              relevance="normal"
-              type="submit"
-              disabled={!formValid}
-            >
-              Confirmar
-            </Button>
-          </div>
         </Grid>
       </Form>
     )

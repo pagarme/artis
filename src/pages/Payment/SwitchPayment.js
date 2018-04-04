@@ -2,8 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { themr } from 'react-css-themr'
-import { pipe, values, mapObjIndexed, pick, merge } from 'ramda'
 import Form from 'react-vanilla-form'
+import {
+  pipe,
+  values,
+  mapObjIndexed,
+  pick,
+  merge,
+  isEmpty,
+  reject,
+  isNil,
+} from 'ramda'
+
 import { Switch, Button } from '../../components'
 
 import BoletoForm from './BoletoForm'
@@ -88,8 +98,11 @@ class SwitchPayment extends Component {
     }
   }
 
-  handleChangeForm = (formData) => {
-    this.setState({ formData })
+  handleChangeForm = (formData, errors) => {
+    this.setState({
+      formData,
+      formValid: isEmpty(reject(isNil, errors)),
+    })
   }
 
   handleFlipCard = () => {
@@ -159,7 +172,12 @@ class SwitchPayment extends Component {
       isBigScreen,
     } = this.props
 
-    const { formData, flipped, clickedPaymentType } = this.state
+    const {
+      formData,
+      formValid,
+      flipped,
+      clickedPaymentType,
+    } = this.state
 
     let validation = null
 
@@ -204,6 +222,7 @@ class SwitchPayment extends Component {
             relevance="normal"
             size="extra-large"
             type="submit"
+            disabled={!formValid}
           >
             Confirmar
           </Button>
