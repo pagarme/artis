@@ -130,6 +130,7 @@ class Checkout extends Component {
     }
 
     return this.setState({
+      transactionError: true,
       ...getErrorMessage(response),
     }, this.props.transition('TRANSACTION_FAILURE'))
   }
@@ -361,7 +362,7 @@ class Checkout extends Component {
     const shouldDisablePrevButton =
       machineState.value === firstPage ||
       machineState.value === 'transaction' ||
-      machineState.value === 'confirmation'
+      (machineState.value === 'confirmation' && !this.state.transactionError)
 
     return (
       <div
