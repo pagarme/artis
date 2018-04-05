@@ -27,7 +27,7 @@ const Boleto = ({
   const { discount } = data
 
   return (
-    <Grid className={theme.page}>
+    <Grid>
       { enableInputAmount &&
         <Row>
           <Col

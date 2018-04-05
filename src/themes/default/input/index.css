@@ -31,7 +31,7 @@
 }
 
 .disabled .inputContainer {
-  border-bottom: 1px solid var(--color-grey-11);
+  border-bottom: 2px solid var(--color-grey-11);
   border-radius: 0;
 }
 
@@ -71,7 +71,7 @@
 }
 
 /* stylelint-disable */
-.inputContainer input[type="number"]::-webkit-inner-spin-button, 
+.inputContainer input[type="number"]::-webkit-inner-spin-button,
 .inputContainer input[type="number"]::-webkit-outer-spin-button {
   appearance: none;
   margin: 0;
@@ -129,7 +129,7 @@
 
 .inputContainer > textarea:focus,
 .inputContainer > input:focus {
-  border-bottom: 1px solid var(--color-grey-68);
+  border-bottom: 2px solid var(--color-grey-68);
   border-radius: 0;
   transition: border-color 100ms ease;
   outline: none;
@@ -137,7 +137,7 @@
 
 .light .inputContainer > textarea:focus,
 .light .inputContainer > input:focus {
-  border-bottom: 1px solid var(--color-grey-39);
+  border-bottom: 2px solid var(--color-grey-39);
 }
 
 .inputContainer > textarea:focus ~ label,

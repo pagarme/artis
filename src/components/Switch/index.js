@@ -52,7 +52,9 @@ const Switch = ({
           })
         }
       >
-        {item.content}
+        <div className={theme.page}>
+          {item.content}
+        </div>
       </div>
     ))
 
