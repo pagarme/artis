@@ -186,7 +186,7 @@ const CreditCard = ({
                   name={`${prefix}installments`}
                   label="Quantidade de Parcelas"
                   placeholder="Selecione"
-                  value={installments[0].initial}
+                  value={installments[0].initial.toString()}
                   icon={!isBigScreen && <Calendar24 size={20} />}
                 />
               </Col>

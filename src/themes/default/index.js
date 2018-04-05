@@ -12,7 +12,6 @@ import UIPaymentPage from './paymentPage/index.css'
 import UIAddressesPage from './addressesPage/index.css'
 import UIShippingPage from './shippingPage/index.css'
 import UICustomerPage from './customerPage/index.css'
-import UIConfirmationPage from './confirmationPage/index.css'
 import UISwitch from './switch/index.css'
 import UISuccessInfo from './successInfo/index.css'
 import UIErrorInfo from './errorInfo/index.css'
@@ -40,7 +39,6 @@ export default {
   UIBillingPage,
   UIPaymentPage,
   UIShippingPage,
-  UIConfirmationPage,
   UISwitch,
   UISuccessInfo,
   UIErrorInfo,

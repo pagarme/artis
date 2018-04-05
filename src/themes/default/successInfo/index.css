@@ -42,9 +42,48 @@
   width: 80%;
 }
 
+.page {
+  margin: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) 0;
+  padding:
+    var(--spacing-xlarge)
+    var(--spacing-small)
+    var(--spacing-xlarge)
+    var(--spacing-small);
+}
+
+.successIcon {
+  padding-top: 10px;
+}
+
+.alignSelfCenter {
+  align-self: center;
+}
+
+.confirmationIcon {
+  border-radius: 50%;
+  background-color: var(--color-grey-85);
+  padding: 20px;
+  width: 80px;
+  height: 80px;
+}
+
+.light .confirmationIcon {
+  background-color: var(--color-grey-10);
+}
+
 @media (--media-palm) {
 
   .success {
     text-align: center;
+  }
+
+  .page {
+    background-color: transparent;
+    margin: var(--spacing-medium) 0 0 0;
+    padding:
+      var(--spacing-small)
+      var(--spacing-small)
+      0
+      var(--spacing-small);
   }
 }
