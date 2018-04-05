@@ -117,24 +117,45 @@
 }
 
 .paymentOption {
+  align-items: center;
   background: var(--color-grey-84);
   border: 0;
+  display: flex;
+  flex-flow: row wrap;
+  height: 80px;
+  justify-content: center;
   padding-top: 25px;
   padding-bottom: 25px;
 }
 
 .paymentTitle {
-  display: block;
   color: var(--color-white);
-  margin-bottom: 10px;
+  display: block;
+  margin-bottom: 0;
+  margin-top: 0;
+  width: 100%;
 }
 
 .paymentSubtitle {
-  text-transform: capitalize;
-  display: block;
   color: var(--color-grey-33);
+  display: block;
+  margin-bottom: 0;
+  margin-top: 10px;
+  text-transform: capitalize;
 }
 
 .confirmBtn {
   float: right;
+}
+
+.light .paymentOption {
+  background: var(--color-grey-07);
+}
+
+.light .paymentTitle {
+  color: var(--color-grey-78);
+}
+
+.wrapperButton {
+  padding-bottom: 10px;
 }

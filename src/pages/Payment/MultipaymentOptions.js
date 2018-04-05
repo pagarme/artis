@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { equals } from 'ramda'
 import { themr } from 'react-css-themr'
+import classNames from 'classnames'
 
 import {
   Grid,
@@ -29,6 +30,7 @@ const allowedOptions = [
 ]
 
 const MultipaymentOptions = ({
+  base,
   theme,
   transaction,
   handlePageTransition,
@@ -54,6 +56,7 @@ const MultipaymentOptions = ({
     return (
       <Row alignCenter key={key}>
         <Col
+          className={theme.wrapperButton}
           tv={mediumColSize}
           desk={mediumColSize}
           tablet={defaultColSize}
@@ -64,19 +67,23 @@ const MultipaymentOptions = ({
             onClick={handlePageTransition(transitionTo)}
             full
           >
-            <span className={theme.paymentTitle}>
+            <p className={theme.paymentTitle}>
               {title}
-            </span>
+            </p>
           </Button>
         </Col>
       </Row>
     )
   })
 
+  const { paymentMethods } = transaction
+  const { creditcard, boleto } = paymentMethods
+
   return (
-    <Grid className={theme.page}>
+    <Grid className={classNames(theme.page, theme[base])}>
       <Row alignCenter>
         <Col
+          className={theme.wrapperButton}
           tv={mediumColSize}
           desk={mediumColSize}
           tablet={defaultColSize}
@@ -87,15 +94,19 @@ const MultipaymentOptions = ({
             onClick={handlePageTransition('SINGLE_CREDITCARD')}
             full
           >
-            <span className={theme.paymentTitle}>
+            <p className={theme.paymentTitle}>
               1 cartão de crédito
-            </span>
+            </p>
+            <p className={theme.paymentSubtitle}>
+              {creditcard.subtitle}
+            </p>
           </Button>
         </Col>
       </Row>
       { multipaymentButtons }
       <Row alignCenter>
         <Col
+          className={theme.wrapperButton}
           tv={mediumColSize}
           desk={mediumColSize}
           tablet={defaultColSize}
@@ -106,9 +117,12 @@ const MultipaymentOptions = ({
             onClick={handlePageTransition('SINGLE_BOLETO')}
             full
           >
-            <span className={theme.paymentTitle}>
+            <p className={theme.paymentTitle}>
               Boleto
-            </span>
+            </p>
+            <p className={theme.paymentSubtitle}>
+              {boleto.subtitle}
+            </p>
           </Button>
         </Col>
       </Row>
@@ -120,6 +134,7 @@ MultipaymentOptions.propTypes = {
   theme: PropTypes.shape(),
   transaction: PropTypes.shape().isRequired,
   handlePageTransition: PropTypes.func.isRequired,
+  base: PropTypes.string.isRequired,
 }
 
 MultipaymentOptions.defaultProps = {
