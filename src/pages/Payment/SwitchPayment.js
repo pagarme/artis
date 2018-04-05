@@ -224,7 +224,7 @@ class SwitchPayment extends Component {
             type="submit"
             disabled={!formValid}
           >
-            Confirmar
+            Finalizar compra
           </Button>
         </div>
       </Form>
