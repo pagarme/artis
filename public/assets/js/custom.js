@@ -139,12 +139,30 @@ if (storagedCustomCode) {
   custom.clearSelection()
 }
 
+/** Full Panel **/
+const full = ace.edit('full');
+full.setTheme('ace/theme/monokai');
+full.session.setMode('ace/mode/javascript');
+full.getSession().setTabSize(2);
+full.setOptions({ fontSize: '11pt' });
+full.setValue(pagarmeApi);
+
+const btnSetMundi = document.querySelector('#btn-set-mundi');
+btnSetMundi.addEventListener('click', () => {
+  full.setValue(mundiApi);
+})
+
+const btnSetPagarme = document.querySelector('#btn-set-pagarme')
+btnSetPagarme.addEventListener('click', () => {
+  full.setValue(pagarmeApi);
+})
+
 const btnOpenCustom = document.querySelector('#btn-open-custom')
 btnOpenCustom.addEventListener('click', () => {
   const code = custom.session.getDocument().getAllLines().join('\n')
   window.localStorage.setItem('custom', code)
   eval(code)
-  Checkout({ key, configs, formData, transaction, })()
+  Checkout(configs)()
 })
 
 const btnResetCustom = document.querySelector('#btn-reset-custom')
@@ -153,16 +171,10 @@ btnResetCustom.addEventListener('click', () => {
   location.reload()
 })
 
-/** Full Panel **/
-const full = ace.edit('full');
-full.setTheme('ace/theme/monokai');
-full.session.setMode('ace/mode/javascript');
-full.getSession().setTabSize(2);
-full.setOptions({ fontSize: '11pt' });
 
 const btnOpenFull = document.querySelector('#btn-open-full')
 btnOpenFull.addEventListener('click', () => {
   const code = full.session.getDocument().getAllLines().join('\n')
   eval(code)
-  Checkout({ key, configs, formData, transaction, })()
+  Checkout(configs)()
 })

@@ -17,8 +17,7 @@ import createElement from './utils/helpers/createElement'
 import setTheme from './utils/helpers/setTheme'
 import setColors from './utils/helpers/setColors'
 import DEFAULT_COLORS from './utils/data/colors'
-
-import { getStrategyName } from './utils/strategies'
+import { getStrategyName, mundipagg } from './utils/strategies'
 import createStore from './store'
 
 import NormalizeCSS from './components/NormalizeCSS'
@@ -27,13 +26,48 @@ import defaultLogo from './images/logo_pagarme.png'
 
 moment.locale('pt-br')
 
+const { getTokenData } = mundipagg
+
 ReactGA.initialize('UA-113290482-1')
+
+const openCheckout = (
+  store,
+  apiData,
+  acquirer,
+  clientTarget,
+  clientThemeBase,
+) => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <ThemeProvider theme={{
+        name: 'Checkout Theme',
+        styles: defaultTheme,
+      }}
+      >
+        <ThemrProvider theme={defaultTheme}>
+          <ErrorBoundary CrashReportComponent={<ErrorPage />}>
+            <NormalizeCSS>
+              <Checkout
+                apiData={apiDataWithDefaults}
+                acquirer={acquirer}
+                targetElement={clientTarget}
+                base={clientThemeBase}
+              />
+            </NormalizeCSS>
+          </ErrorBoundary>
+        </ThemrProvider>
+      </ThemeProvider>
+    </Provider>,
+    clientTarget
+  )
+}
 
 const render = apiData => () => {
   const {
-    configs,
-    formData,
+    configs = {},
+    formData = {},
     key,
+    token,
   } = apiData
 
   const {
@@ -69,30 +103,26 @@ const render = apiData => () => {
     },
   }
 
-  ReactDOM.render(
-    <Provider store={store}>
-      <ThemeProvider theme={{
-        name: 'Checkout Theme',
-        styles: defaultTheme,
-      }}
-      >
-        <ThemrProvider theme={defaultTheme}>
-          <ErrorBoundary CrashReportComponent={<ErrorPage />}>
-            <NormalizeCSS>
-              <Checkout
-                apiData={apiDataWithDefaults}
-                acquirer={acquirer}
-                targetElement={clientTarget}
-                base={clientThemeBase}
-              />
-            </NormalizeCSS>
-          </ErrorBoundary>
-        </ThemrProvider>
-      </ThemeProvider>
-    </Provider>,
-    clientTarget
-  )
-}
+  if (acquirer === 'pagarme') {
+    return openCheckout(
+      store,
+      apiDataWithDefaults,
+      acquirer,
+      clientTarget,
+      clientThemeBase,
+    )
+  }
+
+  return getTokenData(token)
+    .then((data) => {
+      openCheckout(
+        store,
+        data,
+        acquirer,
+        clientTarget,
+        clientThemeBase,
+      )
+    })
 
 const integrations = {
   simple: (buttons) => {
@@ -126,9 +156,7 @@ const integrations = {
     })
   },
   custom: () => {
-    window.Checkout = ({ key, configs, formData, transaction }) => () => {
-      render({ key, configs, formData, transaction })()
-    }
+    window.Checkout = configs => render(configs)
   },
 }
 
