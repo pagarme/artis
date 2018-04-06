@@ -35,8 +35,8 @@ const parseCreditcardData = applySpec({
 })
 
 const parseBoletoData = applySpec({
-  boleto_expiration_date: path(['payment', 'method', 'instructions']),
-  boleto_instructions: path(['payment', 'method', 'expirationAt']),
+  boleto_expiration_date: path(['payment', 'method', 'expirationAt']),
+  boleto_instructions: path(['payment', 'method', 'instructions']),
 })
 
 const parseToPayload = applySpec({
