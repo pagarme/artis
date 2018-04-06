@@ -192,7 +192,7 @@ class CreditCardAndBoleto extends Component {
                   type="submit"
                   disabled={!formValid}
                 >
-                  Confirmar
+                  Finalizar compra
                 </Button>
               </Col>
             </Col>
