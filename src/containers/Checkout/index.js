@@ -103,8 +103,8 @@ class Checkout extends Component {
   onTransactionReturn = (response, onSuccess, onError) => {
     const {
       status,
-      boleto_barcode: boletoUrl,
-      boleto_url: boletoBarcode,
+      boleto_barcode: boletoBarcode,
+      boleto_url: boletoUrl,
     } = response
 
     if (status === 'authorized') {
@@ -270,6 +270,12 @@ class Checkout extends Component {
         <Action show="onTransactionSuccess">
           <SuccessInfo
             base={base}
+            paymentInfo={{
+              customer: path(['customer', 'name'], this.props),
+              address: path(['shipping'], this.props),
+              amount: path(['apiData', 'transaction', 'amount'], this.props),
+              installments: path(['info', 'installments'], this.props.payment),
+            }}
             boletoBarcode={this.state.boletoBarcode}
             boletoUrl={this.state.boletoUrl}
           />
@@ -459,7 +465,22 @@ Checkout.propTypes = {
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
   transition: PropTypes.func.isRequired,
   shipping: PropTypes.object, // eslint-disable-line
-  customer: PropTypes.object.isRequired, // eslint-disable-line
+  customer: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+    documentNumber: PropTypes.string,
+    phoneNumber: PropTypes.string,
+  }).isRequired,
+  payment: PropTypes.shape({
+    type: PropTypes.string,
+    info: PropTypes.shape({
+      cardNumber: PropTypes.string,
+      cvv: PropTypes.string,
+      expiration: PropTypes.string,
+      holderName: PropTypes.string,
+      installments: PropTypes.string,
+    }),
+  }),
   isBigScreen: PropTypes.bool,
   machineState: PropTypes.oneOfType([
     PropTypes.string,
@@ -470,6 +491,7 @@ Checkout.propTypes = {
 Checkout.defaultProps = {
   theme: {},
   shipping: {},
+  payment: {},
   apiData: {},
   isBigScreen: false,
 }
