@@ -17,6 +17,7 @@ import createStore from './store'
 
 import NormalizeCSS from './components/NormalizeCSS'
 import defaultTheme from './themes/default'
+import defaultLogo from './images/logo_pagarme.png'
 
 const colors = {
   light: {
@@ -64,13 +65,21 @@ const render = apiData => () => {
 
   const store = createStore(formData)
 
+  const apiDataWithDefaults = {
+    ...apiData,
+    configs: {
+      ...apiData.configs,
+      image: apiData.configs.image || defaultLogo,
+    },
+  }
+
   ReactDOM.render(
     <Provider store={store}>
       <ThemeProvider theme={defaultTheme}>
         <ErrorBoundary CrashReportComponent={<ErrorPage />}>
           <NormalizeCSS>
             <Checkout
-              apiData={apiData}
+              apiData={apiDataWithDefaults}
               targetElement={clientTarget}
               base={clientThemeBase}
             />

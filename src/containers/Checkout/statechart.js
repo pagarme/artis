@@ -17,7 +17,7 @@ export default {
     payment: {
       on: {
         PREV: 'addresses',
-        NEXT: 'confirmation',
+        NEXT: 'transaction',
         SINGLE_CREDITCARD: 'singleCreditCard',
         SINGLE_BOLETO: 'singleBoleto',
         CREDITCARD_AND_BOLETO: 'creditCardAndBoleto',
@@ -27,30 +27,41 @@ export default {
     singleCreditCard: {
       on: {
         PREV: 'payment',
-        NEXT: 'confirmation',
+        NEXT: 'transaction',
       },
-      onEntry: ['singleCreditCard'],
     },
     singleBoleto: {
       on: {
         PREV: 'payment',
-        NEXT: 'confirmation',
+        NEXT: 'transaction',
       },
-      onEntry: ['singleBoleto'],
     },
     creditCardAndBoleto: {
       on: {
         PREV: 'payment',
-        NEXT: 'confirmation',
+        NEXT: 'transaction',
       },
-      onEntry: ['creditCardAndBoleto'],
     },
     multipleCreditCards: {
       on: {
         PREV: 'payment',
-        NEXT: 'confirmation',
+        NEXT: 'transaction',
       },
-      onEntry: ['multipleCreditCards'],
+    },
+    transaction: {
+      on: {
+        TRANSACTION_SUCCESS: {
+          confirmation: {
+            actions: ['onTransactionSuccess'],
+          },
+        },
+        TRANSACTION_FAILURE: {
+          confirmation: {
+            actions: ['onTransactionError'],
+          },
+        },
+      },
+      onEntry: 'enterLoading',
     },
     confirmation: {
       on: {

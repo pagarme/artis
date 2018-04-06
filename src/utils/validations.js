@@ -1,4 +1,10 @@
-import { isNil } from 'ramda'
+import {
+  isNil,
+  allPass,
+  prop,
+  pathOr,
+  has,
+} from 'ramda'
 
 const isNumber = value => (!/^[0-9]+$/gi.test(value)
   ? 'Apenas números são permitidos'
@@ -16,8 +22,54 @@ const isEmail = value => (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(valu
   : false
 )
 
+const hasAllTransactionData = allPass([
+  prop('customer'),
+  prop('billing'),
+  prop('shipping'),
+  prop('payment'),
+  prop('amount'),
+  prop('publickey'),
+  prop('postback'),
+  prop('items'),
+])
+
+const hasRequiredPageData = (page, props) => {
+  if (page === 'customer') {
+    const customer = pathOr({}, ['apiData', 'formData', 'customer'], props)
+
+    const customerHasAllProps = allPass([
+      has('name'),
+      has('documentNumber'),
+      has('email'),
+      has('phoneNumber'),
+    ])
+
+    return customerHasAllProps(customer)
+  }
+
+  if (page === 'addresses') {
+    const billing = pathOr({}, ['apiData', 'formData', 'billing'], props)
+    const shipping = pathOr({}, ['apiData', 'formData', 'shipping'], props)
+
+    const addressHasAllProps = allPass([
+      has('street'),
+      has('number'),
+      has('neighborhood'),
+      has('city'),
+      has('state'),
+      has('zipcode'),
+    ])
+
+    return addressHasAllProps(billing) && addressHasAllProps(shipping)
+  }
+
+  return false
+}
+
 export {
   isNumber,
   isEmail,
   required,
+  hasAllTransactionData,
+  hasRequiredPageData,
 }

@@ -4,48 +4,89 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 
-import { Row } from '../Grid'
+import { Grid, Col, Row } from '../Grid'
+
+import errorIcon from '../../images/error-icon.png'
 
 const applyThemr = themr('UIErrorInfo')
 
+const iconColSize = 4
+const contentColSize = 8
+const defaultColSize = 12
+
 const ErrorInfo = ({
   theme,
+  base,
   isBigScreen,
   title,
   subtitle,
 }) => (
-  <div className={
-    classNames(
-      theme.alignSelfCenter,
-      {
-        [theme.mediumSize]: isBigScreen,
-      },
-    )
-  }
+  <Grid
+    className={classNames(theme[base], theme.page)}
   >
-    <Row className={theme.title}>
-      <h4 className={
-        classNames(
-          {
-            [theme.textAlignedCenter]: !isBigScreen,
-          },
-          theme.error,
-        )}
+    <Row stretch>
+      <Col
+        tv={iconColSize}
+        desk={iconColSize}
+        tablet={iconColSize}
+        palm={defaultColSize}
+        alignCenter
       >
-        {title}
-      </h4>
-      <p className={
-        classNames(
-          {
-            [theme.textAlignedCenter]: !isBigScreen,
-          },
-          theme.info,
-        )}
+        <div className={
+          classNames(
+            theme.alignSelfCenter,
+            theme.confirmationIcon,
+          )
+        }
+        >
+          <img
+            src={errorIcon}
+            alt={'Ícone de erro'}
+            className={theme.errorIcon}
+          />
+        </div>
+      </Col>
+      <Col
+        tv={contentColSize}
+        desk={contentColSize}
+        tablet={contentColSize}
+        palm={defaultColSize}
       >
-        {subtitle}
-      </p>
+        <div className={
+          classNames(
+            theme.alignSelfCenter,
+            {
+              [theme.mediumSize]: isBigScreen,
+            },
+          )
+        }
+        >
+          <Row className={theme.title}>
+            <h4 className={
+              classNames(
+                {
+                  [theme.textAlignedCenter]: !isBigScreen,
+                },
+                theme.error,
+              )}
+            >
+              {title}
+            </h4>
+            <p className={
+              classNames(
+                {
+                  [theme.textAlignedCenter]: !isBigScreen,
+                },
+                theme.info,
+              )}
+            >
+              {subtitle}
+            </p>
+          </Row>
+        </div>
+      </Col>
     </Row>
-  </div>
+  </Grid>
 )
 
 ErrorInfo.propTypes = {
@@ -60,10 +101,12 @@ ErrorInfo.propTypes = {
   isBigScreen: PropTypes.bool.isRequired,
   title: PropTypes.string,
   subtitle: PropTypes.string,
+  base: PropTypes.string,
 }
 
 ErrorInfo.defaultProps = {
   theme: {},
+  base: 'dark',
   title: 'Seu pagamento foi recusado',
   subtitle: 'Ocorreu um erro ao processar sua transação, tente novamente mais tarde ou entre em contato com seu banco.',
 }

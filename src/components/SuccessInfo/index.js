@@ -6,12 +6,17 @@ import ReactGA from 'react-ga'
 import copy from 'copy-to-clipboard'
 import { connect } from 'react-redux'
 
-import { Row, Col } from '../Grid'
+import { Grid, Row, Col } from '../Grid'
 import EmailForm from '../../containers/EmailForm'
 import ActionList from '../ActionList'
 
+import successIcon from '../../images/success-icon.png'
+
 const applyThemr = themr('UISuccessInfo')
 
+const iconColSize = 4
+const contentColSize = 8
+const defaultColSize = 12
 const mediumColSize = 6
 const paymentInfo = {
   name: 'Dan Abramov',
@@ -114,7 +119,7 @@ class SuccessInfo extends React.Component {
             : <ActionList buttons={[
               {
                 text: 'Salvar arquivo',
-                download: boletoName || 'boleto.pdf',
+                download: boletoName,
                 href: boletoUrl,
               },
               {
@@ -210,13 +215,47 @@ class SuccessInfo extends React.Component {
     const { theme, base, boletoBarcode, boletoUrl } = this.props
 
     return (
-      <div className={theme[base]}>
-        {
-          boletoBarcode || boletoUrl ?
-            this.renderBoleto() :
-            this.renderCreditcard()
-        }
-      </div>
+      <Grid
+        className={classNames(theme[base], theme.page)}
+      >
+        <Row stretch>
+          <Col
+            tv={iconColSize}
+            desk={iconColSize}
+            tablet={iconColSize}
+            palm={defaultColSize}
+            alignCenter
+          >
+            <div className={
+              classNames(
+                theme.alignSelfCenter,
+                theme.confirmationIcon,
+              )
+            }
+            >
+              <img
+                src={successIcon}
+                alt={'Ícone de sucesso'}
+                className={theme.successIcon}
+              />
+            </div>
+          </Col>
+          <Col
+            tv={contentColSize}
+            desk={contentColSize}
+            tablet={contentColSize}
+            palm={defaultColSize}
+          >
+            <div className={theme[base]}>
+              {
+                boletoBarcode || boletoUrl ?
+                  this.renderBoleto() :
+                  this.renderCreditcard()
+              }
+            </div>
+          </Col>
+        </Row>
+      </Grid>
     )
   }
 }
@@ -243,7 +282,7 @@ SuccessInfo.defaultProps = {
   base: 'dark',
   boletoBarcode: '',
   boletoUrl: '',
-  boletoName: '',
+  boletoName: 'boleto.pdf',
 }
 
 const mapStateToProps = ({ screenSize }) => ({
