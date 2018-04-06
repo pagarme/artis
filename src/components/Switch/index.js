@@ -19,9 +19,13 @@ const Switch = ({
       items.map((item, index) => {
         const { value, title, subtitle } = item
 
-        const switchClasses = classNames(theme.switchButton, {
-          [theme.checked]: selected === item.name,
-        })
+        const switchClasses = classNames(
+          theme[base],
+          theme.switchButton,
+          {
+            [theme.checked]: selected === item.name,
+          }
+        )
 
         return (
           <div

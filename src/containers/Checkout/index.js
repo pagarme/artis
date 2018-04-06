@@ -218,10 +218,10 @@ class Checkout extends Component {
         <State value="payment">
           <PaymentPage
             base={base}
+            handlePageTransition={this.handlePageTransition}
+            handleSubmit={this.handleFormSubmit}
             title="Dados de Pagamento"
             transaction={transaction}
-            handleSubmit={this.handleFormSubmit}
-            handlePageTransition={this.handlePageTransition}
           />
         </State>
         <State value="confirmation">
@@ -238,30 +238,34 @@ class Checkout extends Component {
         </State>
         <State value="singleCreditCard">
           <SwitchPayment
-            transaction={transaction}
-            paymentType={'creditcard'}
-            handleSubmit={this.handleFormSubmit}
+            base={base}
             defaultMethod={'creditcard'}
+            handleSubmit={this.handleFormSubmit}
+            paymentType={'creditcard'}
+            transaction={transaction}
           />
         </State>
         <State value="singleBoleto">
           <SwitchPayment
-            transaction={transaction}
-            paymentType={'boleto'}
-            handleSubmit={this.handleFormSubmit}
+            base={base}
             defaultMethod={'boleto'}
+            handleSubmit={this.handleFormSubmit}
+            paymentType={'boleto'}
+            transaction={transaction}
           />
         </State>
         <State value="creditCardAndBoleto">
           <CreditCardAndBoletoPage
-            transaction={transaction}
+            base={base}
             handleSubmit={this.handleFormSubmit}
+            transaction={transaction}
           />
         </State>
         <State value="multipleCreditCards">
           <MultipleCreditCardsPage
-            transaction={transaction}
+            base={base}
             handleSubmit={this.handleFormSubmit}
+            transaction={transaction}
           />
         </State>
       </React.Fragment>

@@ -170,6 +170,7 @@ class SwitchPayment extends Component {
       paymentType,
       transaction,
       isBigScreen,
+      base,
     } = this.props
 
     const {
@@ -201,6 +202,7 @@ class SwitchPayment extends Component {
         validation={validation}
       >
         {Switch({
+          base,
           theme,
           name: 'paymentOptions',
           selected: clickedPaymentType || defaultMethod,
@@ -233,6 +235,7 @@ class SwitchPayment extends Component {
 }
 
 SwitchPayment.propTypes = {
+  base: PropTypes.string.isRequired,
   theme: PropTypes.shape(),
   paymentType: PropTypes.string,
   transaction: PropTypes.shape().isRequired,
