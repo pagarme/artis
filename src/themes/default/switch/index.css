@@ -16,18 +16,21 @@
 
 .switchButton {
   background-color: var(--color-grey-84);
-  flex-grow: 1;
-  position: relative;
-  text-align: center;
-  color: var(--color-white);
   border: 1px solid var(--color-grey-74);
-  border-right: 1px solid var(--color-black);
-  padding: 0;
+  color: var(--color-white);
   cursor: pointer;
-  letter-spacing: var(--letter-spacing);
+  flex-grow: 1;
   font-family: var(--primary-font-family);
   font-size: var(--font-size-small);
+  letter-spacing: var(--letter-spacing);
   outline: none;
+  padding: 0;
+  position: relative;
+  text-align: center;
+}
+
+.switchButton:not(:last-child) {
+  border-right: 1px solid var(--color-black);
 }
 
 .light .switchButton {

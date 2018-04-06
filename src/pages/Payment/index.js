@@ -8,30 +8,34 @@ import MultipaymentOptions from './MultipaymentOptions'
 const applyThemr = themr('UIPaymentPage')
 
 const PaymentPage = ({
-  transaction,
-  handleSubmit,
+  base,
   handlePageTransition,
+  handleSubmit,
+  transaction,
 }) => {
   const { defaultMethod } = transaction
 
   return (
     transaction.multipayment
       ? <MultipaymentOptions
-        transaction={transaction}
+        base={base}
         handlePageTransition={handlePageTransition}
+        transaction={transaction}
       />
       : <SwitchPayment
-        transaction={transaction}
-        handleSubmit={handleSubmit}
+        base={base}
         defaultMethod={defaultMethod}
+        handleSubmit={handleSubmit}
+        transaction={transaction}
       />
   )
 }
 
 PaymentPage.propTypes = {
-  transaction: PropTypes.shape().isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  base: PropTypes.string.isRequired,
   handlePageTransition: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  transaction: PropTypes.shape().isRequired,
 }
 
 export default applyThemr(PaymentPage)
