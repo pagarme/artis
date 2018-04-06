@@ -30,13 +30,12 @@ const { getTokenData } = mundipagg
 
 ReactGA.initialize('UA-113290482-1')
 
-const openCheckout = (
+const render = (apiData, {
   store,
-  apiData,
   acquirer,
   clientTarget,
   clientThemeBase,
-) => {
+}) => {
   ReactDOM.render(
     <Provider store={store}>
       <ThemeProvider theme={{
@@ -62,12 +61,11 @@ const openCheckout = (
   )
 }
 
-const render = apiData => () => {
+const openCheckout = (getMundipaggData, apiData, acquirer) => {
   const {
     configs = {},
     formData = {},
     key,
-    token,
   } = apiData
 
   const {
@@ -85,7 +83,6 @@ const render = apiData => () => {
   setColors(pColor, sColor)
 
   const clientTarget = createElement('div', target, 'body')
-  const acquirer = getStrategyName(apiData)
 
   ReactGA.event({
     category: 'API',
@@ -103,26 +100,39 @@ const render = apiData => () => {
     },
   }
 
+  const commonParams = {
+    store,
+    acquirer,
+    clientTarget,
+    clientThemeBase,
+  }
+
   if (acquirer === 'pagarme') {
-    return openCheckout(
-      store,
+    return render(
       apiDataWithDefaults,
-      acquirer,
-      clientTarget,
-      clientThemeBase,
+      commonParams
     )
   }
 
-  return getTokenData(token)
+  return getMundipaggData
     .then((data) => {
-      openCheckout(
-        store,
+      render(
         data,
-        acquirer,
-        clientTarget,
-        clientThemeBase,
+        commonParams
       )
     })
+
+const preRender = (apiData) => {
+  const acquirer = getStrategyName(apiData)
+
+  let getMundipaggData
+
+  if (acquirer === 'mundipagg') {
+    getMundipaggData = getTokenData(apiData.token)
+  }
+
+  return () => openCheckout(getMundipaggData, apiData, acquirer)
+}
 
 const integrations = {
   simple: (buttons) => {
@@ -147,7 +157,7 @@ const integrations = {
         paymentMethod,
       }
 
-      const open = render({ key, configs, params })
+      const open = preRender({ key, configs, params })
 
       button.addEventListener('click', (e) => {
         e.preventDefault()
@@ -156,7 +166,7 @@ const integrations = {
     })
   },
   custom: () => {
-    window.Checkout = configs => render(configs)
+    window.Checkout = configs => preRender(configs)
   },
 }
 
