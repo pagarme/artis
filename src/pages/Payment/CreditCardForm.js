@@ -7,7 +7,7 @@ import FaCreditCard from 'react-icons/lib/fa/credit-card'
 import FaUser from 'react-icons/lib/fa/user'
 import FaCalendar from 'react-icons/lib/fa/calendar'
 import FaEllipsisH from 'react-icons/lib/fa/ellipsis-h'
-import FaPieChart from 'react-icons/lib/fa/pie-chart'
+import Calendar24 from 'emblematic-icons/svg/Calendar24.svg'
 
 import {
   Grid,
@@ -60,13 +60,13 @@ const CreditCard = ({
   const prefix = inputPrefixName || ''
 
   return (
-    <Grid className={theme.page}>
+    <Grid>
       <Row>
         { showCreditCard &&
           <Col
             tv={mediumColSize}
             desk={mediumColSize}
-            tablet={mediumColSize}
+            tablet={defaultColSize}
             palm={defaultColSize}
             alignCenter
             hidden={!isBigScreen}
@@ -84,9 +84,10 @@ const CreditCard = ({
           </Col>
         }
         <Col
+          className={theme.mobilePadding}
           tv={inputsColSize}
           desk={inputsColSize}
-          tablet={inputsColSize}
+          tablet={defaultColSize}
           palm={defaultColSize}
         >
           <Row>
@@ -186,7 +187,7 @@ const CreditCard = ({
                   label="Quantidade de Parcelas"
                   placeholder="Selecione"
                   value={installments[0].initial}
-                  icon={!isBigScreen && <FaPieChart size={20} />}
+                  icon={!isBigScreen && <Calendar24 size={20} />}
                 />
               </Col>
             </Row>

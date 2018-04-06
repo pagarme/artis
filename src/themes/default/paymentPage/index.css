@@ -6,7 +6,7 @@
 @import "../switch/index.css";
 
 .page {
-  padding: var(--spacing-medium) var(--spacing-small) 0 var(--spacing-small);
+  padding: var(--spacing-medium) var(--spacing-small) 0 0;
 }
 
 .title {

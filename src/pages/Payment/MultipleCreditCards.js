@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { themr } from 'react-css-themr'
 import Form from 'react-vanilla-form'
 import { isEmpty, reject, isNil } from 'ramda'
+import classNames from 'classnames'
 
 import {
   Grid,
@@ -114,6 +115,11 @@ class MultipleCreditCards extends Component {
     const firstPrefix = inputPrefixes.first
     const secondPrefix = inputPrefixes.second
 
+    const gridClasses = classNames(
+      theme.page,
+      theme.multiPayment,
+    )
+
     return (
       <Form
         data={formData}
@@ -128,7 +134,7 @@ class MultipleCreditCards extends Component {
           }),
         }}
       >
-        <Grid className={theme.page}>
+        <Grid className={gridClasses}>
           <Row>
             <Col
               tv={mediumColSize}
