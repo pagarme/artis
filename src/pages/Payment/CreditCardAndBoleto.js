@@ -16,7 +16,12 @@ import {
 import CreditCardForm from './CreditCardForm'
 import BoletoForm from './BoletoForm'
 
-import { required } from '../../utils/validations'
+import {
+  required,
+  minLength,
+  maxLength,
+  isDateValid,
+} from '../../utils/validations'
 import updateMultipleAmount from '../../utils/helpers/updateMultipleAmount'
 import formatToBRL from './../../utils/helpers/formatToBRL'
 
@@ -89,10 +94,27 @@ class CreditCardAndBoleto extends Component {
         validation={{
           [creditcardAmountInputName]: [required],
           [boletoAmountInputName]: [required],
-          cardNumber: [required],
-          holderName: [required],
-          expiration: [required],
-          cvv: [required],
+          cardNumber: [
+            required,
+            minLength(16),
+            maxLength(16),
+          ],
+          holderName: [
+            required,
+            minLength(10),
+            maxLength(20),
+          ],
+          expiration: [
+            required,
+            minLength(4),
+            maxLength(4),
+            isDateValid,
+          ],
+          cvv: [
+            required,
+            minLength(3),
+            maxLength(3),
+          ],
           installments: [required],
         }}
       >
