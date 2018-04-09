@@ -14,7 +14,13 @@ import {
   Input,
 } from '../components'
 
-import { required, isEmail } from '../utils/validations'
+import {
+  required,
+  isEmail,
+  minLength,
+  maxLength,
+  cpf,
+} from '../utils/validations'
 import { addPageInfo } from '../actions'
 
 import CustomerIcon from '../images/avatar-line.svg'
@@ -136,10 +142,28 @@ class CustomerPage extends Component {
         onSubmit={this.props.handleSubmit}
         customErrorProp="error"
         validation={{
-          name: [required],
-          email: [required, isEmail],
-          documentNumber: [required],
-          phoneNumber: [required],
+          name: [
+            required,
+            minLength(10),
+            maxLength(30),
+          ],
+          email: [
+            required,
+            isEmail,
+            minLength(10),
+            maxLength(30),
+          ],
+          documentNumber: [
+            required,
+            minLength(11),
+            maxLength(11),
+            cpf,
+          ],
+          phoneNumber: [
+            required,
+            minLength(10),
+            maxLength(11),
+          ],
         }}
       >
         <Grid

@@ -7,6 +7,8 @@ import {
   replace,
 } from 'ramda'
 
+import cpf from './cpf'
+
 const removeMask = replace(/[^a-zA-Z0-9]/g, '')
 
 const isNumber = value => (!/^[0-9]+$/gi.test(value)
@@ -93,6 +95,7 @@ const hasRequiredPageData = (page, props) => {
 }
 
 export {
+  cpf,
   hasAllTransactionData,
   hasRequiredPageData,
   isNumber,
