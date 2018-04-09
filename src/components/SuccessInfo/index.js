@@ -10,6 +10,8 @@ import { Grid, Row, Col } from '../Grid'
 import EmailForm from '../../containers/EmailForm'
 import ActionList from '../ActionList'
 
+import formatBRL from '../../utils/helpers/formatToBRL'
+
 import successIcon from '../../images/success-icon.png'
 
 const applyThemr = themr('UISuccessInfo')
@@ -18,13 +20,6 @@ const iconColSize = 4
 const contentColSize = 8
 const defaultColSize = 12
 const mediumColSize = 6
-const paymentInfo = {
-  name: 'Dan Abramov',
-  amount: 'R$ 1000.000,00',
-  method: 'MasterCard Black',
-  address: 'Rua Lorem Ipsum Consectetuer, 1001 - apartamento 101 Água Fria',
-  payment: '2x vezes sem juros com 20% de desconto na primeira parcela',
-}
 
 const handleCopyBarCode = (barcode) => {
   ReactGA.event({
@@ -58,6 +53,7 @@ class SuccessInfo extends React.Component {
       boletoUrl,
       boletoName,
       isBigScreen,
+      paymentInfo,
     } = this.props
 
     const {
@@ -82,13 +78,13 @@ class SuccessInfo extends React.Component {
               <Row>
                 <div>
                   <div className={theme.field}>Nome</div>
-                  <div className={theme.value}>{paymentInfo.name}</div>
+                  <div className={theme.value}>{paymentInfo.customer}</div>
                 </div>
               </Row>
               <Row>
                 <div>
                   <div className={theme.field}>Valor pago</div>
-                  <div className={theme.value}>{paymentInfo.amount}</div>
+                  <div className={theme.value}>{formatBRL(paymentInfo.amount)}</div>
                 </div>
               </Row>
             </Col>
@@ -105,7 +101,9 @@ class SuccessInfo extends React.Component {
                       theme.value,
                       theme.mediumSize,
                     )}
-                  >{paymentInfo.address}</div>
+                  >{paymentInfo.address.street}, {paymentInfo.address.number} -
+                    CEP: {paymentInfo.address.zipcode}
+                  </div>
                 </div>
               </Row>
             </Col>
@@ -122,10 +120,10 @@ class SuccessInfo extends React.Component {
                 download: boletoName,
                 href: boletoUrl,
               },
-              {
-                text: 'Encaminhar por e-mail',
-                onClick: this.toggleEmailForm,
-              },
+              // {
+              //   text: 'Encaminhar por e-mail',
+              //   onClick: this.toggleEmailForm,
+              // },
               {
                 text: 'Copiar código de barras',
                 onClick: handleCopyBarCode.bind(this, boletoBarcode),
@@ -141,6 +139,7 @@ class SuccessInfo extends React.Component {
     const {
       theme,
       isBigScreen,
+      paymentInfo,
     } = this.props
 
     return (
@@ -161,19 +160,13 @@ class SuccessInfo extends React.Component {
               <Row>
                 <div>
                   <div className={theme.field}>Nome</div>
-                  <div className={theme.value}>{paymentInfo.name}</div>
+                  <div className={theme.value}>{paymentInfo.customer}</div>
                 </div>
               </Row>
               <Row>
                 <div>
                   <div className={theme.field}>Valor pago</div>
-                  <div className={theme.value}>{paymentInfo.amount}</div>
-                </div>
-              </Row>
-              <Row>
-                <div>
-                  <div className={theme.field}>Cartão</div>
-                  <div className={theme.value}>{paymentInfo.method}</div>
+                  <div className={theme.value}>{formatBRL(paymentInfo.amount)}</div>
                 </div>
               </Row>
             </Col>
@@ -190,7 +183,9 @@ class SuccessInfo extends React.Component {
                       theme.value,
                       theme.mediumSize,
                     )}
-                  >{paymentInfo.address}</div>
+                  >{paymentInfo.address.street}, {paymentInfo.address.number} -
+                    CEP: {paymentInfo.address.zipcode}
+                  </div>
                 </div>
               </Row>
               <Row>
@@ -201,7 +196,7 @@ class SuccessInfo extends React.Component {
                       theme.value,
                       theme.mediumSize,
                     )}
-                  >{paymentInfo.payment}</div>
+                  >{paymentInfo.installments}</div>
                 </div>
               </Row>
             </Col>
@@ -270,6 +265,20 @@ SuccessInfo.propTypes = {
     light: PropTypes.string,
     dark: PropTypes.string,
   }),
+  paymentInfo: PropTypes.shape({
+    customer: PropTypes.string,
+    address: PropTypes.shape({
+      street: PropTypes.string,
+      number: PropTypes.string,
+      complement: PropTypes.string,
+      neighborhood: PropTypes.string,
+      city: PropTypes.string,
+      state: PropTypes.string,
+      zipcode: PropTypes.string,
+    }),
+    amount: PropTypes.number,
+    installments: PropTypes.string,
+  }).isRequired,
   base: PropTypes.string,
   isBigScreen: PropTypes.bool.isRequired,
   boletoBarcode: PropTypes.string,
