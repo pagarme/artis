@@ -53,8 +53,8 @@ ActionList.propTypes = {
       disabled: PropTypes.bool,
       text: PropTypes.string,
       onClick: PropTypes.func,
-      href: PropTypes.func,
-      download: PropTypes.func,
+      href: PropTypes.string,
+      download: PropTypes.string,
     })
   ).isRequired,
 }

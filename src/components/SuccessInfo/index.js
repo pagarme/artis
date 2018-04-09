@@ -36,6 +36,7 @@ class SuccessInfo extends React.Component {
 
     this.state = {
       showBoletoOptions: false,
+      copyText: 'Copiar código de barras',
     }
 
     this.toggleEmailForm = this.toggleEmailForm.bind(this)
@@ -58,6 +59,7 @@ class SuccessInfo extends React.Component {
 
     const {
       showBoletoOptions,
+      copyText,
     } = this.state
 
     return (
@@ -125,8 +127,12 @@ class SuccessInfo extends React.Component {
               //   onClick: this.toggleEmailForm,
               // },
               {
-                text: 'Copiar código de barras',
-                onClick: handleCopyBarCode.bind(this, boletoBarcode),
+                text: copyText,
+                onClick: () => {
+                  this.setState({ copyText: 'Copiado!' }, () => {
+                    handleCopyBarCode(boletoBarcode)
+                  })
+                },
               },
             ]}
             />
