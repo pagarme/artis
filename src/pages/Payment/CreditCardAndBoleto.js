@@ -20,7 +20,7 @@ import {
   required,
   minLength,
   maxLength,
-  isDateValid,
+  isValidDate,
 } from '../../utils/validations'
 import updateMultipleAmount from '../../utils/helpers/updateMultipleAmount'
 import formatToBRL from './../../utils/helpers/formatToBRL'
@@ -108,7 +108,7 @@ class CreditCardAndBoleto extends Component {
             required,
             minLength(4),
             maxLength(4),
-            isDateValid,
+            isValidDate,
           ],
           cvv: [
             required,

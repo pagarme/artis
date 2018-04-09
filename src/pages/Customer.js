@@ -19,7 +19,7 @@ import {
   isEmail,
   minLength,
   maxLength,
-  cpf,
+  isCpf,
 } from '../utils/validations'
 import { addPageInfo } from '../actions'
 
@@ -157,7 +157,7 @@ class CustomerPage extends Component {
             required,
             minLength(11),
             maxLength(11),
-            cpf,
+            isCpf,
           ],
           phoneNumber: [
             required,

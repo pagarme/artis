@@ -19,11 +19,16 @@ import RadioGroup from '../components/RadioGroup'
 
 import options from '../utils/data/states'
 import BillingIcon from '../images/map-pin.svg'
-import removeZipcodeMask from '../utils/helpers/removeZipcodeMask'
+import removeMask from '../utils/helpers/removeMask'
 import getAddress from '../utils/helpers/getAddress'
 
 import { addPageInfo } from '../actions'
-import { required, isNumber } from '../utils/validations'
+import {
+  required,
+  isNumber,
+  minLength,
+  maxLength,
+} from '../utils/validations'
 
 const defaultColSize = 12
 const mediumColSize = 6
@@ -72,7 +77,7 @@ class AddressesPage extends Component {
       this.state.sameAddressForShipping === 'false') {
       this.shippingZipcodeInput.focus()
 
-      this.setState({ formValid: removeZipcodeMask(this.state.shippingZipcode).length >= 8 }) // eslint-disable-line
+      this.setState({ formValid: removeMask(this.state.shippingZipcode).length >= 8 }) // eslint-disable-line
     }
   }
 
@@ -123,7 +128,7 @@ class AddressesPage extends Component {
 
   handleZipcodeChange = (e) => {
     const { name, value } = e.target
-    const zipcode = removeZipcodeMask(value)
+    const zipcode = removeMask(value)
 
     if (zipcode.length === 8) {
       this.autocompleteAddress(zipcode, name)
@@ -197,7 +202,7 @@ class AddressesPage extends Component {
           'shippingZipcode']
         : [], reject(isNil, errors))
 
-      const formValid = isEmpty(validatedErrors) && removeZipcodeMask(values.zipcode || '').length >= 8
+      const formValid = isEmpty(validatedErrors) && removeMask(values.zipcode || '').length >= 8
 
       if (
         prevState.sameAddressForShipping === 'true' &&
@@ -236,18 +241,66 @@ class AddressesPage extends Component {
         onSubmit={this.props.handleSubmit}
         customErrorProp="error"
         validation={{
-          zipcode: [required],
-          number: [required, isNumber],
-          street: [required],
-          neighborhood: [required],
-          city: [required],
-          state: [required],
-          shippingZipcode: [required],
-          shippingNumber: [required, isNumber],
-          shippingStreet: [required],
-          shippingNeighborhood: [required],
-          shippingCity: [required],
-          shippingState: [required],
+          zipcode: [
+            required,
+            minLength(8),
+            maxLength(8),
+          ],
+          number: [
+            required,
+            isNumber,
+            minLength(1),
+            maxLength(5),
+          ],
+          street: [
+            required,
+            minLength(10),
+            maxLength(40),
+          ],
+          neighborhood: [
+            required,
+            minLength(4),
+            maxLength(15),
+          ],
+          city: [
+            required,
+            minLength(4),
+            maxLength(25),
+          ],
+          state: [
+            required,
+            maxLength(19),
+          ],
+          shippingZipcode: [
+            required,
+            minLength(8),
+            maxLength(8),
+          ],
+          shippingNumber: [
+            required,
+            isNumber,
+            minLength(1),
+            maxLength(5),
+          ],
+          shippingStreet: [
+            required,
+            minLength(10),
+            maxLength(40),
+          ],
+          shippingNeighborhood: [
+            required,
+            minLength(4),
+            maxLength(15),
+          ],
+          shippingCity: [
+            required,
+            minLength(4),
+            maxLength(25),
+          ],
+          shippingState: [
+            required,
+            maxLength(19),
+          ],
         }}
       >
         <Grid

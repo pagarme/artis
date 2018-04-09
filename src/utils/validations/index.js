@@ -4,12 +4,11 @@ import {
   prop,
   pathOr,
   has,
-  replace,
 } from 'ramda'
+import removeMask from '../helpers/removeMask'
 
 import cpf from './cpf'
-
-const removeMask = replace(/[^a-zA-Z0-9]/g, '')
+import isDate from './card/date'
 
 const isNumber = value => (!/^[0-9]+$/gi.test(value)
   ? 'Apenas números são permitidos'
@@ -29,26 +28,15 @@ const isEmail = value => (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(valu
 
 const minLength = length => value => (
   removeMask(value).length < length
-    ? 'Esse campo precisa de mais caracteres'
+    ? `Esse campo precisa de ${length} caracteres`
     : false
 )
 
 const maxLength = length => value => (
   removeMask(value).length > length
-    ? 'Limite de caracteres excedidos'
+    ? `Você excedeu o limite de ${length} caracteres`
     : false
 )
-
-const isDateValid = (value) => {
-  const month = value.substr(0, 2)
-  const year = value.substr(3, 2)
-  const actualYear = new Date().getFullYear().toString()
-  const reducedActualYear = actualYear.substr(2, 2)
-
-  return month > 12 || year < reducedActualYear
-    ? 'Data inválida'
-    : false
-}
 
 const hasAllTransactionData = allPass([
   prop('customer'),
@@ -94,13 +82,21 @@ const hasRequiredPageData = (page, props) => {
   return false
 }
 
+const isCpf = value => (!cpf(value)
+  ? 'CPF inválido'
+  : false)
+
+const isValidDate = value => (!isDate(value)
+  ? 'Data inválida'
+  : false)
+
 export {
-  cpf,
+  isCpf,
   hasAllTransactionData,
   hasRequiredPageData,
   isNumber,
   isEmail,
-  isDateValid,
+  isValidDate,
   maxLength,
   minLength,
   required,

@@ -24,7 +24,7 @@ import {
   required,
   minLength,
   maxLength,
-  isDateValid,
+  isValidDate,
 } from '../../utils/validations'
 
 const applyThemr = themr('UIPaymentPage')
@@ -205,7 +205,7 @@ class SwitchPayment extends Component {
           required,
           minLength(4),
           maxLength(4),
-          isDateValid,
+          isValidDate,
         ],
         cvv: [
           required,

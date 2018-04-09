@@ -1,91 +1,51 @@
-import {
-  __,
-  addIndex,
-  allPass,
-  ap,
-  apply,
-  both,
-  complement,
-  equals,
-  either,
-  isEmpty,
-  length,
-  map,
-  modulo,
-  nth,
-  pipe,
-  replace,
-  split,
-  subtract,
-  sum,
-  take,
-  toString,
-} from 'ramda'
+const isCpfDefault = (value) => {
+  let match = false
+  const defaultValue = [
+    '00000000000',
+    '11111111111',
+    '22222222222',
+    '33333333333',
+    '44444444444',
+    '55555555555',
+    '66666666666',
+    '77777777777',
+    '88888888888',
+  ]
 
-const repeatedNumberRegex = /^(.)\1+$/
+  defaultValue.map((item) => { //eslint-disable-line
+    if (value === item) {
+      match = true
+    }
+  })
 
-const mapIndexed = addIndex(map)
-
-const weigthMasks = {
-  // for cpf
-  9: [10, 9, 8, 7, 6, 5, 4, 3, 2],
-  10: [11, 10, 9, 8, 7, 6, 5, 4, 3, 2],
-  // for cnpj
-  12: [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2],
-  13: [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2],
+  return match
 }
 
-// String -> String
-const clean = replace(/[^\d]+/g, '')
+const cpf = (document) => {
+  const strCPF = document.toString().replace(/[^\w\s]/gi, '')
+  let sum = 0
+  let rest = 0
+  let i = 0
 
-// [String] -> ID -> Boolean
-const hasOnlyOneNumber = subject => repeatedNumberRegex.test(subject)
+  if (isCpfDefault(strCPF)) {
+    return false
+  }
 
-// ID -> Boolean
-const hasValidForm = complement(either(isEmpty, hasOnlyOneNumber))
+  for (i = 1; i <= 9; i += 1) {
+    sum += parseInt(strCPF.substring(i - 1, i)) * (11 - i) //eslint-disable-line
+  }
+  rest = (sum * 10) % 11
 
-// [Number] -> ID -> DIGIT
-const generateDigitWithMask = mask => pipe(
-  take(length(mask)),
-  split(''),
-  mapIndexed((el, i) => el * mask[i]),
-  sum,
-  modulo(__, 11),
-  subtract(11, __)
-)
+  if ((rest === 10) || (rest === 11)) rest = 0
+  if (rest !== parseInt(strCPF.substring(9, 10))) return false //eslint-disable-line
 
-// Number -> ID -> DIGIT
-const digit = index => pipe(
-  nth(index),
-  Number
-)
+  sum = 0
+  for (i = 1; i <= 10; i += 1) sum += parseInt(strCPF.substring(i - 1, i)) * (12 - i) //eslint-disable-line
+  rest = (sum * 10) % 11
 
-// Number -> ID -> Boolean
-const validateDigit = index => subject =>
-  apply(
-    equals,
-    ap([
-      digit(index),
-      generateDigitWithMask(weigthMasks[index], index),
-    ], [subject])
-  )
+  if ((rest === 10) || (rest === 11)) rest = 0
+  if (rest !== parseInt(strCPF.substring(10, 11))) return false //eslint-disable-line
+  return true
+}
 
-// [Number] -> ID -> [Number] -> ID -> Boolean
-const validateDigits = pipe(
-  ap([validateDigit]),
-  allPass
-)
-
-// [Number] -> ID -> Boolean
-const validateId = indexes => pipe(
-  toString,
-  clean,
-  both(hasValidForm, validateDigits(indexes))
-)
-
-const cpf = value => (validateId([9, 10])(value) === false
-  ? 'CPF inválido'
-  : false)
-
-// ID -> Boolean
 export default cpf

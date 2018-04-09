@@ -19,7 +19,7 @@ import {
   required,
   minLength,
   maxLength,
-  isDateValid,
+  isValidDate,
 } from '../../utils/validations'
 import updateMultipleAmount from '../../utils/helpers/updateMultipleAmount'
 import formatToBRL from './../../utils/helpers/formatToBRL'
@@ -53,7 +53,7 @@ const getValidations = ({
       required,
       minLength(4),
       maxLength(4),
-      isDateValid,
+      isValidDate,
     ],
     [`${firstPrefix}cvv`]: [
       required,
@@ -79,7 +79,7 @@ const getValidations = ({
       required,
       minLength(4),
       maxLength(4),
-      isDateValid,
+      isValidDate,
     ],
     [`${secondPrefix}cvv`]: [
       required,
