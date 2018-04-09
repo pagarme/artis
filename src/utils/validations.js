@@ -4,7 +4,10 @@ import {
   prop,
   pathOr,
   has,
+  replace,
 } from 'ramda'
+
+const removeMask = replace(/[^a-zA-Z0-9]/g, '')
 
 const isNumber = value => (!/^[0-9]+$/gi.test(value)
   ? 'Apenas números são permitidos'
@@ -20,6 +23,18 @@ const required = value => (
 const isEmail = value => (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
   ? 'Deve ser um email válido'
   : false
+)
+
+const minLength = length => value => (
+  removeMask(value).length < length
+    ? 'Esse campo precisa de mais caracteres'
+    : false
+)
+
+const maxLength = length => value => (
+  removeMask(value).length > length
+    ? 'Limite de caracteres excedidos'
+    : false
 )
 
 const hasAllTransactionData = allPass([
@@ -67,9 +82,11 @@ const hasRequiredPageData = (page, props) => {
 }
 
 export {
-  isNumber,
-  isEmail,
-  required,
   hasAllTransactionData,
   hasRequiredPageData,
+  isNumber,
+  isEmail,
+  maxLength,
+  minLength,
+  required,
 }
