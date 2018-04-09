@@ -37,6 +37,17 @@ const maxLength = length => value => (
     : false
 )
 
+const isDateValid = (value) => {
+  const month = value.substr(0, 2)
+  const year = value.substr(3, 2)
+  const actualYear = new Date().getFullYear().toString()
+  const reducedActualYear = actualYear.substr(2, 2)
+
+  return month > 12 || year < reducedActualYear
+    ? 'Data inválida'
+    : false
+}
+
 const hasAllTransactionData = allPass([
   prop('customer'),
   prop('billing'),
@@ -86,6 +97,7 @@ export {
   hasRequiredPageData,
   isNumber,
   isEmail,
+  isDateValid,
   maxLength,
   minLength,
   required,

@@ -20,7 +20,12 @@ import BoletoForm from './BoletoForm'
 import CreditCardForm from './CreditCardForm'
 
 import { addPageInfo } from '../../actions'
-import { required, minLength, maxLength } from '../../utils/validations'
+import {
+  required,
+  minLength,
+  maxLength,
+  isDateValid,
+} from '../../utils/validations'
 
 const applyThemr = themr('UIPaymentPage')
 
@@ -200,6 +205,7 @@ class SwitchPayment extends Component {
           required,
           minLength(4),
           maxLength(4),
+          isDateValid,
         ],
         cvv: [
           required,
