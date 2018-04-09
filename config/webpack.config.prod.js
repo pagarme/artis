@@ -101,7 +101,7 @@ module.exports = {
       {
         oneOf: [
           {
-            test: /\.(bmp|gif|jpe|png|svg|woff|ttf|eot)$/,
+            test: /\.(bmp|gif|jpe|png|woff|ttf|eot)$/,
             loader: require.resolve('url-loader'),
             options: {
               limit: 1000000,
