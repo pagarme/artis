@@ -53,8 +53,12 @@
   flex-direction: column;
 }
 
-.light.boletoContainer {
+.light .boletoContainer {
   background-color: var(--color-grey-10);
+}
+
+.light .boletoInfo {
+  color: var(--color-grey-77);
 }
 
 .amount {

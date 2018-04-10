@@ -9,6 +9,10 @@
   color: var(--color-white);
 }
 
+.light .title {
+  color: var(--color-grey-77);
+}
+
 .textAlignedCenter {
   text-align: center;
 }

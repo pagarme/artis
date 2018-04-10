@@ -18,6 +18,7 @@ const mediumColSize = 6
 
 const Boleto = ({
   theme,
+  base,
   data,
   amount,
   enableInputAmount,
@@ -27,7 +28,7 @@ const Boleto = ({
   const { discount } = data
 
   return (
-    <Grid>
+    <Grid className={theme[base]}>
       { enableInputAmount &&
         <Row>
           <Col
@@ -90,6 +91,7 @@ const Boleto = ({
 Boleto.propTypes = {
   theme: PropTypes.shape(),
   amount: PropTypes.number.isRequired,
+  base: PropTypes.string.isRequired,
   data: PropTypes.shape().isRequired,
   enableInputAmount: PropTypes.bool,
   showBoletoDetails: PropTypes.bool,

@@ -12,6 +12,7 @@ import {
   isEmpty,
   reject,
   isNil,
+  pathOr,
 } from 'ramda'
 
 import { Switch, Button } from '../../components'
@@ -26,6 +27,7 @@ const applyThemr = themr('UIPaymentPage')
 
 const createSwitchItems = ({
   theme,
+  base,
   transaction,
   isBigScreen,
   paymentType,
@@ -41,6 +43,7 @@ const createSwitchItems = ({
       title: 'Boleto',
       render: () => BoletoForm({
         theme,
+        base,
         amount,
         data: boleto,
         showBoletoDetails: true,
@@ -50,6 +53,7 @@ const createSwitchItems = ({
       title: 'Cartão de Crédito',
       render: () => CreditCardForm({
         theme,
+        base,
         amount,
         data: creditcard,
         showCreditCard: true,
@@ -88,13 +92,14 @@ const createSwitchItems = ({
 }
 
 class SwitchPayment extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
 
     this.state = {
       formData: {},
       clickedPaymentType: null,
       flipped: false,
+      formValid: pathOr(false, ['payment', 'formValid'], props),
     }
   }
 
@@ -138,6 +143,7 @@ class SwitchPayment extends Component {
 
     const payment = {
       method,
+      formValid: isEmpty(reject(isNil, errors)),
       type: paymentType,
     }
 
@@ -154,6 +160,10 @@ class SwitchPayment extends Component {
     if (paymentType === 'boleto') {
       data = { boleto: true }
     }
+
+    this.setState({
+      formValid: payment.formValid,
+    })
 
     handlePageChange({
       page: 'payment',
@@ -208,6 +218,7 @@ class SwitchPayment extends Component {
           selected: clickedPaymentType || defaultMethod,
           items: createSwitchItems({
             theme,
+            base,
             isBigScreen,
             transaction,
             paymentType,
@@ -224,7 +235,7 @@ class SwitchPayment extends Component {
             relevance="normal"
             size="extra-large"
             type="submit"
-            disabled={!formValid}
+            disabled={!formValid && selectedPaymentType !== 'boleto'}
           >
             Finalizar compra
           </Button>
@@ -250,8 +261,9 @@ SwitchPayment.defaultProps = {
   paymentType: null,
 }
 
-const mapStateToProps = ({ screenSize }) => ({
+const mapStateToProps = ({ screenSize, pageInfo }) => ({
   isBigScreen: screenSize.isBigScreen,
+  payment: pageInfo.payment,
 })
 
 export default connect(mapStateToProps, {
