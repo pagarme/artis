@@ -9,9 +9,9 @@ const applyThemr = themr('UIPaymentPage')
 
 const PaymentPage = ({
   base,
-  handlePageTransition,
-  handleSubmit,
   transaction,
+  handleSubmit,
+  handlePageTransition,
 }) => {
   const { defaultMethod } = transaction
 
@@ -19,8 +19,8 @@ const PaymentPage = ({
     transaction.multipayment
       ? <MultipaymentOptions
         base={base}
-        handlePageTransition={handlePageTransition}
         transaction={transaction}
+        handlePageTransition={handlePageTransition}
       />
       : <SwitchPayment
         base={base}
