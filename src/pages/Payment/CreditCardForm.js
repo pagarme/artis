@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { replace } from 'ramda'
 import PaymentCard from 'react-payment-card-component'
 
 import FaCreditCard from 'react-icons/lib/fa/credit-card'
@@ -19,11 +18,10 @@ import {
 
 import formatToBRL from './../../utils/helpers/formatToBRL'
 import { generateInstallments } from './../../utils/calculations'
+import removeMask from './../../utils/helpers/removeMask'
 
 const defaultColSize = 12
 const mediumColSize = 6
-
-const removeMask = replace(/_/g, '')
 
 const CreditCard = ({
   theme,

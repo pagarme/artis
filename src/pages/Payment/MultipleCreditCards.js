@@ -15,7 +15,12 @@ import {
 
 import CreditCardForm from './CreditCardForm'
 
-import { required } from '../../utils/validations'
+import {
+  required,
+  minLength,
+  maxLength,
+  isValidDate,
+} from '../../utils/validations'
 import updateMultipleAmount from '../../utils/helpers/updateMultipleAmount'
 import formatToBRL from './../../utils/helpers/formatToBRL'
 
@@ -34,19 +39,53 @@ const getValidations = ({
 
   const firstCardValidation = {
     [firstAmountInputName]: [required],
-    [`${firstPrefix}cardNumber`]: [required],
-    [`${firstPrefix}holderName`]: [required],
-    [`${firstPrefix}expiration`]: [required],
-    [`${firstPrefix}cvv`]: [required],
+    [`${firstPrefix}cardNumber`]: [
+      required,
+      minLength(16),
+      maxLength(16),
+    ],
+    [`${firstPrefix}holderName`]: [
+      required,
+      minLength(10),
+      maxLength(20),
+    ],
+    [`${firstPrefix}expiration`]: [
+      required,
+      minLength(4),
+      maxLength(4),
+      isValidDate,
+    ],
+    [`${firstPrefix}cvv`]: [
+      required,
+      minLength(3),
+      maxLength(3),
+    ],
     [`${firstPrefix}installments`]: [required],
   }
 
   const secondCardValidation = {
     [secondAmountInputName]: [required],
-    [`${secondPrefix}cardNumber`]: [required],
-    [`${secondPrefix}holderName`]: [required],
-    [`${secondPrefix}expiration`]: [required],
-    [`${secondPrefix}cvv`]: [required],
+    [`${secondPrefix}cardNumber`]: [
+      required,
+      minLength(16),
+      maxLength(16),
+    ],
+    [`${secondPrefix}holderName`]: [
+      required,
+      minLength(10),
+      maxLength(20),
+    ],
+    [`${secondPrefix}expiration`]: [
+      required,
+      minLength(4),
+      maxLength(4),
+      isValidDate,
+    ],
+    [`${secondPrefix}cvv`]: [
+      required,
+      minLength(3),
+      maxLength(3),
+    ],
     [`${secondPrefix}installments`]: [required],
   }
 

@@ -21,7 +21,12 @@ import BoletoForm from './BoletoForm'
 import CreditCardForm from './CreditCardForm'
 
 import { addPageInfo } from '../../actions'
-import { required } from '../../utils/validations'
+import {
+  required,
+  minLength,
+  maxLength,
+  isValidDate,
+} from '../../utils/validations'
 
 const applyThemr = themr('UIPaymentPage')
 
@@ -196,11 +201,30 @@ class SwitchPayment extends Component {
 
     if (selectedPaymentType === 'creditcard') {
       validation = {
-        cardNumber: [required],
-        holderName: [required],
-        expiration: [required],
-        cvv: [required],
-        installments: [required],
+        cardNumber: [
+          required,
+          minLength(16),
+          maxLength(16),
+        ],
+        holderName: [
+          required,
+          minLength(10),
+          maxLength(20),
+        ],
+        expiration: [
+          required,
+          minLength(4),
+          maxLength(4),
+          isValidDate,
+        ],
+        cvv: [
+          required,
+          minLength(3),
+          maxLength(3),
+        ],
+        installments: [
+          required,
+        ],
       }
     }
 
