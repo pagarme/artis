@@ -1,4 +1,4 @@
-import { getStrategyName } from '.'
+import getStrategyName from './getStrategyName'
 
 describe('Get strategy by public key', () => {
   it('Should return a pagarme', () => {

@@ -1,3 +1,7 @@
-export { default as getStrategyName } from './getStrategyName'
-export { default as mundipagg } from './mundipagg'
-export { default as pagarme } from './pagarme'
+import mundipagg from './mundipagg'
+import pagarme from './pagarme'
+
+export default {
+  mundipagg,
+  pagarme,
+}

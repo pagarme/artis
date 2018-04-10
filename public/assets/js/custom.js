@@ -1,6 +1,6 @@
 /* eslint-disable */
 const pagarmeApi = `var configs = {
-  key: 'SOME_KEY',
+  key: 'ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz',
   configs: {
     companyName: 'Pagar.me',
     image: './pagarme.png',
@@ -53,7 +53,7 @@ const pagarmeApi = `var configs = {
       },
       {
         id: 1,
-        title: 'Red pill',
+        title: 'Blue pill',
         unitPrice: 5000,
         quantity: 1,
         tangible: true,
@@ -71,7 +71,7 @@ const pagarmeApi = `var configs = {
       boleto: {
         subtitle: '25% de Desconto!',
         instructions: 'Use this field to add instructions',
-        expirationAt: '2018-01-30',
+        expirationAt: '2018-11-30',
         fileName: 'boleto_pagarme.pdf',
         discount: {
           type: 'percentage',
@@ -80,7 +80,7 @@ const pagarmeApi = `var configs = {
       },
       creditcard: {
         subtitle: '25% de Desconto!',
-        statementDescriptor: 'Use this field to add instructions',
+        statementDescriptor: 'Mercurio :)',
         installments: [
           {
             initial: 2,
@@ -123,7 +123,14 @@ const pagarmeApi = `var configs = {
 };`
 
 const mundiApi = `var configs = {
-  token: 'chk_bg0XP8FjgFGaXWMj',
+  token: 'chk_1AYmoD4Ip3CBQgRZ', // boleto
+  // token: 'chk_JwO07OlTMFLYW9e3', // creditcard
+  onSuccess: (data) => {
+    console.log('Success call', JSON.stringify(data, null, 2))
+  },
+  onError: (error) => {
+    console.log('Error call', JSON.stringify(error, null, 2))
+  },
 };`
 
 /** Custom Panel **/

@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import { ThemeProvider } from 'former-kit'
+import { merge } from 'ramda'
 
 import Checkout from './containers/Checkout'
 import ErrorBoundary from './components/ErrorBoundary'
@@ -17,7 +18,8 @@ import createElement from './utils/helpers/createElement'
 import setTheme from './utils/helpers/setTheme'
 import setColors from './utils/helpers/setColors'
 import DEFAULT_COLORS from './utils/data/colors'
-import { getStrategyName, mundipagg } from './utils/strategies'
+import getStrategyName from './utils/strategies/getStrategyName'
+import { getTokenData } from './utils/strategies/mundipagg'
 import createStore from './store'
 
 import NormalizeCSS from './components/NormalizeCSS'
@@ -25,8 +27,6 @@ import defaultTheme from './themes/default'
 import defaultLogo from './images/logo_pagarme.png'
 
 moment.locale('pt-br')
-
-const { getTokenData } = mundipagg
 
 ReactGA.initialize('UA-113290482-1')
 
@@ -73,6 +73,7 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
     themeBase,
     primaryColor,
     secondaryColor,
+    image,
   } = configs
 
   const clientThemeBase = themeBase || setTheme(primaryColor) || 'dark'
@@ -90,35 +91,38 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
     label: key,
   })
 
-  const store = createStore(formData)
-
-  const apiDataWithDefaults = {
-    ...apiData,
-    configs: {
-      ...apiData.configs,
-      image: apiData.configs.image || defaultLogo,
-    },
-  }
-
   const commonParams = {
-    store,
     acquirer,
     clientTarget,
     clientThemeBase,
   }
 
+  let store
+
   if (acquirer === 'pagarme') {
+    store = createStore(formData)
+
+    const apiDataWithDefaults = {
+      ...apiData,
+      configs: {
+        ...apiData.configs,
+        image: image || defaultLogo,
+      },
+    }
+
     return render(
       apiDataWithDefaults,
-      commonParams
+      merge(commonParams, { store })
     )
   }
 
   return getMundipaggData
     .then((data) => {
+      store = createStore(data.formData)
+
       render(
         data,
-        commonParams
+        merge(commonParams, { store })
       )
     })
 

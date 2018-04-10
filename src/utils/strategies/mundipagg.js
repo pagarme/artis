@@ -1,6 +1,10 @@
 import {
   applySpec,
   always,
+  cond,
+  equals,
+  identity,
+  ifElse,
   join,
   length,
   map,
@@ -9,8 +13,16 @@ import {
   path,
   pathOr,
   prop,
+  propOr,
+  replace,
+  split,
   values,
+  dissoc,
+  dissocPath,
+  T,
 } from 'ramda'
+
+const transactionUrl = 'https://api.mundipagg.com/checkout/v1/payments'
 
 const addressParse = applySpec({
   street: path(['address', 'street']),
@@ -22,85 +34,235 @@ const addressParse = applySpec({
   zipcode: path(['address', 'zip_code']),
 })
 
-const parseTokenData = applySpec({
-  key: path(['account', 'public_key']),
-  configs: applySpec({
-    companyName: path(['account', 'name']),
-    freightValue: path(['shipping', 'amount']),
-  }),
-  formData: applySpec({
-    customer: applySpec({
-      name: path(['customer', 'name']),
-      documentNumber: path(['customer', 'document']),
-      email: path(['customer', 'email']),
-      phoneNumber: pipe(
-        pathOr({}, ['customer', 'phones', 'home_phone']),
-        values,
-        join('')
+const parseBoletoTokenData = pipe(
+  ifElse(
+    prop('boleto'),
+    applySpec({
+      expirationAt: prop('due_at'),
+      instructions: prop('instructions'),
+    }),
+    always(null),
+  )
+)
+
+const parseCreditcardTokenData = ifElse(
+  prop('credit_card'),
+  pipe(
+    prop('credit_card'),
+    applySpec({
+      statementDescriptor: prop('statement_descriptor'),
+      installments: pipe(
+        applySpec({
+          initial: always(1),
+          max: pipe(
+            prop('installments'),
+            length
+          ),
+          interestRate: pipe(
+            prop('installments'),
+            map(
+              applySpec({
+                installment: prop('number'),
+                type: always('amount'),
+                value: prop('total'),
+              })
+            )
+          ),
+        }),
+        of
+      ),
+    })
+  ),
+  always(null)
+)
+
+const removePathIfNull = dataPath => ifElse(
+  path(dataPath),
+  identity,
+  dissocPath(dataPath)
+)
+
+const parseTokenData = pipe(
+  applySpec({
+    key: path(['account', 'public_key']),
+    token: prop('id'),
+    configs: applySpec({
+      companyName: path(['account', 'name']),
+      freightValue: path(['shipping', 'amount']),
+    }),
+    formData: applySpec({
+      customer: applySpec({
+        id: path(['customer', 'id']),
+        name: path(['customer', 'name']),
+        documentNumber: path(['customer', 'document']),
+        email: path(['customer', 'email']),
+        phoneNumber: pipe(
+          pathOr({}, ['customer', 'phones', 'home_phone']),
+          values,
+          join(' ')
+        ),
+      }),
+      billing: pipe(
+        prop('billing'),
+        addressParse
+      ),
+      shipping: pipe(
+        prop('shipping'),
+        addressParse
+      ),
+      items: pipe(
+        prop('items'),
+        map(
+          applySpec({
+            title: prop('description'),
+            unitPrice: prop('amount'),
+            quantity: prop('quantity'),
+          })
+        )
       ),
     }),
-    billing: pipe(
-      prop('billing'),
-      addressParse
-    ),
-    shipping: pipe(
-      prop('shipping'),
-      addressParse
-    ),
-    items: pipe(
-      prop('items'),
-      map(
+    transaction: applySpec({
+      amount: prop('amount'),
+      defaultMethod: path(['default_payment_method']),
+      paymentMethods: pipe(
+        prop('payment_settings'),
         applySpec({
-          title: prop('description'),
-          unitPrice: prop('amount'),
-          quantity: prop('quantity'),
+          boleto: parseBoletoTokenData,
+          creditcard: parseCreditcardTokenData,
         })
-      )
-    ),
+      ),
+    }),
   }),
-  transaction: applySpec({
-    amount: prop('amount'),
-    defaultMethod: pathOr('creditcard', ['default_payment_method']),
-    paymentMethods: pipe(
-      prop('payment_settings'),
-      applySpec({
-        boleto: pipe(
-          prop('boleto'),
-          applySpec({
-            expirationAt: prop('due_at'),
-            instructions: prop('instructions'),
-          })
+  removePathIfNull(['transaction', 'paymentMethods', 'creditcard']),
+  removePathIfNull(['transaction', 'paymentMethods', 'boleto']),
+  removePathIfNull(['transaction', 'defaultMethod']),
+)
+
+const getLineAddress = ({
+  number,
+  street,
+  neighborhood,
+}) => `${number}, ${street}, ${neighborhood}`
+
+const getPaymentType = path([
+  'payment',
+  'type',
+])
+
+const getCreditCardExpiration = path([
+  'payment',
+  'info',
+  'expiration',
+])
+
+const getExpirationMonth = expiration => expiration[0]
+const getExpirationYear = expiration => expiration[1]
+
+const parsersPaymentData = {
+  creditcard: applySpec({
+    amount_percentage: always(100),
+    payment_method: always('credit_card'),
+    credit_card: applySpec({
+      installments: pathOr(1, ['payment', 'info', 'installments']),
+      card: {
+        brand: always('visa'), // to do fix brand
+        exp_month: pipe(
+          getCreditCardExpiration,
+          split('/'),
+          getExpirationMonth,
         ),
-        creditcard: pipe(
-          prop('credit_card'),
-          applySpec({
-            statementDescriptor: prop('statement_descriptor'),
-            installments: pipe(
-              applySpec({
-                initial: always(1),
-                max: pipe(
-                  prop('installments'),
-                  length
-                ),
-                interestRate: pipe(
-                  prop('installments'),
-                  map(
-                    applySpec({
-                      installment: prop('number'),
-                      type: always('amount'),
-                      value: prop('total'),
-                    })
-                  )
-                ),
-              }),
-              of
-            ),
-          })
+        exp_year: pipe(
+          getCreditCardExpiration,
+          split('/'),
+          getExpirationYear,
         ),
-      })
-    ),
+        holder_name: path(['payment', 'info', 'holderName']),
+        number: pipe(
+          path(['payment', 'info', 'cardNumber']),
+          replace(/ /g, '')
+        ),
+        security_code: path(['payment', 'info', 'cvv']),
+      },
+    }),
   }),
+  boleto: applySpec({
+    payment_method: always('boleto'),
+    amount_percentage: always(100),
+  }),
+}
+
+const getAddress = applySpec({
+  city: prop('city'),
+  state: prop('state'),
+  country: propOr('BR', 'country'),
+  zip_code: prop('zipcode'),
+  line_1: getLineAddress,
+  line_2: prop('complement'),
+  description: propOr('Endereço 1', 'description'),
 })
+
+const getBilling = pipe(
+  prop('billing'),
+  dissoc('description'),
+  getAddress
+)
+
+const getShipping = pipe(
+  prop('shipping'),
+  getAddress,
+  address => ({
+    address: dissoc('description', address),
+    description: prop('description', address),
+  }),
+)
+
+const mergePaymentInfos = (data) => {
+  const paymentType = getPaymentType(data)
+
+  return parsersPaymentData[paymentType](data)
+}
+
+const sameAddressOfBilling = pipe(
+  path([
+    'billing',
+    'sameAddressForShipping',
+  ]),
+  equals('true')
+)
+
+const getTransactionData = pipe(
+  applySpec({
+    token_id: prop('token'),
+    billing_equal_to_shipping: sameAddressOfBilling,
+    payments: pipe(
+      mergePaymentInfos,
+      of
+    ),
+    payment_method: pipe(
+      getPaymentType,
+      cond([
+        [equals('creditcard'), always('credit_card')],
+        [T, identity],
+      ])
+    ),
+    customer: applySpec({
+      id: path(['customer', 'id']),
+      email: path(['customer', 'email']),
+      name: path(['customer', 'name']),
+    }),
+    billing_address: getBilling,
+    shipping: ifElse(
+      sameAddressOfBilling,
+      getShipping,
+      always(null)
+    ),
+  }),
+  ifElse(
+    prop('shipping'),
+    identity,
+    dissoc('shipping')
+  )
+)
 
 const getTokenData = token => fetch(
   `https://api.mundipagg.com/checkout/v1/tokens/${token}`, {
@@ -113,4 +275,22 @@ const getTokenData = token => fetch(
   .then(res => res.json())
   .then(parseTokenData)
 
-export default { getTokenData }
+const strategy = (data) => {
+  const payload = getTransactionData(data)
+
+  return fetch(`${transactionUrl}?appId=${data.key}`, {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+    .then(response => response.json())
+}
+
+export {
+  getTokenData,
+}
+
+export default strategy

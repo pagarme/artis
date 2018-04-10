@@ -40,7 +40,7 @@ const parseBoletoData = applySpec({
 })
 
 const parseToPayload = applySpec({
-  encryption_key: prop('publickey'),
+  encryption_key: prop('key'),
   amount: prop('amount'),
   payment_method: pipe(
     getPaymentMethodType,
@@ -49,6 +49,7 @@ const parseToPayload = applySpec({
       [T, identity],
     ])
   ),
+  installments: pathOr(1, ['payment', 'info', 'installments']),
   customer: pipe(
     prop('customer'),
     applySpec({

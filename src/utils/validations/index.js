@@ -1,9 +1,10 @@
 import {
-  isNil,
+  always,
   allPass,
+  concat,
+  isNil,
   prop,
   pathOr,
-  has,
 } from 'ramda'
 import removeMask from '../helpers/removeMask'
 
@@ -38,27 +39,51 @@ const maxLength = length => value => (
     : false
 )
 
-const hasAllTransactionData = allPass([
+const pagarmeTransactionParams = [
+  prop('amount'),
+  prop('shipping'),
+  prop('items'),
+  prop('postback'),
+]
+
+const commonTransactionParams = [
   prop('customer'),
   prop('billing'),
-  prop('shipping'),
   prop('payment'),
-  prop('amount'),
-  prop('publickey'),
-  prop('postback'),
-  prop('items'),
+  prop('key'),
+]
+
+const requiredTransactionParams = {
+  pagarme: allPass(concat(commonTransactionParams, [pagarmeTransactionParams])),
+  mundipagg: allPass(commonTransactionParams),
+}
+
+const customerValidation = allPass([
+  prop('name'),
+  prop('documentNumber'),
+  prop('email'),
+  prop('phoneNumber'),
 ])
+
+const customerRequiredParams = {
+  pagarme: customerValidation,
+  mundipagg: (customer) => {
+    if (customer.id) {
+      return always(true)
+    }
+
+    return customerValidation
+  },
+}
+
+const hasAllTransactionData = (acquirer, data) =>
+  requiredTransactionParams[acquirer](data)
 
 const hasRequiredPageData = (page, props) => {
   if (page === 'customer') {
     const customer = pathOr({}, ['apiData', 'formData', 'customer'], props)
 
-    const customerHasAllProps = allPass([
-      has('name'),
-      has('documentNumber'),
-      has('email'),
-      has('phoneNumber'),
-    ])
+    const customerHasAllProps = customerRequiredParams[props.acquirer]
 
     return customerHasAllProps(customer)
   }
@@ -68,12 +93,12 @@ const hasRequiredPageData = (page, props) => {
     const shipping = pathOr({}, ['apiData', 'formData', 'shipping'], props)
 
     const addressHasAllProps = allPass([
-      has('street'),
-      has('number'),
-      has('neighborhood'),
-      has('city'),
-      has('state'),
-      has('zipcode'),
+      prop('street'),
+      prop('number'),
+      prop('neighborhood'),
+      prop('city'),
+      prop('state'),
+      prop('zipcode'),
     ])
 
     return addressHasAllProps(billing) && addressHasAllProps(shipping)

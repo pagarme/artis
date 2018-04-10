@@ -13,11 +13,10 @@ import {
   path,
   pathOr,
   filter,
-  applySpec,
 } from 'ramda'
 
 import { changeScreenSize } from '../../actions'
-import { request, strategies } from '../../utils/parsers/request'
+import strategies from '../../utils/strategies'
 import getErrorMessage from '../../utils/data/errorMessages'
 import { hasAllTransactionData, hasRequiredPageData } from '../../utils/validations'
 
@@ -198,39 +197,48 @@ class Checkout extends Component {
   }
 
   enterLoading = () => {
-    const transactionModel = applySpec({
-      amount: path(['apiData', 'transaction', 'amount']),
-      publickey: path(['apiData', 'key']),
-      postback: path(['apiData', 'configs', 'postback']),
-      onSuccess: path(['apiData', 'configs', 'onSuccess']),
-      onError: path(['apiData', 'configs', 'onError']),
-      items: path(['apiData', 'formData', 'items']),
-      customer: path(['customer']),
-      shipping: path(['shipping']),
-      billing: path(['billing']),
-      payment: path(['payment']),
-    })
+    const {
+      acquirer,
+      transition,
+      pageInfo,
+      apiData,
+    } = this.props
+    const { configs = {}, formData = {}, key, token, transaction } = apiData
+    const { items } = formData
+    const { amount } = transaction
+    const { onError, onSuccess } = configs
 
-    const transactionData = transactionModel(this.props)
+    const requestPayload = {
+      ...pageInfo,
+      items,
+      key,
+      token,
+      amount,
+    }
 
-    if (hasAllTransactionData(transactionData)) {
-      request(transactionData, strategies[this.props.acquirer])
+    const request = strategies[acquirer]
+    const shouldTransaction = hasAllTransactionData(acquirer, requestPayload)
+
+    if (shouldTransaction) {
+      request(requestPayload)
         .then(response =>
           this.onTransactionReturn(
             response,
-            transactionData.onSuccess,
-            transactionData.onError,
+            onSuccess,
+            onError,
           ))
-        .catch(() => this.props.transition('TRANSACTION_FAILURE'))
+        .catch(() => transition('TRANSACTION_FAILURE'))
     } else {
-      this.props.transition('TRANSACTION_FAILURE')
+      transition('TRANSACTION_FAILURE')
     }
   }
 
   renderPages () {
     const { transaction } = this.props.apiData
 
-    const { base } = this.props
+    const { base, pageInfo } = this.props
+
+    const { payment } = pageInfo
 
     return (
       <React.Fragment>
@@ -269,10 +277,10 @@ class Checkout extends Component {
           <SuccessInfo
             base={base}
             paymentInfo={{
-              customer: path(['customer', 'name'], this.props),
-              address: path(['shipping'], this.props),
+              customer: path(['customer', 'name'], this.props.pageInfo),
+              address: path(['shipping'], this.props.pageInfo),
               amount: path(['apiData', 'transaction', 'amount'], this.props),
-              installments: path(['info', 'installments'], this.props.payment),
+              installments: path(['info', 'installments'], payment),
             }}
             boletoBarcode={this.state.boletoBarcode}
             boletoUrl={this.state.boletoUrl}
@@ -320,7 +328,8 @@ class Checkout extends Component {
     const { items } = formData
     const { enableCart, freightValue } = configs
     const { amount } = transaction
-    const { theme, base, shipping, customer } = this.props
+    const { theme, base, pageInfo } = this.props
+    const { shipping, customer } = pageInfo
 
     return enableCart && (
       <Col
@@ -438,6 +447,7 @@ Checkout.propTypes = {
   }),
   acquirer: PropTypes.string.isRequired,
   apiData: PropTypes.shape({
+    token: PropTypes.string,
     key: PropTypes.string.isRequired,
     configs: PropTypes.shape({
       companyName: PropTypes.string,
@@ -459,31 +469,15 @@ Checkout.propTypes = {
     }),
     transaction: PropTypes.shape({
       amount: PropTypes.number.isRequired,
-      defaultMethod: PropTypes.string.isRequired,
+      defaultMethod: PropTypes.string,
       paymentMethods: PropTypes.shape(),
     }),
   }).isRequired,
   base: PropTypes.string.isRequired,
   changeScreenSize: PropTypes.func.isRequired,
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
+  pageInfo: PropTypes.object.isRequired, // eslint-disable-line
   transition: PropTypes.func.isRequired,
-  shipping: PropTypes.object, // eslint-disable-line
-  customer: PropTypes.shape({
-    name: PropTypes.string,
-    email: PropTypes.string,
-    documentNumber: PropTypes.string,
-    phoneNumber: PropTypes.string,
-  }),
-  payment: PropTypes.shape({
-    type: PropTypes.string,
-    info: PropTypes.shape({
-      cardNumber: PropTypes.string,
-      cvv: PropTypes.string,
-      expiration: PropTypes.string,
-      holderName: PropTypes.string,
-      installments: PropTypes.string,
-    }),
-  }),
   isBigScreen: PropTypes.bool,
   machineState: PropTypes.oneOfType([
     PropTypes.string,
@@ -502,10 +496,7 @@ Checkout.defaultProps = {
 
 const mapStateToProps = ({ screenSize, pageInfo }) => ({
   isBigScreen: screenSize.isBigScreen,
-  shipping: pageInfo.shipping,
-  billing: pageInfo.billing,
-  customer: pageInfo.customer,
-  payment: pageInfo.payment,
+  pageInfo,
 })
 
 export default connect(
