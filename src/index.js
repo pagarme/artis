@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
 import { ThemeProvider } from 'react-css-themr'
 import { Provider } from 'react-redux'
+import moment from 'moment'
+import 'moment/locale/pt-br'
 
 import Checkout from './containers/Checkout'
 import ErrorBoundary from './components/ErrorBoundary'
@@ -18,6 +20,8 @@ import createStore from './store'
 import NormalizeCSS from './components/NormalizeCSS'
 import defaultTheme from './themes/default'
 import defaultLogo from './images/logo_pagarme.png'
+
+moment.locale('pt-br')
 
 const colors = {
   light: {
