@@ -66,7 +66,7 @@ class SuccessInfo extends React.Component {
       <React.Fragment>
         <Row className={theme.title}>
           <h4 className={theme.success}>
-            Seu pagamento foi concluído com sucesso
+            Seu boleto foi gerado com sucesso!
           </h4>
         </Row>
         {

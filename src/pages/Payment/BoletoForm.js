@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import moment from 'moment'
 
 import {
   Grid,
@@ -25,7 +26,11 @@ const Boleto = ({
   showBoletoDetails,
   amountPrefixName,
 }) => {
-  const { discount } = data
+  const { discount, expirationAt = '' } = data
+
+  const finalDate = expirationAt
+    ? moment(expirationAt).format('L')
+    : moment().add(1, 'days').format('L')
 
   return (
     <Grid className={theme[base]}>
@@ -72,12 +77,10 @@ const Boleto = ({
                   }
                 </h4>
                 <span className={theme.boletoInfo}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Mauris risus nunc, malesuada vitae libero venenatis,
-                  vehicula luctus nulla. Aliquam erat volutpat.
-                  Sed porttitor ex vestibulum augue fermentum molestie.
-                  Sed id convallis augue. Nam id malesuada nisl.
-                  Quisque quis orci eget.
+                  Ao finalizar a compra,
+                  será gerado um boleto com o valor acima,
+                  com data de vencimento para {finalDate}.
+                  Depois de pago, o banco leva cerca de 3 dias úteis para reconhecer o pagamento.
                 </span>
               </React.Fragment>
             }
