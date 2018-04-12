@@ -18,7 +18,6 @@ import UIErrorInfo from './errorInfo/index.css'
 import UILoadingInfo from './loadingInfo/index.css'
 import UIActionList from './actionList/index.css'
 import UIEmailForm from './emailForm/index.css'
-import UIBoletoOptions from './boletoOptions/index.css'
 import UIErrorPage from './errorPage/index.css'
 import UITooltip from './tooltip/index.css'
 import UINormalizeCSS from './normalize.css'
@@ -45,7 +44,6 @@ export default {
   UILoadingInfo,
   UIActionList,
   UIEmailForm,
-  UIBoletoOptions,
   UIErrorPage,
   UITooltip,
   UINormalizeCSS,
