@@ -12,22 +12,15 @@ import { Tooltip } from '..'
 const applyThemr = themr('UIInput')
 
 class Input extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      displayPassword: false,
-    }
-
-    this.handleDisplayPassword = this.handleDisplayPassword.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+  state = {
+    displayPassword: false,
   }
 
-  handleDisplayPassword (display) {
-    this.setState({ displayPassword: display })
+  toggleDisplayPassword = () => {
+    this.setState({ displayPassword: !this.state.displayPassword })
   }
 
-  handleChange (e) {
+  handleChange = (e) => {
     if (this.props.onAutocomplete) {
       this.props.onAutocomplete(e)
     }
@@ -48,7 +41,7 @@ class Input extends React.Component {
       return (
         <MdVisibilityOff
           className={theme.displayPasswordIcon}
-          onClick={this.handleDisplayPassword.bind(this, false)}
+          onClick={this.toggleDisplayPassword}
         />
       )
     }
@@ -56,7 +49,7 @@ class Input extends React.Component {
     return (
       <MdVisibility
         className={theme.displayPasswordIcon}
-        onClick={this.handleDisplayPassword.bind(this, true)}
+        onClick={this.toggleDisplayPassword}
       />
     )
   }

@@ -256,7 +256,6 @@ class SwitchPayment extends Component {
           <Button
             alignEnd
             className={theme.confirmBtn}
-            relevance="normal"
             size="extra-large"
             type="submit"
             disabled={!formValid && selectedPaymentType !== 'boleto'}

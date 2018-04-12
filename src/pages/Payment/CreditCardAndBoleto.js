@@ -31,17 +31,13 @@ const defaultColSize = 12
 const mediumColSize = 6
 
 class CreditCardAndBoleto extends Component {
-  constructor () {
-    super()
-
-    this.state = {
-      formData: {},
-      formValid: false,
-      inputAmountNames: {
-        first: 'creditcard-amount',
-        second: 'boleto-amount',
-      },
-    }
+  state = {
+    formData: {},
+    formValid: false,
+    inputAmountNames: {
+      first: 'creditcard-amount',
+      second: 'boleto-amount',
+    },
   }
 
   handleChangeForm = (newFormData, errors) => {
@@ -216,7 +212,6 @@ class CreditCardAndBoleto extends Component {
                 <Button
                   className={theme.confirmBtn}
                   size="extra-large"
-                  relevance="normal"
                   type="submit"
                   disabled={!formValid}
                 >

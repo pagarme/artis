@@ -34,7 +34,6 @@ const Footer = ({
             hidden={!cartButtonVisible}
             size="extra-large"
             fill="outline"
-            relevance="normal"
             onClick={onToggleCart}
             className={classNames(theme.button, theme.cartButton)}
           >

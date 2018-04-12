@@ -10,19 +10,12 @@ const biggerColSize = 9
 const smallerColSize = 3
 
 class EmailForm extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      recipient: '',
-      email: '',
-    }
-
-    this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleKeyPress = this.handleKeyPress.bind(this)
+  state = {
+    recipient: '',
+    email: '',
   }
 
-  handleKeyPress (e) {
+  handleKeyPress = (e) => {
     const { handleClose } = this.props
 
     // send email here
@@ -31,7 +24,7 @@ class EmailForm extends React.Component {
     }
   }
 
-  handleInputChange (e) {
+  handleInputChange = (e) => {
     const { name, value } = e.target
 
     this.setState({ [name]: value })
@@ -101,7 +94,6 @@ EmailForm.propTypes = {
     emailFormClose: PropTypes.string,
   }),
   handleClose: PropTypes.func.isRequired,
-  // content: PropTypes.any, // add this when the container sends emails
 }
 
 EmailForm.defaultProps = {

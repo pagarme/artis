@@ -36,7 +36,7 @@ class CustomerPage extends Component {
   constructor (props) {
     super(props)
 
-    const { customer = {} } = props
+    const { customer } = props
 
     this.state = { ...customer }
   }
@@ -53,6 +53,14 @@ class CustomerPage extends Component {
       ...values,
       formValid: isEmpty(reject(isNil, errors)),
     })
+  }
+
+  handleFormSubmit = (values, errors) => {
+    this.setState({
+      formValid: isEmpty(reject(isNil, errors)),
+    })
+
+    this.props.handleSubmit(values, errors)
   }
 
   renderCustomerForm () {
@@ -129,17 +137,18 @@ class CustomerPage extends Component {
   }
 
   render () {
-    const { theme, base, isBigScreen } = this.props
-
-    const sizeWithDesktop = isBigScreen
-      ? mediumColSize
-      : defaultColSize
+    const {
+      theme,
+      base,
+      isBigScreen,
+      customer,
+    } = this.props
 
     return (
       <Form
-        data={this.state}
+        data={customer}
         onChange={this.handleChangeForm}
-        onSubmit={this.props.handleSubmit}
+        onSubmit={this.handleFormSubmit}
         customErrorProp="error"
         validation={{
           name: [
@@ -172,9 +181,10 @@ class CustomerPage extends Component {
           }
         >
           <Col
-            tv={sizeWithDesktop}
-            desk={sizeWithDesktop}
-            tablet={sizeWithDesktop}
+            tv={mediumColSize}
+            desk={mediumColSize}
+            tablet={mediumColSize}
+            palm={defaultColSize}
           >
             { this.renderCustomerForm() }
           </Col>
@@ -188,7 +198,6 @@ class CustomerPage extends Component {
             <Button
               base={base}
               size="extra-large"
-              relevance="normal"
               type="submit"
               className={theme.button}
               disabled={!this.state.formValid}
