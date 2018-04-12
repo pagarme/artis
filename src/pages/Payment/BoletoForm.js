@@ -24,9 +24,9 @@ const Boleto = ({
   base,
   data,
   amount,
+  amountPrefixName,
   enableInputAmount,
   showBoletoDetails,
-  amountPrefixName,
 }) => {
   const { discount, expirationAt = '' } = data
 
@@ -71,7 +71,7 @@ const Boleto = ({
                     )
                   }
                 >
-                  Valor a pagar:
+                Valor a pagar:
                   {
                     discount
                       ? formatToBRL(applyDiscount(
@@ -99,20 +99,20 @@ const Boleto = ({
 }
 
 Boleto.propTypes = {
-  theme: PropTypes.shape(),
   amount: PropTypes.number.isRequired,
   base: PropTypes.string.isRequired,
+  amountPrefixName: PropTypes.string,
   data: PropTypes.shape().isRequired,
   enableInputAmount: PropTypes.bool,
   showBoletoDetails: PropTypes.bool,
-  amountPrefixName: PropTypes.string,
+  theme: PropTypes.shape(),
 }
 
 Boleto.defaultProps = {
-  theme: {},
+  amountPrefixName: '',
   enableInputAmount: false,
   showBoletoDetails: true,
-  amountPrefixName: '',
+  theme: {},
 }
 
 export default Boleto

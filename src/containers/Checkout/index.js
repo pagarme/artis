@@ -224,6 +224,7 @@ class Checkout extends Component {
       pageInfo,
       apiData,
       transaction,
+      realAmount,
     } = this.props
 
     const {
@@ -242,7 +243,7 @@ class Checkout extends Component {
       items,
       key,
       token,
-      amount,
+      realAmount,
     }
 
     const request = strategies[acquirer]
@@ -346,8 +347,9 @@ class Checkout extends Component {
 
   renderCart () {
     const { theme, base, apiData, pageInfo, transaction } = this.props
-    const { cart } = apiData
+    const { cart, configs } = apiData
     const { items, shippingRate } = cart
+    const { enableCart, freightValue } = configs
     const { shipping, customer } = pageInfo
     const { amount } = transaction
 
@@ -362,7 +364,6 @@ class Checkout extends Component {
         <Cart
           base={base}
           items={items}
-          amount={amount}
           shipping={shipping}
           customer={customer}
           shippingRate={shippingRate}
@@ -505,6 +506,7 @@ Checkout.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]).isRequired,
+  realAmount: PropTypes.number.isRequired, //eslint-disable-line
 }
 
 Checkout.defaultProps = {
@@ -521,6 +523,7 @@ const mapStateToProps = ({ screenSize, pageInfo, transactionValues }) => ({
   isBigScreen: screenSize.isBigScreen,
   pageInfo,
   transaction: transactionValues,
+  realAmount: transactionValues.realAmount,
 })
 
 export default connect(mapStateToProps, {
