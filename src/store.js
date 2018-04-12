@@ -4,7 +4,7 @@ import reducers from './reducers'
 
 const middlewares = []
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'development') {
   const { logger } = require('redux-logger') // eslint-disable-line
   middlewares.push(logger)
 }
