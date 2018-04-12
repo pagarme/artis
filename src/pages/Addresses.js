@@ -537,7 +537,6 @@ class AddressesPage extends Component {
             >
               <Button
                 size="extra-large"
-                relevance="normal"
                 type="submit"
                 className={theme.button}
                 full={!isBigScreen}

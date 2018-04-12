@@ -474,7 +474,7 @@ Checkout.propTypes = {
     email: PropTypes.string,
     documentNumber: PropTypes.string,
     phoneNumber: PropTypes.string,
-  }).isRequired,
+  }),
   payment: PropTypes.shape({
     type: PropTypes.string,
     info: PropTypes.shape({
@@ -494,6 +494,7 @@ Checkout.propTypes = {
 
 Checkout.defaultProps = {
   theme: {},
+  customer: {},
   shipping: {},
   payment: {},
   apiData: {},

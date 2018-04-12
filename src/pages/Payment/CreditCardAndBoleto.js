@@ -216,7 +216,6 @@ class CreditCardAndBoleto extends Component {
                 <Button
                   className={theme.confirmBtn}
                   size="extra-large"
-                  relevance="normal"
                   type="submit"
                   disabled={!formValid}
                 >
