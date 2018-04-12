@@ -19,7 +19,6 @@ import {
 } from './../../components'
 
 import formatToBRL from './../../utils/helpers/formatToBRL'
-import { generateInstallments } from './../../utils/calculations'
 import removeMask from './../../utils/helpers/removeMask'
 
 const defaultColSize = 12
@@ -28,8 +27,8 @@ const mediumColSize = 6
 const CreditCard = ({
   theme,
   isBigScreen,
-  data,
-  installmentsIndex,
+  installments,
+  installmentsOptions,
   amount,
   enableSplitAmount,
   showCreditCard,
@@ -38,7 +37,7 @@ const CreditCard = ({
   flipped,
   amountPrefixName,
   inputPrefixName = '',
-  amountPrefixValue,
+  amountPrefixValue, //eslint-disable-line
 }) => {
   const {
     cardNumber = '•••• •••• •••• ••••',
@@ -46,17 +45,6 @@ const CreditCard = ({
     expiration = 'MM/AA',
     cvv = '•••',
   } = formData
-
-  const { installments } = data
-  const installmentTotalAmount =
-    amountPrefixValue
-      ? amountPrefixValue * 100
-      : amount
-
-  const installmentsOptions = generateInstallments(
-    installmentTotalAmount,
-    installments[installmentsIndex]
-  )
 
   const inputsColSize = showCreditCard
     ? mediumColSize
@@ -215,7 +203,6 @@ CreditCard.propTypes = {
     amount: PropTypes.string,
     cvvTooltip: PropTypes.string,
   }),
-  data: PropTypes.shape().isRequired,
   amount: PropTypes.number.isRequired,
   enableSplitAmount: PropTypes.bool,
   showCreditCard: PropTypes.bool,
@@ -226,7 +213,12 @@ CreditCard.propTypes = {
   amountPrefixName: PropTypes.string,
   amountPrefixValue: PropTypes.number,
   inputPrefixName: PropTypes.string,
-  installmentsIndex: PropTypes.number.isRequired,
+  installmentsOptions: PropTypes.arrayOf([
+    PropTypes.object,
+  ]).isRequired,
+  installments: PropTypes.arrayOf([
+    PropTypes.object,
+  ]).isRequired,
 }
 
 CreditCard.defaultProps = {

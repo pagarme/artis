@@ -21,26 +21,26 @@ describe('Calculate Installments', () => {
     }
 
     const firstInstallment = {
-      name: '1x de R$ 100,00 sem juros.',
       value: '1',
       amount: 10000,
       installmentAmount: '10000',
+      hasInterest: false,
     }
 
     const middleInstallment = {
-      name: '5x de R$ 22,00 com juros.',
       value: '5',
       interest: 1000,
       amount: 11000,
       installmentAmount: '2200',
+      hasInterest: true,
     }
 
     const lastInstallment = {
-      name: '10x de R$ 22,00 com juros.',
       value: '10',
       interest: 12000,
       amount: 22000,
       installmentAmount: '2200',
+      hasInterest: true,
     }
 
     const newInstallments = generateInstallments(10000, installmentsOptions)
@@ -65,18 +65,18 @@ describe('Calculate Installments', () => {
     }
 
     const firstInstallment = {
-      name: '1x de R$ 10.000,00 sem juros.',
       value: '1',
       amount: 1000000,
       installmentAmount: '1000000',
+      hasInterest: false,
     }
 
     const secondInstallment = {
-      name: '2x de R$ 6.250,00 com juros.',
       value: '2',
       amount: 1250000,
       interest: 250000,
       installmentAmount: '625000',
+      hasInterest: true,
     }
 
     const newInstallments = generateInstallments(
