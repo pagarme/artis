@@ -223,7 +223,6 @@ class Checkout extends Component {
       acquirer,
       pageInfo,
       apiData,
-      transaction,
       realAmount,
     } = this.props
 
@@ -234,7 +233,6 @@ class Checkout extends Component {
       cart,
     } = apiData
 
-    const { amount } = transaction
     const { onTransactionSuccess, onError } = configs
     const items = propOr([], 'items', cart)
 
