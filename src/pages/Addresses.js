@@ -48,21 +48,21 @@ const radioOptions = [
   },
 ]
 
+const shippingInfo = applySpec({
+  shippingStreet: pathOr('', ['street']),
+  shippingNumber: pathOr('', ['number']),
+  shippingComplement: pathOr('', ['complement']),
+  shippingNeighborhood: pathOr('', ['neighborhood']),
+  shippingCity: pathOr('', ['city']),
+  shippingState: pathOr('', ['state']),
+  shippingZipcode: pathOr('', ['zipcode']),
+})
+
 class AddressesPage extends Component {
   constructor (props) {
     super(props)
 
-    const { billing = {}, shipping = {} } = props
-
-    const shippingInfo = applySpec({
-      shippingStreet: pathOr('', ['street']),
-      shippingNumber: pathOr('', ['number']),
-      shippingComplement: pathOr('', ['complement']),
-      shippingNeighborhood: pathOr('', ['neighborhood']),
-      shippingCity: pathOr('', ['city']),
-      shippingState: pathOr('', ['state']),
-      shippingZipcode: pathOr('', ['zipcode']),
-    })
+    const { billing, shipping } = props
 
     this.state = {
       ...billing,
@@ -228,11 +228,11 @@ class AddressesPage extends Component {
 
   render () {
     const { sameAddressForShipping } = this.state
-    const { theme, base, isBigScreen } = this.props
-
-    const sizeWithDesktop = isBigScreen
-      ? mediumColSize
-      : defaultColSize
+    const {
+      theme,
+      base,
+      isBigScreen,
+    } = this.props
 
     return (
       <Form
@@ -310,9 +310,10 @@ class AddressesPage extends Component {
         >
           <Row alignCenter stretch>
             <Col
-              tv={sizeWithDesktop}
-              desk={sizeWithDesktop}
-              tablet={sizeWithDesktop}
+              tv={mediumColSize}
+              desk={mediumColSize}
+              tablet={mediumColSize}
+              palm={defaultColSize}
             >
               <Row className={theme.title}>
                 <BillingIcon className={theme.titleIcon} />
@@ -432,9 +433,10 @@ class AddressesPage extends Component {
             {
               (sameAddressForShipping && sameAddressForShipping !== 'true') &&
               <Col
-                tv={sizeWithDesktop}
-                desk={sizeWithDesktop}
-                tablet={sizeWithDesktop}
+                tv={mediumColSize}
+                desk={mediumColSize}
+                tablet={mediumColSize}
+                palm={defaultColSize}
               >
                 <Row className={theme.title}>
                   <BillingIcon className={theme.titleIcon} />
@@ -453,6 +455,7 @@ class AddressesPage extends Component {
                 </Row>
                 <Row>
                   <Input
+                    base={base}
                     name="shippingStreet"
                     label="Rua"
                     placeholder="Digite o endereço"
@@ -517,6 +520,7 @@ class AddressesPage extends Component {
                     palm={smallColSize}
                   >
                     <Dropdown
+                      base={base}
                       options={options}
                       name="shippingState"
                       label="UF"
@@ -542,7 +546,7 @@ class AddressesPage extends Component {
                 full={!isBigScreen}
                 disabled={!this.state.formValid}
               >
-                  Confirmar
+                Confirmar
               </Button>
             </Col>
           </Row>

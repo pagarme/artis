@@ -144,10 +144,6 @@ class CustomerPage extends Component {
       customer,
     } = this.props
 
-    const sizeWithDesktop = isBigScreen
-      ? mediumColSize
-      : defaultColSize
-
     return (
       <Form
         data={customer}
@@ -185,9 +181,10 @@ class CustomerPage extends Component {
           }
         >
           <Col
-            tv={sizeWithDesktop}
-            desk={sizeWithDesktop}
-            tablet={sizeWithDesktop}
+            tv={mediumColSize}
+            desk={mediumColSize}
+            tablet={mediumColSize}
+            palm={defaultColSize}
           >
             { this.renderCustomerForm() }
           </Col>

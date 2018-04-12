@@ -4,45 +4,19 @@ import classNames from 'classnames'
 import shortid from 'shortid'
 import MdArrowDropDown from 'react-icons/lib/md/arrow-drop-down'
 
-import {
-  propEq,
-  pipe,
-  find,
-  prop,
-  defaultTo,
-} from 'ramda'
-
 class Dropdown extends React.Component {
   constructor (props) {
     super(props)
 
     this.instanceId = `${props.name}-${shortid.generate()}`
-    this.selectedName = this.selectedName.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange (event) {
+  handleChange = (event) => {
     const { disabled, onChange } = this.props
 
     if (!disabled && onChange) {
       onChange(event)
     }
-  }
-
-  selectedName () {
-    const {
-      options,
-      value,
-    } = this.props
-
-    const selected = pipe(
-      find(propEq('value', value)),
-      defaultTo({}),
-      prop('name'),
-      defaultTo(this.props.placeholder || 'Selecione')
-    )
-
-    return selected(options)
   }
 
   renderOptions () {

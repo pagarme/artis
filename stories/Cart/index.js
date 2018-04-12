@@ -26,18 +26,12 @@ const items = [
 ]
 
 class CartState extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      collapsed: false,
-    }
-
-    this.handleToggleCart = this.handleToggleCart.bind(this)
+  state = {
+    collapsed: false,
   }
 
-  handleToggleCart () {
-    this.setState(({ collapsed }) => ({ collapsed: !collapsed }))
+  handleToggleCart = () => {
+    this.setState({ collapsed: !this.state.collapsed })
   }
 
   render () {

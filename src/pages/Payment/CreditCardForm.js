@@ -55,8 +55,6 @@ const CreditCard = ({
     ? mediumColSize
     : defaultColSize
 
-  const prefix = inputPrefixName || ''
-
   return (
     <Grid>
       <Row>
@@ -110,7 +108,7 @@ const CreditCard = ({
               palm={defaultColSize}
             >
               <Input
-                name={`${prefix}cardNumber`}
+                name={`${inputPrefixName}cardNumber`}
                 label="Número do cartão"
                 mask="1111 1111 1111 1111"
                 icon={!isBigScreen && <FaCreditCard size={20} />}
@@ -125,7 +123,7 @@ const CreditCard = ({
               palm={defaultColSize}
             >
               <Input
-                name={`${prefix}holderName`}
+                name={`${inputPrefixName}holderName`}
                 label="Nome (igual o do cartão)"
                 maxLength="24"
                 icon={!isBigScreen && <FaUser size={20} />}
@@ -142,7 +140,7 @@ const CreditCard = ({
               palm={mediumColSize}
             >
               <Input
-                name={`${prefix}expiration`}
+                name={`${inputPrefixName}expiration`}
                 label="Data de validade"
                 mask="11/11"
                 icon={!isBigScreen && <FaCalendar size={20} />}
@@ -155,7 +153,7 @@ const CreditCard = ({
               palm={mediumColSize}
             >
               <Input
-                name={`${prefix}cvv`}
+                name={`${inputPrefixName}cvv`}
                 label="CVV"
                 type="number"
                 mask="111"
@@ -181,7 +179,7 @@ const CreditCard = ({
               >
                 <Dropdown
                   options={installmentsOptions}
-                  name={`${prefix}installments`}
+                  name={`${inputPrefixName}installments`}
                   label="Quantidade de Parcelas"
                   placeholder="Selecione"
                   value={installments[0].initial.toString()}
