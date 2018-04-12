@@ -26,6 +26,7 @@ import {
 } from '../../utils/validations'
 import updateMultipleAmount from '../../utils/helpers/updateMultipleAmount'
 import formatToBRL from './../../utils/helpers/formatToBRL'
+import getInstallments from './../../utils/helpers/getInstallments'
 
 const applyThemr = themr('UIPaymentPage')
 
@@ -151,6 +152,8 @@ class CreditCardAndBoleto extends Component {
                   showCreditCard: false,
                   confirmButtonVisible: false,
                   handleSubmit: this.handleSubmit,
+                  installments: creditcard.installments,
+                  installmentsOptions: getInstallments(amount, creditcard, 0),
                 })}
               </Col>
             </Col>
