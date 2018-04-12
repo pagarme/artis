@@ -10,6 +10,7 @@ import {
   join,
   pipe,
 } from 'ramda'
+import { connect } from 'react-redux'
 
 import CloseIcon from 'emblematic-icons/svg/ClearClose32.svg'
 import CustomerIcon from 'emblematic-icons/svg/User24.svg'
@@ -82,13 +83,13 @@ class Cart extends React.Component {
       amount,
       shippingRate,
       theme,
+      base,
       collapsed,
+      customer,
       items,
       onToggleCart,
-      showCloseButton,
-      base,
-      customer,
       shipping,
+      showCloseButton,
     } = this.props
 
     const shouldRenderClientData = !isEmpty(customer) || !isEmpty(shipping)
@@ -179,7 +180,6 @@ Cart.propTypes = {
     value: PropTypes.number,
   })),
   base: PropTypes.string,
-  amount: PropTypes.number.isRequired,
   collapsed: PropTypes.bool.isRequired,
   onToggleCart: PropTypes.func.isRequired,
   showCloseButton: PropTypes.bool.isRequired,
@@ -199,15 +199,21 @@ Cart.propTypes = {
     state: PropTypes.string,
     zipcode: PropTypes.string,
   }),
+  amount: PropTypes.number.isRequired,
 }
 
 Cart.defaultProps = {
-  theme: {},
   base: 'dark',
-  items: [],
-  shipping: {},
   customer: {},
   shippingRate: null,
+  freight: null,
+  items: [],
+  shipping: {},
+  theme: {},
 }
 
-export default applyThemr(Cart)
+const mapStateToProps = ({ transactionValues }) => ({
+  amount: transactionValues.amount,
+})
+
+export default connect(mapStateToProps, {})(applyThemr(Cart))
