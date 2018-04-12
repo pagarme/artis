@@ -13,6 +13,7 @@ import {
   reject,
   isNil,
   pathOr,
+  omit,
 } from 'ramda'
 
 import { Switch, Button } from '../../components'
@@ -146,9 +147,17 @@ class SwitchPayment extends Component {
       { type: paymentType }
     )
 
+    const validatedErrors = omit(paymentType === 'boleto'
+      ? ['cardNumber',
+        'cvv',
+        'expiration',
+        'holderName',
+        'installments']
+      : [], reject(isNil, errors))
+
     const payment = {
       method,
-      formValid: isEmpty(reject(isNil, errors)),
+      formValid: isEmpty(validatedErrors),
       type: paymentType,
     }
 
@@ -175,7 +184,7 @@ class SwitchPayment extends Component {
       pageInfo: payment,
     })
 
-    handleSubmit(data, errors)
+    handleSubmit(data, validatedErrors)
   }
 
   render () {
