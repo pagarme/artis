@@ -47,7 +47,7 @@ const render = (apiData, {
           <ErrorBoundary CrashReportComponent={<ErrorPage />}>
             <NormalizeCSS>
               <Checkout
-                apiData={apiDataWithDefaults}
+                apiData={apiData}
                 acquirer={acquirer}
                 targetElement={clientTarget}
                 base={clientThemeBase}
@@ -125,6 +125,7 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
         merge(commonParams, { store })
       )
     })
+}
 
 const preRender = (apiData) => {
   const acquirer = getStrategyName(apiData)

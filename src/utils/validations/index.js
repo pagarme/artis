@@ -1,7 +1,6 @@
 import {
   always,
   allPass,
-  concat,
   isNil,
   prop,
   pathOr,
@@ -39,25 +38,6 @@ const maxLength = length => value => (
     : false
 )
 
-const pagarmeTransactionParams = [
-  prop('amount'),
-  prop('shipping'),
-  prop('items'),
-  prop('postback'),
-]
-
-const commonTransactionParams = [
-  prop('customer'),
-  prop('billing'),
-  prop('payment'),
-  prop('key'),
-]
-
-const requiredTransactionParams = {
-  pagarme: allPass(concat(commonTransactionParams, [pagarmeTransactionParams])),
-  mundipagg: allPass(commonTransactionParams),
-}
-
 const customerValidation = allPass([
   prop('name'),
   prop('documentNumber'),
@@ -75,9 +55,6 @@ const customerRequiredParams = {
     return customerValidation
   },
 }
-
-const hasAllTransactionData = (acquirer, data) =>
-  requiredTransactionParams[acquirer](data)
 
 const hasRequiredPageData = (page, props) => {
   if (page === 'customer') {
@@ -117,7 +94,6 @@ const isValidDate = value => (!isDate(value)
 
 export {
   isCpf,
-  hasAllTransactionData,
   hasRequiredPageData,
   isNumber,
   isEmail,

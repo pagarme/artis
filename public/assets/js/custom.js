@@ -123,8 +123,7 @@ const pagarmeApi = `var configs = {
 };`
 
 const mundiApi = `var configs = {
-  token: 'chk_1AYmoD4Ip3CBQgRZ', // boleto
-  // token: 'chk_JwO07OlTMFLYW9e3', // creditcard
+  token: 'chk_NkD0500sJKI15PJV',
   onSuccess: (data) => {
     console.log('Success call', JSON.stringify(data, null, 2))
   },

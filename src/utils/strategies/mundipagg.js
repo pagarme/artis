@@ -3,6 +3,7 @@ import {
   always,
   cond,
   equals,
+  head,
   identity,
   ifElse,
   join,
@@ -22,7 +23,22 @@ import {
   T,
 } from 'ramda'
 
-const transactionUrl = 'https://api.mundipagg.com/checkout/v1/payments'
+import URLS from './urls'
+
+const dotsRegex = /\./g
+const spacesRegex = / /g
+
+const removePathIfNull = dataPath => ifElse(
+  path(dataPath),
+  identity,
+  dissocPath(dataPath)
+)
+
+const removePropIfNull = propName => ifElse(
+  prop(propName),
+  identity,
+  dissoc(propName)
+)
 
 const addressParse = applySpec({
   street: path(['address', 'street']),
@@ -74,12 +90,6 @@ const parseCreditcardTokenData = ifElse(
     })
   ),
   always(null)
-)
-
-const removePathIfNull = dataPath => ifElse(
-  path(dataPath),
-  identity,
-  dissocPath(dataPath)
 )
 
 const parseTokenData = pipe(
@@ -179,7 +189,7 @@ const parsersPaymentData = {
         holder_name: path(['payment', 'info', 'holderName']),
         number: pipe(
           path(['payment', 'info', 'cardNumber']),
-          replace(/ /g, '')
+          replace(spacesRegex, '')
         ),
         security_code: path(['payment', 'info', 'cvv']),
       },
@@ -265,7 +275,7 @@ const getTransactionData = pipe(
 )
 
 const getTokenData = token => fetch(
-  `https://api.mundipagg.com/checkout/v1/tokens/${token}`, {
+  `${URLS.mundipagg.token}/${token}`, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -275,10 +285,50 @@ const getTokenData = token => fetch(
   .then(res => res.json())
   .then(parseTokenData)
 
+const getBoletoBarcode = pipe(
+  prop('payments'),
+  head,
+  path(['boleto', 'line']),
+  replace(dotsRegex, '')
+)
+
+const getBoletoUrl = pipe(
+  prop('payments'),
+  head,
+  path(['boleto', 'pdf']),
+)
+
+const isAuthorized = (status, barcode) => (status === 'paid')
+  || (status === 'pending' && barcode)
+
+const parseStatus = (data) => {
+  const { status, boleto_barcode: boletoBarcode } = data
+
+  if (isAuthorized(status, boletoBarcode)) {
+    return {
+      ...data,
+      status: 'authorized',
+    }
+  }
+
+  return { ...data, status }
+}
+
+const parseResponseStrategy = pipe(
+  applySpec({
+    boleto_url: getBoletoUrl,
+    boleto_barcode: getBoletoBarcode,
+    status: prop('status'),
+  }),
+  removePropIfNull('boleto_barcode'),
+  removePropIfNull('boleto_url'),
+  parseStatus,
+)
+
 const strategy = (data) => {
   const payload = getTransactionData(data)
 
-  return fetch(`${transactionUrl}?appId=${data.key}`, {
+  return fetch(`${URLS.mundipagg.payments}?appId=${data.key}`, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -287,6 +337,7 @@ const strategy = (data) => {
     body: JSON.stringify(payload),
   })
     .then(response => response.json())
+    .then(parseResponseStrategy)
 }
 
 export {

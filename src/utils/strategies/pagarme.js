@@ -19,7 +19,7 @@ import {
   toString,
 } from 'ramda'
 
-const url = 'https://api.pagar.me/1/transactions'
+import URLS from './urls'
 
 const getPaymentMethodType = path(['payment', 'method', 'type'])
 
@@ -149,7 +149,7 @@ const strategy = (data) => {
   const paymentData = getPaymentMethodData(data)
   const fullPayload = merge(paymentData, commonPayload)
 
-  return fetch(url, {
+  return fetch(URLS.pagarme.transaction, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',

@@ -4645,7 +4645,7 @@ formatio@1.1.1:
   dependencies:
     samsam "~1.1"
 
-former-kit@^0.4.0:
+former-kit@0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-0.4.0.tgz#732d8ac475fe8822f3ff41505431a9935e4bd025"
   dependencies:

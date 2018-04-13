@@ -13,7 +13,6 @@ import {
   isEmpty,
   reject,
   isNil,
-  path,
   pathOr,
   omit,
 } from 'ramda'
@@ -108,12 +107,10 @@ class SwitchPayment extends Component {
   constructor (props) {
     super(props)
 
-    const formData = path(['payment', 'info'], props) || {}
-
     this.state = {
-      formData,
       clickedPaymentType: null,
       flipped: false,
+      formData: pathOr({}, ['payment', 'info'], props),
       formValid: pathOr(false, ['payment', 'formValid'], props),
     }
   }
@@ -305,13 +302,14 @@ SwitchPayment.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isBigScreen: PropTypes.bool.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  defaultMethod: PropTypes.string.isRequired,
+  defaultMethod: PropTypes.string,
 }
 
 SwitchPayment.defaultProps = {
   theme: {},
   paymentType: null,
   payment: null,
+  defaultMethod: null,
 }
 
 const mapStateToProps = ({ screenSize, pageInfo }) => ({

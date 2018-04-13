@@ -18,7 +18,7 @@ import {
 import { changeScreenSize } from '../../actions'
 import strategies from '../../utils/strategies'
 import getErrorMessage from '../../utils/data/errorMessages'
-import { hasAllTransactionData, hasRequiredPageData } from '../../utils/validations'
+import { hasRequiredPageData } from '../../utils/validations'
 
 import {
   ProgressBar,
@@ -203,7 +203,15 @@ class Checkout extends Component {
       pageInfo,
       apiData,
     } = this.props
-    const { configs = {}, formData = {}, key, token, transaction } = apiData
+
+    const {
+      configs = {},
+      formData = {},
+      key,
+      token,
+      transaction,
+    } = apiData
+
     const { items } = formData
     const { amount } = transaction
     const { onError, onSuccess } = configs
@@ -217,20 +225,16 @@ class Checkout extends Component {
     }
 
     const request = strategies[acquirer]
-    const shouldTransaction = hasAllTransactionData(acquirer, requestPayload)
 
-    if (shouldTransaction) {
-      request(requestPayload)
-        .then(response =>
-          this.onTransactionReturn(
-            response,
-            onSuccess,
-            onError,
-          ))
-        .catch(() => transition('TRANSACTION_FAILURE'))
-    } else {
-      transition('TRANSACTION_FAILURE')
-    }
+    request(requestPayload)
+      .then((response) => {
+        this.onTransactionReturn(
+          response,
+          onSuccess,
+          onError,
+        )
+      })
+      .catch(() => transition('TRANSACTION_FAILURE'))
   }
 
   renderPages () {
@@ -277,8 +281,8 @@ class Checkout extends Component {
           <SuccessInfo
             base={base}
             paymentInfo={{
-              customer: path(['customer', 'name'], this.props.pageInfo),
-              address: path(['shipping'], this.props.pageInfo),
+              customer: path(['customer', 'name'], pageInfo),
+              address: path(['shipping'], pageInfo),
               amount: path(['apiData', 'transaction', 'amount'], this.props),
               installments: path(['info', 'installments'], payment),
             }}
