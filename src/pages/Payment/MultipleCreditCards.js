@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { themr } from 'react-css-themr'
 import Form from 'react-vanilla-form'
-import { isEmpty, reject, isNil } from 'ramda'
+import { isEmpty, reject, isNil, pathOr } from 'ramda'
 import classNames from 'classnames'
+
 import {
   Grid,
   Row,
   Col,
 } from 'former-kit'
+import { incrementFinalAmount, resetFinalAmount } from '../../actions'
 
 import {
   Button,
@@ -98,6 +100,22 @@ const getValidations = ({
   }
 }
 
+const getSelectedInstallment = ({ amount, creditcard, formData }) => (
+  (name, installmentIndex) => {
+    const selectedInstallment = formData[`${name}-installments`]
+    const installmentsList = getInstallments(
+      amount,
+      creditcard,
+      installmentIndex
+    )
+    const interest = installmentsList.find((elem, index) => (
+      index.toString() === selectedInstallment
+    ))
+
+    return interest
+  }
+)
+
 class MultipleCreditCards extends Component {
   constructor () {
     super()
@@ -137,11 +155,62 @@ class MultipleCreditCards extends Component {
     })
   }
 
+  handleSubmit = (formData, errors) => {
+    const {
+      handleIncrementFinalAmount,
+      handleResetFinalAmount,
+      handleSubmit,
+      transaction,
+    } = this.props
+
+    handleResetFinalAmount()
+
+    const { amount, paymentMethods } = transaction
+    const { creditcard } = paymentMethods
+
+    const values = {
+      amount,
+      creditcard,
+      formData,
+    }
+
+    const firstCreditCardInstallment =
+      getSelectedInstallment({ ...values })(
+        'first',
+        0,
+      )
+
+    const secondCreditCardInstallment =
+      getSelectedInstallment({ ...values })(
+        'second',
+        1,
+      )
+
+    const firstInterest = pathOr(
+      0,
+      ['interest'],
+      firstCreditCardInstallment
+    )
+
+    const secondInterest = pathOr(
+      0,
+      ['interest'],
+      secondCreditCardInstallment
+    )
+
+    const finalInterest = firstInterest + secondInterest
+
+    if (finalInterest) {
+      handleIncrementFinalAmount(finalInterest)
+    }
+
+    handleSubmit(formData, errors)
+  }
+
   render () {
     const { theme,
       transaction,
       isBigScreen,
-      handleSubmit,
     } = this.props
 
     const {
@@ -166,7 +235,7 @@ class MultipleCreditCards extends Component {
       <Form
         data={formData}
         onChange={this.handleChangeForm}
-        onSubmit={handleSubmit}
+        onSubmit={this.handleSubmit}
         customErrorProp="error"
         validation={{
           ...getValidations({
@@ -208,11 +277,11 @@ class MultipleCreditCards extends Component {
                   enableSplitAmount: true,
                   inputPrefixName: firstPrefix,
                   amountPrefixName: inputAmountNames.first,
-                  amountPrefixValue: formData[inputAmountNames.first],
                   showCreditCard: false,
                   confirmButtonVisible: false,
                   handleSubmit: this.handleSubmit,
-                  installments: creditcard.installments,
+                  installmentInitialValue:
+                    creditcard.installments[0].initial.toString(),
                   installmentsOptions: getInstallments(amount, creditcard, 0),
                 })}
               </Col>
@@ -247,11 +316,11 @@ class MultipleCreditCards extends Component {
                   enableSplitAmount: true,
                   inputPrefixName: secondPrefix,
                   amountPrefixName: inputAmountNames.second,
-                  amountPrefixValue: formData[inputAmountNames.second],
                   showCreditCard: false,
                   confirmButtonVisible: false,
                   handleSubmit: this.handleSubmit,
-                  installments: creditcard.installments,
+                  iinstallmentInitialValue:
+                    creditcard.installments[1].initial.toString(),
                   installmentsOptions: getInstallments(amount, creditcard, 1),
                 })}
               </Col>
@@ -303,6 +372,8 @@ MultipleCreditCards.propTypes = {
   theme: PropTypes.shape(),
   isBigScreen: PropTypes.bool.isRequired,
   transaction: PropTypes.shape().isRequired,
+  handleIncrementFinalAmount: PropTypes.func.isRequired,
+  handleResetFinalAmount: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 }
 
@@ -314,4 +385,7 @@ const mapStateToProps = ({ screenSize }) => ({
   isBigScreen: screenSize.isBigScreen,
 })
 
-export default connect(mapStateToProps, null)(applyThemr(MultipleCreditCards))
+export default connect(mapStateToProps, {
+  handleIncrementFinalAmount: incrementFinalAmount,
+  handleResetFinalAmount: resetFinalAmount,
+})(applyThemr(MultipleCreditCards))

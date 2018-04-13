@@ -11,10 +11,11 @@ import {
   pick,
   merge,
   isEmpty,
-  reject,
   isNil,
-  pathOr,
   omit,
+  pathOr,
+  prop,
+  reject,
 } from 'ramda'
 
 import { Switch, Button } from '../../components'
@@ -24,8 +25,9 @@ import CreditCardForm from './CreditCardForm'
 
 import {
   addPageInfo,
-  incrementRealAmount,
-  decrementRealAmount,
+  incrementFinalAmount,
+  decrementFinalAmount,
+  resetFinalAmount,
 } from '../../actions'
 import {
   required,
@@ -76,8 +78,9 @@ const createSwitchItems = ({
         formData,
         flipped,
         handleFlipCard,
+        inputPrefixName: '',
         installmentsIndex: 0,
-        installments: creditcard.installments,
+        installmentInitialValue: creditcard.installments[0].initial.toString(),
         installmentsOptions: getInstallments(amount, creditcard, 0),
       }),
     },
@@ -140,19 +143,21 @@ class SwitchPayment extends Component {
 
   handleFormSubmit = (formData, errors) => {
     const {
-      handleSubmit,
-      handlePageChange,
-      transaction,
       defaultMethod,
-      amount,
-      handleIncrementRealAmount,
-      handleDecrementRealAmount,
+      handleDecrementFinalAmount,
+      handleIncrementFinalAmount,
+      handlePageChange,
+      handleResetFinalAmount,
+      handleSubmit,
+      transaction,
     } = this.props
+
+    handleResetFinalAmount()
 
     let data = formData
 
     const { clickedPaymentType } = this.state
-    const { paymentConfig } = transaction
+    const { paymentConfig, amount } = transaction
     const { creditcard, boleto } = paymentConfig
 
     const paymentType = clickedPaymentType || setPaymentMethod({
@@ -189,23 +194,28 @@ class SwitchPayment extends Component {
       ], data)
 
       const selectedInstallment = data.installments
-      const installmentsList = getInstallments(amount, creditcard)
-      const filteredInstallments = installmentsList.filter((elem, i) =>
-        selectedInstallment === i.toString()
-      )
-      const interest = filteredInstallments.length > 0 && filteredInstallments[0]
+      const installmentsList = getInstallments(amount, creditcard, 0)
+      const installment = installmentsList.find((elem, index) => (
+        index.toString() === selectedInstallment
+      ))
+      const interest = prop('interest', installment)
+
+
       if (interest) {
-        handleIncrementRealAmount(interest)
+        handleIncrementFinalAmount(interest)
       }
     }
 
     if (paymentType === 'boleto') {
       data = { boleto: true }
+
       const { discount } = boleto
-      const { type, value } = discount || { type: null, value: null }
+      const type = prop('type', discount)
+      const value = prop('value', discount)
 
       if (type && value) {
-        handleDecrementRealAmount({ type, value, amount })
+        const finalDiscount = amount - applyDiscount(type, value, amount)
+        handleDecrementFinalAmount(finalDiscount)
       }
     }
 
@@ -325,12 +335,13 @@ SwitchPayment.propTypes = {
   amount: PropTypes.number.isRequired,
   base: PropTypes.string.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  handleIncrementRealAmount: PropTypes.func.isRequired,
-  handleDecrementRealAmount: PropTypes.func.isRequired,
+  handleIncrementFinalAmount: PropTypes.func.isRequired,
+  handleDecrementFinalAmount: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isBigScreen: PropTypes.bool.isRequired,
   defaultMethod: PropTypes.string,
   paymentType: PropTypes.string,
+  handleResetFinalAmount: PropTypes.func.isRequired,
   theme: PropTypes.shape(),
   transaction: PropTypes.shape().isRequired,
 }
@@ -350,6 +361,7 @@ const mapStateToProps = ({ screenSize, pageInfo, transactionValues }) => ({
 
 export default connect(mapStateToProps, {
   handlePageChange: addPageInfo,
-  handleIncrementRealAmount: incrementRealAmount,
-  handleDecrementRealAmount: decrementRealAmount,
+  handleIncrementFinalAmount: incrementFinalAmount,
+  handleDecrementFinalAmount: decrementFinalAmount,
+  handleResetFinalAmount: resetFinalAmount,
 })(applyThemr(SwitchPayment))

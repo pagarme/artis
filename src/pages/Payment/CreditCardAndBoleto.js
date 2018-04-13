@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { themr } from 'react-css-themr'
 import Form from 'react-vanilla-form'
-import { isEmpty, reject, isNil } from 'ramda'
+import { isEmpty, reject, isNil, prop } from 'ramda'
 import classNames from 'classnames'
 import {
   Grid,
   Row,
   Col,
 } from 'former-kit'
+import { incrementFinalAmount, resetFinalAmount } from '../../actions'
 
 import {
   Button,
@@ -60,11 +61,37 @@ class CreditCardAndBoleto extends Component {
     })
   }
 
+  handleSubmit = (formData, errors) => {
+    const { handleSubmit } = this.props
+    const {
+      transaction,
+      handleIncrementFinalAmount,
+      handleResetFinalAmount,
+    } = this.props
+
+    handleResetFinalAmount()
+
+    const { amount, paymentMethods } = transaction
+    const { creditcard } = paymentMethods
+
+    const selectedInstallment = formData.installments
+    const installmentsList = getInstallments(amount, creditcard, 0)
+    const installment = installmentsList.find((elem, index) => (
+      index.toString() === selectedInstallment
+    ))
+    const interest = prop('interest', installment)
+
+    if (interest) {
+      handleIncrementFinalAmount(interest)
+    }
+
+    handleSubmit(formData, errors)
+  }
+
   render () {
     const { theme,
       transaction,
       isBigScreen,
-      handleSubmit,
     } = this.props
 
     const {
@@ -88,7 +115,7 @@ class CreditCardAndBoleto extends Component {
       <Form
         data={formData}
         onChange={this.handleChangeForm}
-        onSubmit={handleSubmit}
+        onSubmit={this.handleSubmit}
         customErrorProp="error"
         validation={{
           [creditcardAmountInputName]: [required],
@@ -148,11 +175,12 @@ class CreditCardAndBoleto extends Component {
                   enableSplitAmount: true,
                   installmentsIndex: 0,
                   amountPrefixName: inputAmountNames.first,
-                  amountPrefixValue: formData[inputAmountNames.first],
                   showCreditCard: false,
+                  inputPrefixName: '',
                   confirmButtonVisible: false,
                   handleSubmit: this.handleSubmit,
-                  installments: creditcard.installments,
+                  installmentInitialValue:
+                    creditcard.installments[0].initial.toString(),
                   installmentsOptions: getInstallments(amount, creditcard, 0),
                 })}
               </Col>
@@ -236,6 +264,8 @@ CreditCardAndBoleto.propTypes = {
   theme: PropTypes.shape(),
   isBigScreen: PropTypes.bool.isRequired,
   transaction: PropTypes.shape().isRequired,
+  handleIncrementFinalAmount: PropTypes.func.isRequired,
+  handleResetFinalAmount: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 }
 
@@ -247,4 +277,7 @@ const mapStateToProps = ({ screenSize }) => ({
   isBigScreen: screenSize.isBigScreen,
 })
 
-export default connect(mapStateToProps, null)(applyThemr(CreditCardAndBoleto))
+export default connect(mapStateToProps, {
+  handleIncrementFinalAmount: incrementFinalAmount,
+  handleResetFinalAmount: resetFinalAmount,
+})(applyThemr(CreditCardAndBoleto))

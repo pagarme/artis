@@ -8,12 +8,16 @@ export const addPageInfo = payload => ({
   payload,
 })
 
-export const decrementRealAmount = payload => ({
-  type: 'DECREMENT_REAL_AMOUNT',
+export const decrementFinalAmount = payload => ({
+  type: 'DECREMENT_FINAL_AMOUNT',
   payload,
 })
 
-export const incrementRealAmount = payload => ({
-  type: 'INCREMENT_REAL_AMOUNT',
+export const incrementFinalAmount = payload => ({
+  type: 'INCREMENT_FINAL_AMOUNT',
   payload,
+})
+
+export const resetFinalAmount = () => ({
+  type: 'RESET_FINAL_AMOUNT',
 })

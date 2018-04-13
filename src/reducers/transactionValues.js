@@ -19,17 +19,17 @@ const transactionValues = (state = defaultState, action) => {
     case 'DECREMENT_FINAL_AMOUNT':
       return {
         ...state,
-        realAmount: state.amount - payload,
+        finalAmount: state.amount - payload,
       }
     case 'INCREMENT_FINAL_AMOUNT':
       return {
         ...state,
-        realAmount: payload + state.amount,
+        finalAmount: payload + state.amount,
       }
     case 'RESET_FINAL_AMOUNT':
       return {
         ...state,
-        realAmount: state.amount,
+        finalAmount: state.amount,
       }
 
     default:

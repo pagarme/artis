@@ -24,7 +24,6 @@ describe('Calculate Installments', () => {
       value: '1',
       amount: 10000,
       installmentAmount: '10000',
-      hasInterest: false,
     }
 
     const middleInstallment = {
@@ -32,7 +31,6 @@ describe('Calculate Installments', () => {
       interest: 1000,
       amount: 11000,
       installmentAmount: '2200',
-      hasInterest: true,
     }
 
     const lastInstallment = {
@@ -40,7 +38,6 @@ describe('Calculate Installments', () => {
       interest: 12000,
       amount: 22000,
       installmentAmount: '2200',
-      hasInterest: true,
     }
 
     const newInstallments = generateInstallments(10000, installmentsOptions)
@@ -68,7 +65,6 @@ describe('Calculate Installments', () => {
       value: '1',
       amount: 1000000,
       installmentAmount: '1000000',
-      hasInterest: false,
     }
 
     const secondInstallment = {
@@ -76,7 +72,6 @@ describe('Calculate Installments', () => {
       amount: 1250000,
       interest: 250000,
       installmentAmount: '625000',
-      hasInterest: true,
     }
 
     const newInstallments = generateInstallments(

@@ -27,7 +27,7 @@ const mediumColSize = 6
 const CreditCard = ({
   theme,
   isBigScreen,
-  installments,
+  installmentInitialValue,
   installmentsOptions,
   amount,
   enableSplitAmount,
@@ -37,7 +37,6 @@ const CreditCard = ({
   flipped,
   amountPrefixName,
   inputPrefixName = '',
-  amountPrefixValue, //eslint-disable-line
 }) => {
   const {
     cardNumber = '•••• •••• •••• ••••',
@@ -177,7 +176,7 @@ const CreditCard = ({
                   name={`${inputPrefixName}installments`}
                   label="Quantidade de Parcelas"
                   placeholder="Selecione"
-                  value={installments[0].initial.toString()}
+                  value={installmentInitialValue}
                   icon={!isBigScreen && <Calendar24 size={20} />}
                 />
               </Col>
@@ -211,14 +210,11 @@ CreditCard.propTypes = {
   handleFlipCard: PropTypes.func,
   flipped: PropTypes.bool,
   amountPrefixName: PropTypes.string,
-  amountPrefixValue: PropTypes.number,
   inputPrefixName: PropTypes.string,
   installmentsOptions: PropTypes.arrayOf([
     PropTypes.object,
   ]).isRequired,
-  installments: PropTypes.arrayOf([
-    PropTypes.object,
-  ]).isRequired,
+  installmentInitialValue: PropTypes.string.isRequired,
 }
 
 CreditCard.defaultProps = {
@@ -230,7 +226,6 @@ CreditCard.defaultProps = {
   flipped: false,
   amountPrefixName: '',
   inputPrefixName: '',
-  amountPrefixValue: null,
 }
 
 export default CreditCard

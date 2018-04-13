@@ -42,7 +42,6 @@ const generateFreeInstallment = (index, amount) => {
     amount,
     installmentAmount,
     value: index.toString(),
-    hasInterest: false,
   }
 }
 
@@ -64,7 +63,6 @@ const getInterestInstallment = (interestRate, index, amount) => {
     interest: interestValue,
     value: index.toString(),
     amount: newAmount,
-    hasInterest: true,
   }
 }
 

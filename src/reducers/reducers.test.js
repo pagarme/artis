@@ -107,4 +107,40 @@ describe('checkout reduceres', () => {
       defaultPage: 'just a test',
     })
   })
+
+  it('should handle INCREMENT_FINAL_AMOUNT', () => {
+    expect(
+      reducer({}, {
+        type: 'INCREMENT_FINAL_AMOUNT',
+        payload: 1000,
+      })
+    ).toEqual({
+      pageInfo: {},
+      screenSize: {
+        isBigScreen: false,
+      },
+      transactionValues: {
+        amount: 0,
+        finalAmount: 1000,
+      },
+    })
+  })
+
+  it('should handle DECREMENT_FINAL_AMOUNT 1', () => {
+    expect(
+      reducer({}, {
+        type: 'DECREMENT_FINAL_AMOUNT',
+        payload: 1000,
+      })
+    ).toEqual({
+      pageInfo: {},
+      screenSize: {
+        isBigScreen: false,
+      },
+      transactionValues: {
+        amount: 0,
+        finalAmount: -1000,
+      },
+    })
+  })
 })
