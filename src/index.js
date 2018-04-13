@@ -15,6 +15,8 @@ import ErrorPage from './pages/Error'
 import createElement from './utils/helpers/createElement'
 import setTheme from './utils/helpers/setTheme'
 import setColors from './utils/helpers/setColors'
+import DEFAULT_COLORS from './utils/data/colors'
+
 import createStore from './store'
 
 import NormalizeCSS from './components/NormalizeCSS'
@@ -22,17 +24,6 @@ import defaultTheme from './themes/default'
 import defaultLogo from './images/logo_pagarme.png'
 
 moment.locale('pt-br')
-
-const colors = {
-  light: {
-    primary: '#81cc04',
-    secondary: '#64a100',
-  },
-  dark: {
-    primary: '#7ad499',
-    secondary: '#46b67c',
-  },
-}
 
 ReactGA.initialize('UA-113290482-1')
 
@@ -44,7 +35,7 @@ const render = apiData => () => {
   } = apiData
 
   const {
-    target,
+    target = 'checkout-wrapper',
     themeBase,
     primaryColor,
     secondaryColor,
@@ -52,14 +43,12 @@ const render = apiData => () => {
 
   const clientThemeBase = themeBase || setTheme(primaryColor) || 'dark'
 
-  const pColor = primaryColor || colors[clientThemeBase].primary
-  const sColor = secondaryColor || colors[clientThemeBase].secondary
+  const pColor = primaryColor || DEFAULT_COLORS[clientThemeBase].primary
+  const sColor = secondaryColor || DEFAULT_COLORS[clientThemeBase].secondary
 
   setColors(pColor, sColor)
 
-  const clientTarget = target
-    ? document.getElementById(target)
-    : createElement('div', 'checkout-wrapper', 'body')
+  const clientTarget = createElement('div', target, 'body')
 
   ReactGA.event({
     category: 'API',

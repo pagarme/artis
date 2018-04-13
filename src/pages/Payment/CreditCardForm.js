@@ -35,7 +35,7 @@ const CreditCard = ({
   handleFlipCard,
   flipped,
   amountPrefixName,
-  inputPrefixName,
+  inputPrefixName = '',
 }) => {
   const {
     cardNumber = '•••• •••• •••• ••••',
