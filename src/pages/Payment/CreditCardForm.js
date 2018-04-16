@@ -36,6 +36,7 @@ const CreditCard = ({
   flipped,
   amountPrefixName,
   inputPrefixName = '',
+  amountPrefixValue,
 }) => {
   const {
     cardNumber = '•••• •••• •••• ••••',
@@ -45,9 +46,10 @@ const CreditCard = ({
   } = formData
 
   const { installments } = data
+  const installmentTotalAmount = amountPrefixValue ? amountPrefixValue * 100 : amount
 
   const installmentsOptions = generateInstallments(
-    amount,
+    installmentTotalAmount,
     installments[installmentsIndex]
   )
 
@@ -215,6 +217,7 @@ CreditCard.propTypes = {
   handleFlipCard: PropTypes.func,
   flipped: PropTypes.bool,
   amountPrefixName: PropTypes.string,
+  amountPrefixValue: PropTypes.number,
   inputPrefixName: PropTypes.string,
   installmentsIndex: PropTypes.number.isRequired,
 }
@@ -228,6 +231,7 @@ CreditCard.defaultProps = {
   flipped: false,
   amountPrefixName: '',
   inputPrefixName: '',
+  amountPrefixValue: null,
 }
 
 export default CreditCard

@@ -145,6 +145,7 @@ class CreditCardAndBoleto extends Component {
                   enableSplitAmount: true,
                   installmentsIndex: 0,
                   amountPrefixName: inputAmountNames.first,
+                  amountPrefixValue: formData[inputAmountNames.first],
                   showCreditCard: false,
                   confirmButtonVisible: false,
                   handleSubmit: this.handleSubmit,
