@@ -66,7 +66,7 @@ const parseCreditcardTokenData = ifElse(
   pipe(
     prop('credit_card'),
     applySpec({
-      statementDescriptor: prop('statement_descriptor'),
+      invoiceDescriptor: prop('statement_descriptor'),
       installments: pipe(
         applySpec({
           initial: always(1),
@@ -134,7 +134,7 @@ const parseTokenData = pipe(
     transaction: applySpec({
       amount: prop('amount'),
       defaultMethod: path(['default_payment_method']),
-      paymentMethods: pipe(
+      paymentConfig: pipe(
         prop('payment_settings'),
         applySpec({
           boleto: parseBoletoTokenData,
@@ -143,8 +143,8 @@ const parseTokenData = pipe(
       ),
     }),
   }),
-  removePathIfNull(['transaction', 'paymentMethods', 'creditcard']),
-  removePathIfNull(['transaction', 'paymentMethods', 'boleto']),
+  removePathIfNull(['transaction', 'paymentConfig', 'creditcard']),
+  removePathIfNull(['transaction', 'paymentConfig', 'boleto']),
   removePathIfNull(['transaction', 'defaultMethod']),
 )
 

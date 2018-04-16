@@ -30,7 +30,7 @@ const parseCreditcardData = applySpec({
     path(['payment', 'info', 'expiration']),
     replace(/\//g, ''),
   ),
-  soft_descriptor: path(['payment', 'method', 'statementDescriptor']),
+  soft_descriptor: path(['payment', 'method', 'invoiceDescriptor']),
   card_holder_name: path(['payment', 'info', 'holderName']),
 })
 

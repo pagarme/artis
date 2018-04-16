@@ -9,6 +9,7 @@ import ReactGA from 'react-ga'
 import {
   isEmpty,
   isNil,
+  length,
   reject,
   path,
   pathOr,
@@ -100,7 +101,11 @@ class Checkout extends Component {
     window.removeEventListener('resize', this.handleNewScreenSize)
   }
 
-  onTransactionReturn = (response, onSuccess, onError) => {
+  onTransactionReturn = ({
+    response,
+    onTransactionSuccess,
+    onTransactionError,
+  }) => {
     const {
       status,
       boleto_barcode: boletoBarcode,
@@ -117,8 +122,8 @@ class Checkout extends Component {
         }
       }
 
-      if (onSuccess) {
-        onSuccess(response)
+      if (onTransactionSuccess) {
+        onTransactionSuccess(response)
       }
 
       return this.setState({
@@ -126,8 +131,8 @@ class Checkout extends Component {
       }, this.props.transition('TRANSACTION_SUCCESS'))
     }
 
-    if (onError) {
-      onError(response)
+    if (onTransactionError) {
+      onTransactionError(response)
     }
 
     return this.setState({
@@ -209,15 +214,15 @@ class Checkout extends Component {
 
     const {
       configs = {},
-      formData = {},
       key,
       token,
+      cart,
       transaction,
     } = apiData
 
-    const { items } = formData
     const { amount } = transaction
-    const { onError, onSuccess } = configs
+    const { items } = cart
+    const { onTransactionSuccess, onTransactionError } = configs
 
     const requestPayload = {
       ...pageInfo,
@@ -233,8 +238,8 @@ class Checkout extends Component {
       .then((response) => {
         this.onTransactionReturn(
           response,
-          onSuccess,
-          onError,
+          onTransactionSuccess,
+          onTransactionError,
         )
       })
       .catch(() => transition('TRANSACTION_FAILURE'))
@@ -330,13 +335,11 @@ class Checkout extends Component {
   }
 
   renderCart () {
-    const { formData, transaction, configs } = this.props.apiData
-
-    const { items } = formData
-    const { freightValue } = configs
-    const { amount } = transaction
-    const { theme, base, pageInfo } = this.props
+    const { theme, base, apiData, pageInfo } = this.props
+    const { transaction, cart } = apiData
+    const { items, shippingRate } = cart
     const { shipping, customer } = pageInfo
+    const { amount } = transaction
 
     return (
       <Col
@@ -352,7 +355,7 @@ class Checkout extends Component {
           amount={amount}
           shipping={shipping}
           customer={customer}
-          freight={freightValue}
+          shippingRate={shippingRate}
           onToggleCart={this.handleToggleCart}
           collapsed={this.props.isBigScreen ? false : this.state.collapsedCart}
           showCloseButton={this.props.isBigScreen}
@@ -364,25 +367,31 @@ class Checkout extends Component {
   render () {
     const {
       theme,
+      apiData,
       machineState,
       isBigScreen,
       base,
     } = this.props
 
-    const params = pathOr({}, ['apiData', 'params'], this.props)
-    const configs = pathOr({}, ['apiData', 'configs'], this.props)
+    const { configs, cart } = apiData
+
+    const items = pathOr({}, ['items'], cart)
+
+    const {
+      companyName,
+      logo,
+    } = configs
 
     const pages = filter(value =>
-      !hasRequiredPageData(value.page, this.props), stepsTitles
-    )
+      !hasRequiredPageData(value.page, this.props), stepsTitles)
 
     const firstPage = pages[0].page
 
-    const isCartButtonVisible = configs.enableCart ?
+    const isCartButtonVisible = length(items) ?
       !isBigScreen :
       false
 
-    const checkoutColSize = configs.enableCart ? 9 : 12
+    const checkoutColSize = length(items) ? 9 : 12
 
     const shouldDisablePrevButton =
       machineState.value === firstPage ||
@@ -402,7 +411,7 @@ class Checkout extends Component {
         <div className={theme.wrapper}>
           <Grid className={theme.page}>
             <Row stretch={isBigScreen}>
-              {configs.enableCart && this.renderCart()}
+              {items.length && this.renderCart()}
               <Col
                 tv={checkoutColSize}
                 desk={checkoutColSize}
@@ -411,8 +420,8 @@ class Checkout extends Component {
               >
                 <Header
                   base={base}
-                  logoAlt={configs.companyName}
-                  logoSrc={configs.image}
+                  logoAlt={companyName}
+                  logoSrc={logo}
                   onPrev={this.handleBackButton}
                   onClose={this.close.bind(this)}
                   prevButtonDisabled={shouldDisablePrevButton}
@@ -429,9 +438,8 @@ class Checkout extends Component {
                 </div>
                 <Footer
                   base={base}
-                  total={params.amount}
                   onToggleCart={this.handleToggleCart}
-                  companyName={configs.companyName}
+                  companyName={companyName}
                   cartButtonVisible={isCartButtonVisible}
                   isBigScreen={isBigScreen}
                 />
@@ -464,21 +472,18 @@ Checkout.propTypes = {
       primaryColor: PropTypes.string,
       seconryColor: PropTypes.string,
       postback: PropTypes.string,
-      enableCart: PropTypes.bool,
-      onSuccess: PropTypes.func,
-      onError: PropTypes.func,
-      onClose: PropTypes.func,
+      onTransactionSuccess: PropTypes.func,
+      onTransactionError: PropTypes.func,
+      onModalClose: PropTypes.func,
     }).isRequired,
-    formData: PropTypes.shape({
-      customer: PropTypes.object,
-      billing: PropTypes.object,
-      shipping: PropTypes.object,
+    customer: PropTypes.object,
+    billing: PropTypes.object,
+    shipping: PropTypes.object,
+    cart: PropTypes.shape({
       items: PropTypes.arrayOf(PropTypes.object),
     }),
     transaction: PropTypes.shape({
       amount: PropTypes.number.isRequired,
-      defaultMethod: PropTypes.string,
-      paymentMethods: PropTypes.shape(),
     }),
   }).isRequired,
   base: PropTypes.string.isRequired,

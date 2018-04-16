@@ -59,7 +59,7 @@ const customerRequiredParams = {
 
 const hasRequiredPageData = (page, props) => {
   if (page === 'customer') {
-    const customer = pathOr({}, ['apiData', 'formData', 'customer'], props)
+    const customer = pathOr({}, ['apiData', 'customer'], props)
 
     const customerHasAllProps = customerRequiredParams[props.acquirer]
 
@@ -67,8 +67,8 @@ const hasRequiredPageData = (page, props) => {
   }
 
   if (page === 'addresses') {
-    const billing = pathOr({}, ['apiData', 'formData', 'billing'], props)
-    const shipping = pathOr({}, ['apiData', 'formData', 'shipping'], props)
+    const billing = pathOr({}, ['apiData', 'billing'], props)
+    const shipping = pathOr({}, ['apiData', 'shipping'], props)
 
     const addressHasAllProps = allPass([
       prop('street'),

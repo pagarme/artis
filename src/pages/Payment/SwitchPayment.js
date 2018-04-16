@@ -31,10 +31,10 @@ import {
   isValidDate,
 } from '../../utils/validations'
 
-const getDefaultMethod = ({
+const setPaymentMethod = ({
   defaultMethod,
-  paymentMethods,
-}) => defaultMethod || keys(paymentMethods)[0]
+  paymentConfig,
+}) => defaultMethod || keys(paymentConfig)[0]
 
 const applyThemr = themr('UIPaymentPage')
 
@@ -48,8 +48,8 @@ const createSwitchItems = ({
   flipped,
   handleFlipCard,
 }) => {
-  const { amount, paymentMethods } = transaction
-  const { boleto, creditcard } = paymentMethods
+  const { amount, paymentConfig } = transaction
+  const { boleto, creditcard } = paymentConfig
 
   const allowedPaymentOptions = {
     boleto: {
@@ -93,7 +93,7 @@ const createSwitchItems = ({
     values,
   )
 
-  let choosedPaymentOptions = Object.assign({}, paymentMethods)
+  let choosedPaymentOptions = Object.assign({}, paymentConfig)
 
   if (paymentType) {
     choosedPaymentOptions = {
@@ -147,15 +147,15 @@ class SwitchPayment extends Component {
     let data = formData
 
     const { clickedPaymentType } = this.state
-    const { paymentMethods } = transaction
+    const { paymentConfig } = transaction
 
-    const paymentType = clickedPaymentType || getDefaultMethod({
+    const paymentType = clickedPaymentType || setPaymentMethod({
       defaultMethod,
-      paymentMethods,
+      paymentConfig,
     })
 
     const method = merge(
-      paymentMethods[paymentType],
+      paymentConfig[paymentType],
       { type: paymentType }
     )
 
@@ -217,14 +217,14 @@ class SwitchPayment extends Component {
     } = this.state
 
     const {
-      paymentMethods,
+      paymentConfig,
     } = transaction
 
     let validation = null
 
-    const selectedPaymentType = clickedPaymentType || getDefaultMethod({
+    const selectedPaymentType = clickedPaymentType || setPaymentMethod({
       defaultMethod,
-      paymentMethods,
+      paymentConfig,
     })
 
     if (selectedPaymentType === 'creditcard') {

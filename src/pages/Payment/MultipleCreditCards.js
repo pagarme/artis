@@ -150,8 +150,8 @@ class MultipleCreditCards extends Component {
       inputAmountNames,
     } = this.state
 
-    const { amount, paymentMethods } = transaction
-    const { creditcard } = paymentMethods
+    const { amount, paymentConfig } = transaction
+    const { creditcard } = paymentConfig
 
     const firstPrefix = inputPrefixes.first
     const secondPrefix = inputPrefixes.second

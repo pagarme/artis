@@ -64,9 +64,15 @@ const render = (apiData, {
 const openCheckout = (getMundipaggData, apiData, acquirer) => {
   const {
     configs = {},
-    formData = {},
+    customer,
+    billing,
+    shipping,
+    cart,
+    transaction,
     key,
   } = apiData
+
+  const { items } = transaction
 
   const {
     target = 'checkout-wrapper',
@@ -108,7 +114,7 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
   let store
 
   if (acquirer === 'pagarme') {
-    store = createStore(formData)
+    store = createStore({ customer, billing, shipping, cart, items })
 
     const apiDataWithDefaults = {
       ...apiData,
@@ -126,7 +132,7 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
 
   return getMundipaggData
     .then((data) => {
-      store = createStore(data.formData)
+      store = createStore({ customer, billing, shipping, cart, items })
 
       render(
         data,
@@ -145,6 +151,27 @@ const preRender = (apiData) => {
   }
 
   return () => openCheckout(getMundipaggData, apiData, acquirer)
+}
+
+const apiValidation = (apiData) => {
+  const { key, transaction } = apiData
+  const { amount } = transaction
+
+  let errors
+
+  if (!key) {
+    errors = 'The "key" parameter is required.\n'
+  }
+
+  if (!amount) {
+    errors += 'The "amount" parameter is required.\n'
+  }
+
+  if (typeof amount !== 'number') {
+    errors += 'The "amount" parameter should be number.'
+  }
+
+  return errors
 }
 
 const integrations = {
@@ -179,7 +206,15 @@ const integrations = {
     })
   },
   custom: () => {
-    window.Checkout = configs => preRender(configs)
+    window.Checkout = (apiData) => {
+      const apiErrors = apiValidation(apiData)
+
+      if (apiErrors) {
+        throw new Error(apiErrors)
+      }
+
+      return preRender(apiData)
+    }
   },
 }
 
