@@ -10,7 +10,7 @@
   width: 100vw;
   height: 100vh;
   overflow: auto;
-  background-color: var(--color-grey-83);
+  background-color: var(--checkout-background-color);
 }
 
 .light.checkout {

@@ -73,15 +73,21 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
     themeBase,
     primaryColor,
     secondaryColor,
+    backgroundColor,
     image,
   } = configs
 
   const clientThemeBase = themeBase || setTheme(primaryColor) || 'dark'
 
-  const pColor = primaryColor || DEFAULT_COLORS[clientThemeBase].primary
-  const sColor = secondaryColor || DEFAULT_COLORS[clientThemeBase].secondary
+  const defaultPrimaryColor = DEFAULT_COLORS[clientThemeBase].primary
+  const defaultSecondaryColor = DEFAULT_COLORS[clientThemeBase].secondary
+  const defaulBackgroundColor = DEFAULT_COLORS[clientThemeBase].backgroundColor
 
-  setColors(pColor, sColor)
+  const pColor = primaryColor || defaultPrimaryColor
+  const sColor = secondaryColor || defaultSecondaryColor
+  const bColor = backgroundColor || defaulBackgroundColor
+
+  setColors(pColor, sColor, bColor)
 
   const clientTarget = target
     ? document.getElementById(target)
