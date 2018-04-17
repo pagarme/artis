@@ -14,9 +14,9 @@ import {
   pathOr,
   pick,
 } from 'ramda'
+import { Grid } from 'former-kit'
 
 import {
-  Grid,
   Row,
   Col,
   Button,

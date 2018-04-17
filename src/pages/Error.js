@@ -1,9 +1,10 @@
 import React from 'react'
 import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
+import { Grid } from 'former-kit'
 
 import SadEmoji from './../images/sad.svg'
-import { Grid, Row, Col } from './../components/Grid'
+import { Row, Col } from './../components/Grid'
 
 const applyThemr = themr('UIErrorPage')
 

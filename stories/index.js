@@ -1,6 +1,5 @@
 import './Button'
 import './ErrorBoundary'
-import './Grid'
 import './Header'
 import './Switch'
 import './Typography'

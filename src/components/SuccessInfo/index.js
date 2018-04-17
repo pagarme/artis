@@ -5,8 +5,9 @@ import classNames from 'classnames'
 import ReactGA from 'react-ga'
 import copy from 'copy-to-clipboard'
 import { connect } from 'react-redux'
+import { Grid } from 'former-kit'
 
-import { Grid, Row, Col } from '../Grid'
+import { Row, Col } from '../Grid'
 import EmailForm from '../../containers/EmailForm'
 import ActionList from '../ActionList'
 

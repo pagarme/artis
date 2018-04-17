@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
+import { Grid } from 'former-kit'
 
-import { Grid, Row, Col } from '../Grid'
+import { Row, Col } from '../Grid'
 
 const applyThemr = themr('UILoadingInfo')
 

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { equals } from 'ramda'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
+import { Grid } from 'former-kit'
 
 import {
-  Grid,
   Row,
   Col,
   Button,

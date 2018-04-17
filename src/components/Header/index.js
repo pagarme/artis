@@ -3,9 +3,10 @@ import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import CloseIcon from 'react-icons/lib/io/android-close'
 import BackIcon from 'react-icons/lib/io/android-arrow-back'
+import { Grid } from 'former-kit'
 
 import Button from '../Button'
-import { Grid, Row, Col } from './../Grid'
+import { Row, Col } from './../Grid'
 
 const applyThemr = themr('UIHeader')
 

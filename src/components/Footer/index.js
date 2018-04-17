@@ -4,8 +4,9 @@ import LockIcon from 'react-icons/lib/md/lock-outline'
 import CartIcon from 'emblematic-icons/svg/ShoppingCart24.svg'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
+import { Grid } from 'former-kit'
 
-import { Grid, Row, Col } from '../Grid'
+import { Row, Col } from '../Grid'
 import { Button } from '..'
 
 const applyThemr = themr('UIFooter')

@@ -14,6 +14,7 @@ import {
   pathOr,
   filter,
 } from 'ramda'
+import { Grid } from 'former-kit'
 
 import { changeScreenSize } from '../../actions'
 import strategies from '../../utils/strategies'
@@ -30,7 +31,7 @@ import {
   SuccessInfo,
 } from '../../components'
 
-import { Grid, Row, Col } from '../../components/Grid'
+import { Row, Col } from '../../components/Grid'
 
 import CustomerPage from '../../pages/Customer'
 import AddressesPage from '../../pages/Addresses'
