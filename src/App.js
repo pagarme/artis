@@ -13,6 +13,7 @@ import defaultTheme from './themes/default'
 
 const App = ({
   apiData,
+  apiErrors,
   store,
   acquirer,
   clientTarget,
@@ -29,6 +30,7 @@ const App = ({
           <NormalizeCSS>
             <Checkout
               apiData={apiData}
+              apiErrors={apiErrors}
               acquirer={acquirer}
               targetElement={clientTarget}
               base={clientThemeBase}
@@ -42,10 +44,15 @@ const App = ({
 
 App.propTypes = {
   apiData: PropTypes.shape().isRequired,
+  apiErrors: PropTypes.arrayOf(PropTypes.string),
   store: PropTypes.shape().isRequired,
   acquirer: PropTypes.string.isRequired,
   clientTarget: PropTypes.shape().isRequired,
   clientThemeBase: PropTypes.string.isRequired,
+}
+
+App.defaultProps = {
+  apiErrors: [],
 }
 
 export default App

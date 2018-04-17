@@ -92,6 +92,19 @@ class Checkout extends Component {
     collapsedCart: true,
   }
 
+  componentWillMount () {
+    const { apiData, apiErrors } = this.props
+    const { onError } = apiData.configs || null
+
+    if (length(apiErrors)) {
+      onError({
+        name: 'API_ERROR',
+        message: apiErrors,
+      })
+      throw new Error(apiErrors)
+    }
+  }
+
   componentDidMount () {
     this.props.changeScreenSize(window.innerWidth)
     window.addEventListener('resize', this.handleNewScreenSize)
@@ -104,7 +117,7 @@ class Checkout extends Component {
   onTransactionReturn = ({
     response,
     onTransactionSuccess,
-    onTransactionError,
+    onError,
   }) => {
     const {
       status,
@@ -131,8 +144,8 @@ class Checkout extends Component {
       }, this.props.transition('TRANSACTION_SUCCESS'))
     }
 
-    if (onTransactionError) {
-      onTransactionError(response)
+    if (onError) {
+      onError(response)
     }
 
     return this.setState({
@@ -222,7 +235,7 @@ class Checkout extends Component {
 
     const { amount } = transaction
     const { items } = cart
-    const { onTransactionSuccess, onTransactionError } = configs
+    const { onTransactionSuccess, onError } = configs
 
     const requestPayload = {
       ...pageInfo,
@@ -239,7 +252,7 @@ class Checkout extends Component {
         this.onTransactionReturn(
           response,
           onTransactionSuccess,
-          onTransactionError,
+          onError,
         )
       })
       .catch(() => transition('TRANSACTION_FAILURE'))
@@ -473,7 +486,7 @@ Checkout.propTypes = {
       seconryColor: PropTypes.string,
       postback: PropTypes.string,
       onTransactionSuccess: PropTypes.func,
-      onTransactionError: PropTypes.func,
+      onError: PropTypes.func,
       onModalClose: PropTypes.func,
     }).isRequired,
     customer: PropTypes.object,
@@ -486,6 +499,7 @@ Checkout.propTypes = {
       amount: PropTypes.number.isRequired,
     }),
   }).isRequired,
+  apiErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
   base: PropTypes.string.isRequired,
   changeScreenSize: PropTypes.func.isRequired,
   targetElement: PropTypes.object.isRequired, // eslint-disable-line

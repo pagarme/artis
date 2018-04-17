@@ -8,6 +8,7 @@ import 'moment/locale/pt-br'
 import App from './App'
 import createStore from './store'
 
+import apiValidation from './utils/validations/apiValidation'
 import createElement from './utils/helpers/createElement'
 import setTheme from './utils/helpers/setTheme'
 import setColors from './utils/helpers/setColors'
@@ -21,7 +22,7 @@ moment.locale('pt-br')
 
 ReactGA.initialize('UA-113290482-1')
 
-const openCheckout = (getMundipaggData, apiData, acquirer) => {
+const openCheckout = (getMundipaggData, apiData, apiErrors, acquirer) => {
   const {
     configs = {},
     customer,
@@ -81,6 +82,7 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
     ReactDOM.render(
       <App
         apiData={apiDataWithDefaults}
+        apiErrors={apiErrors}
         store={store}
         acquirer={acquirer}
         clientTarget={clientTarget}
@@ -97,6 +99,7 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
       ReactDOM.render(
         <App
           apiData={data}
+          apiErrors={apiErrors}
           store={store}
           acquirer={acquirer}
           clientTarget={clientTarget}
@@ -108,37 +111,14 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
   }
 }
 
-const preRender = (apiData) => {
+const preRender = (apiData, apiErrors) => {
   const acquirer = getStrategyName(apiData)
 
-  let getMundipaggData
+  const getMundipaggData = acquirer === 'mundipagg'
+    ? getTokenData(apiData.token)
+    : null
 
-  if (acquirer === 'mundipagg') {
-    getMundipaggData = getTokenData(apiData.token)
-  }
-
-  return () => openCheckout(getMundipaggData, apiData, acquirer)
-}
-
-const apiValidation = (apiData) => {
-  const { key, transaction } = apiData
-  const { amount } = transaction
-
-  let errors
-
-  if (!key) {
-    errors = 'The "key" parameter is required.\n'
-  }
-
-  if (!amount) {
-    errors += 'The "amount" parameter is required.\n'
-  }
-
-  if (typeof amount !== 'number') {
-    errors += 'The "amount" parameter should be number.'
-  }
-
-  return errors
+  return () => openCheckout(getMundipaggData, apiData, apiErrors, acquirer)
 }
 
 const integrations = {
@@ -176,11 +156,7 @@ const integrations = {
     window.Checkout = (apiData) => {
       const apiErrors = apiValidation(apiData)
 
-      if (apiErrors) {
-        throw new Error(apiErrors)
-      }
-
-      return preRender(apiData)
+      return preRender(apiData, apiErrors)
     }
   },
 }

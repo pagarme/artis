@@ -1,9 +1,10 @@
-const getStrategy = ({ key }) => {
-  if (key) {
-    return 'pagarme'
-  }
+const getStrategyName = ({ key, token }) => {
+  let response
 
-  return 'mundipagg'
+  if (key) response = 'pagarme'
+  if (token) response = 'mundipagg'
+
+  return response || 'pagarme'
 }
 
-export default getStrategy
+export default getStrategyName

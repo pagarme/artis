@@ -11,10 +11,10 @@ const pagarmeApi = `var configs = {
     postback: 'http://pagar.me',
     enableCart: true,
     onTransactionSuccess: (data) => {
-      console.log('Success call', JSON.stringify(data, null, 2));
+      console.log('onTransactionSuccess callback', data);
     },
-    onTransactionError: (error) => {
-      console.log('Error call', JSON.stringify(error, null, 2));
+    onError: (error) => {
+      console.log('onError callback', error)
     },
     onModalClose: () => {},
   },
@@ -123,11 +123,11 @@ const pagarmeApi = `var configs = {
 const mundipaggApi = `var configs = {
   token: 'chk_1AYmoD4Ip3CBQgRZ', // boleto
   // token: 'chk_JwO07OlTMFLYW9e3', // creditcard
-  onSuccess: (data) => {
-    console.log('Success call', JSON.stringify(data, null, 2));
+  onTransactionSuccess: (data) => {
+    console.log('onTransactionSuccess callback', data);
   },
   onError: (error) => {
-    console.log('Error call', JSON.stringify(error, null, 2));
+    console.log('onError callback', error)
   },
 };`
 
