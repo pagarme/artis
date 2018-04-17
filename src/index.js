@@ -3,10 +3,11 @@ import '@babel/polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
-import { ThemeProvider } from 'react-css-themr'
+import { ThemeProvider as ThemrProvider } from 'react-css-themr'
 import { Provider } from 'react-redux'
 import moment from 'moment'
 import 'moment/locale/pt-br'
+import { ThemeProvider } from 'former-kit'
 
 import Checkout from './containers/Checkout'
 import ErrorBoundary from './components/ErrorBoundary'
@@ -68,16 +69,22 @@ const render = apiData => () => {
 
   ReactDOM.render(
     <Provider store={store}>
-      <ThemeProvider theme={defaultTheme}>
-        <ErrorBoundary CrashReportComponent={<ErrorPage />}>
-          <NormalizeCSS>
-            <Checkout
-              apiData={apiDataWithDefaults}
-              targetElement={clientTarget}
-              base={clientThemeBase}
-            />
-          </NormalizeCSS>
-        </ErrorBoundary>
+      <ThemeProvider theme={{
+        name: 'Checkout Theme',
+        styles: defaultTheme,
+      }}
+      >
+        <ThemrProvider theme={defaultTheme}>
+          <ErrorBoundary CrashReportComponent={<ErrorPage />}>
+            <NormalizeCSS>
+              <Checkout
+                apiData={apiDataWithDefaults}
+                targetElement={clientTarget}
+                base={clientThemeBase}
+              />
+            </NormalizeCSS>
+          </ErrorBoundary>
+        </ThemrProvider>
       </ThemeProvider>
     </Provider>,
     clientTarget

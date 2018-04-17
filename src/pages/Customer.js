@@ -5,10 +5,12 @@ import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import { isEmpty, reject, isNil } from 'ramda'
-
 import {
   Grid,
   Row,
+} from 'former-kit'
+
+import {
   Col,
   Button,
   Input,
@@ -68,9 +70,17 @@ class CustomerPage extends Component {
 
     return (
       <Grid>
-        <Row className={theme.title} alignCenter>
-          <CustomerIcon className={theme.titleIcon} />
-          Dados pessoais
+        <Row className={theme.title}>
+          <Col
+            tv={defaultColSize}
+            desk={defaultColSize}
+            tablet={defaultColSize}
+            palm={defaultColSize}
+            alignCenter
+          >
+            <CustomerIcon className={theme.titleIcon} />
+            Dados pessoais
+          </Col>
         </Row>
         <Row>
           <Col
