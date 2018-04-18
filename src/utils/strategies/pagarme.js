@@ -19,7 +19,7 @@ import {
   toString,
 } from 'ramda'
 
-const url = 'https://api.pagar.me/1/transactions'
+import URLS from './urls'
 
 const getPaymentMethodType = path(['payment', 'method', 'type'])
 
@@ -40,7 +40,7 @@ const parseBoletoData = applySpec({
 })
 
 const parseToPayload = applySpec({
-  encryption_key: prop('publickey'),
+  encryption_key: prop('key'),
   amount: prop('amount'),
   payment_method: pipe(
     getPaymentMethodType,
@@ -49,6 +49,7 @@ const parseToPayload = applySpec({
       [T, identity],
     ])
   ),
+  installments: pathOr(1, ['payment', 'info', 'installments']),
   customer: pipe(
     prop('customer'),
     applySpec({
@@ -148,7 +149,7 @@ const strategy = (data) => {
   const paymentData = getPaymentMethodData(data)
   const fullPayload = merge(paymentData, commonPayload)
 
-  return fetch(url, {
+  return fetch(URLS.pagarme.transaction, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',

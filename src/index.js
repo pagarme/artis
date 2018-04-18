@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import { ThemeProvider } from 'former-kit'
+import { merge } from 'ramda'
 
 import Checkout from './containers/Checkout'
 import ErrorBoundary from './components/ErrorBoundary'
@@ -17,7 +18,8 @@ import createElement from './utils/helpers/createElement'
 import setTheme from './utils/helpers/setTheme'
 import setColors from './utils/helpers/setColors'
 import DEFAULT_COLORS from './utils/data/colors'
-
+import getStrategyName from './utils/strategies/getStrategyName'
+import { getTokenData } from './utils/strategies/mundipagg'
 import createStore from './store'
 
 import NormalizeCSS from './components/NormalizeCSS'
@@ -28,10 +30,41 @@ moment.locale('pt-br')
 
 ReactGA.initialize('UA-113290482-1')
 
-const render = apiData => () => {
+const render = (apiData, {
+  store,
+  acquirer,
+  clientTarget,
+  clientThemeBase,
+}) => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <ThemeProvider theme={{
+        name: 'Checkout Theme',
+        styles: defaultTheme,
+      }}
+      >
+        <ThemrProvider theme={defaultTheme}>
+          <ErrorBoundary CrashReportComponent={<ErrorPage />}>
+            <NormalizeCSS>
+              <Checkout
+                apiData={apiData}
+                acquirer={acquirer}
+                targetElement={clientTarget}
+                base={clientThemeBase}
+              />
+            </NormalizeCSS>
+          </ErrorBoundary>
+        </ThemrProvider>
+      </ThemeProvider>
+    </Provider>,
+    clientTarget
+  )
+}
+
+const openCheckout = (getMundipaggData, apiData, acquirer) => {
   const {
-    configs,
-    formData,
+    configs = {},
+    formData = {},
     key,
   } = apiData
 
@@ -40,6 +73,7 @@ const render = apiData => () => {
     themeBase,
     primaryColor,
     secondaryColor,
+    image,
   } = configs
 
   const clientThemeBase = themeBase || setTheme(primaryColor) || 'dark'
@@ -57,38 +91,52 @@ const render = apiData => () => {
     label: key,
   })
 
-  const store = createStore(formData)
-
-  const apiDataWithDefaults = {
-    ...apiData,
-    configs: {
-      ...apiData.configs,
-      image: apiData.configs.image || defaultLogo,
-    },
+  const commonParams = {
+    acquirer,
+    clientTarget,
+    clientThemeBase,
   }
 
-  ReactDOM.render(
-    <Provider store={store}>
-      <ThemeProvider theme={{
-        name: 'Checkout Theme',
-        styles: defaultTheme,
-      }}
-      >
-        <ThemrProvider theme={defaultTheme}>
-          <ErrorBoundary CrashReportComponent={<ErrorPage />}>
-            <NormalizeCSS>
-              <Checkout
-                apiData={apiDataWithDefaults}
-                targetElement={clientTarget}
-                base={clientThemeBase}
-              />
-            </NormalizeCSS>
-          </ErrorBoundary>
-        </ThemrProvider>
-      </ThemeProvider>
-    </Provider>,
-    clientTarget
-  )
+  let store
+
+  if (acquirer === 'pagarme') {
+    store = createStore(formData)
+
+    const apiDataWithDefaults = {
+      ...apiData,
+      configs: {
+        ...apiData.configs,
+        image: image || defaultLogo,
+      },
+    }
+
+    return render(
+      apiDataWithDefaults,
+      merge(commonParams, { store })
+    )
+  }
+
+  return getMundipaggData
+    .then((data) => {
+      store = createStore(data.formData)
+
+      render(
+        data,
+        merge(commonParams, { store })
+      )
+    })
+}
+
+const preRender = (apiData) => {
+  const acquirer = getStrategyName(apiData)
+
+  let getMundipaggData
+
+  if (acquirer === 'mundipagg') {
+    getMundipaggData = getTokenData(apiData.token)
+  }
+
+  return () => openCheckout(getMundipaggData, apiData, acquirer)
 }
 
 const integrations = {
@@ -114,7 +162,7 @@ const integrations = {
         paymentMethod,
       }
 
-      const open = render({ key, configs, params })
+      const open = preRender({ key, configs, params })
 
       button.addEventListener('click', (e) => {
         e.preventDefault()
@@ -123,9 +171,7 @@ const integrations = {
     })
   },
   custom: () => {
-    window.Checkout = ({ key, configs, formData, transaction }) => () => {
-      render({ key, configs, formData, transaction })()
-    }
+    window.Checkout = configs => preRender(configs)
   },
 }
 

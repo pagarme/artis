@@ -6,6 +6,7 @@ import Form from 'react-vanilla-form'
 import {
   pipe,
   values,
+  keys,
   mapObjIndexed,
   pick,
   merge,
@@ -28,6 +29,11 @@ import {
   maxLength,
   isValidDate,
 } from '../../utils/validations'
+
+const getDefaultMethod = ({
+  defaultMethod,
+  paymentMethods,
+}) => defaultMethod || keys(paymentMethods)[0]
 
 const applyThemr = themr('UIPaymentPage')
 
@@ -102,9 +108,9 @@ class SwitchPayment extends Component {
     super(props)
 
     this.state = {
-      formData: {},
       clickedPaymentType: null,
       flipped: false,
+      formData: pathOr({}, ['payment', 'info'], props),
       formValid: pathOr(false, ['payment', 'formValid'], props),
     }
   }
@@ -140,7 +146,10 @@ class SwitchPayment extends Component {
     const { clickedPaymentType } = this.state
     const { paymentMethods } = transaction
 
-    const paymentType = clickedPaymentType || defaultMethod
+    const paymentType = clickedPaymentType || getDefaultMethod({
+      defaultMethod,
+      paymentMethods,
+    })
 
     const method = merge(
       paymentMethods[paymentType],
@@ -204,9 +213,16 @@ class SwitchPayment extends Component {
       clickedPaymentType,
     } = this.state
 
+    const {
+      paymentMethods,
+    } = transaction
+
     let validation = null
 
-    const selectedPaymentType = clickedPaymentType || defaultMethod
+    const selectedPaymentType = clickedPaymentType || getDefaultMethod({
+      defaultMethod,
+      paymentMethods,
+    })
 
     if (selectedPaymentType === 'creditcard') {
       validation = {
@@ -239,6 +255,7 @@ class SwitchPayment extends Component {
 
     return (
       <Form
+        data={formData}
         onChange={this.handleChangeForm}
         onSubmit={this.handleFormSubmit}
         customErrorProp="error"
@@ -248,7 +265,7 @@ class SwitchPayment extends Component {
           base,
           theme,
           name: 'paymentOptions',
-          selected: clickedPaymentType || defaultMethod,
+          selected: selectedPaymentType,
           items: createSwitchItems({
             theme,
             base,
@@ -285,12 +302,14 @@ SwitchPayment.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isBigScreen: PropTypes.bool.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  defaultMethod: PropTypes.string.isRequired,
+  defaultMethod: PropTypes.string,
 }
 
 SwitchPayment.defaultProps = {
   theme: {},
   paymentType: null,
+  payment: null,
+  defaultMethod: null,
 }
 
 const mapStateToProps = ({ screenSize, pageInfo }) => ({
