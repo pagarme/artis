@@ -4,7 +4,16 @@ import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
-import { merge, omit, isNil, reject, isEmpty, applySpec, pathOr, pick } from 'ramda'
+import {
+  merge,
+  omit,
+  isNil,
+  reject,
+  isEmpty,
+  applySpec,
+  pathOr,
+  pick,
+} from 'ramda'
 
 import {
   Grid,
@@ -202,7 +211,8 @@ class AddressesPage extends Component {
           'shippingZipcode']
         : [], reject(isNil, errors))
 
-      const formValid = isEmpty(validatedErrors) && removeMask(values.zipcode || '').length >= 8
+      const formValid = isEmpty(validatedErrors)
+        && removeMask(values.zipcode || '').length >= 8
 
       if (
         prevState.sameAddressForShipping === 'true' &&

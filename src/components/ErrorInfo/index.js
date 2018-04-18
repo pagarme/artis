@@ -108,7 +108,8 @@ ErrorInfo.defaultProps = {
   theme: {},
   base: 'dark',
   title: 'Seu pagamento foi recusado',
-  subtitle: 'Ocorreu um erro ao processar sua transação, tente novamente mais tarde ou entre em contato com seu banco.',
+  subtitle: `Ocorreu um erro ao processar sua transação,
+    tente novamente mais tarde ou entre em contato com seu banco.`,
 }
 
 const mapStateToProps = ({ screenSize }) => ({
