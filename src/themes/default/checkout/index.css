@@ -18,7 +18,7 @@
 }
 
 .checkout {
-  max-width: 700px;
+  width: 700px;
   max-height: 578px;
   background: var(--color-grey-83);
   border-radius: 4px;

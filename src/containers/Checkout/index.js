@@ -16,9 +16,6 @@ import {
   propOr,
   filter,
 } from 'ramda'
-import {
-  Layout,
-} from 'former-kit'
 
 import { changeScreenSize } from '../../actions'
 import strategies from '../../utils/strategies'
@@ -357,22 +354,19 @@ class Checkout extends Component {
           />
         }
         <div className={theme.checkout}>
-          <Layout
-            header={<Header
-              base={base}
-              logoAlt={companyName}
-              logoSrc={logo}
-              steps={pages}
-              activeStep={machineState.value}
-            />}
-            footer={<Footer />}
+          <Header
+            base={base}
+            logoAlt={companyName}
+            logoSrc={logo}
+            steps={pages}
+            activeStep={machineState.value}
+          />
+          <main
+            className={theme.content}
           >
-            <div
-              className={theme.content}
-            >
-              {this.renderPages()}
-            </div>
-          </Layout>
+            {this.renderPages()}
+          </main>
+          <Footer />
         </div>
       </div>
     )

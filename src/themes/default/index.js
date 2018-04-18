@@ -4,7 +4,7 @@ import UIDropdown from './dropdown/index.css'
 import UIFooter from './footer/index.css'
 import UIGrid from './grid/index.css'
 import UIHeader from './header/index.css'
-import UIInput from './input/index.css'
+import UIInputForm from './input/index.css'
 import UIProgressBar from './progressBar/index.css'
 import UICheckout from './checkout/index.css'
 import UIBillingPage from './billingPage/index.css'
@@ -30,7 +30,7 @@ export default {
   UIFooter,
   UIGrid,
   UIHeader,
-  UIInput,
+  UIInputForm,
   UIProgressBar,
   UICheckout,
   UICustomerPage,

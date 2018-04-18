@@ -5,6 +5,7 @@ import {
   Grid,
   Row,
   Col,
+  FormInput,
 } from 'former-kit'
 
 import FaCreditCard from 'react-icons/lib/fa/credit-card'
@@ -12,10 +13,6 @@ import FaUser from 'react-icons/lib/fa/user'
 import FaCalendar from 'react-icons/lib/fa/calendar'
 import FaEllipsisH from 'react-icons/lib/fa/ellipsis-h'
 import Calendar24 from 'emblematic-icons/svg/Calendar24.svg'
-
-import {
-  Input,
-} from './../../components'
 
 import {
   formatToBRL,
@@ -88,7 +85,7 @@ const CreditCard = ({
                 tablet={mediumColSize}
                 palm={defaultColSize}
               >
-                <Input
+                <FormInput
                   name={`${amountPrefixName}`}
                   label="Valor à pagar"
                   type="number"
@@ -101,7 +98,7 @@ const CreditCard = ({
               tablet={defaultColSize}
               palm={defaultColSize}
             >
-              <Input
+              <FormInput
                 name={`${inputPrefixName}cardNumber`}
                 label="Número do cartão"
                 mask="1111 1111 1111 1111"
@@ -116,7 +113,7 @@ const CreditCard = ({
               tablet={defaultColSize}
               palm={defaultColSize}
             >
-              <Input
+              <FormInput
                 name={`${inputPrefixName}holderName`}
                 label="Nome (igual o do cartão)"
                 maxLength="24"
@@ -133,7 +130,7 @@ const CreditCard = ({
               tablet={mediumColSize}
               palm={mediumColSize}
             >
-              <Input
+              <FormInput
                 name={`${inputPrefixName}expiration`}
                 label="Data de validade"
                 mask="11/11"
@@ -146,7 +143,7 @@ const CreditCard = ({
               tablet={mediumColSize}
               palm={mediumColSize}
             >
-              <Input
+              <FormInput
                 name={`${inputPrefixName}cvv`}
                 label="CVV"
                 type="number"
@@ -172,7 +169,7 @@ const CreditCard = ({
                 tablet={defaultColSize}
                 palm={defaultColSize}
               >
-                <Input
+                <FormInput
                   options={installmentsOptions}
                   name={`${inputPrefixName}installments`}
                   placeholder="Quantidade de Parcelas"
