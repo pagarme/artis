@@ -9,8 +9,27 @@ if (process.env.NODE_ENV === 'development') {
   middlewares.push(logger)
 }
 
-export default ({ customer, shipping, billing }) => createStore(
-  reducers,
-  { pageInfo: { customer, shipping, billing } },
-  applyMiddleware(...middlewares),
-)
+export default ({
+  customer,
+  shipping,
+  billing,
+  cart,
+  items,
+  transaction,
+}) =>
+  createStore(
+    reducers,
+    {
+      pageInfo: {
+        customer,
+        shipping,
+        billing,
+        cart,
+        items,
+      },
+      transactionValues: {
+        ...transaction,
+      },
+    },
+    applyMiddleware(...middlewares)
+  )

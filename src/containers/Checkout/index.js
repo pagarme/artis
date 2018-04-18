@@ -13,6 +13,7 @@ import {
   reject,
   path,
   pathOr,
+  propOr,
   filter,
 } from 'ramda'
 import {
@@ -223,6 +224,7 @@ class Checkout extends Component {
       transition,
       pageInfo,
       apiData,
+      transaction,
     } = this.props
 
     const {
@@ -230,12 +232,11 @@ class Checkout extends Component {
       key,
       token,
       cart,
-      transaction,
     } = apiData
 
     const { amount } = transaction
-    const { items } = cart
     const { onTransactionSuccess, onError } = configs
+    const items = propOr([], 'items', cart)
 
     const requestPayload = {
       ...pageInfo,
@@ -259,9 +260,7 @@ class Checkout extends Component {
   }
 
   renderPages () {
-    const { transaction } = this.props.apiData
-
-    const { base, pageInfo } = this.props
+    const { base, pageInfo, transaction } = this.props
 
     const { payment } = pageInfo
 
@@ -348,8 +347,8 @@ class Checkout extends Component {
   }
 
   renderCart () {
-    const { theme, base, apiData, pageInfo } = this.props
-    const { transaction, cart } = apiData
+    const { theme, base, apiData, pageInfo, transaction } = this.props
+    const { cart } = apiData
     const { items, shippingRate } = cart
     const { shipping, customer } = pageInfo
     const { amount } = transaction
@@ -495,10 +494,8 @@ Checkout.propTypes = {
     cart: PropTypes.shape({
       items: PropTypes.arrayOf(PropTypes.object),
     }),
-    transaction: PropTypes.shape({
-      amount: PropTypes.number.isRequired,
-    }),
   }).isRequired,
+  transaction: PropTypes.shape(),
   apiErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
   base: PropTypes.string.isRequired,
   changeScreenSize: PropTypes.func.isRequired,
@@ -519,16 +516,15 @@ Checkout.defaultProps = {
   payment: {},
   apiData: {},
   isBigScreen: false,
+  transaction: {},
 }
 
-const mapStateToProps = ({ screenSize, pageInfo }) => ({
+const mapStateToProps = ({ screenSize, pageInfo, transactionValues }) => ({
   isBigScreen: screenSize.isBigScreen,
   pageInfo,
+  transaction: transactionValues,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    changeScreenSize,
-  }
-)(applyThemr(withStatechart(statechart)(Checkout)))
+export default connect(mapStateToProps, {
+  changeScreenSize,
+})(applyThemr(withStatechart(statechart)(Checkout)))

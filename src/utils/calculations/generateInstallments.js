@@ -86,7 +86,7 @@ const calculateInstallmentAmount = (
   return generateFreeInstallment(index, amount)
 }
 
-const calculate = (amount, installmentConfig) => {
+const calculate = (amount, installmentConfig = {}) => {
   const {
     max,
     free,

@@ -1,9 +1,8 @@
 import getStrategyName from './getStrategyName'
 
 describe('Get strategy by public key', () => {
-  it('Should return a pagarme', () => {
+  it('Should return pagarme', () => {
     const data = {
-      token: 'chk_',
       key: 'ek_MvwcV2n4LnYra87kyh5tAH6cjkyGqG',
     }
 
@@ -12,7 +11,7 @@ describe('Get strategy by public key', () => {
     expect(strategyName).toBe('pagarme')
   })
 
-  it('Should return a mundipagg', () => {
+  it('Should return mundipagg', () => {
     const data = {
       token: 'chk_',
     }

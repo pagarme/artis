@@ -66,11 +66,16 @@ const openCheckout = (getMundipaggData, apiData, apiErrors, acquirer) => {
     label: key,
   })
 
-  let store
+  const store = createStore({
+    customer,
+    billing,
+    shipping,
+    cart,
+    items,
+    transaction,
+  })
 
   if (acquirer === 'pagarme') {
-    store = createStore({ customer, billing, shipping, cart, items })
-
     const apiDataWithDefaults = {
       ...apiData,
       configs: {
@@ -94,8 +99,6 @@ const openCheckout = (getMundipaggData, apiData, apiErrors, acquirer) => {
 
   if (acquirer === 'mundipagg') {
     getMundipaggData.then((data) => {
-      store = createStore({ customer, billing, shipping, cart, items })
-
       ReactDOM.render(
         <App
           apiData={data}
