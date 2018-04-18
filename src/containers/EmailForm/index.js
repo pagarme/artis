@@ -2,8 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import CloseIcon from 'react-icons/lib/io/android-close'
+import {
+  Row,
+} from 'former-kit'
 
-import { Row, Col, Input, Button } from '../../components'
+import { Col, Input, Button } from '../../components'
 
 const applyThemr = themr('UIEmailForm')
 const biggerColSize = 9

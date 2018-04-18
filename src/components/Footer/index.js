@@ -4,9 +4,12 @@ import LockIcon from 'react-icons/lib/md/lock-outline'
 import CartIcon from 'emblematic-icons/svg/ShoppingCart24.svg'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
-import { Grid } from 'former-kit'
+import {
+  Grid,
+  Row,
+} from 'former-kit'
 
-import { Row, Col } from '../Grid'
+import { Col } from '../Grid'
 import { Button } from '..'
 
 const applyThemr = themr('UIFooter')
@@ -24,7 +27,7 @@ const Footer = ({
 }) => (
   <footer className={classNames(theme[base], theme.wrapper)}>
     <Grid>
-      <Row>
+      { cartButtonVisible && <Row>
         <Col
           desk={buttonColSize}
           tv={buttonColSize}
@@ -32,7 +35,6 @@ const Footer = ({
           palm={palmColSize}
         >
           <Button
-            hidden={!cartButtonVisible}
             size="extra-large"
             fill="outline"
             onClick={onToggleCart}
@@ -42,7 +44,7 @@ const Footer = ({
             Carrinho de Compras
           </Button>
         </Col>
-      </Row>
+      </Row>}
       <Row>
         <Col
           desk={defaultColSize}

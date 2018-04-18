@@ -1,9 +1,9 @@
 import React from 'react'
 import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
+import { Row } from 'former-kit'
 
 import {
-  Row,
   Col,
 } from './../Grid'
 import Button from './../Button'

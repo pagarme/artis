@@ -14,10 +14,12 @@ import {
   pathOr,
   pick,
 } from 'ramda'
-import { Grid } from 'former-kit'
+import {
+  Grid,
+  Row,
+} from 'former-kit'
 
 import {
-  Row,
   Col,
   Button,
   Input,
@@ -318,7 +320,10 @@ class AddressesPage extends Component {
             classNames(theme[base], theme.page)
           }
         >
-          <Row alignCenter stretch>
+          <Row
+            stretch
+            className={theme.alignCenter}
+          >
             <Col
               tv={mediumColSize}
               desk={mediumColSize}

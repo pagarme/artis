@@ -3,9 +3,12 @@ import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { Grid } from 'former-kit'
+import {
+  Grid,
+  Row,
+} from 'former-kit'
 
-import { Col, Row } from '../Grid'
+import { Col } from '../Grid'
 
 import errorIcon from '../../images/error-icon.png'
 

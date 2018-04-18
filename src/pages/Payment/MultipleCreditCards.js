@@ -5,10 +5,12 @@ import { themr } from 'react-css-themr'
 import Form from 'react-vanilla-form'
 import { isEmpty, reject, isNil } from 'ramda'
 import classNames from 'classnames'
-import { Grid } from 'former-kit'
+import {
+  Grid,
+  Row,
+} from 'former-kit'
 
 import {
-  Row,
   Col,
   Button,
 } from '../../components'

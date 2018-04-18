@@ -1,10 +1,13 @@
 import React from 'react'
 import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
-import { Grid } from 'former-kit'
+import {
+  Grid,
+  Row,
+} from 'former-kit'
 
 import SadEmoji from './../images/sad.svg'
-import { Row, Col } from './../components/Grid'
+import { Col } from './../components/Grid'
 
 const applyThemr = themr('UIErrorPage')
 
@@ -12,7 +15,6 @@ const ErrorPage = ({ theme }) => (
   <Grid className={theme.page}>
     <Row
       className={theme.selfAlign}
-      alignCenter
     >
       <Col
         tv={5}

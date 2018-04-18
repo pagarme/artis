@@ -14,7 +14,10 @@ import {
   pathOr,
   filter,
 } from 'ramda'
-import { Grid } from 'former-kit'
+import {
+  Grid,
+  Row,
+} from 'former-kit'
 
 import { changeScreenSize } from '../../actions'
 import strategies from '../../utils/strategies'
@@ -31,7 +34,7 @@ import {
   SuccessInfo,
 } from '../../components'
 
-import { Row, Col } from '../../components/Grid'
+import { Col } from '../../components/Grid'
 
 import CustomerPage from '../../pages/Customer'
 import AddressesPage from '../../pages/Addresses'
@@ -331,12 +334,12 @@ class Checkout extends Component {
     const { formData, transaction, configs } = this.props.apiData
 
     const { items } = formData
-    const { enableCart, freightValue } = configs
+    const { freightValue } = configs
     const { amount } = transaction
     const { theme, base, pageInfo } = this.props
     const { shipping, customer } = pageInfo
 
-    return enableCart && (
+    return (
       <Col
         tv={3}
         desk={3}
@@ -400,7 +403,7 @@ class Checkout extends Component {
         <div className={theme.wrapper}>
           <Grid className={theme.page}>
             <Row stretch={isBigScreen}>
-              {this.renderCart()}
+              {configs.enableCart && this.renderCart()}
               <Col
                 tv={checkoutColSize}
                 desk={checkoutColSize}

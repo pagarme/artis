@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 import { equals } from 'ramda'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
-import { Grid } from 'former-kit'
+import {
+  Grid,
+  Row,
+} from 'former-kit'
 
 import {
-  Row,
   Col,
   Button,
 } from './../../components'
@@ -54,7 +56,10 @@ const MultipaymentOptions = ({
     const key = `${theme.paymentTitle}${index}`
 
     return (
-      <Row alignCenter key={key}>
+      <Row
+        key={key}
+        className={theme.alignCenter}
+      >
         <Col
           className={theme.wrapperButton}
           tv={mediumColSize}
@@ -81,7 +86,9 @@ const MultipaymentOptions = ({
 
   return (
     <Grid className={classNames(theme.page, theme[base])}>
-      <Row alignCenter>
+      <Row
+        className={theme.alignCenter}
+      >
         <Col
           className={theme.wrapperButton}
           tv={mediumColSize}
@@ -104,7 +111,9 @@ const MultipaymentOptions = ({
         </Col>
       </Row>
       { multipaymentButtons }
-      <Row alignCenter>
+      <Row
+        className={theme.alignCenter}
+      >
         <Col
           className={theme.wrapperButton}
           tv={mediumColSize}

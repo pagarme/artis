@@ -1,7 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import PaymentCard from 'react-payment-card-component'
-import { Grid } from 'former-kit'
+import {
+  Grid,
+  Row,
+} from 'former-kit'
 
 import FaCreditCard from 'react-icons/lib/fa/credit-card'
 import FaUser from 'react-icons/lib/fa/user'
@@ -10,7 +13,6 @@ import FaEllipsisH from 'react-icons/lib/fa/ellipsis-h'
 import Calendar24 from 'emblematic-icons/svg/Calendar24.svg'
 
 import {
-  Row,
   Col,
   Dropdown,
   Input,
@@ -194,11 +196,13 @@ const CreditCard = ({
               </Col>
             </Row>
           }
-          <Row hidden={isBigScreen || !showCreditCard}>
-            <h4 className={theme.amount} >
-              Valor a pagar: {formatToBRL(amount)}
-            </h4>
-          </Row>
+          { (!isBigScreen && showCreditCard) &&
+            <Row>
+              <h4 className={theme.amount} >
+                Valor a pagar: {formatToBRL(amount)}
+              </h4>
+            </Row>
+          }
         </Col>
       </Row>
     </Grid>
