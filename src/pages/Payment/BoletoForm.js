@@ -71,16 +71,21 @@ const Boleto = ({
                 >
                   Valor a pagar:
                   {
-                    discount ?
-                      formatToBRL(applyDiscount(discount.type, discount.value, amount)) :
-                      formatToBRL(amount)
+                    discount
+                      ? formatToBRL(applyDiscount(
+                        discount.type,
+                        discount.value,
+                        amount,
+                      ))
+                      : formatToBRL(amount)
                   }
                 </h4>
                 <span className={theme.boletoInfo}>
                   Ao finalizar a compra,
                   será gerado um boleto com o valor acima,
                   com data de vencimento para {finalDate}.
-                  Depois de pago, o banco leva cerca de 3 dias úteis para reconhecer o pagamento.
+                  Depois de pago, o banco leva cerca de
+                  3 dias úteis para reconhecer o pagamento.
                 </span>
               </React.Fragment>
             }

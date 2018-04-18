@@ -46,7 +46,10 @@ const CreditCard = ({
   } = formData
 
   const { installments } = data
-  const installmentTotalAmount = amountPrefixValue ? amountPrefixValue * 100 : amount
+  const installmentTotalAmount =
+    amountPrefixValue
+      ? amountPrefixValue * 100
+      : amount
 
   const installmentsOptions = generateInstallments(
     installmentTotalAmount,
@@ -161,7 +164,8 @@ const CreditCard = ({
                 mask="111"
                 tooltip={
                   isBigScreen &&
-                  'O CVV são os três números que ficam na parte de trás do seu cartão.'
+                  `O CVV são os três números que
+                  ficam na parte de trás do seu cartão.`
                 }
                 tooltipClassName={theme.cvvTooltip}
                 onFocus={handleFlipCard}

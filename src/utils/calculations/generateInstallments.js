@@ -14,7 +14,8 @@ const generateArray = length => Array.from(
 
 const isFree = (free, value) => value > free
 
-const getInstallmentAmount = (amount, installments) => (amount / installments).toFixed(0)
+const getInstallmentAmount = (amount, installments) =>
+  (amount / installments).toFixed(0)
 
 const getInterestPercentage = (amount, interest) => (amount * (interest / 100))
 

@@ -86,7 +86,9 @@ class SuccessInfo extends React.Component {
               <Row>
                 <div>
                   <div className={theme.field}>Valor pago</div>
-                  <div className={theme.value}>{formatBRL(paymentInfo.amount)}</div>
+                  <div className={theme.value}>
+                    {formatBRL(paymentInfo.amount)}
+                  </div>
                 </div>
               </Row>
             </Col>
@@ -172,7 +174,9 @@ class SuccessInfo extends React.Component {
               <Row>
                 <div>
                   <div className={theme.field}>Valor pago</div>
-                  <div className={theme.value}>{formatBRL(paymentInfo.amount)}</div>
+                  <div className={theme.value}>
+                    {formatBRL(paymentInfo.amount)}
+                  </div>
                 </div>
               </Row>
             </Col>

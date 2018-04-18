@@ -5,7 +5,8 @@ const errorMessages = {
   },
   unauthorized: {
     errorTitle: 'Seu pagamento foi recusado',
-    errorSubtitle: 'Tente novamente mais tarde ou entre em contato com seu banco.',
+    errorSubtitle:
+      'Tente novamente mais tarde ou entre em contato com seu banco.',
   },
 }
 
