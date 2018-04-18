@@ -13,8 +13,12 @@
 .cart,
 .cart * {
   box-sizing: border-box;
-  margin: 0;
-  z-index: 99;
+  max-width: 296px;
+  max-height: 538px;
+  margin-top: 40px;
+  margin-right: -15px;
+  overflow: hidden;
+  border-radius: 4px;
 }
 
 .cart {
@@ -261,9 +265,13 @@
   .cart {
     transform: scale(1), translate(-50%, -50%);
     position: absolute;
-    height: 100vh;
+    z-index: 2;
     left: 0;
     top: 0;
+    margin-top: 0;
+    margin-right: 0;
+    max-width: 100vw;
+    max-height: 100vh;
   }
 }
 

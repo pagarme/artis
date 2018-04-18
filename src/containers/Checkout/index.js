@@ -44,6 +44,8 @@ import SwitchPayment from '../../pages/Payment/SwitchPayment'
 import CreditCardAndBoletoPage from '../../pages/Payment/CreditCardAndBoleto'
 import MultipleCreditCardsPage from '../../pages/Payment/MultipleCreditCards'
 
+import CloseIcon from '../../images/close.svg'
+
 import statechart from './statechart'
 
 const stepsTitles = [
@@ -201,7 +203,7 @@ class Checkout extends Component {
 
   handlePageTransition = page => () => this.props.transition(page)
 
-  close () {
+  close = () => {
     const { targetElement } = this.props
 
     ReactGA.event({
@@ -344,36 +346,6 @@ class Checkout extends Component {
     )
   }
 
-  renderCart () {
-    const { theme, base, apiData, pageInfo, transaction } = this.props
-    const { cart } = apiData
-    const { items, shippingRate } = cart
-    const { shipping, customer } = pageInfo
-    const { amount } = transaction
-
-    return (
-      <Col
-        tv={3}
-        desk={3}
-        tablet={3}
-        palm={0}
-        className={theme.cartWrapper}
-      >
-        <Cart
-          base={base}
-          items={items}
-          amount={amount}
-          shipping={shipping}
-          customer={customer}
-          shippingRate={shippingRate}
-          onToggleCart={this.handleToggleCart}
-          collapsed={this.props.isBigScreen ? false : this.state.collapsedCart}
-          showCloseButton={this.props.isBigScreen}
-        />
-      </Col>
-    )
-  }
-
   render () {
     const {
       theme,
@@ -381,16 +353,19 @@ class Checkout extends Component {
       machineState,
       isBigScreen,
       base,
+      pageInfo,
     } = this.props
 
-    const { configs, cart } = apiData
+    const {
+      transaction,
+      configs,
+      cart,
+    } = apiData
 
     const items = pathOr({}, ['items'], cart)
-
-    const {
-      companyName,
-      logo,
-    } = configs
+    const { enableCart, freightValue, companyName, logo } = configs
+    const { amount } = transaction
+    const { shipping, customer } = pageInfo
 
     const pages = filter(value =>
       !hasRequiredPageData(value.page, this.props), stepsTitles)
@@ -401,8 +376,6 @@ class Checkout extends Component {
       !isBigScreen :
       false
 
-    const checkoutColSize = length(items) ? 9 : 12
-
     const shouldDisablePrevButton =
       machineState.value === firstPage ||
       machineState.value === 'transaction' ||
@@ -411,21 +384,37 @@ class Checkout extends Component {
     return (
       <div
         className={classNames(
-          theme.checkout,
-          theme[base],
+          theme.wrapper,
           {
             [theme.closingEffect]: this.state.closingEffect,
           },
         )}
       >
-        <div className={theme.wrapper}>
+        <CloseIcon
+          className={theme.closeButton}
+          onClick={this.close}
+        />
+        {
+          enableCart &&
+          <Cart
+            base={base}
+            items={items}
+            amount={amount}
+            shipping={shipping}
+            customer={customer}
+            freight={freightValue}
+            onToggleCart={this.handleToggleCart}
+            collapsed={isBigScreen ? false : this.state.collapsedCart}
+            showCloseButton={isBigScreen}
+          />
+        }
+        <div className={theme.checkout}>
           <Grid className={theme.page}>
             <Row stretch={isBigScreen}>
-              {items.length && this.renderCart()}
               <Col
-                tv={checkoutColSize}
-                desk={checkoutColSize}
-                tablet={checkoutColSize}
+                tv={12}
+                desk={12}
+                tablet={12}
                 palm={12}
               >
                 <Header
@@ -433,7 +422,7 @@ class Checkout extends Component {
                   logoAlt={companyName}
                   logoSrc={logo}
                   onPrev={this.handleBackButton}
-                  onClose={this.close.bind(this)}
+                  onClose={this.close}
                   prevButtonDisabled={shouldDisablePrevButton}
                 />
                 <div
@@ -463,38 +452,11 @@ class Checkout extends Component {
 }
 
 Checkout.propTypes = {
-  theme: PropTypes.shape({
-    content: PropTypes.string,
-    wrapper: PropTypes.string,
-    closingEffect: PropTypes.string,
-    checkout: PropTypes.string,
-    cartWrapper: PropTypes.string,
-    checkoutWrapper: PropTypes.string,
-  }),
+  theme: PropTypes.shape(),
   acquirer: PropTypes.string.isRequired,
-  apiData: PropTypes.shape({
-    token: PropTypes.string,
-    key: PropTypes.string.isRequired,
-    configs: PropTypes.shape({
-      companyName: PropTypes.string,
-      image: PropTypes.string,
-      themeBase: PropTypes.string,
-      primaryColor: PropTypes.string,
-      seconryColor: PropTypes.string,
-      postback: PropTypes.string,
-      onTransactionSuccess: PropTypes.func,
-      onError: PropTypes.func,
-      onModalClose: PropTypes.func,
-    }).isRequired,
-    customer: PropTypes.object,
-    billing: PropTypes.object,
-    shipping: PropTypes.object,
-    cart: PropTypes.shape({
-      items: PropTypes.arrayOf(PropTypes.object),
-    }),
-  }).isRequired,
   transaction: PropTypes.shape(),
   apiErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  apiData: PropTypes.shape().isRequired,
   base: PropTypes.string.isRequired,
   changeScreenSize: PropTypes.func.isRequired,
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
