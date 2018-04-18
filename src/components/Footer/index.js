@@ -7,9 +7,9 @@ import classNames from 'classnames'
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
 
-import { Col } from '../Grid'
 import { Button } from '..'
 
 const applyThemr = themr('UIFooter')
@@ -23,6 +23,7 @@ const Footer = ({
   theme,
   onToggleCart,
   cartButtonVisible,
+  isBigScreen,
   base,
 }) => (
   <footer className={classNames(theme[base], theme.wrapper)}>
@@ -51,6 +52,7 @@ const Footer = ({
           tv={defaultColSize}
           tablet={defaultColSize}
           palm={palmColSize}
+          align={isBigScreen ? 'end' : 'center'}
           className={theme.safe}
         >
           <LockIcon />
@@ -61,6 +63,7 @@ const Footer = ({
           tv={defaultColSize}
           tablet={defaultColSize}
           palm={palmColSize}
+          align={isBigScreen ? 'start' : 'center'}
           className={theme.powered}
         >
           Powered by { companyName }
@@ -83,6 +86,7 @@ Footer.propTypes = {
     cartIcon: PropTypes.string,
   }),
   base: PropTypes.string,
+  isBigScreen: PropTypes.bool,
   onToggleCart: PropTypes.func,
   cartButtonVisible: PropTypes.bool.isRequired,
   companyName: PropTypes.string.isRequired,
@@ -91,6 +95,7 @@ Footer.propTypes = {
 Footer.defaultProps = {
   theme: {},
   onToggleCart: null,
+  isBigScreen: true,
   base: 'dark',
 }
 

@@ -6,10 +6,10 @@ import classNames from 'classnames'
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
 
 import {
-  Col,
   Button,
 } from './../../components'
 

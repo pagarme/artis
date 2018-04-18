@@ -6,9 +6,8 @@ import { themr } from 'react-css-themr'
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
-
-import { Col } from '../Grid'
 
 const applyThemr = themr('UIProgressBar')
 

@@ -8,10 +8,10 @@ import classNames from 'classnames'
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
 
 import {
-  Col,
   Button,
 } from '../../components'
 
@@ -191,14 +191,14 @@ class CreditCardAndBoleto extends Component {
               desk={defaultColSize}
               tablet={defaultColSize}
               palm={defaultColSize}
-              alignEnd
+              align={'end'}
             >
               <Col
                 tv={defaultColSize}
                 desk={defaultColSize}
                 tablet={defaultColSize}
                 palm={defaultColSize}
-                alignEnd
+                align={'end'}
               >
                 <h4 className={theme.amount} >
                   Valor a pagar: {formatToBRL(amount)}
@@ -209,7 +209,7 @@ class CreditCardAndBoleto extends Component {
                 desk={defaultColSize}
                 tablet={defaultColSize}
                 palm={defaultColSize}
-                alignEnd
+                align={'end'}
                 className={theme.footerNoPadding}
               >
                 <Button

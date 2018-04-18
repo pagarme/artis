@@ -1,11 +1,11 @@
 import React from 'react'
 import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
-import { Row } from 'former-kit'
-
 import {
+  Row,
   Col,
-} from './../Grid'
+} from 'former-kit'
+
 import Button from './../Button'
 
 const applyThemr = themr('UIActionList')

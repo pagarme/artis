@@ -1,9 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Row } from 'former-kit'
+import { Row, Col } from 'former-kit'
 
 import ActionList from './index'
-import { Col } from '../Grid/index'
 
 describe('ActionList', () => {
   it('should render with 2 rows and 2 cols', () => {

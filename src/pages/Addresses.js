@@ -17,10 +17,10 @@ import {
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
 
 import {
-  Col,
   Button,
   Input,
   Dropdown,
@@ -552,7 +552,7 @@ class AddressesPage extends Component {
               tv={defaultColSize}
               tablet={defaultColSize}
               palm={defaultColSize}
-              alignEnd
+              align={'end'}
             >
               <Button
                 size="extra-large"

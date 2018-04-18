@@ -17,6 +17,7 @@ import {
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
 
 import { changeScreenSize } from '../../actions'
@@ -33,8 +34,6 @@ import {
   ErrorInfo,
   SuccessInfo,
 } from '../../components'
-
-import { Col } from '../../components/Grid'
 
 import CustomerPage from '../../pages/Customer'
 import AddressesPage from '../../pages/Addresses'
@@ -434,6 +433,7 @@ class Checkout extends Component {
                   onToggleCart={this.handleToggleCart}
                   companyName={configs.companyName}
                   cartButtonVisible={isCartButtonVisible}
+                  isBigScreen={isBigScreen}
                 />
               </Col>
             </Row>

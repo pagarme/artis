@@ -1,9 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Grid } from 'former-kit'
+import { Grid, Col } from 'former-kit'
 
 import ProgressBar from './index'
-import { Col } from '../Grid/index'
 
 const stepsTitles = [
   {

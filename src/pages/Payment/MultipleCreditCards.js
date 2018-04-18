@@ -8,10 +8,10 @@ import classNames from 'classnames'
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
 
 import {
-  Col,
   Button,
 } from '../../components'
 
@@ -256,14 +256,14 @@ class MultipleCreditCards extends Component {
               desk={defaultColSize}
               tablet={defaultColSize}
               palm={defaultColSize}
-              alignEnd
+              align={'end'}
             >
               <Col
                 tv={defaultColSize}
                 desk={defaultColSize}
                 tablet={defaultColSize}
                 palm={defaultColSize}
-                alignEnd
+                align={'end'}
               >
                 <h4 className={theme.amount} >
                   Valor a pagar: {formatToBRL(amount)}
@@ -275,7 +275,7 @@ class MultipleCreditCards extends Component {
                 tablet={defaultColSize}
                 palm={defaultColSize}
                 className={theme.footerNoPadding}
-                alignEnd
+                align={'end'}
               >
                 <Button
                   className={theme.confirmBtn}

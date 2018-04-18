@@ -4,6 +4,7 @@ import PaymentCard from 'react-payment-card-component'
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
 
 import FaCreditCard from 'react-icons/lib/fa/credit-card'
@@ -13,7 +14,6 @@ import FaEllipsisH from 'react-icons/lib/fa/ellipsis-h'
 import Calendar24 from 'emblematic-icons/svg/Calendar24.svg'
 
 import {
-  Col,
   Dropdown,
   Input,
 } from './../../components'
@@ -65,14 +65,13 @@ const CreditCard = ({
   return (
     <Grid>
       <Row>
-        { showCreditCard &&
+        { (showCreditCard && isBigScreen) &&
           <Col
             tv={mediumColSize}
             desk={mediumColSize}
             tablet={defaultColSize}
             palm={defaultColSize}
-            alignCenter
-            hidden={!isBigScreen}
+            align={'center'}
           >
             <PaymentCard
               number={removeMask(cardNumber)}

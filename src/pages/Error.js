@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
 
 import SadEmoji from './../images/sad.svg'
-import { Col } from './../components/Grid'
 
 const applyThemr = themr('UIErrorPage')
 

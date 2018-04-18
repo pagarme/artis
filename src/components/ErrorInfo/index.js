@@ -6,9 +6,8 @@ import { connect } from 'react-redux'
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
-
-import { Col } from '../Grid'
 
 import errorIcon from '../../images/error-icon.png'
 
@@ -34,7 +33,7 @@ const ErrorInfo = ({
         desk={iconColSize}
         tablet={iconColSize}
         palm={defaultColSize}
-        alignCenter
+        align={'center'}
       >
         <div className={
           classNames(

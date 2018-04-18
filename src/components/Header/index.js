@@ -6,10 +6,10 @@ import BackIcon from 'react-icons/lib/io/android-arrow-back'
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
 
 import Button from '../Button'
-import { Col } from './../Grid'
 
 const applyThemr = themr('UIHeader')
 
@@ -54,7 +54,7 @@ const Header = ({
           desk={imgColSize}
           tablet={imgColSize}
           palm={imgPalmColSize}
-          alignCenter
+          align={'center'}
         >
           {
             logoSrc && <img
@@ -69,7 +69,7 @@ const Header = ({
           desk={buttonColSize}
           tablet={buttonColSize}
           palm={buttonPalmColSize}
-          alignEnd
+          align={'end'}
         >
           <Button
             base={base}

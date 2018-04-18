@@ -5,10 +5,10 @@ import moment from 'moment'
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
 
 import {
-  Col,
   Input,
 } from './../../components'
 

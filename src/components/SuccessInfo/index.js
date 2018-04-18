@@ -8,9 +8,9 @@ import { connect } from 'react-redux'
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
 
-import { Col } from '../Grid'
 import EmailForm from '../../containers/EmailForm'
 import ActionList from '../ActionList'
 
@@ -233,7 +233,7 @@ class SuccessInfo extends React.Component {
             desk={iconColSize}
             tablet={iconColSize}
             palm={defaultColSize}
-            alignCenter
+            align={'center'}
           >
             <div className={
               classNames(
