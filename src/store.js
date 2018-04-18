@@ -14,7 +14,6 @@ export default ({
   shipping,
   billing,
   cart,
-  items,
   transaction,
 }) =>
   createStore(
@@ -25,7 +24,6 @@ export default ({
         shipping,
         billing,
         cart,
-        items,
       },
       transactionValues: {
         ...transaction,

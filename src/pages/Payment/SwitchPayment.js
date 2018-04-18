@@ -13,7 +13,6 @@ import {
   isEmpty,
   reject,
   isNil,
-  path,
   pathOr,
   omit,
 } from 'ramda'
@@ -107,8 +106,6 @@ const createSwitchItems = ({
 class SwitchPayment extends Component {
   constructor (props) {
     super(props)
-
-    const formData = path(['payment', 'info'], props) || {}
 
     this.state = {
       clickedPaymentType: null,

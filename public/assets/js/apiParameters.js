@@ -121,14 +121,7 @@ const pagarmeApi = `var configs = {
 };`
 
 const mundipaggApi = `var configs = {
-  token: 'chk_1AYmoD4Ip3CBQgRZ', // boleto
-  // token: 'chk_JwO07OlTMFLYW9e3', // creditcard
-  onTransactionSuccess: (data) => {
-    console.log('onTransactionSuccess callback', data);
-  },
-  onError: (error) => {
-    console.log('onError callback', error)
-  },
+  token: 'SOME_TOKEN_HERE',
 };`
 
 const storagedCustomCode = window.localStorage.getItem('custom')

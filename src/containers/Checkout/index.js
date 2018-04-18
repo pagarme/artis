@@ -126,7 +126,7 @@ class Checkout extends Component {
       boleto_url: boletoUrl,
     } = response
 
-    if (status === 'authorized') {
+    if (status === 'authorized' || status === 'waiting_payment') {
       let successState = { }
 
       if (boletoBarcode || boletoUrl) {
@@ -221,7 +221,6 @@ class Checkout extends Component {
   enterLoading = () => {
     const {
       acquirer,
-      transition,
       pageInfo,
       apiData,
       transaction,
@@ -250,13 +249,12 @@ class Checkout extends Component {
 
     request(requestPayload)
       .then((response) => {
-        this.onTransactionReturn(
+        this.onTransactionReturn({
           response,
           onTransactionSuccess,
           onError,
-        )
+        })
       })
-      .catch(() => transition('TRANSACTION_FAILURE'))
   }
 
   renderPages () {

@@ -98,28 +98,28 @@ const parseTokenData = pipe(
     token: prop('id'),
     configs: applySpec({
       companyName: path(['account', 'name']),
-      freightValue: path(['shipping', 'amount']),
     }),
-    formData: applySpec({
-      customer: applySpec({
-        id: path(['customer', 'id']),
-        name: path(['customer', 'name']),
-        documentNumber: path(['customer', 'document']),
-        email: path(['customer', 'email']),
-        phoneNumber: pipe(
-          pathOr({}, ['customer', 'phones', 'home_phone']),
-          values,
-          join(' ')
-        ),
-      }),
-      billing: pipe(
-        prop('billing'),
-        addressParse
+    customer: applySpec({
+      id: path(['customer', 'id']),
+      name: path(['customer', 'name']),
+      documentNumber: path(['customer', 'document']),
+      email: path(['customer', 'email']),
+      phoneNumber: pipe(
+        pathOr({}, ['customer', 'phones', 'home_phone']),
+        values,
+        join(' ')
       ),
-      shipping: pipe(
-        prop('shipping'),
-        addressParse
-      ),
+    }),
+    billing: pipe(
+      prop('billing'),
+      addressParse
+    ),
+    shipping: pipe(
+      prop('shipping'),
+      addressParse
+    ),
+    cart: applySpec({
+      shippingRate: path(['shipping', 'amount']),
       items: pipe(
         prop('items'),
         map(
@@ -328,7 +328,7 @@ const parseResponseStrategy = pipe(
 const strategy = (data) => {
   const payload = getTransactionData(data)
 
-  return fetch(`${URLS.mundipagg.payments}?appId=${data.key}`, {
+  return fetch(`${URLS.mundipagg.payment}?appId=${data.key}`, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
