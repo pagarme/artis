@@ -78,15 +78,4 @@ describe('ProgressBar', () => {
         .includes('<span>1.</span>Identificação')
     ).toBeTruthy()
   })
-
-  it('should not allow width greater than 100%', () => {
-    const component = shallow(
-      <ProgressBar
-        steps={stepsTitles}
-        activePage={active}
-      />
-    )
-
-    expect(component.html().includes('width:25%')).toBeTruthy()
-  })
 })

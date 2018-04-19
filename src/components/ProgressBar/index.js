@@ -1,13 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import classNames from 'classnames'
-import { prop, propEq, findIndex, filter, slice, length } from 'ramda'
 import { themr } from 'react-css-themr'
 import {
   Grid,
   Row,
   Col,
+  LinearProgress,
 } from 'former-kit'
+import {
+  prop,
+  propEq,
+  findIndex,
+  filter,
+  slice,
+  length,
+} from 'ramda'
 
 const applyThemr = themr('UIProgressBar')
 
@@ -68,16 +77,12 @@ const ProgressBar = ({
     percentage,
   } = getStepsPayload(steps, activePage)
 
-  const width = `${percentage}%`
-
   return (
     <div className={theme[base]}>
       { stepsList.length &&
         renderSteps(stepsList, activeStep, theme)
       }
-      <div className={theme.wrapper}>
-        <div className={theme.progressBar} style={{ width }} />
-      </div>
+      <LinearProgress label="Linear Progress" percent={percentage} />
     </div>
   )
 }
