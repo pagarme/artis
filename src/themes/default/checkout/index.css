@@ -45,6 +45,7 @@
 
 .content {
   flex: 1;
+  height: 428px;
 }
 
 @media (--media-palm) {

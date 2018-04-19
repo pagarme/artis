@@ -17,9 +17,10 @@ import {
   filter,
 } from 'ramda'
 import {
-  Grid,
-  Row,
-  Col,
+  // Grid,
+  // Row,
+  // Col,
+  Layout,
 } from 'former-kit'
 
 import { changeScreenSize } from '../../actions'
@@ -331,10 +332,6 @@ class Checkout extends Component {
       !hasRequiredPageData(value.page, this.props), steps
     )
 
-    const isCartButtonVisible = length(items) ?
-      !isBigScreen :
-      false
-
     return (
       <div
         className={classNames(
@@ -363,36 +360,22 @@ class Checkout extends Component {
           />
         }
         <div className={theme.checkout}>
-          <Grid className={theme.page}>
-            <Row stretch={isBigScreen}>
-              <Col
-                tv={12}
-                desk={12}
-                tablet={12}
-                palm={12}
-              >
-                <Header
-                  base={base}
-                  logoAlt={companyName}
-                  logoSrc={logo}
-                  steps={pages}
-                  activeStep={machineState.value}
-                />
-                <div
-                  className={theme.content}
-                >
-                  {this.renderPages()}
-                </div>
-                <Footer
-                  base={base}
-                  onToggleCart={this.handleToggleCart}
-                  companyName={companyName}
-                  cartButtonVisible={isCartButtonVisible}
-                  isBigScreen={isBigScreen}
-                />
-              </Col>
-            </Row>
-          </Grid>
+          <Layout
+            header={<Header
+              base={base}
+              logoAlt={companyName}
+              logoSrc={logo}
+              steps={pages}
+              activeStep={machineState.value}
+            />}
+            footer={<Footer />}
+          >
+            <div
+              className={theme.content}
+            >
+              {this.renderPages()}
+            </div>
+          </Layout>
         </div>
       </div>
     )

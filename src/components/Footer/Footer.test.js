@@ -5,13 +5,11 @@ import Footer from './index'
 
 describe('Footer', () => {
   const component = mount(
-    <Footer
-      companyName={'Tesla Motors'}
-      cartButtonVisible
-    />
+    <Footer />
   )
 
-  it('should render powered by company', () => {
-    expect(component.text()).toContain('Powered by Tesla Motors')
+  it('should render the correct texts', () => {
+    expect(component.text()).toContain('Ambiente Seguro')
+    expect(component.text()).toContain('Tecnologia Pagar.me')
   })
 })

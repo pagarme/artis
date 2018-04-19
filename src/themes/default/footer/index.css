@@ -1,110 +1,45 @@
-@import "../media.css";
 @import "../spacing.css";
 @import "../colors.css";
 @import "../typography.css";
-@import "../margin.css";
 
 .wrapper {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  background-color: #242424;
 }
 
 .safe {
-  position: relative;
-  justify-content: flex-end;
-  color: var(--color-white);
-  font-size: var(--font-size-tiny);
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: var(--spacing-medium);
+  color: var(--color-grey-53);
+  font-size: var(--font-size-small);
   font-family: var(--primary-font-family);
-  text-transform: uppercase;
-  padding-bottom: var(--spacing-tiny);
-}
-
-.light .safe {
-  color: var(--color-grey-83);
+  line-height: 14px;
 }
 
 .safe > svg {
-  margin-right: 5px;
-  margin-bottom: 3px;
+  padding-right: var(--spacing-tiny);
 }
 
-.safe:after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  right: -12px;
-  width: 1px;
-  height: 12px;
-  background-color: var(--color-black);
-  border-right: 1px solid var(--color-grey-68);
-}
-
-.light .safe:after {
-  background-color: var(--color-grey-11);
+.safeText {
+  color: var(--color-grey-39);
+  font-weight: bold;
 }
 
 .powered {
   color: var(--color-grey-53);
-  font-size: var(--font-size-tiny);
+  font-size: var(--font-size-small);
   font-family: var(--primary-font-family);
-  text-transform: lowercase;
-  padding-bottom: var(--spacing-tiny);
+  padding-right: var(--spacing-medium);
+  line-height: 14px;
 }
 
-.hidden {
-  display: none;
-}
-
-.button {
-  margin-right: 16px;
-  position: relative;
-}
-
-.cartIcon {
-  position: absolute;
-  left: 20px;
-  top: 10px;
-}
-
-@media (--media-palm) {
-
-  .button {
-    width: 100%;
-    margin-left: var(--margin-page-mobile);
-    margin-right: var(--margin-page-mobile);
-  }
-
-  .safe,
-  .powered {
-    justify-content: center;
-  }
-
-  .powered {
-    padding-bottom: 0;
-  }
-
-  .safe:after {
-    display: none;
-  }
-}
-
-@media (--media-tablet) {
-
-  .cartButton {
-    display: none;
-  }
-}
-
-@media (--media-tv) {
-
-  .cartButton {
-    display: none;
-  }
-}
-
-@media (--media-desk) {
-
-  .cartButton {
-    display: none;
-  }
+.companyName {
+  color: var(--color-white);
+  font-weight: bold;
 }
