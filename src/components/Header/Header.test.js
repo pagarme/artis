@@ -2,6 +2,9 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import Header from './index'
+import { ProgressBar } from '..'
+import steps from '../../containers/Checkout/steps'
+
 
 describe('Header', () => {
   it('should mount', () => {
@@ -10,20 +13,44 @@ describe('Header', () => {
     )
 
     expect(component.find('img')).toHaveLength(0)
-    expect(component.find('button')).toHaveLength(2)
   })
 
-  it('should be click in all buttons', () => {
-    const onClose = jest.fn()
-    const onPrev = jest.fn()
+  it('should filter visible steps', () => {
+    const activeStep = 'addresses'
 
     const component = mount(
-      <Header onClose={onClose} onPrev={onPrev} />
+      <Header
+        steps={steps}
+        activeStep={activeStep}
+      />
     )
 
-    component.find('button').forEach(button => button.simulate('click'))
+    expect(component.find(ProgressBar).props().steps).toHaveLength(4)
+  })
 
-    expect(onClose).toHaveBeenCalled()
-    expect(onPrev).toHaveBeenCalled()
+  it('should calculate progress 50 percent', () => {
+    const activeStep = 'addresses'
+
+    const component = mount(
+      <Header
+        steps={steps}
+        activeStep={activeStep}
+      />
+    )
+
+    expect(component.find(ProgressBar).props().percentage).toBe(50)
+  })
+
+  it('should calculate progress 100 percent', () => {
+    const activeStep = 'confirmation'
+
+    const component = mount(
+      <Header
+        steps={steps}
+        activeStep={activeStep}
+      />
+    )
+
+    expect(component.find(ProgressBar).props().percentage).toBe(100)
   })
 })

@@ -14,10 +14,6 @@ import {
   path,
   pathOr,
   propOr,
-  prop,
-  propEq,
-  slice,
-  findIndex,
   filter,
 } from 'ramda'
 import {
@@ -32,7 +28,6 @@ import getErrorMessage from '../../utils/data/errorMessages'
 import { hasRequiredPageData } from '../../utils/validations'
 
 import {
-  ProgressBar,
   Header,
   Footer,
   Cart,
@@ -54,21 +49,6 @@ import statechart from './statechart'
 import steps from './steps'
 
 const applyThemr = themr('UICheckout')
-
-const filterSteps = (pages, active) => {
-  const visibleSteps = filter(prop('visible'), pages)
-  const activeStepIndex = findIndex(propEq('page', active), pages) + 1
-  const activeSteps = slice(1, activeStepIndex, pages)
-
-  const activeStep = filter(prop('visible'), activeSteps).length
-  const percentage = (100 / length(visibleSteps)) * (activeStep + 1)
-
-  return {
-    percentage,
-    activeStepIndex: activeStep,
-    filteredSteps: visibleSteps,
-  }
-}
 
 class Checkout extends Component {
   state = {
@@ -351,22 +331,9 @@ class Checkout extends Component {
       !hasRequiredPageData(value.page, this.props), steps
     )
 
-    const firstPage = pages[0].page
-
     const isCartButtonVisible = length(items) ?
       !isBigScreen :
       false
-
-    const shouldDisablePrevButton =
-      machineState.value === firstPage ||
-      machineState.value === 'transaction' ||
-      (machineState.value === 'confirmation' && !this.state.transactionError)
-
-    const {
-      filteredSteps,
-      activeStepIndex,
-      percentage,
-    } = filterSteps(pages, machineState.value)
 
     return (
       <div
@@ -408,19 +375,12 @@ class Checkout extends Component {
                   base={base}
                   logoAlt={companyName}
                   logoSrc={logo}
-                  onPrev={this.handleBackButton}
-                  onClose={this.close}
-                  prevButtonDisabled={shouldDisablePrevButton}
+                  steps={pages}
+                  activeStep={machineState.value}
                 />
                 <div
                   className={theme.content}
                 >
-                  <ProgressBar
-                    base={base}
-                    percentage={percentage}
-                    steps={filteredSteps}
-                    activeStepIndex={activeStepIndex}
-                  />
                   {this.renderPages()}
                 </div>
                 <Footer
