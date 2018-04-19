@@ -37,10 +37,10 @@ const MultipaymentOptions = ({
   transaction,
   handlePageTransition,
 }) => {
-  const { multipayment } = transaction
+  const { paymentMethods } = transaction
 
   const hasThisPaymentType = paymentType =>
-    multipayment.find(item => equals(item, paymentType))
+    paymentMethods.find(item => equals(item, paymentType))
 
   const multipaymentButtons = allowedOptions.map((option, index) => {
     const {
@@ -81,8 +81,8 @@ const MultipaymentOptions = ({
     )
   })
 
-  const { paymentMethods } = transaction
-  const { creditcard, boleto } = paymentMethods
+  const { paymentConfig } = transaction
+  const { creditcard, boleto } = paymentConfig
 
   return (
     <Grid className={classNames(theme.page, theme[base])}>

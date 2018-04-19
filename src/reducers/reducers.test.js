@@ -7,6 +7,17 @@ describe('checkout reduceres', () => {
       screenSize: {
         isBigScreen: false,
       },
+      transactionValues: {
+        amount: 0,
+        defaultMethod: 'boleto',
+        paymentMethods: [],
+        paymentConfig: {
+          boleto: {},
+          creditcard: {
+            installments: [],
+          },
+        },
+      },
     })
   })
 

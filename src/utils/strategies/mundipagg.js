@@ -66,7 +66,7 @@ const parseCreditcardTokenData = ifElse(
   pipe(
     prop('credit_card'),
     applySpec({
-      statementDescriptor: prop('statement_descriptor'),
+      invoiceDescriptor: prop('statement_descriptor'),
       installments: pipe(
         applySpec({
           initial: always(1),
@@ -98,28 +98,28 @@ const parseTokenData = pipe(
     token: prop('id'),
     configs: applySpec({
       companyName: path(['account', 'name']),
-      freightValue: path(['shipping', 'amount']),
     }),
-    formData: applySpec({
-      customer: applySpec({
-        id: path(['customer', 'id']),
-        name: path(['customer', 'name']),
-        documentNumber: path(['customer', 'document']),
-        email: path(['customer', 'email']),
-        phoneNumber: pipe(
-          pathOr({}, ['customer', 'phones', 'home_phone']),
-          values,
-          join(' ')
-        ),
-      }),
-      billing: pipe(
-        prop('billing'),
-        addressParse
+    customer: applySpec({
+      id: path(['customer', 'id']),
+      name: path(['customer', 'name']),
+      documentNumber: path(['customer', 'document']),
+      email: path(['customer', 'email']),
+      phoneNumber: pipe(
+        pathOr({}, ['customer', 'phones', 'home_phone']),
+        values,
+        join(' ')
       ),
-      shipping: pipe(
-        prop('shipping'),
-        addressParse
-      ),
+    }),
+    billing: pipe(
+      prop('billing'),
+      addressParse
+    ),
+    shipping: pipe(
+      prop('shipping'),
+      addressParse
+    ),
+    cart: applySpec({
+      shippingRate: path(['shipping', 'amount']),
       items: pipe(
         prop('items'),
         map(
@@ -134,7 +134,7 @@ const parseTokenData = pipe(
     transaction: applySpec({
       amount: prop('amount'),
       defaultMethod: path(['default_payment_method']),
-      paymentMethods: pipe(
+      paymentConfig: pipe(
         prop('payment_settings'),
         applySpec({
           boleto: parseBoletoTokenData,
@@ -143,8 +143,8 @@ const parseTokenData = pipe(
       ),
     }),
   }),
-  removePathIfNull(['transaction', 'paymentMethods', 'creditcard']),
-  removePathIfNull(['transaction', 'paymentMethods', 'boleto']),
+  removePathIfNull(['transaction', 'paymentConfig', 'creditcard']),
+  removePathIfNull(['transaction', 'paymentConfig', 'boleto']),
   removePathIfNull(['transaction', 'defaultMethod']),
 )
 
@@ -328,7 +328,7 @@ const parseResponseStrategy = pipe(
 const strategy = (data) => {
   const payload = getTransactionData(data)
 
-  return fetch(`${URLS.mundipagg.payments}?appId=${data.key}`, {
+  return fetch(`${URLS.mundipagg.payment}?appId=${data.key}`, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',

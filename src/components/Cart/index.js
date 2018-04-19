@@ -80,7 +80,7 @@ class Cart extends React.Component {
   render () {
     const {
       amount,
-      freight,
+      shippingRate,
       theme,
       collapsed,
       items,
@@ -130,15 +130,15 @@ class Cart extends React.Component {
               ))
             }
             {
-              !isNil(freight) &&
+              !isNil(shippingRate) &&
               <li
                 className={theme.item}
               >
                 <h4>Frete</h4>
                 <p>
                   {
-                    freight ?
-                      formatBRL(freight) :
+                    shippingRate ?
+                      formatBRL(shippingRate) :
                       'Grátis'
                   }
                 </p>
@@ -187,7 +187,7 @@ Cart.propTypes = {
     name: PropTypes.string,
     email: PropTypes.string,
   }),
-  freight: PropTypes.number,
+  shippingRate: PropTypes.number,
   shipping: PropTypes.shape({
     street: PropTypes.string,
     number: PropTypes.oneOfType([
@@ -207,7 +207,7 @@ Cart.defaultProps = {
   items: [],
   shipping: {},
   customer: {},
-  freight: null,
+  shippingRate: null,
 }
 
 export default applyThemr(Cart)

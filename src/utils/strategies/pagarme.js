@@ -20,6 +20,7 @@ import {
 } from 'ramda'
 
 import URLS from './urls'
+import removeMask from '../helpers/removeMask'
 
 const getPaymentMethodType = path(['payment', 'method', 'type'])
 
@@ -41,6 +42,7 @@ const parseBoletoData = applySpec({
 
 const parseToPayload = applySpec({
   encryption_key: prop('key'),
+  capture: always(true),
   amount: prop('amount'),
   payment_method: pipe(
     getPaymentMethodType,
@@ -73,6 +75,7 @@ const parseToPayload = applySpec({
       ),
       phone_numbers: pipe(
         prop('phoneNumber'),
+        removeMask,
         concat('+55'),
         of,
       ),
@@ -120,30 +123,6 @@ const getPaymentMethodData = (data) => {
   }
 }
 
-/*
-* Use this method to mock boleto_barcode and boleto_url.
-* Remove this after merge PR 883 in pagarme-core.
-* https://github.com/pagarme/pagarme-core/pull/883
-* Methods: mergeBoletoParams and mockBoletoData.
-*/
-const mockBoletoData = paymentType => (data) => {
-  if (data.boleto_barcode && data.boleto_url) {
-    return data
-  }
-
-  if (paymentType === 'boleto') {
-    return merge(
-      data,
-      {
-        boleto_url: './boleto.pdf',
-        boleto_barcode: '123456789123456789',
-      },
-    )
-  }
-
-  return data
-}
-
 const strategy = (data) => {
   const commonPayload = parseToPayload(data)
   const paymentData = getPaymentMethodData(data)
@@ -159,8 +138,7 @@ const strategy = (data) => {
     body: JSON.stringify(fullPayload),
   })
     .then(response => response.json())
-    .then(mockBoletoData(getPaymentMethodType(data)))
+    .then(getPaymentMethodType(data))
 }
 
 export default strategy
-

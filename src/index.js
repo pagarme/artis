@@ -1,70 +1,39 @@
 import '@babel/polyfill'
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
-import { ThemeProvider as ThemrProvider } from 'react-css-themr'
-import { Provider } from 'react-redux'
 import moment from 'moment'
 import 'moment/locale/pt-br'
-import { ThemeProvider } from 'former-kit'
-import { merge } from 'ramda'
 
-import Checkout from './containers/Checkout'
-import ErrorBoundary from './components/ErrorBoundary'
-import ErrorPage from './pages/Error'
+import App from './App'
+import createStore from './store'
 
+import apiValidation from './utils/validations/apiValidation'
 import createElement from './utils/helpers/createElement'
 import setTheme from './utils/helpers/setTheme'
 import setColors from './utils/helpers/setColors'
 import DEFAULT_COLORS from './utils/data/colors'
 import getStrategyName from './utils/strategies/getStrategyName'
 import { getTokenData } from './utils/strategies/mundipagg'
-import createStore from './store'
 
-import NormalizeCSS from './components/NormalizeCSS'
-import defaultTheme from './themes/default'
 import defaultLogo from './images/logo_pagarme.png'
 
 moment.locale('pt-br')
 
 ReactGA.initialize('UA-113290482-1')
 
-const render = (apiData, {
-  store,
+const openCheckout = ({
+  getMundipaggData,
+  apiData,
   acquirer,
-  clientTarget,
-  clientThemeBase,
 }) => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <ThemeProvider theme={{
-        name: 'Checkout Theme',
-        styles: defaultTheme,
-      }}
-      >
-        <ThemrProvider theme={defaultTheme}>
-          <ErrorBoundary CrashReportComponent={<ErrorPage />}>
-            <NormalizeCSS>
-              <Checkout
-                apiData={apiData}
-                acquirer={acquirer}
-                targetElement={clientTarget}
-                base={clientThemeBase}
-              />
-            </NormalizeCSS>
-          </ErrorBoundary>
-        </ThemrProvider>
-      </ThemeProvider>
-    </Provider>,
-    clientTarget
-  )
-}
-
-const openCheckout = (getMundipaggData, apiData, acquirer) => {
   const {
     configs = {},
-    formData = {},
+    customer,
+    billing,
+    shipping,
+    cart,
+    transaction = {},
     key,
   } = apiData
 
@@ -73,15 +42,21 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
     themeBase,
     primaryColor,
     secondaryColor,
+    backgroundColor,
     image,
   } = configs
 
   const clientThemeBase = themeBase || setTheme(primaryColor) || 'dark'
 
-  const pColor = primaryColor || DEFAULT_COLORS[clientThemeBase].primary
-  const sColor = secondaryColor || DEFAULT_COLORS[clientThemeBase].secondary
+  const defaultPrimaryColor = DEFAULT_COLORS[clientThemeBase].primary
+  const defaultSecondaryColor = DEFAULT_COLORS[clientThemeBase].secondary
+  const defaulBackgroundColor = DEFAULT_COLORS[clientThemeBase].backgroundColor
 
-  setColors(pColor, sColor)
+  const pColor = primaryColor || defaultPrimaryColor
+  const sColor = secondaryColor || defaultSecondaryColor
+  const bColor = backgroundColor || defaulBackgroundColor
+
+  setColors(pColor, sColor, bColor)
 
   const clientTarget = createElement('div', target, 'body')
 
@@ -91,16 +66,18 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
     label: key,
   })
 
-  const commonParams = {
-    acquirer,
-    clientTarget,
-    clientThemeBase,
-  }
-
-  let store
+  let apiErrors
 
   if (acquirer === 'pagarme') {
-    store = createStore(formData)
+    apiErrors = apiValidation(apiData)
+
+    const store = createStore({
+      customer,
+      billing,
+      shipping,
+      cart,
+      transaction,
+    })
 
     const apiDataWithDefaults = {
       ...apiData,
@@ -110,33 +87,50 @@ const openCheckout = (getMundipaggData, apiData, acquirer) => {
       },
     }
 
-    return render(
-      apiDataWithDefaults,
-      merge(commonParams, { store })
+    ReactDOM.render(
+      <App
+        apiData={apiDataWithDefaults}
+        apiErrors={apiErrors}
+        store={store}
+        acquirer={acquirer}
+        clientTarget={clientTarget}
+        clientThemeBase={clientThemeBase}
+      />,
+      clientTarget
     )
   }
 
-  return getMundipaggData
-    .then((data) => {
-      store = createStore(data.formData)
+  if (acquirer === 'mundipagg') {
+    getMundipaggData.then((data) => {
+      const store = createStore(data)
 
-      render(
-        data,
-        merge(commonParams, { store })
+      ReactDOM.render(
+        <App
+          apiData={data}
+          apiErrors={apiErrors}
+          store={store}
+          acquirer={acquirer}
+          clientTarget={clientTarget}
+          clientThemeBase={clientThemeBase}
+        />,
+        clientTarget
       )
     })
+  }
 }
 
 const preRender = (apiData) => {
   const acquirer = getStrategyName(apiData)
 
-  let getMundipaggData
+  const getMundipaggData = acquirer === 'mundipagg'
+    ? getTokenData(apiData.token)
+    : null
 
-  if (acquirer === 'mundipagg') {
-    getMundipaggData = getTokenData(apiData.token)
-  }
-
-  return () => openCheckout(getMundipaggData, apiData, acquirer)
+  return () => openCheckout({
+    getMundipaggData,
+    apiData,
+    acquirer,
+  })
 }
 
 const integrations = {
@@ -171,7 +165,7 @@ const integrations = {
     })
   },
   custom: () => {
-    window.Checkout = configs => preRender(configs)
+    window.Checkout = apiData => preRender(apiData)
   },
 }
 

@@ -9,9 +9,11 @@ import ReactGA from 'react-ga'
 import {
   isEmpty,
   isNil,
+  length,
   reject,
   path,
   pathOr,
+  propOr,
   filter,
 } from 'ramda'
 import {
@@ -91,6 +93,19 @@ class Checkout extends Component {
     collapsedCart: true,
   }
 
+  componentWillMount () {
+    const { apiData, apiErrors } = this.props
+    const { onError } = apiData.configs || null
+
+    if (length(apiErrors)) {
+      onError({
+        name: 'API_ERROR',
+        message: apiErrors,
+      })
+      throw new Error(apiErrors)
+    }
+  }
+
   componentDidMount () {
     this.props.changeScreenSize(window.innerWidth)
     window.addEventListener('resize', this.handleNewScreenSize)
@@ -100,14 +115,18 @@ class Checkout extends Component {
     window.removeEventListener('resize', this.handleNewScreenSize)
   }
 
-  onTransactionReturn = (response, onSuccess, onError) => {
+  onTransactionReturn = ({
+    response,
+    onTransactionSuccess,
+    onError,
+  }) => {
     const {
       status,
       boleto_barcode: boletoBarcode,
       boleto_url: boletoUrl,
     } = response
 
-    if (status === 'authorized') {
+    if (status === 'authorized' || status === 'waiting_payment') {
       let successState = { }
 
       if (boletoBarcode || boletoUrl) {
@@ -117,8 +136,8 @@ class Checkout extends Component {
         }
       }
 
-      if (onSuccess) {
-        onSuccess(response)
+      if (onTransactionSuccess) {
+        onTransactionSuccess(response)
       }
 
       return this.setState({
@@ -202,22 +221,21 @@ class Checkout extends Component {
   enterLoading = () => {
     const {
       acquirer,
-      transition,
       pageInfo,
       apiData,
+      transaction,
     } = this.props
 
     const {
       configs = {},
-      formData = {},
       key,
       token,
-      transaction,
+      cart,
     } = apiData
 
-    const { items } = formData
     const { amount } = transaction
-    const { onError, onSuccess } = configs
+    const { onTransactionSuccess, onError } = configs
+    const items = propOr([], 'items', cart)
 
     const requestPayload = {
       ...pageInfo,
@@ -231,19 +249,16 @@ class Checkout extends Component {
 
     request(requestPayload)
       .then((response) => {
-        this.onTransactionReturn(
+        this.onTransactionReturn({
           response,
-          onSuccess,
+          onTransactionSuccess,
           onError,
-        )
+        })
       })
-      .catch(() => transition('TRANSACTION_FAILURE'))
   }
 
   renderPages () {
-    const { transaction } = this.props.apiData
-
-    const { base, pageInfo } = this.props
+    const { base, pageInfo, transaction } = this.props
 
     const { payment } = pageInfo
 
@@ -330,13 +345,11 @@ class Checkout extends Component {
   }
 
   renderCart () {
-    const { formData, transaction, configs } = this.props.apiData
-
-    const { items } = formData
-    const { freightValue } = configs
-    const { amount } = transaction
-    const { theme, base, pageInfo } = this.props
+    const { theme, base, apiData, pageInfo, transaction } = this.props
+    const { cart } = apiData
+    const { items, shippingRate } = cart
     const { shipping, customer } = pageInfo
+    const { amount } = transaction
 
     return (
       <Col
@@ -352,7 +365,7 @@ class Checkout extends Component {
           amount={amount}
           shipping={shipping}
           customer={customer}
-          freight={freightValue}
+          shippingRate={shippingRate}
           onToggleCart={this.handleToggleCart}
           collapsed={this.props.isBigScreen ? false : this.state.collapsedCart}
           showCloseButton={this.props.isBigScreen}
@@ -364,25 +377,31 @@ class Checkout extends Component {
   render () {
     const {
       theme,
+      apiData,
       machineState,
       isBigScreen,
       base,
     } = this.props
 
-    const params = pathOr({}, ['apiData', 'params'], this.props)
-    const configs = pathOr({}, ['apiData', 'configs'], this.props)
+    const { configs, cart } = apiData
+
+    const items = pathOr({}, ['items'], cart)
+
+    const {
+      companyName,
+      logo,
+    } = configs
 
     const pages = filter(value =>
-      !hasRequiredPageData(value.page, this.props), stepsTitles
-    )
+      !hasRequiredPageData(value.page, this.props), stepsTitles)
 
     const firstPage = pages[0].page
 
-    const isCartButtonVisible = configs.enableCart ?
+    const isCartButtonVisible = length(items) ?
       !isBigScreen :
       false
 
-    const checkoutColSize = configs.enableCart ? 9 : 12
+    const checkoutColSize = length(items) ? 9 : 12
 
     const shouldDisablePrevButton =
       machineState.value === firstPage ||
@@ -402,7 +421,7 @@ class Checkout extends Component {
         <div className={theme.wrapper}>
           <Grid className={theme.page}>
             <Row stretch={isBigScreen}>
-              {configs.enableCart && this.renderCart()}
+              {items.length && this.renderCart()}
               <Col
                 tv={checkoutColSize}
                 desk={checkoutColSize}
@@ -411,8 +430,8 @@ class Checkout extends Component {
               >
                 <Header
                   base={base}
-                  logoAlt={configs.companyName}
-                  logoSrc={configs.image}
+                  logoAlt={companyName}
+                  logoSrc={logo}
                   onPrev={this.handleBackButton}
                   onClose={this.close.bind(this)}
                   prevButtonDisabled={shouldDisablePrevButton}
@@ -429,9 +448,8 @@ class Checkout extends Component {
                 </div>
                 <Footer
                   base={base}
-                  total={params.amount}
                   onToggleCart={this.handleToggleCart}
-                  companyName={configs.companyName}
+                  companyName={companyName}
                   cartButtonVisible={isCartButtonVisible}
                   isBigScreen={isBigScreen}
                 />
@@ -464,23 +482,19 @@ Checkout.propTypes = {
       primaryColor: PropTypes.string,
       seconryColor: PropTypes.string,
       postback: PropTypes.string,
-      enableCart: PropTypes.bool,
-      onSuccess: PropTypes.func,
+      onTransactionSuccess: PropTypes.func,
       onError: PropTypes.func,
-      onClose: PropTypes.func,
+      onModalClose: PropTypes.func,
     }).isRequired,
-    formData: PropTypes.shape({
-      customer: PropTypes.object,
-      billing: PropTypes.object,
-      shipping: PropTypes.object,
+    customer: PropTypes.object,
+    billing: PropTypes.object,
+    shipping: PropTypes.object,
+    cart: PropTypes.shape({
       items: PropTypes.arrayOf(PropTypes.object),
     }),
-    transaction: PropTypes.shape({
-      amount: PropTypes.number.isRequired,
-      defaultMethod: PropTypes.string,
-      paymentMethods: PropTypes.shape(),
-    }),
   }).isRequired,
+  transaction: PropTypes.shape(),
+  apiErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
   base: PropTypes.string.isRequired,
   changeScreenSize: PropTypes.func.isRequired,
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
@@ -500,16 +514,15 @@ Checkout.defaultProps = {
   payment: {},
   apiData: {},
   isBigScreen: false,
+  transaction: {},
 }
 
-const mapStateToProps = ({ screenSize, pageInfo }) => ({
+const mapStateToProps = ({ screenSize, pageInfo, transactionValues }) => ({
   isBigScreen: screenSize.isBigScreen,
   pageInfo,
+  transaction: transactionValues,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    changeScreenSize,
-  }
-)(applyThemr(withStatechart(statechart)(Checkout)))
+export default connect(mapStateToProps, {
+  changeScreenSize,
+})(applyThemr(withStatechart(statechart)(Checkout)))

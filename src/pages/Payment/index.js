@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
+import { find, type } from 'ramda'
 
 import SwitchPayment from './SwitchPayment'
 import MultipaymentOptions from './MultipaymentOptions'
 
 const applyThemr = themr('UIPaymentPage')
+
+const hasMultipayment = find(item => type(item) === 'Array')
 
 const PaymentPage = ({
   base,
@@ -13,10 +16,10 @@ const PaymentPage = ({
   handleSubmit,
   handlePageTransition,
 }) => {
-  const { defaultMethod } = transaction
+  const { defaultMethod, paymentMethods } = transaction
 
   return (
-    transaction.multipayment
+    hasMultipayment(paymentMethods)
       ? <MultipaymentOptions
         base={base}
         transaction={transaction}

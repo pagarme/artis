@@ -65,40 +65,8 @@ h2 {
   background-color: #6e4e4e;
 }
 
-.btn-pagarme {
-  position: absolute;
-  top: 13px;
-  right: 120px;
-  border: none;
-  background-color: #3f3131;
-  color: #a1a1a1;
-  padding: 5px 20px;
-  cursor: pointer;
-}
 
-.btn-pagarme:hover {
-  color: #291a1a;
-  background-color: #6e4e4e;
-}
-
-.btn-mundipagg {
-  position: absolute;
-  top: 13px;
-  right: 238px;
-  border: none;
-  background-color: #3f3131;
-  color: #a1a1a1;
-  padding: 5px 20px;
-  cursor: pointer;
-}
-
-.btn-mundipagg:hover {
-  color: #291a1a;
-  background-color: #6e4e4e;
-}
-
-
-#full {
+#full-panel {
   position: absolute;
   top: 50px;
   left: 0;
@@ -107,7 +75,7 @@ h2 {
   z-index: 0;
 }
 
-#custom {
+#custom-panel {
   position: absolute;
   top: 50px;
   left: 0;
@@ -116,3 +84,13 @@ h2 {
   z-index: 0;
 }
 
+.companies {
+  position: absolute;
+  top: 14px;
+  left: 248px;
+}
+
+.companies label {
+  color: #d6d6d6;
+  margin-right: 10px;
+}

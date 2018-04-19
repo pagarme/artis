@@ -11,35 +11,26 @@
       <h2>Custom API parameters</h2>
       <button id="btn-open-custom" class="btn-open">Open</button>
       <button id="btn-reset-custom" class="btn-reset">Reset</button>
-      <div id="custom">var key = 'SOME_KEY';
-
-var configs = {
-  companyName: 'Pagar.me',
-  image: './pagarme.png',
-  themeBase: 'dark',
-}
-
-var formData = {};
-
-var transaction = {
-  amount: 5000,
-  paymentMethods: [
-    {
-      type: 'creditcard',
-      title: 'Cartão de crédito'
-    }
-  ],
-};</div>
+      <div id="custom-panel"></div>
     </div>
     <div class="box box-full">
-      <h2>Full API parameters</h2>
-      <button id="btn-set-mundi" class="btn-mundipagg">Mundipagg</button>
-      <button id="btn-set-pagarme" class="btn-pagarme">Pagar.me</button>
+      <h2>Full API Parameters</h2>
+      <div class="companies">
+        <label>
+          <input id="opt-set-pagarme" type="radio" name="company" checked/>
+          Pagar.me
+        </label>
+        <label>
+          <input id="opt-set-mundipagg" type="radio" name="company" />
+          Mundipagg
+        </label>
+      </div>
       <button id="btn-open-full" class="btn-open">Open</button>
-      <div id="full"></div>
+      <div id="full-panel"></div>
     </div>
   </body>
-  <script src="assets/js/ace.js" type="text/javascript" charset="utf-8"></script>
-  <script src="assets/js/custom.js" type="text/javascript" charset="utf-8"></script>
+  <script src="assets/js/vendor/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="assets/js/panel.js" type="text/javascript" charset="utf-8"></script>
+  <script src="assets/js/apiParameters.js" type="text/javascript" charset="utf-8"></script>
   </body>
 </html>

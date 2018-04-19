@@ -1,10 +1,11 @@
-const setColors = (primaryColor, secondaryColor) => {
+const setColors = (primaryColor, secondaryColor, backgroundColor) => {
   const head = document.head || document.getElementsByTagName('head')[0]
   const style = document.createElement('style')
 
   const css = `:root {
     --checkout-primary-color: ${primaryColor};
     --checkout-secondary-color: ${secondaryColor || primaryColor};
+    --checkout-background-color: ${backgroundColor};
   }`
 
   style.type = 'text/css'

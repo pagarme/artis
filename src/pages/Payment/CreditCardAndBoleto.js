@@ -72,8 +72,8 @@ class CreditCardAndBoleto extends Component {
       inputAmountNames,
     } = this.state
 
-    const { amount, paymentMethods } = transaction
-    const { boleto, creditcard } = paymentMethods
+    const { amount, paymentConfig } = transaction
+    const { boleto, creditcard } = paymentConfig
 
     const creditcardAmountInputName = `${inputAmountNames.first}`
     const boletoAmountInputName = `${inputAmountNames.second}`
