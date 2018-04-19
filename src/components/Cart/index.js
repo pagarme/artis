@@ -206,7 +206,6 @@ Cart.defaultProps = {
   base: 'dark',
   customer: {},
   shippingRate: null,
-  freight: null,
   items: [],
   shipping: {},
   theme: {},

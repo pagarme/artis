@@ -86,7 +86,6 @@ const stepsTitles = [
 ]
 
 const applyThemr = themr('UICheckout')
-
 class Checkout extends Component {
   state = {
     closingEffect: false,

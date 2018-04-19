@@ -28,6 +28,7 @@ import {
 import updateMultipleAmount from '../../utils/helpers/updateMultipleAmount'
 import formatToBRL from './../../utils/helpers/formatToBRL'
 import getInstallments from './../../utils/helpers/getInstallments'
+import getInputAmountValue from './../../utils/helpers/getInputAmountValue'
 
 const applyThemr = themr('UIPaymentPage')
 
@@ -231,6 +232,20 @@ class MultipleCreditCards extends Component {
       theme.multiPayment,
     )
 
+    const firstCreditCardAmount = getInputAmountValue(
+      formData,
+      inputAmountNames,
+      'first',
+      amount
+    )
+
+    const secondCreditCardAmount = getInputAmountValue(
+      formData,
+      inputAmountNames,
+      'second',
+      amount
+    )
+
     return (
       <Form
         data={formData}
@@ -269,7 +284,7 @@ class MultipleCreditCards extends Component {
               >
                 {CreditCardForm({
                   theme,
-                  amount,
+                  amount: firstCreditCardAmount,
                   data: creditcard,
                   installmentsIndex: 0,
                   formData,
@@ -282,7 +297,11 @@ class MultipleCreditCards extends Component {
                   handleSubmit: this.handleSubmit,
                   installmentInitialValue:
                     creditcard.installments[0].initial.toString(),
-                  installmentsOptions: getInstallments(amount, creditcard, 0),
+                  installmentsOptions: getInstallments(
+                    firstCreditCardAmount,
+                    creditcard,
+                    0
+                  ),
                 })}
               </Col>
             </Col>
@@ -308,7 +327,7 @@ class MultipleCreditCards extends Component {
               >
                 {CreditCardForm({
                   theme,
-                  amount,
+                  amount: secondCreditCardAmount,
                   data: creditcard,
                   installmentsIndex: 1,
                   formData,
@@ -321,7 +340,11 @@ class MultipleCreditCards extends Component {
                   handleSubmit: this.handleSubmit,
                   iinstallmentInitialValue:
                     creditcard.installments[1].initial.toString(),
-                  installmentsOptions: getInstallments(amount, creditcard, 1),
+                  installmentsOptions: getInstallments(
+                    secondCreditCardAmount,
+                    creditcard,
+                    1
+                  ),
                 })}
               </Col>
             </Col>

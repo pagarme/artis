@@ -28,6 +28,7 @@ import {
 import updateMultipleAmount from '../../utils/helpers/updateMultipleAmount'
 import formatToBRL from './../../utils/helpers/formatToBRL'
 import getInstallments from './../../utils/helpers/getInstallments'
+import getInputAmountValue from './../../utils/helpers/getInputAmountValue'
 
 const applyThemr = themr('UIPaymentPage')
 
@@ -111,6 +112,17 @@ class CreditCardAndBoleto extends Component {
       theme.multiPayment,
     )
 
+    const creditCardAmount = getInputAmountValue(formData,
+      inputAmountNames,
+      'first',
+      amount
+    )
+    const boletoAmount = getInputAmountValue(formData,
+      inputAmountNames,
+      'second',
+      amount
+    )
+
     return (
       <Form
         data={formData}
@@ -168,7 +180,7 @@ class CreditCardAndBoleto extends Component {
               >
                 {CreditCardForm({
                   theme,
-                  amount,
+                  amount: creditCardAmount,
                   data: creditcard,
                   formData,
                   isBigScreen,
@@ -181,7 +193,11 @@ class CreditCardAndBoleto extends Component {
                   handleSubmit: this.handleSubmit,
                   installmentInitialValue:
                     creditcard.installments[0].initial.toString(),
-                  installmentsOptions: getInstallments(amount, creditcard, 0),
+                  installmentsOptions: getInstallments(
+                    creditCardAmount,
+                    creditcard,
+                    0
+                  ),
                 })}
               </Col>
             </Col>
@@ -207,7 +223,7 @@ class CreditCardAndBoleto extends Component {
               >
                 {BoletoForm({
                   theme,
-                  amount,
+                  amount: boletoAmount,
                   data: boleto,
                   enableInputAmount: true,
                   amountPrefixName: inputAmountNames.second,

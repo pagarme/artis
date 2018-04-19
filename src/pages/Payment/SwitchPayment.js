@@ -36,6 +36,11 @@ import {
   isValidDate,
 } from '../../utils/validations'
 
+import getInstallments from './../../utils/helpers/getInstallments'
+import { applyDiscount } from './../../utils/calculations'
+
+const applyThemr = themr('UIPaymentPage')
+
 const setPaymentMethod = ({
   defaultMethod,
   paymentConfig,
@@ -52,7 +57,7 @@ const createSwitchItems = ({
   handleFlipCard,
   paymentType,
 }) => {
-  const { amount, paymentConfig } = transaction
+  const { paymentConfig } = transaction
   const { boleto, creditcard } = paymentConfig
 
   const allowedPaymentOptions = {
@@ -199,7 +204,6 @@ class SwitchPayment extends Component {
         index.toString() === selectedInstallment
       ))
       const interest = prop('interest', installment)
-
 
       if (interest) {
         handleIncrementFinalAmount(interest)

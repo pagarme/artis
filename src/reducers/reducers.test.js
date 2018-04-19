@@ -121,7 +121,15 @@ describe('checkout reduceres', () => {
       },
       transactionValues: {
         amount: 0,
+        defaultMethod: 'boleto',
         finalAmount: 1000,
+        paymentConfig: {
+          boleto: {},
+          creditcard: {
+            installments: [],
+          },
+        },
+        paymentMethods: [],
       },
     })
   })
@@ -139,7 +147,15 @@ describe('checkout reduceres', () => {
       },
       transactionValues: {
         amount: 0,
+        defaultMethod: 'boleto',
         finalAmount: -1000,
+        paymentConfig: {
+          boleto: {},
+          creditcard: {
+            installments: [],
+          },
+        },
+        paymentMethods: [],
       },
     })
   })

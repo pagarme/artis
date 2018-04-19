@@ -6,7 +6,9 @@ import formatToBRL from '../../utils/helpers/formatToBRL'
 import Cart from './index'
 
 const store = createStore({
-  amount: 15000,
+  transaction: {
+    amount: 15000,
+  },
 })
 
 const items = [
@@ -26,7 +28,7 @@ const items = [
   },
 ]
 
-const amount = 15000
+const shippingRate = 5000
 
 describe('Cart', () => {
   it('should have two items', () => {
@@ -35,15 +37,15 @@ describe('Cart', () => {
     const component = mount(
       <Cart
         items={items}
-        amount={amount}
         onToggleCart={onToggleCart}
         collapsed={false}
         showCloseButton={false}
         store={store}
+        shippingRate={shippingRate}
       />
     )
 
-    expect(component.find('li')).toHaveLength(2)
+    expect(component.find('li')).toHaveLength(3)
   })
 
   it('Must have two items', () => {
@@ -52,11 +54,11 @@ describe('Cart', () => {
     const component = mount(
       <Cart
         items={items}
-        amount={amount}
         onToggleCart={onToggleCart}
         showCloseButton
         collapsed={false}
         store={store}
+        shippingRate={shippingRate}
       />
     )
 
