@@ -21,7 +21,6 @@ import UIEmailForm from './emailForm/index.css'
 import UIErrorPage from './errorPage/index.css'
 import UITooltip from './tooltip/index.css'
 import UINormalizeCSS from './normalize.css'
-import UIRadioGroup from './radio-group/index.css'
 import UILinearProgress from './linear-progress/index.css'
 
 export default {
@@ -48,6 +47,5 @@ export default {
   UIErrorPage,
   UITooltip,
   UINormalizeCSS,
-  UIRadioGroup,
   UILinearProgress,
 }

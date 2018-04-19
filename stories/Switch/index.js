@@ -1,97 +1,54 @@
+/* eslint-disable react/jsx-no-bind */
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import Switch from '../../src/components/Switch'
+import { Switch } from 'former-kit'
 
-import style from './style.css'
-
-class SwitchContainer extends React.Component {
+class SwitchState extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      selected: '',
+      value: props.checked,
     }
-
-    this.handleChange = this.handleChange.bind(this)
-  }
-
-  componentWillMount () {
-    this.setState({
-      selected: this.props.selected,
-    })
-  }
-
-  handleChange (value) {
-    this.setState({ selected: value })
   }
 
   render () {
     return (
       <Switch
-        items={this.props.items}
-        onChange={this.handleChange}
-        name={this.props.name}
-        selected={this.state.selected}
+        checked={this.state.value}
+        disabled={this.props.disabled}
+        onChange={value => this.setState({ value })}
+        strings={{
+          on: 'Sim',
+          off: 'Não',
+        }}
       />
     )
   }
 }
 
-const twoItems = [
-  {
-    value: 'creditcard',
-    title: 'Cartão de Crédito',
-    subtitle: 'Em até 2x sem juros com 20% de desconto na primeira parcela',
-  },
-  {
-    value: 'boleto',
-    title: 'Boleto bancário',
-    subtitle: '10% de desconto',
-  },
-]
-
-const FourItems = [
-  {
-    value: 'creditcard',
-    title: 'Cartão de Crédito',
-    subtitle: 'Em até 2x sem juros com 20% de desconto na primeira parcela',
-  },
-  {
-    value: 'voucher',
-    title: 'Voucher',
-    subtitle: '20% de desconto',
-  },
-  {
-    value: 'bankbill',
-    title: 'Boleto bancário',
-    subtitle: '10% de desconto',
-  },
-  {
-    value: 'bitcoin',
-    title: 'Bitcoin',
-    subtitle: '20% de desconto',
-  },
-]
+SwitchState.defaultProps = {
+  checked: false,
+  disabled: false,
+}
 
 storiesOf('Switch', module)
-  .add('Default Theme', () => (
-    <div className={style.container}>
+  .add('Default', () => (
+    <div>
       <section>
-        <h2>Two options</h2>
-        <SwitchContainer
-          items={twoItems}
-          selected={twoItems[0]}
-          name="live-test"
-        />
+        <h2>Enabled</h2>
+        <p>Checked</p>
+        <SwitchState checked />
+        <p>Unchecked</p>
+        <SwitchState checked={false} />
       </section>
       <section>
-        <h2>Four options</h2>
-        <SwitchContainer
-          items={FourItems}
-          selected={FourItems[2]}
-          name="super-extra"
-        />
+        <h2>Disabled</h2>
+        <p>Checked</p>
+        <SwitchState disabled checked />
+        <p>Unchecked</p>
+        <SwitchState disabled checked={false} />
       </section>
     </div>
   ))
