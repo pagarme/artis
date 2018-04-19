@@ -9,9 +9,10 @@
   background-color: var(--color-grey-68);
 }
 
-.light .wrapper {
-  background-color: var(--color-grey-11);
-  box-shadow: none;
+.steps {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 7px;
 }
 
 .progressBar {
@@ -22,20 +23,29 @@
 }
 
 .step {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: var(--primary-font-family);
   font-size: var(--font-size-small);
-  color: var(--color-grey-39);
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-  justify-content: center;
+  color: var(--color-grey-35);
+  fill: var(--color-grey-35);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-weight: 900;
 }
 
-.active {
+.active,
+.passed {
   color: var(--checkout-primary-color);
+  fill: var(--checkout-primary-color);
+}
+
+.step svg {
+  margin-right: 7px;
 }
 
 .passed {
-  color: var(--checkout-primary-color);
   opacity: 0.6;
 }
 

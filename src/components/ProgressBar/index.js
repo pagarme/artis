@@ -4,110 +4,61 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { themr } from 'react-css-themr'
 import {
-  Grid,
-  Row,
-  Col,
   LinearProgress,
 } from 'former-kit'
-import {
-  prop,
-  propEq,
-  findIndex,
-  filter,
-  slice,
-  length,
-} from 'ramda'
 
 const applyThemr = themr('UIProgressBar')
 
-const getStepsPayload = (pages, active) => {
-  const visibleSteps = filter(prop('visible'), pages)
-  const activeStepIndex = findIndex(propEq('page', active), pages) + 1
-  const activeSteps = slice(1, activeStepIndex, pages)
-
-  const activeStep = filter(prop('visible'), activeSteps).length
-  const percentage = (100 / length(visibleSteps)) * (activeStep + 1)
-
-  return {
-    percentage,
-    activeStep,
-    stepsList: visibleSteps,
-  }
-}
-
-const renderSteps = (steps, activeStep, theme) => {
-  const colSize = 12 / steps.length
-
-  return (
-    <Grid className={theme.steps}>
-      <Row>
-        { steps
-          .map((step, index) => (
-            <Col
-              key={`colKey-${index + 1}`}
-              tv={colSize}
-              desk={colSize}
-              tablet={colSize}
-              className={
-                classNames(theme.step, {
-                  [theme.active]: index === activeStep,
-                  [theme.passed]: index < activeStep,
-                })
-              }
-            >
-              <span className={theme.stepIndex}>{ `${index + 1}.` }</span>
-              { step.title }
-            </Col>
-          ))
-        }
-      </Row>
-    </Grid>
-  )
-}
+const renderSteps = (steps, activeStep, theme) => (
+  <div className={theme.steps}>
+    {
+      steps.map((step, index) => (
+        <div
+          key={`step-${index + 1}`}
+          className={
+            classNames(theme.step, {
+              [theme.active]: index === activeStep,
+              [theme.passed]: index < activeStep,
+            })
+          }
+        >
+          { step.icon }
+          { step.title }
+        </div>
+      ))
+    }
+  </div>
+)
 
 const ProgressBar = ({
   theme,
   base,
   steps,
-  activePage,
-}) => {
-  const {
-    stepsList,
-    activeStep,
-    percentage,
-  } = getStepsPayload(steps, activePage)
-
-  return (
-    <div className={theme[base]}>
-      { stepsList.length &&
-        renderSteps(stepsList, activeStep, theme)
-      }
-      <LinearProgress label="Linear Progress" percent={percentage} />
-    </div>
-  )
-}
+  activeStepIndex,
+  percentage,
+}) => (
+  <div className={theme[base]}>
+    {
+      steps.length &&
+      renderSteps(steps, activeStepIndex, theme)
+    }
+    <LinearProgress label="Linear Progress" percent={percentage} />
+  </div>
+)
 
 ProgressBar.propTypes = {
-  theme: PropTypes.shape({
-    step: PropTypes.string,
-    steps: PropTypes.string,
-    wrapper: PropTypes.string,
-    progressBar: PropTypes.string,
-    index: PropTypes.string,
-    active: PropTypes.string,
-    passed: PropTypes.string,
-    light: PropTypes.string,
-    dark: PropTypes.string,
-  }),
+  theme: PropTypes.shape(),
   base: PropTypes.string,
   steps: PropTypes.arrayOf(PropTypes.object).isRequired,
-  activePage: PropTypes.string,
+  activeStepIndex: PropTypes.number,
+  percentage: PropTypes.number,
 }
 
 ProgressBar.defaultProps = {
   theme: {},
   base: 'dark',
-  activePage: '',
+  activeStepIndex: 0,
+  percentage: 0,
 }
 
 export default applyThemr(ProgressBar)

@@ -14,6 +14,10 @@ import {
   path,
   pathOr,
   propOr,
+  prop,
+  propEq,
+  slice,
+  findIndex,
   filter,
 } from 'ramda'
 import {
@@ -47,47 +51,25 @@ import MultipleCreditCardsPage from '../../pages/Payment/MultipleCreditCards'
 import CloseIcon from '../../images/close.svg'
 
 import statechart from './statechart'
-
-const stepsTitles = [
-  {
-    page: 'customer',
-    title: 'Identificação',
-    visible: true,
-  },
-  {
-    page: 'addresses',
-    title: 'Endereços',
-    visible: true,
-  },
-  {
-    page: 'payment',
-    title: 'Forma de Pagamento',
-    visible: true,
-  },
-  {
-    page: 'singleCreditCard',
-    visible: false,
-  },
-  {
-    page: 'singleBoleto',
-    visible: false,
-  },
-  {
-    page: 'creditCardAndBoleto',
-    visible: false,
-  },
-  {
-    page: 'transaction',
-    visible: false,
-  },
-  {
-    page: 'confirmation',
-    title: 'Confirmação',
-    visible: true,
-  },
-]
+import steps from './steps'
 
 const applyThemr = themr('UICheckout')
+
+const filterSteps = (pages, active) => {
+  const visibleSteps = filter(prop('visible'), pages)
+  const activeStepIndex = findIndex(propEq('page', active), pages) + 1
+  const activeSteps = slice(1, activeStepIndex, pages)
+
+  const activeStep = filter(prop('visible'), activeSteps).length
+  const percentage = (100 / length(visibleSteps)) * (activeStep + 1)
+
+  return {
+    percentage,
+    activeStepIndex: activeStep,
+    filteredSteps: visibleSteps,
+  }
+}
+
 class Checkout extends Component {
   state = {
     closingEffect: false,
@@ -366,7 +348,8 @@ class Checkout extends Component {
     const { shipping, customer } = pageInfo
 
     const pages = filter(value =>
-      !hasRequiredPageData(value.page, this.props), stepsTitles)
+      !hasRequiredPageData(value.page, this.props), steps
+    )
 
     const firstPage = pages[0].page
 
@@ -378,6 +361,12 @@ class Checkout extends Component {
       machineState.value === firstPage ||
       machineState.value === 'transaction' ||
       (machineState.value === 'confirmation' && !this.state.transactionError)
+
+    const {
+      filteredSteps,
+      activeStepIndex,
+      percentage,
+    } = filterSteps(pages, machineState.value)
 
     return (
       <div
@@ -428,8 +417,9 @@ class Checkout extends Component {
                 >
                   <ProgressBar
                     base={base}
-                    steps={pages}
-                    activePage={machineState.value}
+                    percentage={percentage}
+                    steps={filteredSteps}
+                    activeStepIndex={activeStepIndex}
                   />
                   {this.renderPages()}
                 </div>
