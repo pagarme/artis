@@ -31,4 +31,5 @@
 
 .selfAlign {
   align-self: center;
+  justify-content: center;
 }

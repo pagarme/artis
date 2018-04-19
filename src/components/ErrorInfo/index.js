@@ -3,8 +3,11 @@ import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-
-import { Grid, Col, Row } from '../Grid'
+import {
+  Grid,
+  Row,
+  Col,
+} from 'former-kit'
 
 import errorIcon from '../../images/error-icon.png'
 
@@ -30,7 +33,7 @@ const ErrorInfo = ({
         desk={iconColSize}
         tablet={iconColSize}
         palm={defaultColSize}
-        alignCenter
+        align={'center'}
       >
         <div className={
           classNames(

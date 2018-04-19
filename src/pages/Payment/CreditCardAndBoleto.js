@@ -5,11 +5,13 @@ import { themr } from 'react-css-themr'
 import Form from 'react-vanilla-form'
 import { isEmpty, reject, isNil } from 'ramda'
 import classNames from 'classnames'
-
 import {
   Grid,
   Row,
   Col,
+} from 'former-kit'
+
+import {
   Button,
 } from '../../components'
 
@@ -189,14 +191,14 @@ class CreditCardAndBoleto extends Component {
               desk={defaultColSize}
               tablet={defaultColSize}
               palm={defaultColSize}
-              alignEnd
+              align={'end'}
             >
               <Col
                 tv={defaultColSize}
                 desk={defaultColSize}
                 tablet={defaultColSize}
                 palm={defaultColSize}
-                alignEnd
+                align={'end'}
               >
                 <h4 className={theme.amount} >
                   Valor a pagar: {formatToBRL(amount)}
@@ -207,7 +209,7 @@ class CreditCardAndBoleto extends Component {
                 desk={defaultColSize}
                 tablet={defaultColSize}
                 palm={defaultColSize}
-                alignEnd
+                align={'end'}
                 className={theme.footerNoPadding}
               >
                 <Button

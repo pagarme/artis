@@ -43,6 +43,10 @@
   font-size: 14px;
 }
 
+.alignCenter {
+  justify-content: center;
+}
+
 @media (--media-palm) {
 
   .title {

@@ -1,8 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
-
-import { Grid, Row, Col } from '../Grid'
+import {
+  Grid,
+  Row,
+  Col,
+} from 'former-kit'
 
 const applyThemr = themr('UILoadingInfo')
 
@@ -18,7 +21,7 @@ const LoadingInfo = ({ theme, title, subtitle }) => (
         desk={defaultColSize}
         tablet={defaultColSize}
         palm={defaultColSize}
-        alignCenter
+        align={'center'}
       >
         <div className={theme.loadingWrapper}>
           <h1 className={theme.loadingText}>{title}</h1>

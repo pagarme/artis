@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { prop, propEq, findIndex, filter, slice, length } from 'ramda'
 import { themr } from 'react-css-themr'
-
-import { Grid, Row, Col } from '../Grid'
+import {
+  Grid,
+  Row,
+  Col,
+} from 'former-kit'
 
 const applyThemr = themr('UIProgressBar')
 

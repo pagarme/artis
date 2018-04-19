@@ -2,11 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import moment from 'moment'
-
 import {
   Grid,
   Row,
   Col,
+} from 'former-kit'
+
+import {
   Input,
 } from './../../components'
 

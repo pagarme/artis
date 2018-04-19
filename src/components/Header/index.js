@@ -3,9 +3,13 @@ import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import CloseIcon from 'react-icons/lib/io/android-close'
 import BackIcon from 'react-icons/lib/io/android-arrow-back'
+import {
+  Grid,
+  Row,
+  Col,
+} from 'former-kit'
 
 import Button from '../Button'
-import { Grid, Row, Col } from './../Grid'
 
 const applyThemr = themr('UIHeader')
 
@@ -26,7 +30,7 @@ const Header = ({
 }) => (
   <header className={theme.header}>
     <Grid>
-      <Row alignCenter>
+      <Row>
         <Col
           tv={buttonColSize}
           desk={buttonColSize}
@@ -50,7 +54,7 @@ const Header = ({
           desk={imgColSize}
           tablet={imgColSize}
           palm={imgPalmColSize}
-          alignCenter
+          align={'center'}
         >
           {
             logoSrc && <img
@@ -65,7 +69,7 @@ const Header = ({
           desk={buttonColSize}
           tablet={buttonColSize}
           palm={buttonPalmColSize}
-          alignEnd
+          align={'end'}
         >
           <Button
             base={base}

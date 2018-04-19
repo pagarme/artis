@@ -163,3 +163,7 @@
 .wrapperButton {
   padding-bottom: 10px;
 }
+
+.alignCenter {
+  justify-content: center;
+}

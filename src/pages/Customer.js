@@ -8,10 +8,10 @@ import { isEmpty, reject, isNil } from 'ramda'
 import {
   Grid,
   Row,
+  Col,
 } from 'former-kit'
 
 import {
-  Col,
   Button,
   Input,
 } from '../components'
@@ -76,7 +76,7 @@ class CustomerPage extends Component {
             desk={defaultColSize}
             tablet={defaultColSize}
             palm={defaultColSize}
-            alignCenter
+            align={'center'}
           >
             <CustomerIcon className={theme.titleIcon} />
             Dados pessoais
@@ -203,7 +203,7 @@ class CustomerPage extends Component {
             tv={defaultColSize}
             tablet={defaultColSize}
             palm={defaultColSize}
-            alignEnd
+            align={'end'}
           >
             <Button
               base={base}
