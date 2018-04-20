@@ -1,0 +1,14 @@
+@import "../index.css";
+
+.select {
+  background-color: rgba(38, 38, 38, 1);
+  border-color: rgba(75, 75, 75, 1);
+  border-radius: 13px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 10px;
+}
+
+.secondaryText {
+  margin-left: 15px;
+}

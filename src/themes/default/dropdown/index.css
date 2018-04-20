@@ -1,34 +1,11 @@
 @import "../colors.css";
 @import "../typography.css";
 
-.dropdown {
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.dropdown * {
-  box-sizing: border-box;
-}
-
 .select {
-  appearance: none;
-  background: transparent;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-  border-bottom: 2px solid var(--color-grey-68);
   color: var(--color-white);
-  cursor: inherit;
-  outline: none;
-  padding: 3px 20px 2px 0;
-  width: 100%;
-}
-
-.option {
-  color: var(--color-grey-77);
   cursor: pointer;
+  outline: none;
+  width: 100%;
 }
 
 .select,

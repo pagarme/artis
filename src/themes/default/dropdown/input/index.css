@@ -1,0 +1,22 @@
+@import "../index.css";
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.select {
+  appearance: none;
+  background: transparent;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 2px solid var(--color-grey-68);
+  padding: 3px 20px 2px 0;
+}
+
+.option {
+  color: var(--color-grey-77);
+  cursor: pointer;
+}
