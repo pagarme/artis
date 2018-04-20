@@ -1,11 +1,14 @@
 import React from 'react'
 
-import CloseIcon from 'react-icons/lib/io/android-close'
-import BackIcon from 'react-icons/lib/io/android-arrow-back'
-
 import { storiesOf } from '@storybook/react'
 
-import Button from '../../src/components/Button'
+import { Button } from 'former-kit'
+
+import CloseIcon from 'react-icons/lib/io/android-close'
+import BackIcon from 'react-icons/lib/io/android-arrow-back'
+import NavigateBack from './../../src/images/navigate_back.svg'
+import NavigateNext from './../../src/images/navigate_next.svg'
+
 
 import style from './style.css'
 
@@ -14,52 +17,60 @@ storiesOf('Buttons', module)
     <div className={style.container}>
       <div>
         <h2>Default Button</h2>
-        <Button base="dark">Label</Button>
+        <Button>
+          <b>Continuar</b>
+        </Button>
+        <Button>
+              Ops
+          <span><b>Voltar</b></span>
+        </Button>
       </div>
 
       <div>
-        <h2>Outline</h2>
+        <h2>Fill Gradient</h2>
+        <Button fill="gradient">
+              Label
+        </Button>
+      </div>
+
+      <div>
+        <h2>Fill Outline</h2>
         <Button fill="outline">Label</Button>
+      </div>
+
+      <div>
+        <h2>Icons</h2>
+        <Button
+          fill="outline"
+          icon={<NavigateBack />}
+        >
+          <span>Label</span>
+        </Button>
+        <Button
+          fill="gradient"
+          icon={<NavigateNext />}
+          iconAlignment="right"
+        >
+          <span>Label</span>
+        </Button>
       </div>
 
       <div>
         <h2>Disabled</h2>
         <Button disabled>Label</Button>
-        <Button disabled relevance="low">Label</Button>
       </div>
 
       <div>
         <h2>Sizes</h2>
         <Button size="tiny">Tiny</Button>
-        <Button size="small">Small</Button>
         <Button>Default</Button>
-        <Button size="large">Large</Button>
-        <Button size="extra-large">Extra-large</Button>
+        <Button size="huge">Huge</Button>
       </div>
 
       <div>
         <h2>Clean buttons for icons</h2>
-        <Button fill="clean" relevance="low"><BackIcon size={30} /></Button>
-        <Button fill="clean" relevance="high"><CloseIcon size={30} /></Button>
-      </div>
-
-      <div>
-        <h2>Full</h2>
-        <Button full>Full</Button>
-      </div>
-
-      <div>
-        <h2>Text align</h2>
-        <Button textAlign="center" className={style.textAlign}>Center</Button>
-        <Button textAlign="left" className={style.textAlign}>Left</Button>
-        <Button textAlign="right" className={style.textAlign}>Right</Button>
-      </div>
-
-      <div>
-        <h2>Relevance</h2>
-        <Button relevance="high">High</Button>
-        <Button relevance="normal">Normal</Button>
-        <Button relevance="low">Low</Button>
+        <Button fill="clean" relevance="low" icon={<BackIcon size={30} />} />
+        <Button fill="clean" relevance="high" icon={<CloseIcon size={30} />} />
       </div>
     </div>
   ))
