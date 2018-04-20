@@ -28,7 +28,6 @@ import getErrorMessage from '../../utils/data/errorMessages'
 import { hasRequiredPageData } from '../../utils/validations'
 
 import {
-  ProgressBar,
   Header,
   Footer,
   Cart,
@@ -47,47 +46,10 @@ import MultipleCreditCardsPage from '../../pages/Payment/MultipleCreditCards'
 import CloseIcon from '../../images/close.svg'
 
 import statechart from './statechart'
-
-const stepsTitles = [
-  {
-    page: 'customer',
-    title: 'Identificação',
-    visible: true,
-  },
-  {
-    page: 'addresses',
-    title: 'Endereços',
-    visible: true,
-  },
-  {
-    page: 'payment',
-    title: 'Forma de Pagamento',
-    visible: true,
-  },
-  {
-    page: 'singleCreditCard',
-    visible: false,
-  },
-  {
-    page: 'singleBoleto',
-    visible: false,
-  },
-  {
-    page: 'creditCardAndBoleto',
-    visible: false,
-  },
-  {
-    page: 'transaction',
-    visible: false,
-  },
-  {
-    page: 'confirmation',
-    title: 'Confirmação',
-    visible: true,
-  },
-]
+import steps from './steps'
 
 const applyThemr = themr('UICheckout')
+
 class Checkout extends Component {
   state = {
     closingEffect: false,
@@ -366,18 +328,12 @@ class Checkout extends Component {
     const { shipping, customer } = pageInfo
 
     const pages = filter(value =>
-      !hasRequiredPageData(value.page, this.props), stepsTitles)
-
-    const firstPage = pages[0].page
+      !hasRequiredPageData(value.page, this.props), steps
+    )
 
     const isCartButtonVisible = length(items) ?
       !isBigScreen :
       false
-
-    const shouldDisablePrevButton =
-      machineState.value === firstPage ||
-      machineState.value === 'transaction' ||
-      (machineState.value === 'confirmation' && !this.state.transactionError)
 
     return (
       <div
@@ -419,18 +375,12 @@ class Checkout extends Component {
                   base={base}
                   logoAlt={companyName}
                   logoSrc={logo}
-                  onPrev={this.handleBackButton}
-                  onClose={this.close}
-                  prevButtonDisabled={shouldDisablePrevButton}
+                  steps={pages}
+                  activeStep={machineState.value}
                 />
                 <div
                   className={theme.content}
                 >
-                  <ProgressBar
-                    base={base}
-                    steps={pages}
-                    activePage={machineState.value}
-                  />
                   {this.renderPages()}
                 </div>
                 <Footer

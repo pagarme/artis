@@ -1,0 +1,42 @@
+@import "../typography.css";
+@import "../colors.css";
+
+:root {
+  --progress-linear-width: 100%;
+  --progress-linear-height: 3px;
+  --progress-linear-fill-height: 3px;
+
+  --progress-linear-fill-enabled: linear-gradient(to left, var(--checkout-secondary-color), var(--checkout-primary-color));
+  --progress-linear-back-enabled: var(--color-grey-64);
+}
+
+.linearProgress,
+.linearProgress * {
+  box-sizing: border-box;
+}
+
+.linearProgress {
+  width: var(--progress-linear-width);
+  height: var(--progress-linear-height);
+  position: relative;
+  overflow: hidden;
+}
+
+.background {
+  height: var(--progress-linear-fill-height);
+  background-color: var(--progress-linear-back-enabled);
+}
+
+.fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  will-change: width;
+  height: var(--progress-linear-fill-height);
+  background-image: var(--progress-linear-fill-enabled);
+}
+
+.number {
+  display: none;
+}
