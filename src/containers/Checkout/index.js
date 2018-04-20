@@ -88,7 +88,6 @@ const stepsTitles = [
 ]
 
 const applyThemr = themr('UICheckout')
-
 class Checkout extends Component {
   state = {
     closingEffect: false,
@@ -225,7 +224,7 @@ class Checkout extends Component {
       acquirer,
       pageInfo,
       apiData,
-      transaction,
+      finalAmount,
     } = this.props
 
     const {
@@ -235,7 +234,6 @@ class Checkout extends Component {
       cart,
     } = apiData
 
-    const { amount } = transaction
     const { onTransactionSuccess, onError } = configs
     const items = propOr([], 'items', cart)
 
@@ -244,7 +242,7 @@ class Checkout extends Component {
       items,
       key,
       token,
-      amount,
+      amount: finalAmount,
     }
 
     const request = strategies[acquirer]
@@ -467,6 +465,7 @@ Checkout.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]).isRequired,
+  finalAmount: PropTypes.number.isRequired, //eslint-disable-line
 }
 
 Checkout.defaultProps = {
@@ -483,6 +482,7 @@ const mapStateToProps = ({ screenSize, pageInfo, transactionValues }) => ({
   isBigScreen: screenSize.isBigScreen,
   pageInfo,
   transaction: transactionValues,
+  finalAmount: transactionValues.finalAmount,
 })
 
 export default connect(mapStateToProps, {

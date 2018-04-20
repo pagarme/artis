@@ -19,7 +19,6 @@ import {
 } from './../../components'
 
 import formatToBRL from './../../utils/helpers/formatToBRL'
-import { generateInstallments } from './../../utils/calculations'
 import removeMask from './../../utils/helpers/removeMask'
 
 const defaultColSize = 12
@@ -28,8 +27,8 @@ const mediumColSize = 6
 const CreditCard = ({
   theme,
   isBigScreen,
-  data,
-  installmentsIndex,
+  installmentInitialValue,
+  installmentsOptions,
   amount,
   enableSplitAmount,
   showCreditCard,
@@ -38,7 +37,6 @@ const CreditCard = ({
   flipped,
   amountPrefixName,
   inputPrefixName = '',
-  amountPrefixValue,
 }) => {
   const {
     cardNumber = '•••• •••• •••• ••••',
@@ -46,17 +44,6 @@ const CreditCard = ({
     expiration = 'MM/AA',
     cvv = '•••',
   } = formData
-
-  const { installments } = data
-  const installmentTotalAmount =
-    amountPrefixValue
-      ? amountPrefixValue * 100
-      : amount
-
-  const installmentsOptions = generateInstallments(
-    installmentTotalAmount,
-    installments[installmentsIndex]
-  )
 
   const inputsColSize = showCreditCard
     ? mediumColSize
@@ -189,7 +176,7 @@ const CreditCard = ({
                   name={`${inputPrefixName}installments`}
                   label="Quantidade de Parcelas"
                   placeholder="Selecione"
-                  value={installments[0].initial.toString()}
+                  value={installmentInitialValue}
                   icon={!isBigScreen && <Calendar24 size={20} />}
                 />
               </Col>
@@ -215,7 +202,6 @@ CreditCard.propTypes = {
     amount: PropTypes.string,
     cvvTooltip: PropTypes.string,
   }),
-  data: PropTypes.shape().isRequired,
   amount: PropTypes.number.isRequired,
   enableSplitAmount: PropTypes.bool,
   showCreditCard: PropTypes.bool,
@@ -224,9 +210,11 @@ CreditCard.propTypes = {
   handleFlipCard: PropTypes.func,
   flipped: PropTypes.bool,
   amountPrefixName: PropTypes.string,
-  amountPrefixValue: PropTypes.number,
   inputPrefixName: PropTypes.string,
-  installmentsIndex: PropTypes.number.isRequired,
+  installmentsOptions: PropTypes.arrayOf([
+    PropTypes.object,
+  ]).isRequired,
+  installmentInitialValue: PropTypes.string.isRequired,
 }
 
 CreditCard.defaultProps = {
@@ -238,7 +226,6 @@ CreditCard.defaultProps = {
   flipped: false,
   amountPrefixName: '',
   inputPrefixName: '',
-  amountPrefixValue: null,
 }
 
 export default CreditCard

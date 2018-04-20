@@ -1,7 +1,15 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
+import createStore from '../../store'
+import formatToBRL from '../../utils/helpers/formatToBRL'
 import Cart from './index'
+
+const store = createStore({
+  transaction: {
+    amount: 15000,
+  },
+})
 
 const items = [
   {
@@ -20,39 +28,44 @@ const items = [
   },
 ]
 
-const amount = 15000
+const shippingRate = 5000
 
 describe('Cart', () => {
-  it('should have three items', () => {
+  it('should have two items', () => {
     const onToggleCart = jest.fn()
 
     const component = mount(
       <Cart
         items={items}
-        amount={amount}
         onToggleCart={onToggleCart}
         collapsed={false}
         showCloseButton={false}
+        store={store}
+        shippingRate={shippingRate}
       />
     )
 
-    expect(component.find('li')).toHaveLength(2)
+    expect(component.find('li')).toHaveLength(3)
   })
 
-  it('Must have three items', () => {
+  it('Must have two items', () => {
     const onToggleCart = jest.fn()
 
     const component = mount(
       <Cart
         items={items}
-        amount={amount}
         onToggleCart={onToggleCart}
         showCloseButton
         collapsed={false}
+        store={store}
+        shippingRate={shippingRate}
       />
     )
 
-    expect(component.find('p').last().text()).toBe('R$ 150,00')
+    const totalValue = component.find('p').last().text()
+    const totalValueToCompare = formatToBRL(15000)
+
+    expect(totalValue).toBe(totalValueToCompare)
   })
 })
 

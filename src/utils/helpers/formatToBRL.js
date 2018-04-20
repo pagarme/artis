@@ -1,11 +1,15 @@
-const formatToBRL = (int) => {
-  let tmp = `${int}`
-  tmp = tmp.replace(/([0-9]{2})$/g, ',$1')
-  if (tmp.length > 6) {
-    tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, '.$1,$2')
-  }
+const formatToBRL = (value) => {
+  const brl = value / 100
+  const floatValue = parseFloat(brl)
 
-  return `R$ ${tmp}`
+  const formatedMoney = floatValue.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+    style: 'currency',
+    currency: 'BRL',
+  })
+
+  return formatedMoney
 }
 
 export default formatToBRL

@@ -11,10 +11,11 @@ import {
   pick,
   merge,
   isEmpty,
-  reject,
   isNil,
-  pathOr,
   omit,
+  pathOr,
+  prop,
+  reject,
 } from 'ramda'
 
 import { Switch, Button } from '../../components'
@@ -22,7 +23,12 @@ import { Switch, Button } from '../../components'
 import BoletoForm from './BoletoForm'
 import CreditCardForm from './CreditCardForm'
 
-import { addPageInfo } from '../../actions'
+import {
+  addPageInfo,
+  incrementFinalAmount,
+  decrementFinalAmount,
+  resetFinalAmount,
+} from '../../actions'
 import {
   required,
   minLength,
@@ -30,24 +36,28 @@ import {
   isValidDate,
 } from '../../utils/validations'
 
+import getInstallments from './../../utils/helpers/getInstallments'
+import { applyDiscount } from './../../utils/calculations'
+
+const applyThemr = themr('UIPaymentPage')
+
 const setPaymentMethod = ({
   defaultMethod,
   paymentConfig,
 }) => defaultMethod || keys(paymentConfig)[0]
 
-const applyThemr = themr('UIPaymentPage')
-
 const createSwitchItems = ({
   theme,
   base,
   transaction,
+  amount,
   isBigScreen,
-  paymentType,
-  formData,
   flipped,
+  formData,
   handleFlipCard,
+  paymentType,
 }) => {
-  const { amount, paymentConfig } = transaction
+  const { paymentConfig } = transaction
   const { boleto, creditcard } = paymentConfig
 
   const allowedPaymentOptions = {
@@ -73,7 +83,10 @@ const createSwitchItems = ({
         formData,
         flipped,
         handleFlipCard,
+        inputPrefixName: '',
         installmentsIndex: 0,
+        installmentInitialValue: creditcard.installments[0].initial.toString(),
+        installmentsOptions: getInstallments(amount, creditcard, 0),
       }),
     },
   }
@@ -129,22 +142,28 @@ class SwitchPayment extends Component {
     }))
   }
 
-  handleSwitchPayment = clickedPaymentType => (
+  handleSwitchPayment = (clickedPaymentType) => {
     this.setState({ clickedPaymentType })
-  )
+  }
 
   handleFormSubmit = (formData, errors) => {
     const {
-      handleSubmit,
-      handlePageChange,
-      transaction,
       defaultMethod,
+      handleDecrementFinalAmount,
+      handleIncrementFinalAmount,
+      handlePageChange,
+      handleResetFinalAmount,
+      handleSubmit,
+      transaction,
     } = this.props
+
+    handleResetFinalAmount()
 
     let data = formData
 
     const { clickedPaymentType } = this.state
-    const { paymentConfig } = transaction
+    const { paymentConfig, amount } = transaction
+    const { creditcard, boleto } = paymentConfig
 
     const paymentType = clickedPaymentType || setPaymentMethod({
       defaultMethod,
@@ -178,10 +197,30 @@ class SwitchPayment extends Component {
         'expiration',
         'installments',
       ], data)
+
+      const selectedInstallment = data.installments
+      const installmentsList = getInstallments(amount, creditcard, 0)
+      const installment = installmentsList.find((elem, index) => (
+        index.toString() === selectedInstallment
+      ))
+      const interest = prop('interest', installment)
+
+      if (interest) {
+        handleIncrementFinalAmount(interest)
+      }
     }
 
     if (paymentType === 'boleto') {
       data = { boleto: true }
+
+      const { discount } = boleto
+      const type = prop('type', discount)
+      const value = prop('value', discount)
+
+      if (type && value) {
+        const finalDiscount = amount - applyDiscount(type, value, amount)
+        handleDecrementFinalAmount(finalDiscount)
+      }
     }
 
     this.setState({
@@ -198,12 +237,13 @@ class SwitchPayment extends Component {
 
   render () {
     const {
-      defaultMethod,
-      theme,
-      paymentType,
-      transaction,
-      isBigScreen,
+      amount,
       base,
+      defaultMethod,
+      isBigScreen,
+      paymentType,
+      theme,
+      transaction,
     } = this.props
 
     const {
@@ -267,6 +307,7 @@ class SwitchPayment extends Component {
           name: 'paymentOptions',
           selected: selectedPaymentType,
           items: createSwitchItems({
+            amount,
             theme,
             base,
             isBigScreen,
@@ -295,28 +336,36 @@ class SwitchPayment extends Component {
 }
 
 SwitchPayment.propTypes = {
+  amount: PropTypes.number.isRequired,
   base: PropTypes.string.isRequired,
-  theme: PropTypes.shape(),
-  paymentType: PropTypes.string,
-  transaction: PropTypes.shape().isRequired,
+  handlePageChange: PropTypes.func.isRequired,
+  handleIncrementFinalAmount: PropTypes.func.isRequired,
+  handleDecrementFinalAmount: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isBigScreen: PropTypes.bool.isRequired,
-  handlePageChange: PropTypes.func.isRequired,
   defaultMethod: PropTypes.string,
+  paymentType: PropTypes.string,
+  handleResetFinalAmount: PropTypes.func.isRequired,
+  theme: PropTypes.shape(),
+  transaction: PropTypes.shape().isRequired,
 }
 
 SwitchPayment.defaultProps = {
-  theme: {},
   paymentType: null,
   payment: null,
   defaultMethod: null,
+  theme: {},
 }
 
-const mapStateToProps = ({ screenSize, pageInfo }) => ({
+const mapStateToProps = ({ screenSize, pageInfo, transactionValues }) => ({
   isBigScreen: screenSize.isBigScreen,
   payment: pageInfo.payment,
+  amount: transactionValues.amount,
 })
 
 export default connect(mapStateToProps, {
   handlePageChange: addPageInfo,
+  handleIncrementFinalAmount: incrementFinalAmount,
+  handleDecrementFinalAmount: decrementFinalAmount,
+  handleResetFinalAmount: resetFinalAmount,
 })(applyThemr(SwitchPayment))

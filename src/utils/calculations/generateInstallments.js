@@ -6,8 +6,6 @@ import {
   prop,
 } from 'ramda'
 
-import formatToBRL from '../helpers/formatToBRL'
-
 const generateArray = length => Array.from(
   { length }
 ).map(Number.call, Number)
@@ -39,13 +37,11 @@ const getInterestOption = index => pipe(
 
 const generateFreeInstallment = (index, amount) => {
   const installmentAmount = getInstallmentAmount(amount, index)
-  const parsedAmount = formatToBRL(installmentAmount)
 
   return {
     amount,
     installmentAmount,
     value: index.toString(),
-    name: `${index}x de ${parsedAmount} sem juros.`,
   }
 }
 
@@ -61,13 +57,11 @@ const getInterestInstallment = (interestRate, index, amount) => {
   const interestValue = calculateFunction(amount, interest.value)
   const newAmount = amount + interestValue
   const installmentAmount = getInstallmentAmount(newAmount, index)
-  const parsedAmount = formatToBRL(installmentAmount)
 
   return {
     installmentAmount,
     interest: interestValue,
     value: index.toString(),
-    name: `${index}x de ${parsedAmount} com juros.`,
     amount: newAmount,
   }
 }
