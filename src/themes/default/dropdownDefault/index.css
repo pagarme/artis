@@ -1,6 +1,50 @@
 @import "../colors.css";
 @import "../typography.css";
 
+.select {
+  color: var(--color-white);
+  background-color: rgba(38, 38, 38, 1);
+  border-color: rgba(75, 75, 75, 1);
+  border-radius: 13px;
+  outline: none;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 10px;
+  width: 100%;
+}
+
+.select,
+.option,
+.secondaryText {
+  font-family: var(--primary-font-family);
+}
+
+.select,
+.option {
+  font-size: var(--font-size-small);
+}
+
+.disabled {
+  cursor: not-allowed;
+}
+
+.disabled > .select {
+  color: var(--color-grey-68);
+}
+
+.error > .select {
+  border-color: var(--color-error);
+}
+
+.secondaryText {
+  color: var(--color-error);
+  font-size: 11px;
+  margin-bottom: 0;
+  margin-left: 15px;
+  margin-top: 2px;
+}
+
+/*
 .dropdown * {
   box-sizing: border-box;
   font-family: var(--primary-font-family);
@@ -33,6 +77,7 @@
 }
 
 .select {
+  color: red !important;
   appearance: none;
   background: transparent;
   border: none;
@@ -148,3 +193,4 @@
 .disabled .placeholder {
   color: var(--color-grey-34);
 }
+*/

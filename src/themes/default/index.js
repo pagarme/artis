@@ -1,6 +1,7 @@
 import UIButton from './button/index.css'
 import UICart from './cart/index.css'
-import UIDropdown from './dropdown/index.css'
+import UIDropdownInput from './dropdownInput/index.css'
+import UIDropdownDefault from './dropdownDefault/index.css'
 import UIFooter from './footer/index.css'
 import UIGrid from './grid/index.css'
 import UIHeader from './header/index.css'
@@ -26,7 +27,8 @@ import UILinearProgress from './linear-progress/index.css'
 export default {
   UIButton,
   UICart,
-  UIDropdown,
+  UIDropdownInput,
+  UIDropdownDefault,
   UIFooter,
   UIGrid,
   UIHeader,

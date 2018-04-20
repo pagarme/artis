@@ -1,9 +1,28 @@
 import React from 'react'
+import DropdownDefault from '../../../src/components/DropdownDefault'
+import DropdownInput from '../../../src/components/DropdownInput'
 
-import Dropdown from '../../../src/components/Dropdown'
+const defaultOptions = [
+  {
+    name: '1x de R$ 100,00 sem juros',
+    value: '100',
+  },
+  {
+    name: '2x de R$ 50,00 sem juros',
+    value: '100',
+  },
+  {
+    name: '3x de R$ 33,33 sem juros',
+    value: '100',
+  },
+  {
+    name: '4x de R$ 30,00 com juros',
+    value: '120',
+  },
+]
 
 
-const options = [
+const inputOptions = [
   {
     name: 'Leonardo',
     value: 'leonardo',
@@ -23,33 +42,17 @@ const options = [
 ]
 
 
-class DropdownState extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = { selected: '' }
-
-    this.handleChange = this.handleChange.bind(this)
-  }
-
-  handleChange (value) {
-    this.setState({ selected: value })
-  }
-
+class DropdownState extends React.Component { //eslint-disable-line
   render () {
     return (
       <div>
-        <Dropdown
-          options={options}
+        <DropdownInput
+          options={inputOptions}
           name="pessoas"
-          label="Pessoas"
-          onChange={this.handleChange}
-          value={this.state.selected}
+          placeholder="Pessoas"
           disabled={this.props.disabled}
-          title={this.props.title}
           error={this.props.error}
         />
-
-        <p>Selecionado: {this.state.selected}</p>
       </div>
     )
   }
@@ -67,27 +70,50 @@ const DropdownExamples = () => (
 
     <section>
       <h3>Default</h3>
+      <DropdownDefault
+        options={defaultOptions}
+        name="former-kit"
+        placeholder="Em quantas parcelas?"
+      />
+    </section>
+
+    <section>
+      <h3>Default disabled</h3>
+      <DropdownDefault
+        options={defaultOptions}
+        name="former-kit"
+        placeholder="Em quantas parcelas?"
+        disabled
+      />
+    </section>
+
+    <section>
+      <h3>Default error</h3>
+      <DropdownDefault
+        options={defaultOptions}
+        name="former-kit"
+        placeholder="Em quantas parcelas?"
+        error="Esse campo é obrigatório"
+      />
+    </section>
+
+    <section>
+      <h3>Input</h3>
       <DropdownState />
     </section>
 
     <section>
-      <h3>With title</h3>
-      <DropdownState title="Selecione alguem" />
+      <h3>Input disabled</h3>
+      <DropdownState
+        disabled
+      />
     </section>
 
     <section>
-      <h3>Disabled with title</h3>
-      <DropdownState disabled title="Selecione alguem" />
-    </section>
-
-    <section>
-      <h3>Disabled</h3>
-      <DropdownState disabled />
-    </section>
-
-    <section>
-      <h3>Error</h3>
-      <DropdownState error="Something went wrong" />
+      <h3>Input disabled</h3>
+      <DropdownState
+        error="Esse campo é obrigatório"
+      />
     </section>
 
   </div>
