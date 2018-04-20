@@ -3,32 +3,37 @@
 @import "../colors.css";
 @import "../margin.css";
 
-.checkout {
+.wrapper {
   position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   overflow: auto;
-  background-color: var(--checkout-background-color);
-}
-
-.light.checkout {
-  background-color: var(--color-white);
-}
-
-.wrapper {
-  width: 90vw;
-  height: 93vh;
-  padding-left: calc(100vw - 100%);
-  max-width: 1300px;
-  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: calc(100vw - 100%);
 }
 
-.cartWrapper {
-  padding-bottom: 0;
+.checkout {
+  max-width: 700px;
+  max-height: 578px;
+  background: var(--color-grey-83);
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.closeButton {
+  position: absolute;
+  right: 14px;
+  top: 15px;
+  transition: trasform 300ms ease;
+
+  & :active {
+    transform: scale(0.95);
+  }
 }
 
 .closingEffect {
@@ -44,12 +49,13 @@
 
 @media (--media-palm) {
 
-  .rowWrapper {
-    margin-left: 0;
+  .wrapper {
+    align-items: inherit;
   }
 
-  .wrapper {
-    width: 100vw;
+  .checkout {
+    max-width: 100vw;
+    max-height: 100%;
   }
 
   .content {
