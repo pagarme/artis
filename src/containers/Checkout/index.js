@@ -14,6 +14,7 @@ import {
   path,
   pathOr,
   propOr,
+  prop,
   filter,
 } from 'ramda'
 
@@ -48,7 +49,6 @@ const applyThemr = themr('UICheckout')
 class Checkout extends Component {
   state = {
     closingEffect: false,
-    collapsedCart: true,
   }
 
   componentWillMount () {
@@ -151,10 +151,6 @@ class Checkout extends Component {
     }
 
     this.navigateNextPage()
-  }
-
-  handleToggleCart = () => {
-    this.setState(({ collapsedCart }) => ({ collapsedCart: !collapsedCart }))
   }
 
   handlePageTransition = page => () => this.props.transition(page)
@@ -306,7 +302,6 @@ class Checkout extends Component {
       theme,
       apiData,
       machineState,
-      isBigScreen,
       base,
       pageInfo,
     } = this.props
@@ -317,8 +312,9 @@ class Checkout extends Component {
       cart,
     } = apiData
 
-    const items = pathOr({}, ['items'], cart)
-    const { enableCart, freightValue, companyName, logo } = configs
+    const items = pathOr([], ['items'], cart)
+    const shippingRate = prop('shippingRate', cart)
+    const { enableCart, companyName, logo } = configs
     const { amount } = transaction
     const { shipping, customer } = pageInfo
 
@@ -347,10 +343,8 @@ class Checkout extends Component {
             amount={amount}
             shipping={shipping}
             customer={customer}
-            freight={freightValue}
+            shippingRate={shippingRate}
             onToggleCart={this.handleToggleCart}
-            collapsed={isBigScreen ? false : this.state.collapsedCart}
-            showCloseButton={isBigScreen}
           />
         }
         <div className={theme.checkout}>
@@ -384,7 +378,6 @@ Checkout.propTypes = {
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
   pageInfo: PropTypes.object.isRequired, // eslint-disable-line
   transition: PropTypes.func.isRequired,
-  isBigScreen: PropTypes.bool,
   machineState: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
@@ -402,8 +395,7 @@ Checkout.defaultProps = {
   transaction: {},
 }
 
-const mapStateToProps = ({ screenSize, pageInfo, transactionValues }) => ({
-  isBigScreen: screenSize.isBigScreen,
+const mapStateToProps = ({ pageInfo, transactionValues }) => ({
   pageInfo,
   transaction: transactionValues,
   finalAmount: transactionValues.finalAmount,

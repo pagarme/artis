@@ -5,12 +5,10 @@ import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import {
-  applySpec,
   isEmpty,
   isNil,
   merge,
   omit,
-  pathOr,
   reject,
 } from 'ramda'
 import {
@@ -39,17 +37,6 @@ const defaultColSize = 12
 const mediumColSize = 6
 
 const applyThemr = themr('UIAddressesPage')
-
-// eslint-disable-next-line
-const shippingInfo = applySpec({
-  shippingStreet: pathOr('', ['street']),
-  shippingNumber: pathOr('', ['number']),
-  shippingComplement: pathOr('', ['complement']),
-  shippingNeighborhood: pathOr('', ['neighborhood']),
-  shippingCity: pathOr('', ['city']),
-  shippingState: pathOr('', ['state']),
-  shippingZipcode: pathOr('', ['zipcode']),
-})
 
 class AddressesPage extends Component {
   constructor (props) {
