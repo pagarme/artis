@@ -6,13 +6,13 @@ import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import { isEmpty, reject, isNil } from 'ramda'
 import {
+  Button,
   Grid,
   Row,
   Col,
 } from 'former-kit'
 
 import {
-  Button,
   Input,
 } from '../components'
 

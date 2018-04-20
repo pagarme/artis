@@ -15,13 +15,13 @@ import {
   pick,
 } from 'ramda'
 import {
+  Button,
   Grid,
   Row,
   Col,
 } from 'former-kit'
 
 import {
-  Button,
   Input,
   Dropdown,
 } from '../components'

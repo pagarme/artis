@@ -6,15 +6,12 @@ import Form from 'react-vanilla-form'
 import { isEmpty, reject, isNil, prop } from 'ramda'
 import classNames from 'classnames'
 import {
+  Button,
   Grid,
   Row,
   Col,
 } from 'former-kit'
 import { incrementFinalAmount, resetFinalAmount } from '../../actions'
-
-import {
-  Button,
-} from '../../components'
 
 import CreditCardForm from './CreditCardForm'
 import BoletoForm from './BoletoForm'

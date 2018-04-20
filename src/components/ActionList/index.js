@@ -2,11 +2,10 @@ import React from 'react'
 import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import {
+  Button,
   Row,
   Col,
 } from 'former-kit'
-
-import Button from './../Button'
 
 const applyThemr = themr('UIActionList')
 const defaultColSize = 12
@@ -25,10 +24,10 @@ const ActionList = ({ theme, buttons }) => (
             <Button
               textAlign="left"
               relevance="low"
-              fill="double"
+              fill="outline"
               disabled={buttonInfo.disabled || false}
               full
-              size="extra-large"
+              size="huge"
               className={theme.actionButton}
               onClick={buttonInfo.onClick}
               type={buttonInfo.href ? 'link' : 'button'}

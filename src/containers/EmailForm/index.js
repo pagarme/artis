@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import { themr } from 'react-css-themr'
 import CloseIcon from 'react-icons/lib/io/android-close'
 import {
+  Button,
   Row,
   Col,
 } from 'former-kit'
 
-import { Input, Button } from '../../components'
+import { Input } from '../../components'
 
 const applyThemr = themr('UIEmailForm')
 const biggerColSize = 9
@@ -63,9 +64,8 @@ class EmailForm extends React.Component {
               fill="clean"
               onClick={handleClose}
               relevance="high"
-            >
-              <CloseIcon />
-            </Button>
+              icon={<CloseIcon size={20} />}
+            />
           </Col>
         </Row>
         <Row>

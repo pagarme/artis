@@ -17,8 +17,9 @@ import {
   prop,
   reject,
 } from 'ramda'
+import { Button } from 'former-kit'
 
-import { Switch, Button } from '../../components'
+import { Switch } from '../../components'
 
 import BoletoForm from './BoletoForm'
 import CreditCardForm from './CreditCardForm'

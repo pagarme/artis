@@ -17,7 +17,7 @@ import CustomerIcon from 'emblematic-icons/svg/User24.svg'
 import MailIcon from 'emblematic-icons/svg/Mail24.svg'
 import CartIcon from 'emblematic-icons/svg/ShoppingCart24.svg'
 
-import { Button } from '..'
+import { Button } from 'former-kit'
 
 import formatBRL from '../../utils/helpers/formatToBRL'
 
@@ -112,9 +112,8 @@ class Cart extends React.Component {
             className={theme.close}
             onClick={onToggleCart}
             base={base}
-          >
-            <CloseIcon />
-          </Button>
+            icon={<CloseIcon size={20} />}
+          />
         </div>
         <div className={theme.content}>
           <h2 className={theme.title}>Carrinho de compra</h2>

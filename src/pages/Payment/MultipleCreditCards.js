@@ -7,15 +7,12 @@ import { isEmpty, reject, isNil, pathOr } from 'ramda'
 import classNames from 'classnames'
 
 import {
+  Button,
   Grid,
   Row,
   Col,
 } from 'former-kit'
 import { incrementFinalAmount, resetFinalAmount } from '../../actions'
-
-import {
-  Button,
-} from '../../components'
 
 import CreditCardForm from './CreditCardForm'
 
