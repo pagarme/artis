@@ -20,11 +20,11 @@ import {
   Row,
   Col,
   Switch,
+  FormDropdown,
 } from 'former-kit'
 
 import {
   Input,
-  Dropdown,
 } from '../components'
 
 import options from '../utils/data/states'
@@ -406,11 +406,9 @@ class AddressesPage extends Component {
                   tablet={smallColSize}
                   palm={smallColSize}
                 >
-                  <Dropdown
-                    base={base}
+                  <FormDropdown
                     options={options}
                     name="state"
-                    label="UF"
                     placeholder="Escolha a UF"
                   />
                 </Col>
@@ -534,11 +532,9 @@ class AddressesPage extends Component {
                     tablet={smallColSize}
                     palm={smallColSize}
                   >
-                    <Dropdown
-                      base={base}
+                    <FormDropdown
                       options={options}
                       name="shippingState"
-                      label="UF"
                       placeholder="Escolha a UF"
                     />
                   </Col>

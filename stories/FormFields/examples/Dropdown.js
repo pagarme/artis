@@ -1,6 +1,5 @@
 import React from 'react'
-import DropdownDefault from '../../../src/components/DropdownDefault'
-import DropdownInput from '../../../src/components/DropdownInput'
+import { Dropdown, FormDropdown } from 'former-kit'
 
 const defaultOptions = [
   {
@@ -21,7 +20,6 @@ const defaultOptions = [
   },
 ]
 
-
 const inputOptions = [
   {
     name: 'Leonardo',
@@ -41,18 +39,35 @@ const inputOptions = [
   },
 ]
 
+class DropdownState extends React.Component {
+  constructor () {
+    super()
 
-class DropdownState extends React.Component { //eslint-disable-line
+    this.state = {
+      selected: 'leonardo',
+    }
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      selected: e.target.value,
+    })
+  }
+
   render () {
     return (
       <div>
-        <DropdownInput
+        <FormDropdown
           options={inputOptions}
           name="pessoas"
           placeholder="Pessoas"
           disabled={this.props.disabled}
           error={this.props.error}
+          onChange={this.handleChange}
+          value={this.state.selected}
         />
+
+        <p>Selecionado: {this.state.selected}</p>
       </div>
     )
   }
@@ -70,7 +85,7 @@ const DropdownExamples = () => (
 
     <section>
       <h3>Default</h3>
-      <DropdownDefault
+      <Dropdown
         options={defaultOptions}
         name="former-kit"
         placeholder="Em quantas parcelas?"
@@ -79,7 +94,7 @@ const DropdownExamples = () => (
 
     <section>
       <h3>Default disabled</h3>
-      <DropdownDefault
+      <Dropdown
         options={defaultOptions}
         name="former-kit"
         placeholder="Em quantas parcelas?"
@@ -89,7 +104,7 @@ const DropdownExamples = () => (
 
     <section>
       <h3>Default error</h3>
-      <DropdownDefault
+      <Dropdown
         options={defaultOptions}
         name="former-kit"
         placeholder="Em quantas parcelas?"

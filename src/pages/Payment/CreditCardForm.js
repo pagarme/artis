@@ -5,6 +5,7 @@ import {
   Grid,
   Row,
   Col,
+  FormDropdown,
 } from 'former-kit'
 
 import FaCreditCard from 'react-icons/lib/fa/credit-card'
@@ -14,7 +15,6 @@ import FaEllipsisH from 'react-icons/lib/fa/ellipsis-h'
 import Calendar24 from 'emblematic-icons/svg/Calendar24.svg'
 
 import {
-  Dropdown,
   Input,
 } from './../../components'
 
@@ -171,11 +171,10 @@ const CreditCard = ({
                 tablet={defaultColSize}
                 palm={defaultColSize}
               >
-                <Dropdown
+                <FormDropdown
                   options={installmentsOptions}
                   name={`${inputPrefixName}installments`}
-                  label="Quantidade de Parcelas"
-                  placeholder="Selecione"
+                  placeholder="Quantidade de Parcelas"
                   value={installmentInitialValue}
                   icon={!isBigScreen && <Calendar24 size={20} />}
                 />
