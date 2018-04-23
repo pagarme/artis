@@ -26,7 +26,7 @@ import {
   isValidDate,
 } from '../../utils/validations'
 import updateMultipleAmount from '../../utils/helpers/updateMultipleAmount'
-import formatToBRL from './../../utils/helpers/formatToBRL'
+import { formatToBRL } from './../../utils/masks/'
 import getInstallments from './../../utils/helpers/getInstallments'
 import getInputAmountValue from './../../utils/helpers/getInputAmountValue'
 

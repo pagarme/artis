@@ -29,7 +29,7 @@ import {
 
 import options from '../utils/data/states'
 import BillingIcon from '../images/map-pin.svg'
-import removeMask from '../utils/helpers/removeMask'
+import { removeMask } from '../utils/masks/'
 import getAddress from '../utils/helpers/getAddress'
 
 import { addPageInfo } from '../actions'

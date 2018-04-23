@@ -20,7 +20,7 @@ import {
 } from 'ramda'
 
 import URLS from './urls'
-import removeMask from '../helpers/removeMask'
+import { removeMask } from '../masks/'
 
 const getPaymentMethodType = path(['payment', 'method', 'type'])
 

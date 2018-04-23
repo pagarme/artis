@@ -22,6 +22,7 @@ describe('Calculate Installments', () => {
 
     const firstInstallment = {
       value: '1',
+      interest: 0,
       amount: 10000,
       installmentAmount: '10000',
     }
@@ -64,6 +65,7 @@ describe('Calculate Installments', () => {
     const firstInstallment = {
       value: '1',
       amount: 1000000,
+      interest: 0,
       installmentAmount: '1000000',
     }
 
