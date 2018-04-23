@@ -17,9 +17,6 @@ import {
   filter,
 } from 'ramda'
 import {
-  // Grid,
-  // Row,
-  // Col,
   Layout,
 } from 'former-kit'
 

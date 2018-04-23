@@ -18,6 +18,7 @@ import {
   Grid,
   Row,
   Col,
+  Switch,
 } from 'former-kit'
 
 import {
@@ -25,8 +26,6 @@ import {
   Input,
   Dropdown,
 } from '../components'
-
-import RadioGroup from '../components/RadioGroup'
 
 import options from '../utils/data/states'
 import BillingIcon from '../images/map-pin.svg'
@@ -48,17 +47,6 @@ const bigColSize = 8
 
 const applyThemr = themr('UIAddressesPage')
 
-const radioOptions = [
-  {
-    name: 'Sim',
-    value: 'true',
-  },
-  {
-    name: 'Não',
-    value: 'false',
-  },
-]
-
 const shippingInfo = applySpec({
   shippingStreet: pathOr('', ['street']),
   shippingNumber: pathOr('', ['number']),
@@ -78,17 +66,15 @@ class AddressesPage extends Component {
     this.state = {
       ...billing,
       ...shippingInfo(shipping),
-      sameAddressForShipping: billing.sameAddressForShipping || 'true',
+      sameAddressForShipping: billing.sameAddressForShipping || true,
     }
   }
 
   componentDidUpdate (prevProps, prevState) {
     if (
-      prevState.sameAddressForShipping === 'true' &&
-      this.state.sameAddressForShipping === 'false') {
+      prevState.sameAddressForShipping === true &&
+      this.state.sameAddressForShipping === false) {
       this.shippingZipcodeInput.focus()
-
-      this.setState({ formValid: removeMask(this.state.shippingZipcode).length >= 8 }) // eslint-disable-line
     }
   }
 
@@ -114,14 +100,14 @@ class AddressesPage extends Component {
       pageInfo: billingAddress,
     })
 
-    if (sameAddressForShipping === 'true') {
+    if (sameAddressForShipping === true) {
       this.props.handlePageChange({
         page: 'shipping',
         pageInfo: billingAddress,
       })
     }
 
-    if (sameAddressForShipping === 'false') {
+    if (sameAddressForShipping === false) {
       this.props.handlePageChange({
         page: 'shipping',
         pageInfo: {
@@ -199,11 +185,36 @@ class AddressesPage extends Component {
     this.shippingZipcodeInput = input
   }
 
-  handleChangeForm = (values, errors) => {
+  handleSameAddressChange = (value) => {
     this.setState((prevState) => {
-      let updatedShippingAddress = {}
+      const changeSameAddressToFalse = (
+        prevState.sameAddressForShipping === true && value === false
+      )
 
-      const validatedErrors = omit(values.sameAddressForShipping === 'true'
+      const newState = {
+        sameAddressForShipping: value,
+        formValid: !changeSameAddressToFalse,
+      }
+
+      if (changeSameAddressToFalse) {
+        return merge(newState, {
+          shippingStreet: '',
+          shippingNumber: '',
+          shippingComplement: '',
+          shippingNeighborhood: '',
+          shippingCity: '',
+          shippingState: '',
+          shippingZipcode: '',
+        })
+      }
+
+      return newState
+    })
+  }
+
+  handleChangeForm = (values, errors) => {
+    this.setState(() => {
+      const validatedErrors = omit(this.state.sameAddressForShipping === true
         ? ['shippingStreet',
           'shippingNumber',
           'shippingComplement',
@@ -216,23 +227,8 @@ class AddressesPage extends Component {
       const formValid = isEmpty(validatedErrors)
         && removeMask(values.zipcode || '').length >= 8
 
-      if (
-        prevState.sameAddressForShipping === 'true' &&
-        values.sameAddressForShipping === 'false') {
-        updatedShippingAddress = {
-          shippingStreet: '',
-          shippingNumber: '',
-          shippingComplement: '',
-          shippingNeighborhood: '',
-          shippingCity: '',
-          shippingState: '',
-          shippingZipcode: '',
-        }
-      }
-
       return {
         ...values,
-        ...updatedShippingAddress,
         formValid,
       }
     })
@@ -438,15 +434,19 @@ class AddressesPage extends Component {
                   tablet={mediumColSize}
                   palm={mediumColSize}
                 >
-                  <RadioGroup
-                    name="sameAddressForShipping"
-                    options={radioOptions}
+                  <Switch
+                    checked={sameAddressForShipping}
+                    onChange={this.handleSameAddressChange}
+                    strings={{
+                      on: 'Sim',
+                      off: 'Não',
+                    }}
                   />
                 </Col>
               </Row>
             </Col>
             {
-              (sameAddressForShipping && sameAddressForShipping !== 'true') &&
+              !sameAddressForShipping &&
               <Col
                 tv={mediumColSize}
                 desk={mediumColSize}

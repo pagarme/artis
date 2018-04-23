@@ -3,120 +3,122 @@
 @import "../typography.css";
 @import "../media.css";
 
+:root {
+  --switch-label-left: 15px;
+  --switch-label-font-family: var(--primary-font-family);
+
+  --switch-width: 39px;
+  --switch-height: 25px;
+  --switch-radius: 12px;
+  --switch-bullet-width: 17px;
+  --switch-bullet-height: 17px;
+  --switch-bullet-off: 5px;
+  --switch-bullet-on: calc(var(--switch-width) - var(--switch-bullet-width) - var(--switch-bullet-off));
+
+  --switch-border-color: #74c29a;
+  --switch-bullet-on-color: var(--color-white);
+  --switch-bullet-off-color: var(--color-white);
+  --switch-bullet-on-background: #8deec6;
+  --switch-bullet-off-background: #ef6d6d;
+  --switch-disabled-color: var(--color-grey-68);
+  --switch-disabled-background: var(--color-white);
+}
+
 .switch {
-  display: inline-flex;
-  user-select: none;
-  width: 100%;
-}
-
-.content {
-  display: none;
-  width: 100%;
-}
-
-.switchButton {
-  background-color: var(--color-grey-84);
-  border: 1px solid var(--color-grey-74);
-  color: var(--color-white);
   cursor: pointer;
-  flex-grow: 1;
-  font-family: var(--primary-font-family);
-  font-size: var(--font-size-small);
-  letter-spacing: var(--letter-spacing);
-  outline: none;
-  padding: 0;
+  display: inline-flex;
   position: relative;
-  text-align: center;
+  padding-left: calc(var(--switch-width) + var(--switch-label-left));
+  height: var(--switch-height);
+  align-items: center;
+  font-family: var(--switch-label-font-family);
+  color: var(--switch-bullet-off-background);
 }
 
-.switchButton:not(:last-child) {
-  border-right: 1px solid var(--color-black);
+.switch,
+.switch:before,
+.switch:after {
+  box-sizing: border-box;
 }
 
-.light .switchButton {
-  color: var(--color-grey-83);
-  background-color: var(--color-grey-10);
-  border: 1px solid var(--color-grey-11);
-  border-right: 1px solid var(--color-grey-10);
-}
-
-.switchButton > h3 {
-  font-size: var(--font-size-small);
-  margin-top: 23px;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  font-weight: normal;
-}
-
-.switchButton > p {
-  font-size: var(--font-size-tiny);
-  margin-top: 0;
-  margin-bottom: 14px;
-  color: var(--color-grey-33);
-}
-
-.switchButton.checked > h3 {
-  color: var(--checkout-primary-color);
-  font-weight: 900;
-  font-style: normal;
-  font-stretch: normal;
-}
-
-.switchButton.checked:before {
+.switch:before,
+.switch:after {
   content: "";
   position: absolute;
-  left: 36.75%;
-  bottom: -1px;
-  height: 1px;
-  width: 26.5%;
-  border-bottom: 1px solid var(--checkout-primary-color);
+  top: 0;
+  left: 0;
+  border-radius: var(--switch-radius);
+  pointer-events: none;
 }
 
-.switchButton:last-child .switchButton {
-  border-right: 1px solid var(--color-grey-74);
+.switch:before {
+  background-color: var(--switch-bullet-off-color);
+  width: var(--switch-bullet-width);
+  height: var(--switch-bullet-height);
+  z-index: 10;
+  transform:
+    translateX(
+      var(--switch-bullet-off)
+    )
+    translateY(calc(calc(var(--switch-height) / 2) - calc(var(--switch-bullet-height) / 2)));
+  transition: transform 100ms ease-in;
 }
 
-.light .switchButton:last-child .switchButton {
-  border-right: 1px solid var(--color-grey-11);
+.switch:after {
+  background-color: var(--switch-bullet-off-background);
+  width: var(--switch-width);
+  height: var(--switch-height);
+  border: 1px solid var(--switch-bullet-off-background);
+  transition: background-color 70ms ease-in;
 }
 
-.switchButton.checked:after {
-  content: "";
+.checked:before {
+  background-color: var(--switch-bullet-on-color);
+  transform:
+    translateX(var(--switch-bullet-on))
+    translateY(calc(calc(var(--switch-height) / 2) - calc(var(--switch-bullet-height) / 2)));
+}
+
+.switch > input {
+  opacity: 0;
   position: absolute;
-  left: calc(50% - 8px);
-  bottom: -8px;
-  height: 0;
-  vertical-align: middle;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid var(--checkout-primary-color);
-}
-
-@media (--media-tablet) {
-
-  .switchButton.checked:before {
-    left: 19%;
-    width: 62%;
-  }
-
-  .switchButton > h3 {
-    font-size: var(--font-size-tiny);
-  }
-}
-
-@media (--media-palm) {
-
-  .switchButton.checked:before {
-    left: 19%;
-    width: 62%;
-  }
-
-  .switchButton > h3 {
-    font-size: var(--font-size-tiny);
-  }
-}
-
-.visible {
-  display: block;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.checked:after {
+  background-color: var(--switch-bullet-on-background);
+  border-color: var(--switch-bullet-on-background);
+}
+
+.checked {
+  color: var(--switch-bullet-on-background);
+}
+
+.disabled {
+  color: var(--switch-disabled-color);
+}
+
+.disabled > input {
+  cursor: not-allowed;
+}
+
+.disabled:before {
+  background-color: var(--switch-disabled-color);
+}
+
+.disabled:after {
+  background-color: var(--switch-disabled-background);
+  border-color: var(--switch-disabled-color);
+}
+
+.switch span::selection {
+  color: inherit;
+}
+
+.checked span::selection {
+  color: var(--switch-bullet-on-background);
 }
