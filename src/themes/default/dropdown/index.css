@@ -1,9 +1,26 @@
 @import "../colors.css";
 @import "../typography.css";
 
+.dropdown {
+  position: relative;
+}
+
+.dropdown:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 5px 0;
+  border-color: var(--color-white) transparent transparent transparent;
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
 .select {
-  background-color: rgba(38, 38, 38, 1);
-  border-color: rgba(75, 75, 75, 1);
+  appearance: none;
+  background: #262626;
+  border-color: #4b4b4b;
   border-radius: 13px;
   color: var(--color-white);
   cursor: pointer;
@@ -11,6 +28,7 @@
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 10px;
+  position: relative;
   width: 100%;
 }
 
