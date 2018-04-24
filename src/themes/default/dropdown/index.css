@@ -2,9 +2,15 @@
 @import "../typography.css";
 
 .select {
+  background-color: rgba(38, 38, 38, 1);
+  border-color: rgba(75, 75, 75, 1);
+  border-radius: 13px;
   color: var(--color-white);
   cursor: pointer;
   outline: none;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 10px;
   width: 100%;
 }
 
@@ -35,5 +41,6 @@
   color: var(--color-error);
   font-size: 11px;
   margin-bottom: 0;
+  margin-left: 15px;
   margin-top: 2px;
 }

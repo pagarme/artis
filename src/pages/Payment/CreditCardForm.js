@@ -5,7 +5,6 @@ import {
   Grid,
   Row,
   Col,
-  FormDropdown,
 } from 'former-kit'
 
 import FaCreditCard from 'react-icons/lib/fa/credit-card'
@@ -171,7 +170,7 @@ const CreditCard = ({
                 tablet={defaultColSize}
                 palm={defaultColSize}
               >
-                <FormDropdown
+                <Input
                   options={installmentsOptions}
                   name={`${inputPrefixName}installments`}
                   placeholder="Quantidade de Parcelas"

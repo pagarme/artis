@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown, FormDropdown } from 'former-kit'
+import { Dropdown } from 'former-kit'
 
 const defaultOptions = [
   {
@@ -19,65 +19,6 @@ const defaultOptions = [
     value: '120',
   },
 ]
-
-const inputOptions = [
-  {
-    name: 'Leonardo',
-    value: 'leonardo',
-  },
-  {
-    name: 'Donatello',
-    value: 'donatello',
-  },
-  {
-    name: 'Raphael',
-    value: 'raphael',
-  },
-  {
-    name: 'Michelangelo',
-    value: 'michelangelo',
-  },
-]
-
-class DropdownState extends React.Component {
-  constructor () {
-    super()
-
-    this.state = {
-      selected: 'leonardo',
-    }
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      selected: e.target.value,
-    })
-  }
-
-  render () {
-    return (
-      <div>
-        <FormDropdown
-          options={inputOptions}
-          name="pessoas"
-          placeholder="Pessoas"
-          disabled={this.props.disabled}
-          error={this.props.error}
-          onChange={this.handleChange}
-          value={this.state.selected}
-        />
-
-        <p>Selecionado: {this.state.selected}</p>
-      </div>
-    )
-  }
-}
-
-DropdownState.defaultProps = {
-  disabled: false,
-  error: '',
-  title: '',
-}
 
 const DropdownExamples = () => (
   <div>
@@ -108,25 +49,6 @@ const DropdownExamples = () => (
         options={defaultOptions}
         name="former-kit"
         placeholder="Em quantas parcelas?"
-        error="Esse campo é obrigatório"
-      />
-    </section>
-
-    <section>
-      <h3>Input</h3>
-      <DropdownState />
-    </section>
-
-    <section>
-      <h3>Input disabled</h3>
-      <DropdownState
-        disabled
-      />
-    </section>
-
-    <section>
-      <h3>Input disabled</h3>
-      <DropdownState
         error="Esse campo é obrigatório"
       />
     </section>
