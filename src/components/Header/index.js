@@ -46,15 +46,17 @@ const Header = ({
 
   return (
     <header className={theme.header}>
-      {
-        logoSrc
-          ? <img
-            className={theme.logo}
-            src={logoSrc}
-            alt={logoAlt}
-          />
-          : <span />
-      }
+      <div className={theme.logoWrapper}>
+        {
+          logoSrc
+            ? <img
+              className={theme.logo}
+              src={logoSrc}
+              alt={logoAlt}
+            />
+            : ''
+        }
+      </div>
       <ProgressBar
         base={base}
         percentage={percentage}
