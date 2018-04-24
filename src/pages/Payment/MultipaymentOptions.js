@@ -4,14 +4,11 @@ import { equals } from 'ramda'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import {
+  Button,
   Grid,
   Row,
   Col,
 } from 'former-kit'
-
-import {
-  Button,
-} from './../../components'
 
 const applyThemr = themr('UIPaymentPage')
 

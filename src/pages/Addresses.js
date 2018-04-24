@@ -15,6 +15,7 @@ import {
   pick,
 } from 'ramda'
 import {
+  Button,
   Grid,
   Row,
   Col,
@@ -22,7 +23,6 @@ import {
 } from 'former-kit'
 
 import {
-  Button,
   Input,
   Dropdown,
 } from '../components'
