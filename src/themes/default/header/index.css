@@ -3,7 +3,6 @@
 .logo {
   max-width: 110px;
   max-height: 21px;
-  margin: 29px auto 0;
 }
 
 .header {
@@ -13,4 +12,11 @@
   min-height: 110px;
   background: var(--color-grey-86);
   width: 100%;
+}
+
+.logoWrapper {
+  align-items: center;
+  display: flex;
+  height: 81px;
+  justify-content: center;
 }
