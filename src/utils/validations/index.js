@@ -1,11 +1,12 @@
 import {
   always,
   allPass,
+  isEmpty,
   isNil,
   prop,
   pathOr,
 } from 'ramda'
-import removeMask from '../helpers/removeMask'
+import { removeMask } from '../masks/'
 
 import cpf from './cpf'
 import isDate from './card/date'
@@ -16,7 +17,7 @@ const isNumber = value => (!/^[0-9]+$/gi.test(value)
 )
 
 const required = value => (
-  (isNil(value) || value === '')
+  (isNil(value) || isEmpty(value))
     ? 'Este campo é obrigatório'
     : false
 )

@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import createStore from '../../store'
-import formatToBRL from '../../utils/helpers/formatToBRL'
+import { formatToBRL } from '../../utils/masks/'
 import Cart from './index'
 
 const store = createStore({

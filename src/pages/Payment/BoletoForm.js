@@ -13,7 +13,7 @@ import {
 } from './../../components'
 
 import { applyDiscount } from './../../utils/calculations'
-import formatToBRL from './../../utils/helpers/formatToBRL'
+import { formatToBRL } from './../../utils/masks'
 import Barcode from '../../images/barcode.svg'
 
 const defaultColSize = 12

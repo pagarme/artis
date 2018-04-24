@@ -1,7 +1,11 @@
 import {
+  defaultTo,
   filter,
   gte,
+  identity,
   last,
+  of,
+  path,
   pipe,
   prop,
 } from 'ramda'
@@ -10,18 +14,16 @@ const generateArray = length => Array.from(
   { length }
 ).map(Number.call, Number)
 
-const isFree = (free, value) => value > free
+const isFree = (free, value) => value <= free
 
 const getInstallmentAmount = (amount, installments) =>
   (amount / installments).toFixed(0)
 
-const getInterestPercentage = (amount, interest) => (amount * (interest / 100))
-
-const getInterestAmount = (amount, interest) => interest // eslint-disable-line
+const getInterestPercentage = (interest, amount) => (amount * (interest / 100))
 
 const interestCalculateFunctions = {
   percentage: getInterestPercentage,
-  amount: getInterestAmount,
+  amount: identity,
 }
 
 const getInterestOption = index => pipe(
@@ -34,27 +36,19 @@ const getInterestOption = index => pipe(
   last
 )
 
-
-const generateFreeInstallment = (index, amount) => {
-  const installmentAmount = getInstallmentAmount(amount, index)
-
-  return {
-    amount,
-    installmentAmount,
-    value: index.toString(),
-  }
-}
-
 const getInterestInstallment = (interestRate, index, amount) => {
   const interest = getInterestOption(index)(interestRate)
 
-  if (!interest) {
-    return generateFreeInstallment(index, amount)
-  }
+  const calculateFunction = pipe(
+    path(of(prop('type', interest))),
+    defaultTo(identity)
+  )(interestCalculateFunctions)
 
-  const calculateFunction = interestCalculateFunctions[interest.type]
+  const interestValue = calculateFunction(
+    defaultTo(0, prop('value', interest)),
+    amount,
+  )
 
-  const interestValue = calculateFunction(amount, interest.value)
   const newAmount = amount + interestValue
   const installmentAmount = getInstallmentAmount(newAmount, index)
 
@@ -73,11 +67,9 @@ const calculateInstallmentAmount = (
 ) => (value) => {
   const index = value + 1
 
-  if (isFree(free, index)) {
-    return getInterestInstallment(interestRate, index, amount)
-  }
-
-  return generateFreeInstallment(index, amount)
+  return getInterestInstallment(
+    isFree(free, index) ? [] : interestRate, index, amount,
+  )
 }
 
 const calculate = (amount, installmentConfig = {}) => {
@@ -92,6 +84,7 @@ const calculate = (amount, installmentConfig = {}) => {
   }
 
   const installments = generateArray(max)
+
   const generateInstallments = calculateInstallmentAmount(
     interestRate,
     free,

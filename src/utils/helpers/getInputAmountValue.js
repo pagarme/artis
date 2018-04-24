@@ -1,4 +1,4 @@
-import formatToCents from './formatToCents'
+import { multiply, defaultTo, pipe, prop } from 'ramda'
 
 const getInputAmountValue = (
   formData,
@@ -6,6 +6,10 @@ const getInputAmountValue = (
   position,
   amount
 ) =>
-  formatToCents(formData[inputAmountNames[position]]) || amount
+  pipe(
+    prop(inputAmountNames[position]),
+    multiply(100),
+    defaultTo(amount),
+  )(formData)
 
 export default getInputAmountValue

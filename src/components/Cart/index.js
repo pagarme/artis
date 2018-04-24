@@ -19,7 +19,7 @@ import CartIcon from 'emblematic-icons/svg/ShoppingCart24.svg'
 
 import { Button } from 'former-kit'
 
-import formatBRL from '../../utils/helpers/formatToBRL'
+import { formatToBRL } from '../../utils/masks/'
 
 const applyThemr = themr('UICart')
 
@@ -125,7 +125,7 @@ class Cart extends React.Component {
                   className={theme.item}
                 >
                   <h4>{item.title}</h4>
-                  <p>{formatBRL(item.unitPrice)}</p>
+                  <p>{formatToBRL(item.unitPrice)}</p>
                 </li>
               ))
             }
@@ -138,7 +138,7 @@ class Cart extends React.Component {
                 <p>
                   {
                     shippingRate ?
-                      formatBRL(shippingRate) :
+                      formatToBRL(shippingRate) :
                       'Grátis'
                   }
                 </p>
@@ -146,7 +146,7 @@ class Cart extends React.Component {
             }
           </ul>
           <p className={theme.total}>Total</p>
-          <p className={theme.amount}>{formatBRL(amount)}</p>
+          <p className={theme.amount}>{formatToBRL(amount)}</p>
         </div>
         <div className={theme.footer}>
           { shouldRenderClientData && this.renderClientData() }

@@ -14,7 +14,7 @@ import {
 import EmailForm from '../../containers/EmailForm'
 import ActionList from '../ActionList'
 
-import formatBRL from '../../utils/helpers/formatToBRL'
+import { formatToBRL } from '../../utils/masks/'
 
 import successIcon from '../../images/success-icon.png'
 
@@ -91,7 +91,7 @@ class SuccessInfo extends React.Component {
                 <div>
                   <div className={theme.field}>Valor pago</div>
                   <div className={theme.value}>
-                    {formatBRL(paymentInfo.amount)}
+                    {formatToBRL(paymentInfo.amount)}
                   </div>
                 </div>
               </Row>
@@ -179,7 +179,7 @@ class SuccessInfo extends React.Component {
                 <div>
                   <div className={theme.field}>Valor pago</div>
                   <div className={theme.value}>
-                    {formatBRL(paymentInfo.amount)}
+                    {formatToBRL(paymentInfo.amount)}
                   </div>
                 </div>
               </Row>

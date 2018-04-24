@@ -18,8 +18,10 @@ import {
   Input,
 } from './../../components'
 
-import formatToBRL from './../../utils/helpers/formatToBRL'
-import removeMask from './../../utils/helpers/removeMask'
+import {
+  formatToBRL,
+  removeMaskPlaceholder,
+} from './../../utils/masks/'
 
 const defaultColSize = 12
 const mediumColSize = 6
@@ -61,10 +63,10 @@ const CreditCard = ({
             align={'center'}
           >
             <PaymentCard
-              number={removeMask(cardNumber)}
-              cvv={removeMask(cvv)}
-              holderName={removeMask(holderName)}
-              expiration={removeMask(expiration)}
+              number={removeMaskPlaceholder(cardNumber)}
+              cvv={removeMaskPlaceholder(cvv)}
+              holderName={removeMaskPlaceholder(holderName)}
+              expiration={removeMaskPlaceholder(expiration)}
               flipped={flipped}
             />
             <h4 className={theme.amount} >
