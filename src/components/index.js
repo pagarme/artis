@@ -1,4 +1,5 @@
 export { default as ActionList } from './ActionList'
+export { default as Autocomplete } from './Autocomplete'
 export { default as ErrorBoundary } from './ErrorBoundary'
 export { default as ErrorInfo } from './ErrorInfo'
 export { default as Footer } from './Footer'
