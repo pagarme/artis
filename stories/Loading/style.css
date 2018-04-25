@@ -1,0 +1,25 @@
+@import "../../src/themes/default/index.css";
+
+.container {
+  padding: 20px;
+  background-color: #333333;
+}
+
+.container h2 {
+  margin-top: 0;
+  color: #ffffff;
+  font-family: var(--primary-font-family);
+  font-weight: var(--title-font-weight);
+}
+
+.container > div {
+  padding: 20px 0;
+}
+
+.container button {
+  margin-right: 20px;
+}
+
+.textAlign {
+  width: 100px;
+}

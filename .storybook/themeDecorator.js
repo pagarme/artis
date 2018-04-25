@@ -19,4 +19,4 @@ const ThemeDecorator = (storyFn) => (
 )
 
 addDecorator(ThemeDecorator)
-setColors('#7ad499', '#46b67c')
+setColors('#37cc9a', '#46b67c')
