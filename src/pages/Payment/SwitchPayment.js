@@ -38,6 +38,7 @@ import {
 } from '../../utils/validations'
 
 import getInstallments from './../../utils/helpers/getInstallments'
+import modifyInstallments from './../../utils/helpers/modifyInstallments'
 import { applyDiscount } from './../../utils/calculations'
 
 const applyThemr = themr('UIPaymentPage')
@@ -59,7 +60,8 @@ const createSwitchItems = ({
   paymentType,
 }) => {
   const { paymentConfig } = transaction
-  const { boleto, creditcard } = paymentConfig
+  const { boleto } = paymentConfig
+  const creditcard = modifyInstallments(paymentConfig.creditcard)
 
   const allowedPaymentOptions = {
     boleto: {
