@@ -43,7 +43,7 @@
   font-size: var(--font-size-small);
 }
 
-.disabled {
+.disabled > select {
   cursor: not-allowed;
 }
 
