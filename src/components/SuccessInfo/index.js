@@ -1,5 +1,4 @@
 import React from 'react'
-import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import ReactGA from 'react-ga'
@@ -9,6 +8,7 @@ import {
   Grid,
   Row,
   Col,
+  ThemeConsumer,
 } from 'former-kit'
 
 import EmailForm from '../../containers/EmailForm'
@@ -18,7 +18,7 @@ import { formatToBRL } from '../../utils/masks/'
 
 import successIcon from '../../images/success-icon.png'
 
-const applyThemr = themr('UISuccessInfo')
+const consumeTheme = ThemeConsumer('UISuccessInfo')
 
 const iconColSize = 4
 const contentColSize = 8
@@ -312,4 +312,4 @@ const mapStateToProps = ({ screenSize }) => ({
   isBigScreen: screenSize.isBigScreen,
 })
 
-export default connect(mapStateToProps)(applyThemr(SuccessInfo))
+export default connect(mapStateToProps)(consumeTheme(SuccessInfo))

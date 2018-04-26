@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { themr } from 'react-css-themr'
 import Form from 'react-vanilla-form'
 import {
   pipe,
@@ -17,7 +16,10 @@ import {
   prop,
   reject,
 } from 'ramda'
-import { Button } from 'former-kit'
+import {
+  Button,
+  ThemeConsumer,
+} from 'former-kit'
 
 import { Switch } from '../../components'
 
@@ -40,7 +42,7 @@ import {
 import getInstallments from './../../utils/helpers/getInstallments'
 import { applyDiscount } from './../../utils/calculations'
 
-const applyThemr = themr('UIPaymentPage')
+const consumeTheme = ThemeConsumer('UIPaymentPage')
 
 const setPaymentMethod = ({
   defaultMethod,
@@ -369,4 +371,4 @@ export default connect(mapStateToProps, {
   handleIncrementFinalAmount: incrementFinalAmount,
   handleDecrementFinalAmount: decrementFinalAmount,
   handleResetFinalAmount: resetFinalAmount,
-})(applyThemr(SwitchPayment))
+})(consumeTheme(SwitchPayment))

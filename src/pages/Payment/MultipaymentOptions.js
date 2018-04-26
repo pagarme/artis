@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { equals } from 'ramda'
-import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import {
   Button,
   Grid,
   Row,
   Col,
+  ThemeConsumer,
 } from 'former-kit'
 
-const applyThemr = themr('UIPaymentPage')
+const consumeTheme = ThemeConsumer('UIPaymentPage')
 
 const defaultColSize = 12
 const mediumColSize = 6
@@ -147,4 +147,4 @@ MultipaymentOptions.defaultProps = {
   theme: {},
 }
 
-export default applyThemr(MultipaymentOptions)
+export default consumeTheme(MultipaymentOptions)

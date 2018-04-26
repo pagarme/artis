@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
-import { themr } from 'react-css-themr'
+import { ThemeConsumer } from 'former-kit'
 
-const applyThemr = themr('UINormalizeCSS')
+const consumeTheme = ThemeConsumer('UINormalizeCSS')
 
 const NormalizeCSS = ({ children }) => (children)
 
@@ -13,4 +13,4 @@ NormalizeCSS.defaultProps = {
   children: {},
 }
 
-export default applyThemr(NormalizeCSS)
+export default consumeTheme(NormalizeCSS)

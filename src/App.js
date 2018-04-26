@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
-import { ThemeProvider as ThemrProvider } from 'react-css-themr'
 import { ThemeProvider } from 'former-kit'
 
 import Checkout from './containers/Checkout'
@@ -25,19 +24,17 @@ const App = ({
       styles: defaultTheme,
     }}
     >
-      <ThemrProvider theme={defaultTheme}>
-        <ErrorBoundary CrashReportComponent={<ErrorPage />}>
-          <NormalizeCSS>
-            <Checkout
-              apiData={apiData}
-              apiErrors={apiErrors}
-              acquirer={acquirer}
-              targetElement={clientTarget}
-              base={clientThemeBase}
-            />
-          </NormalizeCSS>
-        </ErrorBoundary>
-      </ThemrProvider>
+      <ErrorBoundary CrashReportComponent={<ErrorPage />}>
+        <NormalizeCSS>
+          <Checkout
+            apiData={apiData}
+            apiErrors={apiErrors}
+            acquirer={acquirer}
+            targetElement={clientTarget}
+            base={clientThemeBase}
+          />
+        </NormalizeCSS>
+      </ErrorBoundary>
     </ThemeProvider>
   </Provider>
 )

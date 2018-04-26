@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { themr } from 'react-css-themr'
+import { ThemeConsumer } from 'former-kit'
 import { connect } from 'react-redux'
 import { State, Action, withStatechart } from 'react-automata'
 import ReactGA from 'react-ga'
@@ -44,7 +44,7 @@ import CloseIcon from '../../images/close.svg'
 import statechart from './statechart'
 import steps from './steps'
 
-const applyThemr = themr('UICheckout')
+const consumeTheme = ThemeConsumer('UICheckout')
 
 class Checkout extends Component {
   state = {
@@ -403,4 +403,4 @@ const mapStateToProps = ({ pageInfo, transactionValues }) => ({
 
 export default connect(mapStateToProps, {
   changeScreenSize,
-})(applyThemr(withStatechart(statechart)(Checkout)))
+})(consumeTheme(withStatechart(statechart)(Checkout)))

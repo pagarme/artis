@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import {
@@ -18,6 +17,7 @@ import {
   Col,
   Switch,
   FormInput,
+  ThemeConsumer,
 } from 'former-kit'
 
 import options from '../utils/data/states'
@@ -36,7 +36,7 @@ import {
 const defaultColSize = 12
 const mediumColSize = 6
 
-const applyThemr = themr('UIAddressesPage')
+const consumeTheme = ThemeConsumer('UIAddressesPage')
 
 class AddressesPage extends Component {
   constructor (props) {
@@ -328,4 +328,4 @@ const mapStateToProps = ({ screenSize, pageInfo }) => ({
 
 export default connect(mapStateToProps, {
   handlePageChange: addPageInfo,
-})(applyThemr(AddressesPage))
+})(consumeTheme(AddressesPage))

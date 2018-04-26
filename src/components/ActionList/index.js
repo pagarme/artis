@@ -1,13 +1,13 @@
 import React from 'react'
-import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import {
   Button,
   Row,
   Col,
+  ThemeConsumer,
 } from 'former-kit'
 
-const applyThemr = themr('UIActionList')
+const consumeTheme = ThemeConsumer('UIActionList')
 const defaultColSize = 12
 
 const ActionList = ({ theme, buttons }) => (
@@ -62,4 +62,4 @@ ActionList.defaultProps = {
   theme: {},
 }
 
-export default applyThemr(ActionList)
+export default consumeTheme(ActionList)

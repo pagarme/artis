@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { themr } from 'react-css-themr'
+import { ThemeConsumer } from 'former-kit'
 
 import ShieldIcon from '../../images/escudo.svg'
 
-const applyThemr = themr('UIFooter')
+const consumeTheme = ThemeConsumer('UIFooter')
 
 const Footer = ({
   theme,
@@ -36,4 +36,4 @@ Footer.defaultProps = {
   theme: {},
 }
 
-export default applyThemr(Footer)
+export default consumeTheme(Footer)

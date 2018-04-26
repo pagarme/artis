@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { themr } from 'react-css-themr'
+import { ThemeConsumer } from 'former-kit'
 import { find, type } from 'ramda'
 
 import SwitchPayment from './SwitchPayment'
 import MultipaymentOptions from './MultipaymentOptions'
 
-const applyThemr = themr('UIPaymentPage')
+const consumeTheme = ThemeConsumer('UIPaymentPage')
 
 const hasMultipayment = find(item => type(item) === 'Array')
 
@@ -41,4 +41,4 @@ PaymentPage.propTypes = {
   transaction: PropTypes.shape().isRequired,
 }
 
-export default applyThemr(PaymentPage)
+export default consumeTheme(PaymentPage)

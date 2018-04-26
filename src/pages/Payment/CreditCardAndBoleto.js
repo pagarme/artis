@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { themr } from 'react-css-themr'
 import Form from 'react-vanilla-form'
 import { isEmpty, reject, isNil, prop } from 'ramda'
 import classNames from 'classnames'
@@ -10,6 +9,7 @@ import {
   Grid,
   Row,
   Col,
+  ThemeConsumer,
 } from 'former-kit'
 import { incrementFinalAmount, resetFinalAmount } from '../../actions'
 
@@ -27,7 +27,7 @@ import { formatToBRL } from './../../utils/masks/'
 import getInstallments from './../../utils/helpers/getInstallments'
 import getInputAmountValue from './../../utils/helpers/getInputAmountValue'
 
-const applyThemr = themr('UIPaymentPage')
+const consumeTheme = ThemeConsumer('UIPaymentPage')
 
 const defaultColSize = 12
 const mediumColSize = 6
@@ -293,4 +293,4 @@ const mapStateToProps = ({ screenSize }) => ({
 export default connect(mapStateToProps, {
   handleIncrementFinalAmount: incrementFinalAmount,
   handleResetFinalAmount: resetFinalAmount,
-})(applyThemr(CreditCardAndBoleto))
+})(consumeTheme(CreditCardAndBoleto))

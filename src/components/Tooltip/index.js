@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { themr } from 'react-css-themr'
+import { ThemeConsumer } from 'former-kit'
 
 import InfoIcon from '../../images/info.svg'
 
-const applyThemr = themr('UITooltip')
+const consumeTheme = ThemeConsumer('UITooltip')
 
 const Tooltip = ({ text, theme, className }) => (
   <div
@@ -36,4 +36,4 @@ Tooltip.defaultProps = {
   className: null,
 }
 
-export default applyThemr(Tooltip)
+export default consumeTheme(Tooltip)

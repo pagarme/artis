@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { themr } from 'react-css-themr'
 import CloseIcon from 'react-icons/lib/io/android-close'
 import {
   Button,
   Row,
   Col,
   FormInput,
+  ThemeConsumer,
 } from 'former-kit'
 
-const applyThemr = themr('UIEmailForm')
+const consumeTheme = ThemeConsumer('UIEmailForm')
 const biggerColSize = 9
 const smallerColSize = 3
 
@@ -103,4 +103,4 @@ EmailForm.defaultProps = {
   theme: {},
 }
 
-export default applyThemr(EmailForm)
+export default consumeTheme(EmailForm)
