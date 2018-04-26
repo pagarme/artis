@@ -1,15 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import createStore from '../../store'
 import { formatToBRL } from '../../utils/masks/'
 import Cart from './index'
-
-const store = createStore({
-  transaction: {
-    amount: 15000,
-  },
-})
 
 const items = [
   {
@@ -20,44 +13,63 @@ const items = [
     tangible: true,
   },
   {
-    id: 1,
+    id: 2,
     title: 'Blue pill',
-    unitPrice: 10000,
+    unitPrice: 5000,
     quantity: 1,
     tangible: true,
   },
 ]
 
+const customer = {
+  name: 'Dan Abramov',
+  documentNumber: '19981596639',
+  email: 'mercurio@pagar.me',
+  phoneNumber: '1130442277',
+}
+
+const shipping = {
+  street: 'Rua Fidêncio Ramos',
+  number: '308',
+  additionalInfo: 'Pagar.me',
+  neighborhood: 'Vila Olimpia',
+  city: 'São Paulo',
+  state: 'SP',
+  zipcode: '04551010',
+}
+
 const shippingRate = 5000
 
 describe('Cart', () => {
-  it('should have two items', () => {
-    const onToggleCart = jest.fn()
-
+  it('should render shippingRate value', () => {
     const component = mount(
-      <Cart
-        items={items}
-        onToggleCart={onToggleCart}
-        collapsed={false}
-        showCloseButton={false}
-        store={store}
-        shippingRate={shippingRate}
-      />
+      <Cart shippingRate={shippingRate} />
     )
 
-    expect(component.find('li')).toHaveLength(3)
+    expect(
+      component
+        .find('div')
+        .last()
+        .find('p')
+        .contains('R$ 50.00')
+    ).toBeTruthy()
   })
 
-  it('Must have two items', () => {
-    const onToggleCart = jest.fn()
+  it('should render amount', () => {
+    const component = mount(
+      <Cart items={items} />
+    )
 
+    const totalValue = component.find('p').last().text()
+    const totalValueToCompare = formatToBRL(10000)
+
+    expect(totalValue).toBe(totalValueToCompare)
+  })
+
+  it('should sum amount and shipping rate', () => {
     const component = mount(
       <Cart
         items={items}
-        onToggleCart={onToggleCart}
-        showCloseButton
-        collapsed={false}
-        store={store}
         shippingRate={shippingRate}
       />
     )
@@ -67,5 +79,61 @@ describe('Cart', () => {
 
     expect(totalValue).toBe(totalValueToCompare)
   })
-})
 
+  it('should render items', () => {
+    const component = mount(
+      <Cart
+        items={items}
+      />
+    )
+
+    expect(component.contains('Red pill')).toBeTruthy()
+    expect(component.contains('Blue pill')).toBeTruthy()
+  })
+
+  it('should not render name without customer', () => {
+    const component = mount(
+      <Cart />
+    )
+
+    expect(component.contains('Nome')).toBeFalsy()
+  })
+
+  it('should render name and email', () => {
+    const component = mount(
+      <Cart customer={customer} />
+    )
+
+    expect(component.contains('Nome')).toBeTruthy()
+    expect(component.contains('E-mail')).toBeTruthy()
+    expect(component.contains('Dan Abramov')).toBeTruthy()
+    expect(component.contains('mercurio@pagar.me')).toBeTruthy()
+  })
+
+  it('should not render delivery whithout shipping', () => {
+    const component = mount(
+      <Cart customer={customer} />
+    )
+
+    expect(component.contains('Entrega')).toBeFalsy()
+  })
+
+  it('should not render delivery', () => {
+    const component = mount(
+      <Cart shipping={shipping} />
+    )
+
+    const shippingLines = component.debug()
+
+    const containsLine1 = shippingLines.includes(
+      'Rua Fidêncio Ramos 308 - Pagar.me'
+    )
+
+    const containsLine2 = shippingLines.includes(
+      'CEP 04551-010 - São Paulo - SP'
+    )
+
+    expect(component.contains('Entrega')).toBeTruthy()
+    expect(containsLine1 && containsLine2).toBeTruthy()
+  })
+})

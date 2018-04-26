@@ -12,6 +12,7 @@
   min-height: 110px;
   background: var(--color-grey-86);
   width: 100%;
+  border-radius: 4px;
 }
 
 .logoWrapper {

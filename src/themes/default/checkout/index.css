@@ -20,9 +20,12 @@
 .checkout {
   width: 700px;
   max-height: 578px;
+  min-width: 700px;
+  min-height: 578px;
   background: var(--color-grey-83);
   border-radius: 4px;
   z-index: 1;
+  box-shadow: 0 0 13px -2px #757575;
 }
 
 .closeButton {

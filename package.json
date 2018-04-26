@@ -25,6 +25,7 @@
     "react": "16.2.0",
     "react-automata": "2.0.0",
     "react-css-themr": "2.1.2",
+    "react-custom-scrollbars": "4.2.1",
     "react-dom": "16.2.0",
     "react-ga": "2.4.1",
     "react-icons": "2.2.7",

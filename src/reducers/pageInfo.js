@@ -1,7 +1,7 @@
 const defaultState = { }
 
 const pageInfo = (state = defaultState, action) => {
-  const { payload = {} } = action // default payload if none recieved by action
+  const { payload = {} } = action
 
   switch (action.type) {
     case 'ADD_PAGE_INFO':
