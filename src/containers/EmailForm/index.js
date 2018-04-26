@@ -6,9 +6,8 @@ import {
   Button,
   Row,
   Col,
+  FormInput,
 } from 'former-kit'
-
-import { Input } from '../../components'
 
 const applyThemr = themr('UIEmailForm')
 const biggerColSize = 9
@@ -69,7 +68,7 @@ class EmailForm extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Input
+          <FormInput
             name="recipient"
             label="Digite seu nome (opcional)"
             value={recipient}
@@ -77,7 +76,7 @@ class EmailForm extends React.Component {
           />
         </Row>
         <Row>
-          <Input
+          <FormInput
             name="email"
             label="Digite o e-mail"
             hint="Aperte Enter para enviar"

@@ -8,13 +8,9 @@ import { isEmpty, reject, isNil } from 'ramda'
 import {
   Button,
   Grid,
-  Row,
   Col,
+  FormInput,
 } from 'former-kit'
-
-import {
-  Input,
-} from '../components'
 
 import {
   required,
@@ -27,9 +23,7 @@ import { addPageInfo } from '../actions'
 
 import CustomerIcon from '../images/avatar-line.svg'
 
-const smallColSize = 4
-const mediumColSize = 7
-const bigColSize = 8
+const mediumColSize = 6
 const defaultColSize = 12
 
 const applyThemr = themr('UICustomerPage')
@@ -66,83 +60,37 @@ class CustomerPage extends Component {
   }
 
   renderCustomerForm () {
-    const { theme, base } = this.props
+    const { theme } = this.props
 
     return (
-      <Grid>
-        <Row className={theme.title}>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-            align={'center'}
-          >
-            <CustomerIcon className={theme.titleIcon} />
-            Dados pessoais
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Input
-              base={base}
-              name="name"
-              label="Nome"
-              placeholder="Digite seu nome"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            tv={defaultColSize}
-            desk={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-          >
-            <Input
-              base={base}
-              name="email"
-              label="E-mail"
-              placeholder="Digite seu e-mail"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            tv={smallColSize}
-            desk={smallColSize}
-            tablet={smallColSize}
-            palm={smallColSize}
-          >
-            <Input
-              base={base}
-              name="documentNumber"
-              label="CPF"
-              mask="111.111.111-11"
-              placeholder="Digite seu CPF"
-            />
-          </Col>
-          <Col
-            tv={bigColSize}
-            desk={bigColSize}
-            tablet={bigColSize}
-            palm={bigColSize}
-          >
-            <Input
-              base={base}
-              name="phoneNumber"
-              label="DDD + Telefone"
-              mask="(11) 11111-1111"
-              placeholder="Digite seu telefone"
-            />
-          </Col>
-        </Row>
-      </Grid>
+      <div className={theme.customerForm}>
+        <h2 className={theme.title}>
+          <CustomerIcon className={theme.titleIcon} />
+          Dados pessoais
+        </h2>
+        <FormInput
+          name="name"
+          label="Nome"
+          placeholder="Digite seu nome"
+        />
+        <FormInput
+          name="email"
+          label="E-mail"
+          placeholder="Digite seu e-mail"
+        />
+        <FormInput
+          name="documentNumber"
+          label="CPF"
+          mask="111.111.111-11"
+          placeholder="Digite seu CPF"
+        />
+        <FormInput
+          name="phoneNumber"
+          label="DDD + Telefone"
+          mask="(11) 11111-1111"
+          placeholder="Digite seu telefone"
+        />
+      </div>
     )
   }
 

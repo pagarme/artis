@@ -5,14 +5,13 @@ import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import {
+  applySpec,
+  isEmpty,
+  isNil,
   merge,
   omit,
-  isNil,
-  reject,
-  isEmpty,
-  applySpec,
   pathOr,
-  pick,
+  reject,
 } from 'ramda'
 import {
   Button,
@@ -20,11 +19,8 @@ import {
   Row,
   Col,
   Switch,
+  FormInput,
 } from 'former-kit'
-
-import {
-  Input,
-} from '../components'
 
 import options from '../utils/data/states'
 import BillingIcon from '../images/map-pin.svg'
@@ -41,11 +37,10 @@ import {
 
 const defaultColSize = 12
 const mediumColSize = 6
-const smallColSize = 4
-const bigColSize = 8
 
 const applyThemr = themr('UIAddressesPage')
 
+// eslint-disable-next-line
 const shippingInfo = applySpec({
   shippingStreet: pathOr('', ['street']),
   shippingNumber: pathOr('', ['number']),
@@ -60,124 +55,55 @@ class AddressesPage extends Component {
   constructor (props) {
     super(props)
 
-    const { billing, shipping } = props
+    const { billing } = props
 
     this.state = {
       ...billing,
-      ...shippingInfo(shipping),
       sameAddressForShipping: billing.sameAddressForShipping || true,
     }
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    if (
-      prevState.sameAddressForShipping === true &&
-      this.state.sameAddressForShipping === false) {
-      this.shippingZipcodeInput.focus()
-    }
-  }
-
   componentWillUnmount () {
-    const {
-      sameAddressForShipping,
-    } = this.state
-
-    const billingAddress = pick([
-      'street',
-      'number',
-      'complement',
-      'neighborhood',
-      'city',
-      'state',
-      'zipcode',
-      'sameAddressForShipping',
-      'formValid',
-    ], this.state)
-
     this.props.handlePageChange({
       page: 'billing',
-      pageInfo: billingAddress,
+      pageInfo: this.state,
     })
-
-    if (sameAddressForShipping === true) {
-      this.props.handlePageChange({
-        page: 'shipping',
-        pageInfo: billingAddress,
-      })
-    }
-
-    if (sameAddressForShipping === false) {
-      this.props.handlePageChange({
-        page: 'shipping',
-        pageInfo: {
-          street: this.state.shippingStreet,
-          number: this.state.shippingNumber,
-          complement: this.state.shippingComplement,
-          neighborhood: this.state.shippingNeighborhood,
-          city: this.state.shippingCity,
-          state: this.state.shippingState,
-          zipcode: this.state.shippingZipcode,
-        },
-      })
-    }
   }
 
-  handleZipcodeChange = (e) => {
-    const { name, value } = e.target
-    const zipcode = removeMask(value)
-
-    if (zipcode.length === 8) {
-      this.autocompleteAddress(zipcode, name)
-    }
-  }
-
-  autocompleteAddress (zipcode, name) {
+  autocompleteAddress (zipcode) {
     const updateAddress = (address) => {
       const newZipcode = address.cep
 
-      if (name.startsWith('shipping')) {
-        this.setState({
-          shippingStreet: address.street,
-          shippingNeighborhood: address.neighborhood,
-          shippingCity: address.city,
-          shippingState: address.state,
-          shippingNumber: '',
-          shippingComplement: '',
-        })
+      const newAddress = merge(
+        omit(['cep'], address),
+        {
+          zipcode: newZipcode,
+          number: '',
+          complement: '',
+          isSearchingCPF: false,
+        }
+      )
 
-        this.shippingNumberInput.focus()
-      } else {
-        const newAddress = merge(
-          omit(['cep'], address),
-          {
-            zipcode: newZipcode,
-            number: '',
-            complement: '',
-          }
-        )
+      this.setState(newAddress)
 
-        this.setState(newAddress)
-
-        this.numberInput.focus()
-      }
+      // this.numberInput.focus()
     }
 
     const handleError = error =>
       this.setState({
         error: error.message,
+        isSearchingCPF: false,
       })
 
-    getAddress(zipcode)
-      .then(updateAddress)
-      .catch(handleError)
+    this.setState({ isSearchingCPF: true }, () => (
+      getAddress(zipcode)
+        .then(updateAddress)
+        .catch(handleError)
+    ))
   }
 
   handleNumberInputRef = (input) => {
     this.numberInput = input
-  }
-
-  handleShippingNumberInputRef = (input) => {
-    this.shippingNumberInput = input
   }
 
   shippingZipcodeRef = (input) => {
@@ -185,56 +111,31 @@ class AddressesPage extends Component {
   }
 
   handleSameAddressChange = (value) => {
-    this.setState((prevState) => {
-      const changeSameAddressToFalse = (
-        prevState.sameAddressForShipping === true && value === false
-      )
-
-      const newState = {
-        sameAddressForShipping: value,
-        formValid: !changeSameAddressToFalse,
-      }
-
-      if (changeSameAddressToFalse) {
-        return merge(newState, {
-          shippingStreet: '',
-          shippingNumber: '',
-          shippingComplement: '',
-          shippingNeighborhood: '',
-          shippingCity: '',
-          shippingState: '',
-          shippingZipcode: '',
-        })
-      }
-
-      return newState
-    })
+    this.setState({ sameAddressForShipping: value })
   }
 
   handleChangeForm = (values, errors) => {
-    this.setState(() => {
-      const validatedErrors = omit(this.state.sameAddressForShipping === true
-        ? ['shippingStreet',
-          'shippingNumber',
-          'shippingComplement',
-          'shippingNeighborhood',
-          'shippingCity',
-          'shippingState',
-          'shippingZipcode']
-        : [], reject(isNil, errors))
+    const {
+      zipcode: oldZipcode,
+    } = this.state
 
-      const formValid = isEmpty(validatedErrors)
-        && removeMask(values.zipcode || '').length >= 8
-
-      return {
-        ...values,
-        formValid,
+    this.setState({
+      ...values,
+      formValid: isEmpty(reject(isNil, errors)),
+    }, () => {
+      if (values.zipcode !== oldZipcode &&
+        removeMask(values.zipcode).length === 8) {
+        this.autocompleteAddress(values.zipcode)
       }
     })
   }
 
   render () {
-    const { sameAddressForShipping } = this.state
+    const {
+      sameAddressForShipping,
+      isSearchingCPF,
+    } = this.state
+
     const {
       theme,
       base,
@@ -278,36 +179,6 @@ class AddressesPage extends Component {
             required,
             maxLength(19),
           ],
-          shippingZipcode: [
-            required,
-            minLength(8),
-            maxLength(8),
-          ],
-          shippingNumber: [
-            required,
-            isNumber,
-            minLength(1),
-            maxLength(5),
-          ],
-          shippingStreet: [
-            required,
-            minLength(10),
-            maxLength(40),
-          ],
-          shippingNeighborhood: [
-            required,
-            minLength(4),
-            maxLength(15),
-          ],
-          shippingCity: [
-            required,
-            minLength(4),
-            maxLength(25),
-          ],
-          shippingState: [
-            required,
-            maxLength(19),
-          ],
         }}
       >
         <Grid
@@ -315,251 +186,113 @@ class AddressesPage extends Component {
             classNames(theme[base], theme.page)
           }
         >
-          <Row
-            stretch
-            className={theme.alignCenter}
+          <Col
+            tv={mediumColSize}
+            desk={mediumColSize}
+            tablet={mediumColSize}
+            palm={defaultColSize}
           >
-            <Col
-              tv={mediumColSize}
-              desk={mediumColSize}
-              tablet={mediumColSize}
-              palm={defaultColSize}
-            >
-              <Row className={theme.title}>
+            <div className={theme.addressForm}>
+              <h2 className={theme.title}>
                 <BillingIcon className={theme.titleIcon} />
                 Endereço de cobrança
-              </Row>
-              <Row>
-                <Input
-                  base={base}
-                  name="zipcode"
-                  label="CEP"
-                  mask="11111-111"
-                  placeholder="Digite o CEP"
-                  onAutocomplete={this.handleZipcodeChange}
-                />
-              </Row>
-              <Row>
-                <Input
-                  base={base}
-                  name="street"
-                  label="Rua"
-                  placeholder="Digite o endereço"
-                />
-              </Row>
-              <Row>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <Input
-                    base={base}
-                    inputRef={this.handleNumberInputRef}
-                    name="number"
-                    label="Nº"
-                    placeholder="Digite o número"
-                    type="number"
-                  />
-                </Col>
-                <Col
-                  tv={bigColSize}
-                  desk={bigColSize}
-                  tablet={bigColSize}
-                  palm={bigColSize}
-                >
-                  <Input
-                    base={base}
-                    name="complement"
-                    label="Complemento"
-                    placeholder="Digite o complemento do endereço"
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Input
-                  base={base}
-                  name="neighborhood"
-                  label="Bairro"
-                  placeholder="Digite o bairro"
-                />
-              </Row>
-              <Row>
-                <Col
-                  tv={bigColSize}
-                  desk={bigColSize}
-                  tablet={bigColSize}
-                  palm={bigColSize}
-                >
-                  <Input
-                    base={base}
-                    name="city"
-                    label="Cidade"
-                    placeholder="Digite a cidade"
-                  />
-                </Col>
-                <Col
-                  tv={smallColSize}
-                  desk={smallColSize}
-                  tablet={smallColSize}
-                  palm={smallColSize}
-                >
-                  <Input
-                    options={options}
-                    name="state"
-                    placeholder="Escolha a UF"
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col
-                  tv={defaultColSize}
-                  desk={defaultColSize}
-                  tablet={defaultColSize}
-                  palm={defaultColSize}
-                >
-                  <span className={theme.label}>
-                  Utilizar este endereço para entrega?
-                  </span>
-                </Col>
-              </Row>
-              <Row>
-                <Col
-                  tv={mediumColSize}
-                  desk={mediumColSize}
-                  tablet={mediumColSize}
-                  palm={mediumColSize}
-                >
-                  <Switch
-                    checked={sameAddressForShipping}
-                    onChange={this.handleSameAddressChange}
-                    strings={{
-                      on: 'Sim',
-                      off: 'Não',
-                    }}
-                  />
-                </Col>
-              </Row>
-            </Col>
-            {
-              !sameAddressForShipping &&
+              </h2>
+              <FormInput
+                disabled={isSearchingCPF}
+                name="zipcode"
+                label="CEP"
+                mask="11111-111"
+                placeholder="Digite o CEP"
+                hint={isSearchingCPF
+                  ? 'Procurando dados do endereço'
+                  : 'Digite o CEP para buscar os dados de endereço'
+                }
+              />
+              <FormInput
+                disabled={isSearchingCPF}
+                name="street"
+                label="Rua"
+                placeholder="Digite o endereço"
+              />
+              <FormInput
+                inputRef={this.handleNumberInputRef}
+                name="number"
+                label="Nº"
+                placeholder="Digite o número"
+                type="number"
+              />
+              <FormInput
+                name="complement"
+                label="Complemento"
+                placeholder="Digite o complemento do endereço"
+              />
+              <FormInput
+                disabled={isSearchingCPF}
+                name="neighborhood"
+                label="Bairro"
+                placeholder="Digite o bairro"
+              />
+              <FormInput
+                disabled={isSearchingCPF}
+                name="city"
+                label="Cidade"
+                placeholder="Digite a cidade"
+              />
+              <FormInput
+                disabled={isSearchingCPF}
+                options={options}
+                name="state"
+                label="UF"
+                placeholder="Escolha a UF"
+              />
+            </div>
+            <Row>
+              <Col
+                tv={defaultColSize}
+                desk={defaultColSize}
+                tablet={defaultColSize}
+                palm={defaultColSize}
+              >
+                <span className={theme.label}>
+                Utilizar este endereço para entrega?
+                </span>
+              </Col>
+            </Row>
+            <Row>
               <Col
                 tv={mediumColSize}
                 desk={mediumColSize}
                 tablet={mediumColSize}
-                palm={defaultColSize}
+                palm={mediumColSize}
               >
-                <Row className={theme.title}>
-                  <BillingIcon className={theme.titleIcon} />
-                  Endereço de entrega
-                </Row>
-                <Row>
-                  <Input
-                    base={base}
-                    name="shippingZipcode"
-                    label="CEP"
-                    mask="11111-111"
-                    placeholder="Digite o CEP"
-                    inputRef={this.shippingZipcodeRef}
-                    onAutocomplete={this.handleZipcodeChange}
-                  />
-                </Row>
-                <Row>
-                  <Input
-                    base={base}
-                    name="shippingStreet"
-                    label="Rua"
-                    placeholder="Digite o endereço"
-                  />
-                </Row>
-                <Row>
-                  <Col
-                    tv={smallColSize}
-                    desk={smallColSize}
-                    tablet={smallColSize}
-                    palm={smallColSize}
-                  >
-                    <Input
-                      base={base}
-                      inputRef={this.handleShippingNumberInputRef}
-                      name="shippingNumber"
-                      label="Nº"
-                      placeholder="Digite o número"
-                      type="number"
-                    />
-                  </Col>
-                  <Col
-                    tv={bigColSize}
-                    desk={bigColSize}
-                    tablet={bigColSize}
-                    palm={bigColSize}
-                  >
-                    <Input
-                      base={base}
-                      name="shippingComplement"
-                      label="Complemento"
-                      placeholder="Digite o complemento do endereço"
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Input
-                    base={base}
-                    name="shippingNeighborhood"
-                    label="Bairro"
-                    placeholder="Digite o bairro"
-                  />
-                </Row>
-                <Row>
-                  <Col
-                    tv={bigColSize}
-                    desk={bigColSize}
-                    tablet={bigColSize}
-                    palm={bigColSize}
-                  >
-                    <Input
-                      base={base}
-                      name="shippingCity"
-                      label="Cidade"
-                      placeholder="Digite a cidade"
-                    />
-                  </Col>
-                  <Col
-                    tv={smallColSize}
-                    desk={smallColSize}
-                    tablet={smallColSize}
-                    palm={smallColSize}
-                  >
-                    <Input
-                      options={options}
-                      name="shippingState"
-                      placeholder="Escolha a UF"
-                    />
-                  </Col>
-                </Row>
+                <Switch
+                  checked={sameAddressForShipping}
+                  onChange={this.handleSameAddressChange}
+                  strings={{
+                    on: 'Sim',
+                    off: 'Não',
+                  }}
+                />
               </Col>
-            }
-          </Row>
-          <Row>
-            <Col
-              desk={defaultColSize}
-              tv={defaultColSize}
-              tablet={defaultColSize}
-              palm={defaultColSize}
-              align={'end'}
+            </Row>
+          </Col>
+          <Col
+            desk={defaultColSize}
+            tv={defaultColSize}
+            tablet={defaultColSize}
+            palm={defaultColSize}
+            align={'end'}
+          >
+            <Button
+              size="extra-large"
+              type="submit"
+              className={theme.button}
+              full={!isBigScreen}
+              disabled={!this.state.formValid}
             >
-              <Button
-                size="extra-large"
-                type="submit"
-                className={theme.button}
-                full={!isBigScreen}
-                disabled={!this.state.formValid}
-              >
-                Confirmar
-              </Button>
-            </Col>
-          </Row>
+              Confirmar
+            </Button>
+          </Col>
         </Grid>
       </Form>
 
@@ -593,30 +326,15 @@ AddressesPage.propTypes = {
     state: PropTypes.string,
     zipcode: PropTypes.string,
   }),
-  shipping: PropTypes.shape({
-    name: PropTypes.string,
-    street: PropTypes.string,
-    number: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-    complement: PropTypes.string,
-    neighborhood: PropTypes.string,
-    city: PropTypes.string,
-    state: PropTypes.string,
-    zipcode: PropTypes.string,
-  }),
 }
 
 AddressesPage.defaultProps = {
   theme: {},
-  shipping: {},
   billing: {},
   base: 'dark',
 }
 
 const mapStateToProps = ({ screenSize, pageInfo }) => ({
-  shipping: pageInfo.shipping,
   billing: pageInfo.billing,
   isBigScreen: screenSize.isBigScreen,
 })

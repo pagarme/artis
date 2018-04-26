@@ -1,8 +1,9 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
 import FaAndroid from 'react-icons/lib/fa/android'
-
-import Input from '../../../src/components/Input'
+import {
+  FormInput,
+} from 'former-kit'
 
 class InputState extends React.Component {
   constructor (props) {
@@ -33,7 +34,7 @@ class InputState extends React.Component {
     } = this.state
 
     return (
-      <Input
+      <FormInput
         name={name}
         type={type}
         icon={icon}
@@ -119,7 +120,7 @@ const InputExamples = () => (
 
     <section>
       <h3>Disabled</h3>
-      <Input
+      <FormInput
         name="email_disabled"
         label="Digite seu email"
         hint="Texto de apoio"
@@ -131,7 +132,7 @@ const InputExamples = () => (
 
     <section>
       <h3>Tooltip</h3>
-      <Input
+      <FormInput
         name="email_disabled"
         label="Digite seu email"
         hint="Texto de apoio"

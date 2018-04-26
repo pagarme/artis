@@ -6,11 +6,8 @@ import {
   Grid,
   Row,
   Col,
+  FormInput,
 } from 'former-kit'
-
-import {
-  Input,
-} from './../../components'
 
 import { applyDiscount } from './../../utils/calculations'
 import { formatToBRL } from './../../utils/masks'
@@ -44,7 +41,7 @@ const Boleto = ({
             tablet={mediumColSize}
             palm={defaultColSize}
           >
-            <Input
+            <FormInput
               name={`${amountPrefixName}`}
               label="Valor à pagar"
               type="number"

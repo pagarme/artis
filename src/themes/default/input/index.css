@@ -2,23 +2,77 @@
 @import "../colors.css";
 
 :root {
+  --input-container-padding: 4px;
   --input-font-family: var(--primary-font-family);
-  --input-font-size: var(--font-size-small);
+  --input-container-letter-spacing: var(--letter-spacing);
 
-  --input-label-color-focus: var(--color-grey-39);
-  --input-label-font-size-focus: 12px;
+  --input-color: var(--color-white);
 
-  --input-textarea-disabled-background: var(--color-grey-53);
-  --input-textarea-padding-bottom: var(--spacing-tiny);
+  --input-textarea-border-color: var(--color-grey-53);
+  --input-textarea-border-radius: 0;
+  --input-textarea-border-style: solid;
+  --input-textarea-border-width: 0 0 2px 0;
+  --input-textarea-caret-default-color: var(--color-white);
+  --input-textarea-height: calc(100% - 25px);
+  --input-textarea-placeholder-opacity: 0;
+
+  --input-textarea-label-top: 0;
+
+  --input-textarea-hover-border-color: var(--color-grey-33);
+
+  --input-textarea-focus-transition-time: 100ms;
+  --input-textarea-focus-placeholder-color: var(--color-grey-11);
+  --input-textarea-focus-placeholder-opacity: 1;
+  --input-textarea-focus-border-color: var(--color-grey-11);
+
+  --input-font-size: var(--font-size-medium);
+
+  --input-padding-bottom: var(--spacing-tiny);
+  --input-padding-top: var(--spacing-small);
+
+  --textarea-z-index: 1;
+
+  --input-label-color: var(--color-grey-53);
+  --input-label-font-size-default: var(--font-size-medium);
+  --input-label-font-size-focus: var(--font-size-tiny);
+  --input-label-top: 20px;
+  --input-label-transition-time: 0.1s;
+
+  --input-label-color-focus: var(--color-grey-11);
+
+  --input-multiline-content-present-top: 0;
+  --input-multiline-expander-min-height: 25px;
+  --input-multiline-font-size: var(--input-font-size);
+  --input-multiline-line-height: 20px;
+  --input-multiline-padding-bottom: var(--spacing-tiny);
+  --input-multiline-padding-left: 1px;
+  --input-multiline-padding-right: 1px;
+
+  --input-secondary-text-font-size: 11px;
+  --input-secondary-text-margin-top: var(--spacing-tiny);
+
+  --input-container-textarea-padding-top: 25px;
+
+  --input-icon-active-color: var(--color-success);
+  --input-icon-inactive-color: var(--color-error);
+  --input-icon-margin: var(--spacing-small);
+  --input-icon-padding: 22px;
+
+  --input-color-error: var(--color-error);
+
+  --input-display-password-icon-bottom: var(--spacing-tiny);
+  --input-display-password-icon-right: var(--spacing-tiny);
+
+  --input-textarea-disabled-border-color: var(--color-grey-53);
+  --input-color-disabled: var(--color-grey-53);
 }
 
-.container {
+.input {
   display: flex;
-  width: 100%;
 }
 
-.container,
-.container * {
+.input,
+.input * {
   box-sizing: border-box;
 }
 
@@ -26,204 +80,190 @@
   flex: 1;
 }
 
-.disabled {
-  cursor: not-allowed;
-}
-
-.disabled .inputContainer {
-  border-bottom: 2px solid var(--color-grey-11);
-  border-radius: 0;
-}
-
-.disabled .secondaryText {
-  color: var(--color-grey-11);
-}
-
-.inputContainer {
+.container {
+  padding-top: var(--input-container-padding);
   position: relative;
 }
 
-.inputContainer * {
+.container * {
   font-family: var(--input-font-family);
-  letter-spacing: var(--letter-spacing);
+  letter-spacing: var(--input-container-letter-spacing);
 }
 
-.inputContainer > textarea,
-.inputContainer > input {
-  display: block;
-  min-width: 100%;
-  width: 100%;
-  resize: none;
-  border: none;
-  border-bottom: 2px solid var(--color-grey-68);
-  border-radius: 0;
-  font-size: var(--input-font-size);
-  color: var(--color-white);
-  padding-top: var(--spacing-small);
-  caret-color: var(--color-white);
+.container > textarea,
+.container > input {
   background: none;
+  border-color: var(--input-textarea-border-color);
+  border-radius: var(--input-textarea-border-radius);
+  border-style: var(--input-textarea-border-style);
+  border-width: var(--input-textarea-border-width);
+  color: var(--input-color);
+  caret-color: var(--input-textarea-caret-default-color);
+  display: block;
+  font-size: var(--input-font-size);
+  min-width: 100%;
 }
 
-.light .inputContainer > input {
-  color: var(--color-grey-77);
-  border-bottom: 2px solid var(--color-grey-11);
-  caret-color: var(--color-grey-83);
+.container > input {
+  padding-top: var(--input-padding-top);
+  padding-bottom: var(--input-padding-bottom);
 }
 
-/* stylelint-disable */
-.inputContainer input[type="number"]::-webkit-inner-spin-button,
-.inputContainer input[type="number"]::-webkit-outer-spin-button {
-  appearance: none;
-  margin: 0;
-}
-/* stylelint-enable */
-
-.inputContainer > textarea {
+.container > textarea {
   padding: 0;
   margin: 0;
   resize: none;
-  z-index: 1;
+  z-index: var(--textarea-z-index);
   position: absolute;
-  height: calc(100% - var(--spacing-medium));
+  height: var(--input-textarea-height);
   overflow: hidden;
-  outline: none;
 }
 
-.inputContainer > textarea:disabled,
-.inputContainer > input:disabled {
-  border: none;
-  cursor: not-allowed;
+.container > textarea::placeholder,
+.container > input::placeholder {
+  opacity: var(--input-textarea-placeholder-opacity);
 }
 
-.inputContainer > textarea:disabled ~ label,
-.inputContainer > input:disabled ~ label {
-  color: var(--color-grey-39);
-  cursor: not-allowed;
-}
-
-.inputContainer > textarea::placeholder,
-.inputContainer > input::placeholder {
-  opacity: 0;
-}
-
-.inputContainer > textarea:focus::placeholder,
-.inputContainer > input:focus::placeholder {
-  opacity: 1;
-  color: var(--color-grey-34);
-  font-size: var(--input-font-size);
-}
-
-.inputContainer > label {
-  color: var(--color-white);
-  font-size: var(--input-font-size);
-  white-space: nowrap;
-  position: absolute;
-  top: 14px;
+.container > label {
+  color: var(--input-label-color);
+  font-size: var(--input-label-font-size-default);
   pointer-events: none;
-  transition: 0.1s ease all;
-}
-
-.light .inputContainer > label {
-  color: var(--color-grey-77);
-}
-
-.inputContainer > textarea:focus,
-.inputContainer > input:focus {
-  border-bottom: 2px solid var(--color-grey-68);
-  border-radius: 0;
-  transition: border-color 100ms ease;
-  outline: none;
-}
-
-.light .inputContainer > textarea:focus,
-.light .inputContainer > input:focus {
-  border-bottom: 2px solid var(--color-grey-39);
-}
-
-.inputContainer > textarea:focus ~ label,
-.inputContainer > input:focus ~ label {
-  top: 2px;
-  font-size: var(--input-label-font-size-focus);
-  color: var(--input-label-color-focus);
-}
-
-.inputContainer .contentPresent {
-  top: 2px;
-  font-size: var(--input-label-font-size-focus);
-  color: var(--input-label-color-focus);
-}
-
-.icon {
-  height: 35.7px;
-  display: flex;
-  align-items: center;
-  padding-right: 10px;
-  padding-left: 8px;
-  color: var(--color-grey-53);
-  border-bottom: 2px solid var(--color-grey-68);
-}
-
-.iconError {
-  color: var(--color-error);
-  border-color: var(--color-pink);
-}
-
-.disabled .icon {
-  color: var(--color-grey-34);
-}
-
-.displayPasswordIcon {
   position: absolute;
-  bottom: 8px;
-  right: 8px;
-  cursor: pointer;
+  top: var(--input-label-top);
+  transition: var(--input-label-transition-time) ease all;
+  white-space: nowrap;
+}
+
+.container .contentPresent {
+  font-size: var(--input-label-font-size-focus);
+  top: var(--input-multiline-content-present-top);
 }
 
 .secondaryText {
-  color: var(--color-grey-53);
-  font-family: var(--input-font-family);
-  font-size: 12px;
-  text-align: left;
+  color: var(--input-label-color);
+  font-size: var(--input-secondary-text-font-size);
   margin: 0;
-  margin-top: 5px;
+  margin-top: var(--input-secondary-text-margin-top);
+  text-align: left;
   width: 100%;
 }
 
+/* multiline */
+
 .multiline {
   height: auto;
-  padding-top: var(--spacing-medium);
+  padding-top: var(--input-container-textarea-padding-top);
 }
 
 .multiline > .expander {
   white-space: pre-wrap;
   visibility: hidden;
-  min-height: 25px;
+  min-height: var(--input-multiline-expander-min-height);
   word-wrap: break-word;
 }
 
-.multiline .expander,
+.multiline > .expander,
 .multiline textarea {
-  font-size: 14px;
-  line-height: 20px;
-  padding-bottom: 6px;
-  padding-left: 16px;
-  padding-right: 16px;
+  font-size: var(--input-multiline-font-size);
+  line-height: var(--input-multiline-line-height);
+  padding-bottom: var(--input-multiline-padding-bottom);
+  padding-left: var(--input-multiline-padding-left);
+  padding-right: var(--input-multiline-padding-right);
   word-break: break-word;
 }
 
-.error ~ .secondaryText {
-  color: var(--color-error);
+/* hover */
+
+.container > textarea:hover,
+.container > input:hover {
+  border-color: var(--input-textarea-hover-border-color);
+  transition: border-color var(--input-textarea-focus-transition-time) ease;
 }
 
-.error > textarea,
-.error > input,
-.error > textarea:focus,
-.error > input:focus {
-  border-bottom: 2px solid var(--color-error);
+/* focus */
+
+.container > textarea:focus::placeholder,
+.container > input:focus::placeholder {
+  opacity: var(--input-textarea-focus-placeholder-opacity);
+  color: var(--input-textarea-focus-placeholder-color);
+  font-size: var(--input-font-size);
 }
 
-.tooltip {
+.container > textarea:focus,
+.container > input:focus {
+  border-color: var(--input-textarea-focus-border-color);
+  outline: none;
+  transition: border-color var(--input-textarea-focus-transition-time) ease;
+}
+
+.container > textarea:focus ~ label,
+.container > input:focus ~ label {
+  color: var(--input-label-color-focus);
+  font-size: var(--input-label-font-size-focus);
+  top: var(--input-textarea-label-top);
+}
+
+/* icon */
+
+.icon {
+  padding-top: var(--input-icon-padding);
+  margin-right: var(--input-icon-margin);
+  color: var(--input-icon-inactive-color);
+}
+
+.active .icon {
+  color: var(--input-icon-active-color);
+}
+
+.displayPasswordIcon {
+  appearance: none;
+  background: none;
+  border: none;
+  bottom: var(--input-display-password-icon-bottom);
+  cursor: pointer;
+  right: var(--input-display-password-icon-right);
+  outline: none;
   position: absolute;
-  right: 0;
-  top: 32%;
+}
+
+/* error */
+
+.error textarea:focus ~ label,
+.error input:focus ~ label,
+.error .secondaryText,
+.error .contentPresent {
+  color: var(--input-color-error);
+}
+
+.error textarea,
+.error input,
+.error textarea:hover,
+.error input:hover,
+.error textarea:focus,
+.error input:focus {
+  border-color: var(--input-color-error);
+}
+
+/* disabled */
+
+.disabled,
+.container > input:disabled,
+.container > textarea:disabled {
+  cursor: not-allowed;
+}
+
+.container > textarea:disabled,
+.container > input:disabled {
+  border-color: var(--input-textarea-disabled-border-color);
+  color: var(--input-color-disabled);
+}
+
+.disabled .secondaryText,
+.container > textarea:disabled ~ label,
+.container > input:disabled ~ label {
+  color: var(--input-color-disabled);
+}
+
+.disabled .icon {
+  color: var(--input-color-disabled);
 }
