@@ -225,6 +225,7 @@ class Checkout extends Component {
         </State>
         <State value="addresses">
           <AddressesPage
+            handlePreviousButton={this.navigatePreviousPage}
             base={base}
             handleSubmit={this.handleFormSubmit}
           />
@@ -344,7 +345,6 @@ class Checkout extends Component {
             shipping={shipping}
             customer={customer}
             shippingRate={shippingRate}
-            onToggleCart={this.handleToggleCart}
           />
         }
         <div className={theme.checkout}>

@@ -16,7 +16,7 @@
     "copy-to-clipboard": "3.0.8",
     "dotenv": "5.0.1",
     "emblematic-icons": "0.2.0",
-    "former-kit": "0.4.0",
+    "former-kit": "0.5.0",
     "fs-extra": "5.0.0",
     "moment": "2.22.0",
     "prop-types": "15.6.0",
