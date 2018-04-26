@@ -20,6 +20,8 @@
   --color-grey-85: #1f1f1f;
   --color-grey-86: #242424;
 
+  --color-title: #54d894;
+
   --color-error: #dc6860;
   --color-success: var(--checkout-primary-color);
 }

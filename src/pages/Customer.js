@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { themr } from 'react-css-themr'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import { isEmpty, reject, isNil } from 'ramda'
 import {
+  ThemeConsumer,
   Button,
-  Grid,
-  Col,
   FormInput,
 } from 'former-kit'
 
@@ -21,12 +18,7 @@ import {
 } from '../utils/validations'
 import { addPageInfo } from '../actions'
 
-import CustomerIcon from '../images/avatar-line.svg'
-
-const mediumColSize = 6
-const defaultColSize = 12
-
-const applyThemr = themr('UICustomerPage')
+const consumeTheme = ThemeConsumer('UICustomerPage')
 
 class CustomerPage extends Component {
   constructor (props) {
@@ -59,52 +51,16 @@ class CustomerPage extends Component {
     this.props.handleSubmit(values, errors)
   }
 
-  renderCustomerForm () {
-    const { theme } = this.props
-
-    return (
-      <div className={theme.customerForm}>
-        <h2 className={theme.title}>
-          <CustomerIcon className={theme.titleIcon} />
-          Dados pessoais
-        </h2>
-        <FormInput
-          name="name"
-          label="Nome"
-          placeholder="Digite seu nome"
-        />
-        <FormInput
-          name="email"
-          label="E-mail"
-          placeholder="Digite seu e-mail"
-        />
-        <FormInput
-          name="documentNumber"
-          label="CPF"
-          mask="111.111.111-11"
-          placeholder="Digite seu CPF"
-        />
-        <FormInput
-          name="phoneNumber"
-          label="DDD + Telefone"
-          mask="(11) 11111-1111"
-          placeholder="Digite seu telefone"
-        />
-      </div>
-    )
-  }
-
   render () {
     const {
       theme,
-      base,
-      isBigScreen,
       customer,
     } = this.props
 
     return (
       <Form
         data={customer}
+        className={theme.customerForm}
         onChange={this.handleChangeForm}
         onSubmit={this.handleFormSubmit}
         customErrorProp="error"
@@ -133,38 +89,41 @@ class CustomerPage extends Component {
           ],
         }}
       >
-        <Grid
-          className={
-            classNames(theme[base], theme.page)
-          }
-        >
-          <Col
-            tv={mediumColSize}
-            desk={mediumColSize}
-            tablet={mediumColSize}
-            palm={defaultColSize}
+        <h2 className={theme.title}>
+          Olá, precisamos dos seus dados básicos
+        </h2>
+        <div className={theme.inputsContainer}>
+          <FormInput
+            name="name"
+            label="Qual seu nome?"
+            placeholder="Digite seu nome"
+          />
+          <FormInput
+            name="email"
+            label="E-mail"
+            placeholder="Digite seu e-mail"
+          />
+          <FormInput
+            name="documentNumber"
+            label="CPF"
+            mask="111.111.111-11"
+            placeholder="Digite seu CPF"
+          />
+          <FormInput
+            name="phoneNumber"
+            label="DDD + Telefone"
+            mask="(11) 11111-1111"
+            placeholder="Digite seu telefone"
+          />
+        </div>
+        <div className={theme.buttonContainer}>
+          <Button
+            type="submit"
+            disabled={!this.state.formValid}
           >
-            { this.renderCustomerForm() }
-          </Col>
-          <Col
-            desk={defaultColSize}
-            tv={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-            align={'end'}
-          >
-            <Button
-              base={base}
-              size="extra-large"
-              type="submit"
-              className={theme.button}
-              disabled={!this.state.formValid}
-              full={!isBigScreen}
-            >
-              Confirmar
-            </Button>
-          </Col>
-        </Grid>
+            Confirmar
+          </Button>
+        </div>
       </Form>
     )
   }
@@ -172,14 +131,11 @@ class CustomerPage extends Component {
 
 CustomerPage.propTypes = {
   theme: PropTypes.shape({
-    page: PropTypes.string,
     title: PropTypes.string,
-    titleIcon: PropTypes.string,
-    light: PropTypes.string,
-    dark: PropTypes.string,
+    customerForm: PropTypes.string,
+    inputsContainer: PropTypes.string,
+    buttonContainer: PropTypes.string,
   }),
-  base: PropTypes.string,
-  isBigScreen: PropTypes.bool.isRequired,
   customer: PropTypes.shape({
     name: PropTypes.string,
     email: PropTypes.string,
@@ -196,11 +152,10 @@ CustomerPage.defaultProps = {
   base: 'dark',
 }
 
-const mapStateToProps = ({ screenSize, pageInfo }) => ({
-  isBigScreen: screenSize.isBigScreen,
+const mapStateToProps = ({ pageInfo }) => ({
   customer: pageInfo.customer,
 })
 
 export default connect(mapStateToProps, {
   handlePageChange: addPageInfo,
-})(applyThemr(CustomerPage))
+})(consumeTheme(CustomerPage))

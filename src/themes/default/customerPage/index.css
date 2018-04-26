@@ -1,56 +1,43 @@
 @import "../colors.css";
 @import "../typography.css";
 @import "../spacing.css";
-@import "../media.css";
-@import "../margin.css";
-
-.page {
-  padding: var(--spacing-medium) var(--spacing-small);
-  justify-content: center;
-}
 
 .customerForm {
-  flex: 1;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 
-  & > *:not(:first-child) {
-    padding-top: 24px;
+.inputsContainer {
+  flex: 1;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    padding-top: var(--spacing-medium);
   }
 }
 
 .title {
-  margin: 6px 0;
+  width: 100%;
+  margin-top: var(--spacing-large);
   font-family: var(--primary-font-family);
-  font-size: var(--font-size-small);
-  color: var(--color-white);
-  text-transform: uppercase;
-  letter-spacing: 1.4px;
+  font-weight: 900;
+  font-size: var(--font-size-large);
+  color: var(--color-title);
+  letter-spacing: 0.02em;
   justify-content: center;
   display: flex;
-  align-items: center;
-  padding-bottom: 24px;
 }
 
-.light .title {
-  color: var(--color-grey-77);
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-end;
+  align-items: flex-end;
+  margin-bottom: var(--spacing-medium);
+  margin-right: var(--spacing-medium);
 }
-
-.titleIcon {
-  padding: 0 9px 0 0;
-}
-
-@media (--media-palm) {
-
-  .title {
-    display: none;
-  }
-
-  .page {
-    padding-left: var(--margin-page-mobile);
-    padding-right: var(--margin-page-mobile);
-  }
-}
-

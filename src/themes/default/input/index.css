@@ -27,7 +27,7 @@
 
   --input-font-size: var(--font-size-medium);
 
-  --input-padding-bottom: var(--spacing-tiny);
+  --input-padding-bottom: 0;
   --input-padding-top: var(--spacing-small);
 
   --textarea-z-index: 1;
