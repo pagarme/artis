@@ -118,6 +118,7 @@ class CustomerPage extends Component {
         </div>
         <div className={theme.buttonContainer}>
           <Button
+            fill="gradient"
             type="submit"
             disabled={!this.state.formValid}
           >

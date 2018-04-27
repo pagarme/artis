@@ -13,8 +13,14 @@ export default [
     visible: true,
   },
   {
-    page: 'addresses',
-    title: 'Endereços',
+    page: 'billing',
+    title: 'Endereço',
+    icon: <MapIcon />,
+    visible: true,
+  },
+  {
+    page: 'shipping',
+    title: 'Endereço',
     icon: <MapIcon />,
     visible: true,
   },

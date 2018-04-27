@@ -14,7 +14,6 @@ import {
   path,
   pathOr,
   propOr,
-  filter,
 } from 'ramda'
 
 import { changeScreenSize } from '../../actions'
@@ -32,7 +31,8 @@ import {
 } from '../../components'
 
 import CustomerPage from '../../pages/Customer'
-import AddressesPage from '../../pages/Addresses'
+import BillingPage from '../../pages/Billing'
+import ShippingPage from '../../pages/Shipping'
 import PaymentPage from '../../pages/Payment'
 import SwitchPayment from '../../pages/Payment/SwitchPayment'
 import CreditCardAndBoletoPage from '../../pages/Payment/CreditCardAndBoleto'
@@ -124,7 +124,7 @@ class Checkout extends Component {
       return
     }
 
-    if (pathOr('', ['value'], history) === 'payment') {
+    if (pathOr('', ['value'], history) === 'shipping') {
       this.navigatePreviousPage()
       return
     }
@@ -140,16 +140,28 @@ class Checkout extends Component {
     this.props.transition('NEXT')
   }
 
-  handleBackButton = () => {
-    this.navigatePreviousPage()
-  }
-
   handleFormSubmit = (values, errors) => {
     if (isEmpty(values) || !isEmpty(reject(isNil, errors))) {
       return
     }
 
     this.navigateNextPage()
+  }
+
+  handleBillingFormSubmit = (values, errors) => {
+    if (isEmpty(values) || !isEmpty(reject(isNil, errors))) {
+      return
+    }
+
+    const { sameAddressForShipping } = values
+
+    if (isNil(sameAddressForShipping) || sameAddressForShipping) {
+      this.props.transition('SAME_SHIPPING_ADDRESS')
+    }
+
+    if (!sameAddressForShipping) {
+      this.props.transition('DIFFERENT_SHIPPING_ADDRESS')
+    }
   }
 
   handlePageTransition = page => () => this.props.transition(page)
@@ -209,7 +221,7 @@ class Checkout extends Component {
       })
   }
 
-  renderPages () {
+  renderPages (pages) {
     const { base, pageInfo, transaction } = this.props
 
     const { payment } = pageInfo
@@ -222,9 +234,30 @@ class Checkout extends Component {
             handleSubmit={this.handleFormSubmit}
           />
         </State>
-        <State value="addresses">
-          <AddressesPage
-            handlePreviousButton={this.navigatePreviousPage}
+        <State value="billing">
+          <BillingPage
+            allowSwitchChooseSameAddress={
+              !hasRequiredPageData(
+                'shipping',
+                this.props
+              )
+            }
+            handlePreviousButton={
+              pages[0].page === 'billing'
+                ? null
+                : this.navigatePreviousPage
+            }
+            base={base}
+            handleSubmit={this.handleBillingFormSubmit}
+          />
+        </State>
+        <State value="shipping">
+          <ShippingPage
+            handlePreviousButton={
+              pages[0].page === 'shipping'
+                ? null
+                : this.navigatePreviousPage
+            }
             base={base}
             handleSubmit={this.handleFormSubmit}
           />
@@ -317,9 +350,22 @@ class Checkout extends Component {
     const { amount } = transaction
     const { shipping, customer } = pageInfo
 
-    const pages = filter(value =>
-      !hasRequiredPageData(value.page, this.props), steps
-    )
+    const makeStepInvisible = (step, index, defaultSteps) => {
+      if (step.page === 'shipping'
+        && index > 0
+        && defaultSteps[index - 1].page === 'billing') {
+        return {
+          ...step,
+          visible: false,
+        }
+      }
+
+      return step
+    }
+
+    const pages = steps
+      .filter(value => !hasRequiredPageData(value.page, this.props))
+      .map(makeStepInvisible)
 
     return (
       <div
@@ -356,7 +402,7 @@ class Checkout extends Component {
           <main
             className={theme.content}
           >
-            {this.renderPages()}
+            {this.renderPages(pages)}
           </main>
           <Footer />
         </div>

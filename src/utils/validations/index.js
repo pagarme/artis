@@ -67,20 +67,24 @@ const hasRequiredPageData = (page, props) => {
     return customerHasAllProps(customer)
   }
 
-  if (page === 'addresses') {
+  const addressHasAllProps = allPass([
+    prop('street'),
+    prop('number'),
+    prop('city'),
+    prop('state'),
+    prop('zipcode'),
+  ])
+
+  if (page === 'billing') {
     const billing = pathOr({}, ['apiData', 'billing'], props)
+
+    return addressHasAllProps(billing)
+  }
+
+  if (page === 'shipping') {
     const shipping = pathOr({}, ['apiData', 'shipping'], props)
 
-    const addressHasAllProps = allPass([
-      prop('street'),
-      prop('number'),
-      prop('neighborhood'),
-      prop('city'),
-      prop('state'),
-      prop('zipcode'),
-    ])
-
-    return addressHasAllProps(billing) && addressHasAllProps(shipping)
+    return addressHasAllProps(shipping)
   }
 
   return false
