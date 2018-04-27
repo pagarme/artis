@@ -1,6 +1,6 @@
 import getInputAmountValue from './getInputAmountValue'
 import getInstallments from './getInstallments'
-import modifyInstallments from './modifyInstallments'
+import changeInstallmentsToArray from './changeInstallmentsToArray'
 
 describe('test helper functions', () => {
   it('should get input amount value', () => {
@@ -125,7 +125,7 @@ describe('test helper functions', () => {
     }
 
     expect(
-      modifyInstallments(creditcardExample1)
+      changeInstallmentsToArray(creditcardExample1)
     ).toEqual({
       invoiceDescriptor: 'Mercurio :)',
       installments: [{
@@ -148,7 +148,7 @@ describe('test helper functions', () => {
     })
 
     expect(
-      modifyInstallments(creditcardExample2)
+      changeInstallmentsToArray(creditcardExample2)
     ).toEqual({
       invoiceDescriptor: 'Mercurio :)',
       installments: [
@@ -185,11 +185,11 @@ describe('test helper functions', () => {
     })
 
     expect(
-      modifyInstallments({ creditcard: '4242 4242 4242 4242' })
+      changeInstallmentsToArray({ creditcard: '4242 4242 4242 4242' })
     ).toEqual({ creditcard: '4242 4242 4242 4242' })
 
     expect(
-      modifyInstallments({})
+      changeInstallmentsToArray({})
     ).toEqual({})
   })
 })

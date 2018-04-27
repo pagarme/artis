@@ -5,7 +5,7 @@ import {
   of,
 } from 'ramda'
 
-const modifyInstallments = evolve({
+const changeInstallmentsToArray = evolve({
   installments: ifElse(
     Array.isArray,
     identity,
@@ -13,4 +13,4 @@ const modifyInstallments = evolve({
   ),
 })
 
-export default modifyInstallments
+export default changeInstallmentsToArray
