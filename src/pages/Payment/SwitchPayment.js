@@ -40,6 +40,8 @@ import {
 } from '../../utils/validations'
 
 import getInstallments from './../../utils/helpers/getInstallments'
+import changeInstallmentsToArray
+  from './../../utils/helpers/changeInstallmentsToArray'
 import { applyDiscount } from './../../utils/calculations'
 
 const consumeTheme = ThemeConsumer('UIPaymentPage')
@@ -61,7 +63,8 @@ const createSwitchItems = ({
   paymentType,
 }) => {
   const { paymentConfig } = transaction
-  const { boleto, creditcard } = paymentConfig
+  const { boleto } = paymentConfig
+  const creditcard = changeInstallmentsToArray(paymentConfig.creditcard)
 
   const allowedPaymentOptions = {
     boleto: {
