@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import { isEmpty, reject, isNil } from 'ramda'
 import {
-  ThemeConsumer,
   Button,
   FormInput,
+  ThemeConsumer,
 } from 'former-kit'
 
 import {

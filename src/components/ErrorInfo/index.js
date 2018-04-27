@@ -1,5 +1,4 @@
 import React from 'react'
-import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
@@ -7,11 +6,12 @@ import {
   Grid,
   Row,
   Col,
+  ThemeConsumer,
 } from 'former-kit'
 
 import errorIcon from '../../images/error-icon.png'
 
-const applyThemr = themr('UIErrorInfo')
+const consumeTheme = ThemeConsumer('UIErrorInfo')
 
 const iconColSize = 4
 const contentColSize = 8
@@ -119,4 +119,4 @@ const mapStateToProps = ({ screenSize }) => ({
   isBigScreen: screenSize.isBigScreen,
 })
 
-export default connect(mapStateToProps)(applyThemr(ErrorInfo))
+export default connect(mapStateToProps)(consumeTheme(ErrorInfo))

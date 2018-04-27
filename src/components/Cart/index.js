@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 import { Scrollbars } from 'react-custom-scrollbars'
 import {
@@ -14,12 +13,15 @@ import {
   reduce,
 } from 'ramda'
 
+import {
+  ThemeConsumer,
+} from 'former-kit'
 
 import CartIcon from '../../images/cart.svg'
 import CloseIcon from '../../images/clear-close.svg'
 import { formatToBRL } from '../../utils/masks/'
 
-const applyThemr = themr('UICart')
+const consumeTheme = ThemeConsumer('UICart')
 
 const formatShippingRate = freight => (
   freight === 0 ? 'Gratis!' : formatToBRL(freight)
@@ -220,4 +222,4 @@ Cart.defaultProps = {
   shippingRate: null,
 }
 
-export default applyThemr(Cart)
+export default consumeTheme(Cart)

@@ -1,15 +1,15 @@
 import React from 'react'
-import { themr } from 'react-css-themr'
 import PropTypes from 'prop-types'
 import {
   Grid,
   Row,
   Col,
+  ThemeConsumer,
 } from 'former-kit'
 
 import SadEmoji from './../images/sad.svg'
 
-const applyThemr = themr('UIErrorPage')
+const consumeTheme = ThemeConsumer('UIErrorPage')
 
 const ErrorPage = ({ theme }) => (
   <Grid className={theme.page}>
@@ -56,4 +56,4 @@ ErrorPage.propTypes = {
   }).isRequired,
 }
 
-export default applyThemr(ErrorPage)
+export default consumeTheme(ErrorPage)

@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { themr } from 'react-css-themr'
 import {
   Grid,
   Row,
   Col,
+  ThemeConsumer,
 } from 'former-kit'
 
-const applyThemr = themr('UILoadingInfo')
+const consumeTheme = ThemeConsumer('UILoadingInfo')
 
 const defaultColSize = 12
 
@@ -49,4 +49,4 @@ LoadingInfo.defaultProps = {
   theme: {},
 }
 
-export default applyThemr(LoadingInfo)
+export default consumeTheme(LoadingInfo)

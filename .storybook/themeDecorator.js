@@ -1,5 +1,4 @@
 import React from 'react'
-import { ThemeProvider as ThemrProvider } from 'react-css-themr'
 import { storiesOf, addDecorator } from '@storybook/react'
 import { ThemeProvider } from 'former-kit'
 
@@ -12,9 +11,7 @@ const ThemeDecorator = (storyFn) => (
     styles: defaultTheme,
   }}
   >
-    <ThemrProvider theme={defaultTheme}>
-      {storyFn()}
-    </ThemrProvider>
+    {storyFn()}
   </ThemeProvider>
 )
 

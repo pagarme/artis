@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import classNames from 'classnames'
-import { themr } from 'react-css-themr'
 import {
   LinearProgress,
+  ThemeConsumer,
 } from 'former-kit'
 
-const applyThemr = themr('UIProgressBar')
+const consumeTheme = ThemeConsumer('UIProgressBar')
 
 const renderSteps = (steps, activeStep, theme) => (
   <div className={theme.steps}>
@@ -61,4 +61,4 @@ ProgressBar.defaultProps = {
   percentage: 0,
 }
 
-export default applyThemr(ProgressBar)
+export default consumeTheme(ProgressBar)

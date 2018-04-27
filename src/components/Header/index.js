@@ -1,5 +1,5 @@
 import React from 'react'
-import { themr } from 'react-css-themr'
+import { ThemeConsumer } from 'former-kit'
 import PropTypes from 'prop-types'
 
 import {
@@ -13,7 +13,7 @@ import {
 
 import { ProgressBar } from '..'
 
-const applyThemr = themr('UIHeader')
+const consumeTheme = ThemeConsumer('UIHeader')
 
 const filterSteps = (pages, active) => {
   const visibleSteps = filter(prop('visible'), pages)
@@ -89,4 +89,4 @@ Header.defaultProps = {
   activeStep: '',
 }
 
-export default applyThemr(Header)
+export default consumeTheme(Header)
