@@ -98,6 +98,7 @@ const pagarmeApi = `var configs = {
     defaultMethod: 'creditcard',
     paymentConfig: {
       boleto: {
+        softDescriptor: 'Company name',
         instructions: 'Use this field to add instructions',
         expirationAt: '2018-11-30',
         discount: {
