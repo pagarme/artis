@@ -23,6 +23,7 @@
     "ramda": "0.25.0",
     "raven-js": "3.24.0",
     "react": "16.2.0",
+    "react-autocomplete": "1.8.1",
     "react-automata": "2.0.0",
     "react-custom-scrollbars": "4.2.1",
     "react-dom": "16.2.0",

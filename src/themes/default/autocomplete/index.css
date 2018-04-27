@@ -1,0 +1,81 @@
+.selectWrapper {
+  cursor: pointer;
+  font-family: var(--primary-font-family);
+  font-weight: var(--title-font-weight);
+  position: relative;
+}
+
+.selectWrapper,
+.selectWrapper * {
+  box-sizing: border-box;
+}
+
+.selectWrapper > div,
+.selectWrapper > div > input {
+  width: 100%;
+}
+
+.selectWrapper > div > input {
+  background: transparent;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid var(--input-textarea-border-color);
+  border-radius: 0;
+  cursor: inherit;
+  color: var(--color-white);
+  display: block;
+  outline: none;
+  overflow: hidden;
+  padding: 3px 20px 2px 0;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.selectWrapper:hover > div > input {
+  border-bottom-color: var(--input-textarea-hover-border-color);
+}
+
+.selectWrapper > div > input:focus {
+  border-bottom-color: var(--input-textarea-focus-border-color);
+}
+
+.selectWrapper > div > input,
+.selectWrapper > div > input::placeholder {
+  font-size: var(--font-size-medium);
+}
+
+.selectWrapper > div > input::placeholder {
+  color: var(--color-grey-53);
+}
+
+.selectWrapper > div > div {
+  box-shadow: 0;
+  /* stylelint-disable */
+  background: rgba(255, 255, 255, 1) !important;
+  border-radius: 0 !important;
+  /* stylelint-enable */
+}
+
+.error > div > input {
+  border-color: var(--color-error);
+}
+
+.error > p {
+  color: var(--color-error);
+  font-size: var(--font-size-tiny);
+  font-weight: 500;
+  margin-bottom: 0;
+  margin-top: 2px;
+}
+
+.selectItem {
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.selectItem:hover {
+  background: var(--color-grey-07);
+}

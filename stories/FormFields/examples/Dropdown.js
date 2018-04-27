@@ -1,5 +1,6 @@
 import React from 'react'
 import { Dropdown } from 'former-kit'
+import { Autocomplete } from '../../../src/components'
 
 const defaultOptions = [
   {
@@ -20,9 +21,31 @@ const defaultOptions = [
   },
 ]
 
+const autocompleteOptios = [
+  { label: 'Mercurio' },
+  { label: 'Artis' },
+]
+
 const DropdownExamples = () => (
   <div>
     <h2>Dropdown</h2>
+
+    <section>
+      <h3>Autocomplete default</h3>
+      <Autocomplete
+        items={autocompleteOptios}
+        placeholder="Checkout"
+      />
+    </section>
+
+    <section>
+      <h3>Autocomplete error</h3>
+      <Autocomplete
+        error="Something went wrong"
+        items={autocompleteOptios}
+        placeholder="Checkout"
+      />
+    </section>
 
     <section>
       <h3>Default</h3>
