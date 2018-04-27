@@ -36,14 +36,13 @@ const shipping = {
   city: 'São Paulo',
   state: 'SP',
   zipcode: '04551010',
+  fee: 5000,
 }
 
-const shippingRate = 5000
-
 describe('Cart', () => {
-  it('should render shippingRate value', () => {
+  it('should render shipping fee value', () => {
     const component = mount(
-      <Cart shippingRate={shippingRate} />
+      <Cart shipping={shipping} />
     )
 
     expect(
@@ -66,11 +65,11 @@ describe('Cart', () => {
     expect(totalValue).toBe(totalValueToCompare)
   })
 
-  it('should sum amount and shipping rate', () => {
+  it('should sum amount and shipping fee', () => {
     const component = mount(
       <Cart
         items={items}
-        shippingRate={shippingRate}
+        shipping={shipping}
       />
     )
 

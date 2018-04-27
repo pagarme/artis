@@ -41,9 +41,9 @@ const pagarmeApi = `var configs = {
     city: 'São Paulo',
     state: 'SP',
     zipcode: '04551010',
+    fee: 1599,
   },
   cart: {
-    shippingRate: 1599,
     items: [
       {
         id: 1,

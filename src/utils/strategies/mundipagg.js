@@ -116,10 +116,12 @@ const parseTokenData = pipe(
     ),
     shipping: pipe(
       prop('shipping'),
-      addressParse
+      addressParse,
+      applySpec({
+        fee: path(['shipping', 'amount']),
+      }),
     ),
     cart: applySpec({
-      shippingRate: path(['shipping', 'amount']),
       items: pipe(
         prop('items'),
         map(
