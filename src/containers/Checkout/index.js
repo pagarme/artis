@@ -14,7 +14,6 @@ import {
   path,
   pathOr,
   propOr,
-  prop,
   filter,
 } from 'ramda'
 
@@ -314,7 +313,6 @@ class Checkout extends Component {
     } = apiData
 
     const items = pathOr([], ['items'], cart)
-    const shippingRate = prop('shippingRate', cart)
     const { enableCart, companyName, logo } = configs
     const { amount } = transaction
     const { shipping, customer } = pageInfo
@@ -344,7 +342,7 @@ class Checkout extends Component {
             amount={amount}
             shipping={shipping}
             customer={customer}
-            shippingRate={shippingRate}
+            onToggleCart={this.handleToggleCart}
           />
         }
         <div className={theme.checkout}>

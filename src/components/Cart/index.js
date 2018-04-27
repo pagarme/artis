@@ -15,18 +15,18 @@ import {
   prop,
   reduce,
 } from 'ramda'
-
 import {
   ThemeConsumer,
 } from 'former-kit'
 
+import { formatToBRL } from '../../utils/masks/'
+
 import CartIcon from '../../images/cart.svg'
 import CloseIcon from '../../images/clear-close.svg'
-import { formatToBRL } from '../../utils/masks/'
 
 const consumeTheme = ThemeConsumer('UICart')
 
-const formatShippingRate = ifElse(
+const formatShippingFee = ifElse(
   equals(0),
   always('Gratis!'),
   formatToBRL
@@ -37,7 +37,7 @@ const formatZipcode = pipe(
   join('')
 )
 
-const hasShippingLines = anyPass([
+const hasShippingAddress = anyPass([
   prop('street'),
   prop('number'),
   prop('additionalInfo'),
@@ -46,7 +46,7 @@ const hasShippingLines = anyPass([
   prop('state'),
 ])
 
-const generateShippingLine = ({
+const renderShippingAddress = ({
   street = '',
   number = '',
   additionalInfo = '',
@@ -60,15 +60,15 @@ CEP ${formatZipcode(zipcode)} - ${city} - ${state}
 
 const sumItem = (total, { unitPrice, quantity }) => (
   total + (
-    quantity && quantity > 1 ?
-      quantity * unitPrice :
-      unitPrice
+    quantity && quantity > 1
+      ? quantity * unitPrice
+      : unitPrice
   )
 )
 
-const sumAmount = (items, shippingRate) => pipe(
+const sumAmount = (items, shippingFee = 0) => pipe(
   reduce(sumItem, 0),
-  add(shippingRate)
+  add(shippingFee)
 )(items)
 
 class Cart extends React.Component {
@@ -76,11 +76,11 @@ class Cart extends React.Component {
     collapsed: true,
   }
 
-  handleToggle = () => {
+  handleToggleCollapsed = () => {
     this.setState(({ collapsed }) => ({ collapsed: !collapsed }))
   }
 
-  renderItens = ({
+  renderItems = ({
     id,
     title,
     unitPrice,
@@ -114,15 +114,16 @@ class Cart extends React.Component {
     const {
       base,
       customer,
-      shippingRate,
       shipping,
       theme,
       items,
     } = this.props
 
-    const amount = sumAmount(items, shippingRate)
+    const shippingFee = prop('fee', shipping)
+    const amount = sumAmount(items, shippingFee)
 
-    const renderFreight = !isNil(shippingRate)
+    const shouldRenderShippingFee = !isNil(shippingFee)
+
     const cartClasses = classNames(
       theme.cart,
       theme[base],
@@ -133,15 +134,16 @@ class Cart extends React.Component {
 
     const customerName = prop('name', customer)
     const customerEmail = prop('email', customer)
-    const shippingLine = hasShippingLines(shipping)
-      ? generateShippingLine(shipping)
+
+    const shippingAddress = hasShippingAddress(shipping)
+      ? renderShippingAddress(shipping)
       : ''
 
     return (
       <React.Fragment>
         <button
           className={theme.openCart}
-          onClick={this.handleToggle}
+          onClick={this.handleToggleCollapsed}
         >
           <CartIcon />
         </button>
@@ -150,7 +152,7 @@ class Cart extends React.Component {
             <CartIcon />
             <span>Sua compra</span>
             <CloseIcon
-              onClick={this.handleToggle}
+              onClick={this.handleToggleCollapsed}
               className={theme.closeIcon}
             />
           </h1>
@@ -158,7 +160,7 @@ class Cart extends React.Component {
             <Scrollbars
               renderThumbVertical={this.renderScrollbarThumb}
             >
-              {items.map(this.renderItens)}
+              {items.map(this.renderItems)}
             </Scrollbars>
           </div>
           <div className={theme.customerResume}>
@@ -177,10 +179,10 @@ class Cart extends React.Component {
               </div>
             }
             {
-              shippingLine &&
+              shippingAddress &&
               <div>
                 <p>Entrega</p>
-                <p>{shippingLine}</p>
+                <p>{shippingAddress}</p>
               </div>
             }
           </div>
@@ -188,7 +190,7 @@ class Cart extends React.Component {
             <div className={theme.labels}>
               <p>Valor</p>
               {
-                renderFreight
+                shouldRenderShippingFee
                 && <p>Frete</p>
               }
               <p>Total</p>
@@ -196,8 +198,8 @@ class Cart extends React.Component {
             <div className={theme.values}>
               <p>{formatToBRL(amount)}</p>
               {
-                renderFreight &&
-                <p>{formatShippingRate(shippingRate)}</p>
+                shouldRenderShippingFee &&
+                <p>{formatShippingFee(shippingFee)}</p>
               }
               <p>{formatToBRL(amount)}</p>
             </div>
@@ -208,23 +210,42 @@ class Cart extends React.Component {
   }
 }
 
-
 Cart.propTypes = {
   theme: PropTypes.shape(),
   base: PropTypes.string,
   items: PropTypes.arrayOf(PropTypes.object),
-  shippingRate: PropTypes.number,
-  customer: PropTypes.shape(),
-  shipping: PropTypes.shape(),
+  customer: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+  }),
+  shipping: PropTypes.shape({
+    street: PropTypes.string,
+    number: PropTypes.string,
+    additionalInfo: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zipcode: PropTypes.string,
+    fee: PropTypes.string,
+  }),
 }
 
 Cart.defaultProps = {
   theme: {},
   base: 'dark',
-  customer: {},
-  shipping: {},
+  customer: {
+    name: '',
+    email: '',
+  },
+  shipping: {
+    street: '',
+    number: '',
+    additionalInfo: '',
+    city: '',
+    state: '',
+    zipcode: '',
+    fee: null,
+  },
   items: [],
-  shippingRate: null,
 }
 
 export default consumeTheme(Cart)
