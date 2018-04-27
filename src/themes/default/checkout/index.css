@@ -20,7 +20,6 @@
 .checkout {
   width: 700px;
   max-height: 578px;
-  min-width: 700px;
   min-height: 578px;
   background: var(--color-grey-83);
   border-radius: 4px;
@@ -49,6 +48,7 @@
 .content {
   flex: 1;
   height: 428px;
+  background: var(--color-grey-83);
 }
 
 @media (--media-palm) {
@@ -64,5 +64,6 @@
 
   .content {
     width: 100%;
+    height: initial;
   }
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import {
@@ -8,23 +7,19 @@ import {
   isNil,
   merge,
   omit,
+  propOr,
   reject,
 } from 'ramda'
 import {
   Button,
-  Grid,
-  Row,
-  Col,
   Switch,
   FormInput,
   ThemeConsumer,
 } from 'former-kit'
 
 import options from '../utils/data/states'
-import BillingIcon from '../images/map-pin.svg'
 import { removeMask } from '../utils/masks/'
 import getAddress from '../utils/helpers/getAddress'
-
 import { addPageInfo } from '../actions'
 import {
   required,
@@ -33,8 +28,8 @@ import {
   maxLength,
 } from '../utils/validations'
 
-const defaultColSize = 12
-const mediumColSize = 6
+import NavigateBack from './../../src/images/navigate_back.svg'
+import NavigateNext from './../../src/images/navigate_next.svg'
 
 const consumeTheme = ThemeConsumer('UIAddressesPage')
 
@@ -46,7 +41,7 @@ class AddressesPage extends Component {
 
     this.state = {
       ...billing,
-      sameAddressForShipping: billing.sameAddressForShipping || true,
+      sameAddressForShipping: propOr(true, 'sameAddressForShipping', billing),
     }
   }
 
@@ -73,7 +68,7 @@ class AddressesPage extends Component {
 
       this.setState(newAddress)
 
-      // this.numberInput.focus()
+      this.numberInput.focus()
     }
 
     const handleError = error =>
@@ -125,13 +120,13 @@ class AddressesPage extends Component {
 
     const {
       theme,
-      base,
-      isBigScreen,
+      handlePreviousButton,
     } = this.props
 
     return (
       <Form
         data={this.state}
+        className={theme.addressForm}
         onChange={this.handleChangeForm}
         onSubmit={this.props.handleSubmit}
         customErrorProp="error"
@@ -168,138 +163,104 @@ class AddressesPage extends Component {
           ],
         }}
       >
-        <Grid
-          className={
-            classNames(theme[base], theme.page)
-          }
-        >
-          <Col
-            tv={mediumColSize}
-            desk={mediumColSize}
-            tablet={mediumColSize}
-            palm={defaultColSize}
+        <h2 className={theme.title}>
+          Qual é seu endereço de cobrança?
+        </h2>
+        <div className={theme.inputsContainer}>
+          <FormInput
+            disabled={isSearchingCPF}
+            name="zipcode"
+            label="CEP"
+            mask="11111-111"
+          />
+          <FormInput
+            disabled={isSearchingCPF}
+            name="street"
+            label="Rua"
+            placeholder="Digite o endereço"
+          />
+          <div className={theme.inputGroup}>
+            <FormInput
+              inputRef={this.handleNumberInputRef}
+              name="number"
+              className={theme.fieldNumber}
+              label="Nº"
+              placeholder="Digite o número"
+              type="number"
+            />
+            <FormInput
+              name="complement"
+              className={theme.fieldComplement}
+              label="Complemento"
+              placeholder="Digite o complemento do endereço"
+            />
+          </div>
+          <div className={theme.inputGroup}>
+            <FormInput
+              disabled={isSearchingCPF}
+              name="city"
+              className={theme.fieldCity}
+              label="Cidade"
+              placeholder="Digite a cidade"
+            />
+            <FormInput
+              disabled={isSearchingCPF}
+              options={options}
+              name="state"
+              className={theme.fieldState}
+              label="Estado"
+              placeholder="Escolha a UF"
+            />
+          </div>
+          <div className={theme.inputGroup}>
+            <p className={theme.switchLabel} >Entregar no mesmo endereço?</p>
+            <Switch
+              checked={sameAddressForShipping}
+              onChange={this.handleSameAddressChange}
+              strings={{
+                on: 'Sim',
+                off: 'Não',
+              }}
+            />
+          </div>
+        </div>
+        <div className={theme.buttonContainer}>
+          <Button
+            fill="outline"
+            onClick={handlePreviousButton}
+            icon={<NavigateBack />}
           >
-            <div className={theme.addressForm}>
-              <h2 className={theme.title}>
-                <BillingIcon className={theme.titleIcon} />
-                Endereço de cobrança
-              </h2>
-              <FormInput
-                disabled={isSearchingCPF}
-                name="zipcode"
-                label="CEP"
-                mask="11111-111"
-                placeholder="Digite o CEP"
-                hint={isSearchingCPF
-                  ? 'Procurando dados do endereço'
-                  : 'Digite o CEP para buscar os dados de endereço'
-                }
-              />
-              <FormInput
-                disabled={isSearchingCPF}
-                name="street"
-                label="Rua"
-                placeholder="Digite o endereço"
-              />
-              <FormInput
-                inputRef={this.handleNumberInputRef}
-                name="number"
-                label="Nº"
-                placeholder="Digite o número"
-                type="number"
-              />
-              <FormInput
-                name="complement"
-                label="Complemento"
-                placeholder="Digite o complemento do endereço"
-              />
-              <FormInput
-                disabled={isSearchingCPF}
-                name="neighborhood"
-                label="Bairro"
-                placeholder="Digite o bairro"
-              />
-              <FormInput
-                disabled={isSearchingCPF}
-                name="city"
-                label="Cidade"
-                placeholder="Digite a cidade"
-              />
-              <FormInput
-                disabled={isSearchingCPF}
-                options={options}
-                name="state"
-                label="UF"
-                placeholder="Escolha a UF"
-              />
-            </div>
-            <Row>
-              <Col
-                tv={defaultColSize}
-                desk={defaultColSize}
-                tablet={defaultColSize}
-                palm={defaultColSize}
-              >
-                <span className={theme.label}>
-                Utilizar este endereço para entrega?
-                </span>
-              </Col>
-            </Row>
-            <Row>
-              <Col
-                tv={mediumColSize}
-                desk={mediumColSize}
-                tablet={mediumColSize}
-                palm={mediumColSize}
-              >
-                <Switch
-                  checked={sameAddressForShipping}
-                  onChange={this.handleSameAddressChange}
-                  strings={{
-                    on: 'Sim',
-                    off: 'Não',
-                  }}
-                />
-              </Col>
-            </Row>
-          </Col>
-          <Col
-            desk={defaultColSize}
-            tv={defaultColSize}
-            tablet={defaultColSize}
-            palm={defaultColSize}
-            align={'end'}
+              Ops Voltar
+          </Button>
+          <Button
+            type="submit"
+            iconAlignment="end"
+            icon={<NavigateNext />}
+            disabled={!this.state.formValid}
           >
-            <Button
-              size="extra-large"
-              type="submit"
-              className={theme.button}
-              full={!isBigScreen}
-              disabled={!this.state.formValid}
-            >
-              Confirmar
-            </Button>
-          </Col>
-        </Grid>
+            Confirmar
+          </Button>
+        </div>
       </Form>
-
     )
   }
 }
 
 AddressesPage.propTypes = {
   theme: PropTypes.shape({
-    page: PropTypes.string,
-    title: PropTypes.string,
-    btnAddNewAddress: PropTypes.string,
-    label: PropTypes.string,
-    light: PropTypes.string,
-    dark: PropTypes.string,
+    addressForm: PropTypes.string,
+    inputsContainer: PropTypes.string,
+    buttonContainer: PropTypes.string,
+    fieldNumber: PropTypes.string,
+    fieldComplement: PropTypes.string,
+    fieldCity: PropTypes.string,
+    fieldState: PropTypes.string,
+    inputGroup: PropTypes.string,
+    switchLabel: PropTypes.string,
   }),
-  base: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  isBigScreen: PropTypes.bool.isRequired,
+  handlePreviousButton: PropTypes.func.isRequired,
   billing: PropTypes.shape({
     name: PropTypes.string,
     street: PropTypes.string,
@@ -318,12 +279,10 @@ AddressesPage.propTypes = {
 AddressesPage.defaultProps = {
   theme: {},
   billing: {},
-  base: 'dark',
 }
 
-const mapStateToProps = ({ screenSize, pageInfo }) => ({
+const mapStateToProps = ({ pageInfo }) => ({
   billing: pageInfo.billing,
-  isBigScreen: screenSize.isBigScreen,
 })
 
 export default connect(mapStateToProps, {

@@ -3,10 +3,13 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Scrollbars } from 'react-custom-scrollbars'
 import {
+  always,
   add,
   anyPass,
+  equals,
   insert,
   isNil,
+  ifElse,
   join,
   pipe,
   prop,
@@ -23,8 +26,10 @@ import { formatToBRL } from '../../utils/masks/'
 
 const consumeTheme = ThemeConsumer('UICart')
 
-const formatShippingRate = freight => (
-  freight === 0 ? 'Gratis!' : formatToBRL(freight)
+const formatShippingRate = ifElse(
+  equals(0),
+  always('Gratis!'),
+  formatToBRL
 )
 
 const formatZipcode = pipe(

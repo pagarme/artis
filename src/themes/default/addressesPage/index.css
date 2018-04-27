@@ -1,61 +1,108 @@
 @import "../colors.css";
 @import "../typography.css";
-@import "../spacing.css";
 @import "../media.css";
-@import "../margin.css";
+@import "../spacing.css";
 
-.page {
-  padding: var(--spacing-medium) var(--spacing-small) 0 var(--spacing-small);
-  justify-content: center;
+.addressForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.inputsContainer {
+  flex: 1;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    padding-top: var(--spacing-medium);
+  }
 }
 
 .title {
-  margin: 6px 0;
+  width: 100%;
+  margin-top: var(--spacing-large);
   font-family: var(--primary-font-family);
-  font-size: var(--font-size-small);
-  color: var(--color-white);
-  text-transform: uppercase;
-  letter-spacing: 1.4px;
+  font-weight: 900;
+  font-size: var(--font-size-large);
+  color: var(--color-title);
+  letter-spacing: 0.02em;
   justify-content: center;
   display: flex;
-  align-items: center;
-  padding-bottom: 24px;
+  text-align: center;
 }
 
-.light .title {
-  color: var(--color-grey-77);
-}
-
-.titleIcon {
-  padding: 0 9px 0 0;
-}
-
-.label {
-  color: #ffffff;
-  font-size: 14px;
-}
-
-.addressForm {
-  flex: 1;
+.buttonContainer {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-medium);
+  fill: var(--checkout-primary-color);
+}
 
-  & > *:not(:first-child) {
-    padding-top: 12px;
-  }
+.buttonContainer button:first-child {
+  margin-left: var(--spacing-medium);
+}
+
+.buttonContainer button:first-child:hover {
+  fill: var(--color-black);
+}
+
+.buttonContainer button:last-child {
+  margin-right: var(--spacing-medium);
+}
+
+.fieldNumber,
+.fieldNumber input {
+  width: 18%;
+}
+
+.fieldComplement,
+.fieldComplement input {
+  width: 72%;
+}
+
+.fieldCity,
+.fieldCity input {
+  width: 63%;
+}
+
+.fieldState,
+.fieldState input {
+  width: 30%;
+}
+
+.inputGroup {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputGroup:last-child {
+  align-items: center;
+}
+
+.switchLabel {
+  font-family: var(--primary-font-family);
+  font-weight: 900;
+  font-style: italic;
+  color: var(--color-white);
+  font-size: 13px;
 }
 
 @media (--media-palm) {
 
   .title {
-    display: none;
+    font-size: var(--font-size-medium);
   }
 
-  .page {
-    padding-left: var(--margin-page-mobile);
-    padding-right: var(--margin-page-mobile);
+  .inputsContainer {
+    width: 87%;
+  }
+
+  .buttonContainer button {
+    font-size: 13px;
   }
 }
-
