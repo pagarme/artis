@@ -128,10 +128,6 @@ class SuccessInfo extends React.Component {
                 download: boletoName,
                 href: boletoUrl,
               },
-              // {
-              //   text: 'Encaminhar por e-mail',
-              //   onClick: this.toggleEmailForm,
-              // },
               {
                 text: copyText,
                 onClick: () => {

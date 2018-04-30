@@ -21,6 +21,7 @@ import UINormalizeCSS from './normalize.css'
 import UIPaymentOptionsPage from './paymentoptionsPage/index.css'
 import UIProgressBar from './progressBar/index.css'
 import UISuccessInfo from './successInfo/index.css'
+import UISuccessMessageInfo from './messageInfo/success/index.css'
 import UISwitch from './switch/index.css'
 import UITooltip from './tooltip/index.css'
 
@@ -48,6 +49,7 @@ export default {
   UIPaymentOptionsPage,
   UIProgressBar,
   UISuccessInfo,
+  UISuccessMessageInfo,
   UISwitch,
   UITooltip,
 }
