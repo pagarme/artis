@@ -6,10 +6,7 @@ import { Button } from 'former-kit'
 
 import CloseIcon from 'react-icons/lib/io/android-close'
 import BackIcon from 'react-icons/lib/io/android-arrow-back'
-import NavigateBack from './../../src/images/navigate_back.svg'
 import NavigateNext from './../../src/images/navigate_next.svg'
-
-
 import style from './style.css'
 
 storiesOf('Buttons', module)
@@ -18,11 +15,7 @@ storiesOf('Buttons', module)
       <div>
         <h2>Default Button</h2>
         <Button>
-          <b>Continuar</b>
-        </Button>
-        <Button>
-              Ops
-          <span><b>Voltar</b></span>
+          Continuar
         </Button>
       </div>
 
@@ -41,17 +34,11 @@ storiesOf('Buttons', module)
       <div>
         <h2>Icons</h2>
         <Button
-          fill="outline"
-          icon={<NavigateBack />}
-        >
-          <span>Label</span>
-        </Button>
-        <Button
           fill="gradient"
           icon={<NavigateNext />}
-          iconAlignment="right"
+          iconAlignment="end"
         >
-          <span>Label</span>
+          Label
         </Button>
       </div>
 

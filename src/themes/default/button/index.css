@@ -38,10 +38,9 @@
   background: #32b895;
 }
 
-.button > span {
-  margin-left: 10px;
-  margin-right: 10px;
-  padding-top: 2px;
+.button > svg {
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 .gradient {
@@ -58,9 +57,9 @@
 }
 
 .button:disabled {
-  color: var(--color-grey-39);
+  background: #484848;
+  color: #909090;
   cursor: not-allowed;
-  background: var(--color-grey-11);
 }
 
 /*
