@@ -6,6 +6,7 @@
 :root {
   --switch-label-left: 15px;
   --switch-label-font-family: var(--primary-font-family);
+  --switch-label-font-size: 13px;
 
   --switch-width: 39px;
   --switch-height: 25px;
@@ -19,20 +20,22 @@
   --switch-bullet-on-color: var(--color-white);
   --switch-bullet-off-color: var(--color-white);
   --switch-bullet-on-background: #8deec6;
-  --switch-bullet-off-background: #ef6d6d;
+  --switch-bullet-off-background: #d86767;
   --switch-disabled-color: var(--color-grey-68);
   --switch-disabled-background: var(--color-white);
 }
 
 .switch {
+  align-items: center;
+  color: var(--switch-bullet-off-background);
   cursor: pointer;
   display: inline-flex;
-  position: relative;
-  padding-left: calc(var(--switch-width) + var(--switch-label-left));
-  height: var(--switch-height);
-  align-items: center;
   font-family: var(--switch-label-font-family);
-  color: var(--switch-bullet-off-background);
+  font-size: var(--switch-label-font-size);
+  font-weight: 900;
+  height: var(--switch-height);
+  position: relative;
+  width: 100%;
 }
 
 .switch,
@@ -46,7 +49,7 @@
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
+  left: 30px;
   border-radius: var(--switch-radius);
   pointer-events: none;
 }

@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-
 import { Switch } from 'former-kit'
 
 class SwitchState extends React.Component {
