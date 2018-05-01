@@ -222,7 +222,10 @@ Cart.propTypes = {
     city: PropTypes.string,
     state: PropTypes.string,
     zipcode: PropTypes.string,
-    fee: PropTypes.string,
+    fee: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
   }),
   amount: PropTypes.shape({
     initial: PropTypes.number,
