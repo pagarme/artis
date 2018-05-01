@@ -26,8 +26,8 @@ import {
   Footer,
   Cart,
   LoadingInfo,
-  ErrorInfo,
   SuccessInfo,
+  ErrorInfo,
 } from '../../components'
 
 import CustomerPage from '../../pages/Customer'
@@ -276,9 +276,7 @@ class Checkout extends Component {
         </State>
         <Action show="onTransactionError">
           <ErrorInfo
-            base={base}
-            title={this.state.errorTitle}
-            subtitle={this.state.errorSubtitle}
+            navigatePreviousPage={this.navigatePreviousPage}
           />
         </Action>
         <Action show="onTransactionSuccess">

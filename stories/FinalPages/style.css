@@ -1,0 +1,7 @@
+.bg {
+  background: #333333;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
