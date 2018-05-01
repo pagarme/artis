@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import moment from 'moment'
@@ -43,10 +44,27 @@ const Success = ({ amount, boleto, creditCard, theme }) => {
     }
   )
 
+  const handleCloseCheckout = () => {
+    const { targetElement } = this.props
+
+    ReactGA.event({
+      category: 'Header',
+      action: 'Click - Close Button',
+    })
+
+    this.setState({ closingEffect: true })
+
+    setTimeout(() => {
+      ReactDOM.unmountComponentAtNode(
+        targetElement
+      )
+    }, 500)
+  }
+
   const renderTexts = () => {
     let content = null
 
-    if (creditCard.installments) {
+    if (creditCard.installmentText) {
       content = (
         <Fragment>
           <Row className={theme.noPadding}>
@@ -59,9 +77,7 @@ const Success = ({ amount, boleto, creditCard, theme }) => {
             >
               <p className={theme.subtitle}>Parcelamento:</p>
               <p className={theme.value}>
-                {creditCard.installments}x vezes de R$
-                {creditCard.installmentValue} com juros de
-                {creditCard.installmentRate}% ao mês
+                {creditCard.installmentText}
               </p>
             </Col>
           </Row>
@@ -108,8 +124,8 @@ const Success = ({ amount, boleto, creditCard, theme }) => {
   }
 
   return (
-    <div className={theme.wrapperPai}>
-      <div className={theme.wrapper}>
+    <div className={theme.wrapper}>
+      <div className={theme.box}>
         <Row className={theme.noPadding}>
           <Col
             tv={12}
@@ -165,7 +181,11 @@ const Success = ({ amount, boleto, creditCard, theme }) => {
             >
               <Button
                 fill="gradient"
-                onClick={boleto.url ? handleBoletoSaveFile(boleto.url) : ''}
+                onClick={
+                  boleto.url
+                    ? handleBoletoSaveFile(boleto.url)
+                    : handleCloseCheckout
+                }
               >
                 {boleto.url ? 'Salvar arquivo' : 'Fechar'}
               </Button>
@@ -200,9 +220,7 @@ Success.propTypes = {
     expirationAt: PropTypes.string,
   }),
   creditCard: PropTypes.shape({
-    installments: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    installmentValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    installmentRate: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    installmentText: PropTypes.string,
   }),
   theme: PropTypes.shape({
     buttonsWrapper: PropTypes.string,

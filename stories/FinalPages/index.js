@@ -7,9 +7,7 @@ import SuccessInfo from '../../src/components/MessageInfo/Success'
 import style from './style.css'
 
 const creditCard = {
-  installments: 10,
-  installmentValue: 250,
-  installmentRate: 1.5,
+  installmentText: '6x de R$ 36,67 com juros',
 }
 
 const boleto = {

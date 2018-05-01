@@ -291,7 +291,7 @@ class Checkout extends Component {
         </Action>
         <Action show="onTransactionSuccess">
           <SuccessMessageInfo
-            amount={path(['apiData', 'transaction', 'amount'], this.props)}
+            amount={path(['finalAmount'], this.props)}
             boleto={{
               barcode: this.state.boletoBarcode,
               url: this.state.boletoUrl,
@@ -308,6 +308,14 @@ class Checkout extends Component {
                 'paymentConfig',
                 'boleto',
                 'expirationAt',
+              ], this.props),
+            }}
+            creditCard={{
+              installmentText: path([
+                'pageInfo',
+                'payment',
+                'info',
+                'installmentText',
               ], this.props),
             }}
           />

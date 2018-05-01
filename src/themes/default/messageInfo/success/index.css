@@ -5,25 +5,25 @@
 @import "../../margin.css";
 @import "../../switch/index.css";
 
-.wrapperPai {
+.wrapper {
   display: flex;
   padding-left: 5px;
   padding-right: 5px;
 }
 
-.wrapper {
+.box {
   background: #434343;
   padding-top: 30px;
   max-width: 420px;
 }
 
-.wrapperPai,
 .wrapper,
-.wrapper * {
+.box,
+.box * {
   justify-content: center;
 }
 
-.wrapper * {
+.box * {
   box-sizing: border-box;
   font-family: var(--primary-font-family);
   text-align: center;
