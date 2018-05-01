@@ -5,11 +5,21 @@
 @import "../../margin.css";
 @import "../../switch/index.css";
 
+.wrapperPai {
+  display: flex;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 .wrapper {
   background: #434343;
-  padding-bottom: 30px;
   padding-top: 30px;
   max-width: 420px;
+}
+
+.wrapperPai,
+.wrapper,
+.wrapper * {
   justify-content: center;
 }
 
@@ -26,7 +36,7 @@
   padding-left: 0;
   padding-bottom: 0;
   margin-bottom: 0;
-  margin-top: 0;
+  margin-top: 10px;
   width: 100%;
 }
 
@@ -38,9 +48,7 @@
   border-color: #a1a1a1;
   padding-left: 0;
   padding-bottom: 0;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 15px;
+  margin: 15px auto;
   border-style: dotted;
 }
 
@@ -75,7 +83,7 @@
 }
 
 .buttonsWrapper {
-  width: 350px;
+  width: 100%;
   max-width: 350px;
 }
 
@@ -85,6 +93,13 @@
 
 .buttonColumn {
   display: inline-flex;
+}
+
+.buttonColumn:first-child {
+  padding-right: 5px;
+}
+
+.buttonColumn:last-child {
   padding-left: 5px;
 }
 

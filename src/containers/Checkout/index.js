@@ -31,6 +31,8 @@ import {
   AnalysisInfo,
 } from '../../components'
 
+import SuccessMessageInfo from '../../components/MessageInfo/Success'
+
 import CustomerPage from '../../pages/Customer'
 import BillingPage from '../../pages/Billing'
 import ShippingPage from '../../pages/Shipping'
@@ -225,9 +227,7 @@ class Checkout extends Component {
   }
 
   renderPages (pages) {
-    const { base, pageInfo, transaction } = this.props
-
-    const { payment } = pageInfo
+    const { base, transaction } = this.props
 
     return (
       <React.Fragment>
@@ -290,16 +290,26 @@ class Checkout extends Component {
           />
         </Action>
         <Action show="onTransactionSuccess">
-          <SuccessInfo
-            base={base}
-            paymentInfo={{
-              customer: path(['customer', 'name'], pageInfo),
-              address: path(['shipping'], pageInfo),
-              amount: path(['apiData', 'transaction', 'amount'], this.props),
-              installments: path(['info', 'installments'], payment),
+          <SuccessMessageInfo
+            amount={path(['apiData', 'transaction', 'amount'], this.props)}
+            boleto={{
+              barcode: this.state.boletoBarcode,
+              url: this.state.boletoUrl,
+              name: path([
+                'apiData',
+                'transaction',
+                'paymentConfig',
+                'boleto',
+                'fileName',
+              ], this.props),
+              expirationAt: path([
+                'apiData',
+                'transaction',
+                'paymentConfig',
+                'boleto',
+                'expirationAt',
+              ], this.props),
             }}
-            boletoBarcode={this.state.boletoBarcode}
-            boletoUrl={this.state.boletoUrl}
           />
         </Action>
         <State value="singleCreditCard">

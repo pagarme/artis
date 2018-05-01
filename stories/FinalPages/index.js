@@ -16,7 +16,7 @@ const boleto = {
   barcode: 12345678901234567890,
   name: 'meuboleto',
   url: 'www.pagar.me',
-  expireAt: '2017-12-24',
+  expirationAt: '2018-11-30',
 }
 
 const amount = 1500
