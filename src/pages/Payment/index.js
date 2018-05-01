@@ -10,17 +10,20 @@ const PaymentPage = ({
   base,
   transaction,
   handlePageTransition,
+  handlePreviousButton,
 }) => (
   <MultipaymentOptions
     base={base}
     transaction={transaction}
     handlePageTransition={handlePageTransition}
+    handlePreviousButton={handlePreviousButton}
   />
 )
 
 PaymentPage.propTypes = {
   base: PropTypes.string.isRequired,
   handlePageTransition: PropTypes.func.isRequired,
+  handlePreviousButton: PropTypes.func.isRequired,
   transaction: PropTypes.shape().isRequired,
 }
 

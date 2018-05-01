@@ -209,7 +209,7 @@ class Checkout extends Component {
       })
   }
 
-  renderPages () {
+  renderPages (pages) {
     const { base, pageInfo, transaction } = this.props
 
     const { payment } = pageInfo
@@ -232,6 +232,11 @@ class Checkout extends Component {
         <State value="payment">
           <PaymentPage
             base={base}
+            handlePreviousButton={
+              pages[0].page === 'payment'
+                ? null
+                : this.navigatePreviousPage
+            }
             handlePageTransition={this.handlePageTransition}
             handleSubmit={this.handleFormSubmit}
             title="Dados de Pagamento"
@@ -358,7 +363,7 @@ class Checkout extends Component {
           <main
             className={theme.content}
           >
-            {this.renderPages()}
+            {this.renderPages(pages)}
           </main>
           <Footer />
         </div>
