@@ -39,6 +39,11 @@ const shipping = {
   fee: 5000,
 }
 
+const amount = {
+  initial: 10000,
+  final: 15000,
+}
+
 describe('Cart', () => {
   it('should render shipping fee value', () => {
     const component = mount(
@@ -56,20 +61,8 @@ describe('Cart', () => {
 
   it('should render amount', () => {
     const component = mount(
-      <Cart items={items} />
-    )
-
-    const totalValue = component.find('p').last().text()
-    const totalValueToCompare = formatToBRL(10000)
-
-    expect(totalValue).toBe(totalValueToCompare)
-  })
-
-  it('should sum amount and shipping fee', () => {
-    const component = mount(
       <Cart
-        items={items}
-        shipping={shipping}
+        amount={amount}
       />
     )
 
@@ -77,6 +70,21 @@ describe('Cart', () => {
     const totalValueToCompare = formatToBRL(15000)
 
     expect(totalValue).toBe(totalValueToCompare)
+  })
+
+  it('should decrease amount using shipping fee', () => {
+    const component = mount(
+      <Cart
+        amount={amount}
+        items={items}
+        shipping={shipping}
+      />
+    )
+
+    const value = component.find('p').get(9).props.children
+    const totalValueToCompare = formatToBRL(5000)
+
+    expect(value).toBe(totalValueToCompare)
   })
 
   it('should render items', () => {

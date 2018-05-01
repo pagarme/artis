@@ -4,7 +4,11 @@ import { shallow } from 'enzyme'
 import Checkout from './'
 import createStore from '../../store'
 
-const store = createStore({})
+const store = createStore({
+  transaction: {
+    amount: 10000,
+  },
+})
 
 describe('Main App', () => {
   const component = shallow(
