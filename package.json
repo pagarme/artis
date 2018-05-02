@@ -30,9 +30,9 @@
     "react-ga": "2.4.1",
     "react-icons": "2.2.7",
     "react-maskedinput": "4.0.1",
-    "react-payment-card-component": "0.1.0",
+    "react-payment-card-component": "0.2.0",
     "react-redux": "5.0.7",
-    "react-vanilla-form": "0.2.5",
+    "react-vanilla-form": "0.3.0",
     "redux": "3.7.2",
     "shortid": "2.2.8",
     "whatwg-fetch": "2.0.3"
