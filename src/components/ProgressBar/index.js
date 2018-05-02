@@ -23,7 +23,9 @@ const renderSteps = (steps, activeStep, theme) => (
           }
         >
           { step.icon }
-          { step.title }
+          <span className={theme.title}>
+            { step.title }
+          </span>
         </div>
       ))
     }

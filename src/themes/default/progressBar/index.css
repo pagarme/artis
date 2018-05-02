@@ -60,11 +60,10 @@
   }
 
   .active {
-    width: 100%;
     color: var(--color-white);
   }
 
-  .step:not(.active) {
+  .step .title {
     display: none;
   }
 }
