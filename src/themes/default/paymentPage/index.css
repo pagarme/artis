@@ -3,7 +3,6 @@
 @import "../spacing.css";
 @import "../media.css";
 @import "../margin.css";
-@import "../switch/index.css";
 
 .page {
   padding: var(--spacing-medium) var(--spacing-small) 0 0;

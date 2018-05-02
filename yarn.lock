@@ -9044,9 +9044,9 @@ react-motion@0.5.2:
     prop-types "^15.5.8"
     raf "^3.1.0"
 
-react-payment-card-component@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-payment-card-component/-/react-payment-card-component-0.1.0.tgz#9870db6fa311b3c977bd380248511b49189e9c02"
+react-payment-card-component@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-payment-card-component/-/react-payment-card-component-0.2.0.tgz#2df252690cce2767e7c78b14ea9f106c756c67df"
   dependencies:
     classnames "2.2.5"
     prop-types "15.6.0"
@@ -9127,9 +9127,9 @@ react-treebeard@^2.1.0:
     shallowequal "^0.2.2"
     velocity-react "^1.3.1"
 
-react-vanilla-form@0.2.5:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/react-vanilla-form/-/react-vanilla-form-0.2.5.tgz#21b2d83267bb961bcaf1ea7710bf0d76f6ed1185"
+react-vanilla-form@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-vanilla-form/-/react-vanilla-form-0.3.0.tgz#1f19f5a69f7bb3ab26c10f16e1ec7f74cf4b0428"
   dependencies:
     ramda "0.25.0"
 

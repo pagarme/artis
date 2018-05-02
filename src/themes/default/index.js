@@ -23,6 +23,7 @@ import UITooltip from './tooltip/index.css'
 import UINormalizeCSS from './normalize.css'
 import UILinearProgress from './linear-progress/index.css'
 import UIAutocomplete from './autocomplete/index.css'
+import UICreditCardPage from './creditcardPage/index.css'
 
 export default {
   UIButton,
@@ -50,4 +51,5 @@ export default {
   UINormalizeCSS,
   UILinearProgress,
   UIAutocomplete,
+  UICreditCardPage,
 }
