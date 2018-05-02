@@ -1,150 +1,185 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { equals } from 'ramda'
 import classNames from 'classnames'
 import {
   Button,
-  Grid,
-  Row,
-  Col,
   ThemeConsumer,
 } from 'former-kit'
+import {
+  concat,
+  equals,
+  reduce,
+} from 'ramda'
 
-const consumeTheme = ThemeConsumer('UIPaymentPage')
+import BoletoIcon from '../../images/boleto.svg'
+import CreditCardIcon from '../../images/credit-card.svg'
+import TwoCreditCards from '../../images/two-credit-cards.svg'
+import CradiCardMoreBoleto from '../../images/credit-card-more-boleto.svg'
+import NavigateBack from '../../images/navigate_back.svg'
+import NavigateNext from '../../images/navigate_next.svg'
 
-const defaultColSize = 12
-const mediumColSize = 6
+const consumeTheme = ThemeConsumer('UIPaymentOptionsPage')
 
 const allowedOptions = [
   {
     paymentType: ['creditcard', 'creditcard'],
-    title: '2 cartões de crédito',
+    title: '2 Cartões',
+    icon: <TwoCreditCards />,
     transitionTo: 'MULTIPLE_CREDITCARDS',
   },
   {
     paymentType: ['creditcard', 'boleto'],
-    title: 'Cartão de crédito + Boleto',
+    title: 'Cartão + Boleto',
+    icon: <CradiCardMoreBoleto />,
     transitionTo: 'CREDITCARD_AND_BOLETO',
   },
 ]
 
-const MultipaymentOptions = ({
-  base,
-  theme,
-  transaction,
-  handlePageTransition,
-}) => {
-  const { paymentMethods } = transaction
+class PaymentOptionsPage extends React.Component {
+  state = {
+    transitionTo: '',
+  }
 
-  const hasThisPaymentType = paymentType =>
-    paymentMethods.find(item => equals(item, paymentType))
+  handleSelectOption = option => () => {
+    this.setState({
+      transitionTo: option,
+    })
+  }
 
-  const multipaymentButtons = allowedOptions.map((option, index) => {
+  render () {
     const {
-      paymentType,
-      title,
-      transitionTo,
-    } = option
+      theme,
+      transaction,
+      handlePageTransition,
+      handlePreviousButton,
+    } = this.props
+    const { paymentMethods } = this.props.transaction
 
-    if (!hasThisPaymentType(paymentType)) {
-      return null
-    }
+    const hasThisPaymentType = paymentType =>
+      paymentMethods.find(item => equals(item, paymentType))
 
-    const key = `${theme.paymentTitle}${index}`
+    const multipaymentButtons = reduce(
+      (buttons, option, index) => {
+        const {
+          paymentType,
+          title,
+          icon,
+          transitionTo,
+        } = option
+
+        if (!hasThisPaymentType(paymentType)) {
+          return buttons
+        }
+
+        const key = `${theme.paymentTitle}${index}`
+
+        return concat(
+          buttons,
+          [
+            (
+              <Button
+                key={key}
+                className={theme.paymentOption}
+                icon={icon}
+                onClick={this.handleSelectOption(transitionTo)}
+              >
+                <div className={theme.paymentOptionText}>
+                  <p className={theme.paymentTitle}>
+                    {title}
+                  </p>
+                </div>
+              </Button>
+            ),
+          ]
+        )
+      },
+      [],
+      allowedOptions
+    )
+
+    const { paymentConfig } = transaction
+    const { creditcard, boleto } = paymentConfig
+    const optionsClasses = classNames(
+      theme.optionsContainer,
+      {
+        [theme.multipayments]: multipaymentButtons.length,
+      }
+    )
 
     return (
-      <Row
-        key={key}
-        className={theme.alignCenter}
-      >
-        <Col
-          className={theme.wrapperButton}
-          tv={mediumColSize}
-          desk={mediumColSize}
-          tablet={defaultColSize}
-          palm={defaultColSize}
-        >
+      <div className={theme.page}>
+        <h2 className={theme.title}>
+          Como quer pagar?
+        </h2>
+        <div className={optionsClasses} >
           <Button
             className={theme.paymentOption}
-            onClick={handlePageTransition(transitionTo)}
-            full
+            onClick={this.handleSelectOption('SINGLE_CREDITCARD')}
+            icon={<CreditCardIcon />}
           >
-            <p className={theme.paymentTitle}>
-              {title}
-            </p>
+            <div className={theme.paymentOptionText}>
+              <p className={theme.paymentTitle}>
+                Cartão de crédito
+              </p>
+              <p className={theme.paymentSubtitle}>
+                {creditcard.subtitle}
+              </p>
+            </div>
           </Button>
-        </Col>
-      </Row>
+          { multipaymentButtons }
+          <Button
+            className={theme.paymentOption}
+            onClick={this.handleSelectOption('SINGLE_BOLETO')}
+            icon={<BoletoIcon />}
+          >
+            <div className={theme.paymentOptionText}>
+              <p className={theme.paymentTitle}>
+                Boleto
+              </p>
+              <p className={theme.paymentSubtitle}>
+                {boleto.subtitle}
+              </p>
+            </div>
+          </Button>
+        </div>
+        <div className={theme.buttonContainer}>
+          {
+            handlePreviousButton ?
+              <Button
+                fill="outline"
+                onClick={handlePreviousButton}
+                icon={<NavigateBack />}
+              >
+                  Ops, Voltar
+              </Button> :
+              <div />
+          }
+          <Button
+            type="submit"
+            iconAlignment="end"
+            icon={<NavigateNext />}
+            disabled={!this.state.transitionTo}
+            onClick={handlePageTransition(this.state.transitionTo)}
+          >
+            Confirmar
+          </Button>
+        </div>
+      </div>
     )
-  })
-
-  const { paymentConfig } = transaction
-  const { creditcard, boleto } = paymentConfig
-
-  return (
-    <Grid className={classNames(theme.page, theme[base])}>
-      <Row
-        className={theme.alignCenter}
-      >
-        <Col
-          className={theme.wrapperButton}
-          tv={mediumColSize}
-          desk={mediumColSize}
-          tablet={defaultColSize}
-          palm={defaultColSize}
-        >
-          <Button
-            className={theme.paymentOption}
-            onClick={handlePageTransition('SINGLE_CREDITCARD')}
-            full
-          >
-            <p className={theme.paymentTitle}>
-              1 cartão de crédito
-            </p>
-            <p className={theme.paymentSubtitle}>
-              {creditcard.subtitle}
-            </p>
-          </Button>
-        </Col>
-      </Row>
-      { multipaymentButtons }
-      <Row
-        className={theme.alignCenter}
-      >
-        <Col
-          className={theme.wrapperButton}
-          tv={mediumColSize}
-          desk={mediumColSize}
-          tablet={defaultColSize}
-          palm={defaultColSize}
-        >
-          <Button
-            className={theme.paymentOption}
-            onClick={handlePageTransition('SINGLE_BOLETO')}
-            full
-          >
-            <p className={theme.paymentTitle}>
-              Boleto
-            </p>
-            <p className={theme.paymentSubtitle}>
-              {boleto.subtitle}
-            </p>
-          </Button>
-        </Col>
-      </Row>
-    </Grid>
-  )
+  }
 }
 
-MultipaymentOptions.propTypes = {
-  theme: PropTypes.shape(),
+PaymentOptionsPage.propTypes = {
+  theme: PropTypes.shape({
+    page: PropTypes.string,
+  }),
   transaction: PropTypes.shape().isRequired,
   handlePageTransition: PropTypes.func.isRequired,
-  base: PropTypes.string.isRequired,
+  handlePreviousButton: PropTypes.func.isRequired,
 }
 
-MultipaymentOptions.defaultProps = {
+PaymentOptionsPage.defaultProps = {
   theme: {},
 }
 
-export default consumeTheme(MultipaymentOptions)
+export default consumeTheme(PaymentOptionsPage)

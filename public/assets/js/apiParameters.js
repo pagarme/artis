@@ -98,6 +98,7 @@ const pagarmeApi = `var configs = {
     defaultMethod: 'creditcard',
     paymentConfig: {
       boleto: {
+        subtitle: '10% de desconto :)',
         softDescriptor: 'Company name',
         instructions: 'Use this field to add instructions',
         expirationAt: '2018-11-30',
@@ -107,6 +108,7 @@ const pagarmeApi = `var configs = {
         },
       },
       creditcard: {
+        subtitle: 'Em até 3x sem juros!',
         invoiceDescriptor: 'Mercurio :)',
         installments: [
           {

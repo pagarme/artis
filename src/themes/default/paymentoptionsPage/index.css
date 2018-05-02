@@ -1,0 +1,144 @@
+@import "../colors.css";
+@import "../typography.css";
+@import "../media.css";
+@import "../spacing.css";
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: inherit;
+}
+
+.title {
+  width: 100%;
+  margin-top: var(--spacing-large);
+  font-family: var(--primary-font-family);
+  font-weight: 900;
+  font-size: var(--font-size-large);
+  color: var(--color-title);
+  letter-spacing: 0.02em;
+  justify-content: center;
+  display: flex;
+  text-align: center;
+}
+
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 47px;
+  width: calc(100% - 60px);
+  height: 265px;
+}
+
+.optionsContainer button {
+  width: 300px;
+  height: 76px;
+  background: var(--color-black);
+  border: 2px solid #4b4b4b;
+  border-radius: 5px;
+  box-shadow: 0 2px 11px 4px rgba(0, 0, 0, 0.26);
+  padding: 18px 19px 17px;
+
+  &:not(:first-child) {
+    margin-top: 14px;
+  }
+}
+
+.optionsContainer.multipayments button {
+  width: 205px;
+  height: 76px;
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+.optionsContainer.multipayments button:nth-child(1),
+.optionsContainer.multipayments button:nth-child(2) {
+  margin-right: 10px;
+}
+
+.optionsContainer.multipayments {
+  display: block;
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+.optionsContainer button,
+.optionsContainer button:active,
+.optionsContainer button:hover,
+.optionsContainer button:focus {
+  background: var(--color-black);
+}
+
+.optionsContainer button:focus {
+  border-color: #54d894;
+}
+
+.optionsContainer button svg {
+  width: 51px;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.optionsContainer.multipayments button svg {
+  margin-right: 10px;
+}
+
+.paymentOptionText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  height: 39px;
+}
+
+.multipayments .paymentOptionText {
+  height: 34px;
+}
+
+.paymentOptionText p {
+  font-size: 13px;
+  font-family: var(--primary-font-family);
+  font-weight: 900;
+}
+
+.multipayments .paymentOptionText p {
+  font-size: 10px;
+}
+
+.paymentTitle {
+  color: var(--color-white);
+  text-transform: uppercase;
+  margin: 0;
+  margin-top: 3px;
+}
+
+.paymentSubtitle {
+  margin: 0;
+  margin-top: -3px;
+  color: #a7a7a7;
+}
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-medium);
+  fill: var(--checkout-primary-color);
+}
+
+.buttonContainer button:first-child {
+  margin-left: var(--spacing-medium);
+}
+
+.buttonContainer button:first-child:hover {
+  fill: var(--color-black);
+}
+
+.buttonContainer button:last-child {
+  margin-right: var(--spacing-medium);
+}
