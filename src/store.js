@@ -27,6 +27,7 @@ export default ({
       },
       transactionValues: {
         ...transaction,
+        finalAmount: transaction.amount,
       },
     },
     applyMiddleware(...middlewares)

@@ -4,7 +4,6 @@ import classNames from 'classnames'
 import { Scrollbars } from 'react-custom-scrollbars'
 import {
   always,
-  add,
   anyPass,
   equals,
   insert,
@@ -13,7 +12,7 @@ import {
   join,
   pipe,
   prop,
-  reduce,
+  propOr,
 } from 'ramda'
 import {
   ThemeConsumer,
@@ -66,12 +65,7 @@ const sumItem = (total, { unitPrice, quantity }) => (
   )
 )
 
-const sumAmount = (items, shippingFee = 0) => pipe(
-  reduce(sumItem, 0),
-  add(shippingFee)
-)(items)
-
-class Cart extends React.Component {
+class Cart extends React.PureComponent {
   state = {
     collapsed: true,
   }
@@ -112,6 +106,7 @@ class Cart extends React.Component {
 
   render () {
     const {
+      amount,
       base,
       customer,
       shipping,
@@ -119,10 +114,9 @@ class Cart extends React.Component {
       items,
     } = this.props
 
-    const shippingFee = prop('fee', shipping)
-    const amount = sumAmount(items, shippingFee)
+    const shippingFee = propOr(0, 'fee')(shipping)
 
-    const shouldRenderShippingFee = !isNil(shippingFee)
+    const shouldRenderShippingFee = !isNil(shipping.fee)
 
     const cartClasses = classNames(
       theme.cart,
@@ -134,6 +128,9 @@ class Cart extends React.Component {
 
     const customerName = prop('name', customer)
     const customerEmail = prop('email', customer)
+    const initialAmount = prop('initial', amount)
+    const finalAmount = prop('final', amount)
+    const subtotal = initialAmount - shippingFee
 
     const shippingAddress = hasShippingAddress(shipping)
       ? renderShippingAddress(shipping)
@@ -196,12 +193,12 @@ class Cart extends React.Component {
               <p>Total</p>
             </div>
             <div className={theme.values}>
-              <p>{formatToBRL(amount)}</p>
+              <p>{formatToBRL(subtotal)}</p>
               {
                 shouldRenderShippingFee &&
                 <p>{formatShippingFee(shippingFee)}</p>
               }
-              <p>{formatToBRL(amount)}</p>
+              <p>{formatToBRL(finalAmount)}</p>
             </div>
           </div>
         </section>
@@ -227,6 +224,10 @@ Cart.propTypes = {
     zipcode: PropTypes.string,
     fee: PropTypes.string,
   }),
+  amount: PropTypes.shape({
+    initial: PropTypes.number,
+    final: PropTypes.number,
+  }).isRequired,
 }
 
 Cart.defaultProps = {

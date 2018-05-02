@@ -304,6 +304,7 @@ class Checkout extends Component {
       machineState,
       base,
       pageInfo,
+      finalAmount,
     } = this.props
 
     const {
@@ -339,7 +340,10 @@ class Checkout extends Component {
           <Cart
             base={base}
             items={items}
-            amount={amount}
+            amount={{
+              initial: amount,
+              final: finalAmount,
+            }}
             shipping={shipping}
             customer={customer}
             onToggleCart={this.handleToggleCart}
