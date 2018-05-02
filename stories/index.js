@@ -1,7 +1,6 @@
 import './Button'
 import './ErrorBoundary'
 import './Header'
-import './Switch'
 import './Typography'
 import './FormFields'
 import './ProgressBar'

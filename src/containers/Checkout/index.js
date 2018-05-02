@@ -34,7 +34,6 @@ import {
 import CustomerPage from '../../pages/Customer'
 import AddressesPage from '../../pages/Addresses'
 import PaymentPage from '../../pages/Payment'
-import SwitchPayment from '../../pages/Payment/SwitchPayment'
 import CreditCardPage from '../../pages/Payment/CreditCard'
 import CreditCardAndBoletoPage from '../../pages/Payment/CreditCardAndBoleto'
 import MultipleCreditCardsPage from '../../pages/Payment/MultipleCreditCards'
@@ -270,13 +269,13 @@ class Checkout extends Component {
           />
         </State>
         <State value="singleBoleto">
-          <SwitchPayment
+          {/* <SwitchPayment
             base={base}
             defaultMethod={'boleto'}
             handleSubmit={this.handleFormSubmit}
             paymentType={'boleto'}
             transaction={transaction}
-          />
+          /> */}
         </State>
         <State value="creditCardAndBoleto">
           <CreditCardAndBoletoPage
