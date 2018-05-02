@@ -12,9 +12,7 @@
 }
 
 .box {
-  background: #434343;
   padding-top: 30px;
-  max-width: 420px;
 }
 
 .wrapper,
@@ -27,6 +25,10 @@
   box-sizing: border-box;
   font-family: var(--primary-font-family);
   text-align: center;
+}
+
+.headerIcon {
+  fill: var(--color-success);
 }
 
 .title {
@@ -84,7 +86,36 @@
 
 .buttonsWrapper {
   width: 100%;
-  max-width: 350px;
+  max-width: 320px;
+}
+
+.boletoButtonsWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  max-width: 569px;
+}
+
+.boletoButtonsWrapper > div > div > button {
+  height: 40px;
+  width: 180px;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.boletoButtonsWrapper > div > div > button > svg {
+  max-width: 21px;
+  max-height: 15px;
+}
+
+.boletoButtonsWrapper button div {
+  justify-content: center;
+}
+
+.boletoButtonsWrapper button p {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .centerJustifyContent {
@@ -106,5 +137,13 @@
 .buttonColumn > button {
   width: 100%;
   justify-content: center;
-  line-height: 20px;
+}
+
+.buttonColumn svg {
+  max-width: 15px;
+  max-height: 15px;
+}
+
+.whiteIcon {
+  fill: var(--color-white);
 }

@@ -1,4 +1,5 @@
 import './Button'
+import './DarkButton'
 import './ErrorBoundary'
 import './FinalPages'
 import './Footer'

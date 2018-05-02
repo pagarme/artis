@@ -10,10 +10,12 @@ const creditCard = {
   installmentText: '6x de R$ 36,67 com juros',
 }
 
+const url = 'https://www.pagar.me'
+
 const boleto = {
   barcode: 12345678901234567890,
   name: 'meuboleto',
-  url: 'www.pagar.me',
+  url,
   expirationAt: '2018-11-30',
 }
 
@@ -41,6 +43,7 @@ storiesOf('Final Pages', module)
       <SuccessInfo
         amount={amount}
         creditCard={creditCard}
+        orderUrl={url}
       />
       <SuccessInfo
         amount={amount}

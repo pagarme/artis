@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import moment from 'moment'
@@ -12,60 +11,56 @@ import {
 import ReactGA from 'react-ga'
 import copy from 'copy-to-clipboard'
 
+import { DarkButton } from './../../'
 import { formatToBRL } from '../../../utils/masks/'
 import SuccessIcon from '../../../images/confirmacao_sucesso.svg'
+import CopyIcon from '../../../images/copy.svg'
+import DownloadIcon from '../../../images/download.svg'
+import CloseXIcon from '../../../images/closeX.svg'
+import OrderIcon from '../../../images/pedido.svg'
 
 const consumeTheme = ThemeConsumer('UISuccessMessageInfo')
 
-const Success = ({ amount, boleto, creditCard, theme }) => {
+const Success = ({
+  amount,
+  boleto,
+  closeCheckout,
+  creditCard,
+  orderUrl,
+  theme,
+}) => {
+  const openLink = url => () => window.open(url, '_blank')
+
   const formatExpirationAt = value => (
     value
       ? moment(value).format('L')
       : moment().add(1, 'days').format('L')
   )
 
-  const handleBarcodeCopy = (barcode) => {
-    ReactGA.event({
-      category: 'Boleto',
-      action: 'Copy Bar Code',
-    })
+  const handleBarcodeCopy = barcode => (
+    () => {
+      ReactGA.event({
+        category: 'Boleto',
+        action: 'Copy Bar Code',
+      })
 
-    copy(barcode)
-  }
+      copy(barcode)
+    }
+  )
 
-  const handleBoletoSaveFile = fileUrl => (
+  const handleBoletoSaveFile = fileUrl =>
     () => {
       ReactGA.event({
         category: 'Boleto',
         action: 'Download boleto',
       })
 
-      window.open(fileUrl, '_blank')
+      openLink(fileUrl)
     }
-  )
-
-  const handleCloseCheckout = () => {
-    const { targetElement } = this.props
-
-    ReactGA.event({
-      category: 'Header',
-      action: 'Click - Close Button',
-    })
-
-    this.setState({ closingEffect: true })
-
-    setTimeout(() => {
-      ReactDOM.unmountComponentAtNode(
-        targetElement
-      )
-    }, 500)
-  }
 
   const renderTexts = () => {
-    let content = null
-
     if (creditCard.installmentText) {
-      content = (
+      return (
         <Fragment>
           <Row className={theme.noPadding}>
             <Col
@@ -86,7 +81,7 @@ const Success = ({ amount, boleto, creditCard, theme }) => {
     }
 
     if (boleto.url) {
-      content = (
+      return (
         <Fragment>
           <Row className={theme.noPadding}>
             <Col
@@ -116,11 +111,40 @@ const Success = ({ amount, boleto, creditCard, theme }) => {
               </p>
             </Col>
           </Row>
-        </Fragment>
+
+          <Row className={theme.boletoButtonsWrapper}>
+            <Col
+              tv={6}
+              desk={6}
+              tablet={6}
+              palm={6}
+              className={theme.noPaddingBottom}
+            >
+              <DarkButton
+                onClick={handleBarcodeCopy(boleto.barcode)}
+                title="Copiar código"
+                icon={<CopyIcon className={theme.whiteIcon} />}
+              />
+            </Col>
+            <Col
+              tv={6}
+              desk={6}
+              tablet={6}
+              palm={6}
+              className={theme.noPaddingBottom}
+            >
+              <DarkButton
+                onClick={handleBoletoSaveFile(boleto.url)}
+                title="Salvar código"
+                icon={<DownloadIcon className={theme.whiteIcon} />}
+              />
+            </Col>
+          </Row>
+        </Fragment >
       )
     }
 
-    return content
+    return null
   }
 
   return (
@@ -134,7 +158,7 @@ const Success = ({ amount, boleto, creditCard, theme }) => {
             palm={12}
             className={theme.noPaddingBottom}
           >
-            <SuccessIcon />
+            <SuccessIcon className={theme.headerIcon} />
           </Col>
         </Row>
         <Row className={theme.noPadding}>
@@ -166,6 +190,7 @@ const Success = ({ amount, boleto, creditCard, theme }) => {
           </Col>
         </Row>
         { renderTexts() }
+
         <Row className={
           classNames(theme.noPadding, theme.centerJustifyContent)}
         >
@@ -181,29 +206,32 @@ const Success = ({ amount, boleto, creditCard, theme }) => {
             >
               <Button
                 fill="gradient"
-                onClick={
-                  boleto.url
-                    ? handleBoletoSaveFile(boleto.url)
-                    : handleCloseCheckout
-                }
+                icon={<CloseXIcon className={theme.whiteIcon} />}
+                onClick={closeCheckout}
+                size="tiny"
               >
-                {boleto.url ? 'Salvar arquivo' : 'Fechar'}
+                Fechar
               </Button>
             </Col>
-            <Col
-              tv={6}
-              desk={6}
-              tablet={6}
-              palm={6}
-              className={theme.buttonColumn}
-            >
-              <Button
-                fill="outline"
-                onClick={boleto.url ? handleBarcodeCopy(boleto.barcode) : ''}
+            {
+              orderUrl &&
+              <Col
+                tv={6}
+                desk={6}
+                tablet={6}
+                palm={6}
+                className={theme.buttonColumn}
               >
-                {boleto.url ? 'Copiar código' : 'Ver pedido'}
-              </Button>
-            </Col>
+                <Button
+                  fill="outline"
+                  icon={<OrderIcon className={theme.whiteIcon} />}
+                  onClick={openLink(orderUrl)}
+                  size="tiny"
+                >
+                  Ver pedido
+                </Button>
+              </Col>
+            }
           </div>
         </Row>
       </div>
@@ -214,7 +242,7 @@ const Success = ({ amount, boleto, creditCard, theme }) => {
 Success.propTypes = {
   amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   boleto: PropTypes.shape({
-    barcode: PropTypes.string,
+    barcode: PropTypes.number,
     name: PropTypes.string,
     url: PropTypes.string,
     expirationAt: PropTypes.string,
@@ -223,20 +251,25 @@ Success.propTypes = {
     installmentText: PropTypes.string,
   }),
   theme: PropTypes.shape({
-    buttonsWrapper: PropTypes.string,
     buttonColumn: PropTypes.string,
+    buttonsWrapper: PropTypes.string,
     centerJustifyContent: PropTypes.string,
     noPadding: PropTypes.string,
     noPaddingBottom: PropTypes.string,
     subtitle: PropTypes.string,
     title: PropTypes.string,
     value: PropTypes.string,
+    whiteIcon: PropTypes.string,
   }).isRequired,
+  closeCheckout: PropTypes.func,
+  orderUrl: PropTypes.string,
 }
 
 Success.defaultProps = {
   boleto: {},
   creditCard: {},
+  closeCheckout: null,
+  orderUrl: '',
 }
 
 export default consumeTheme(Success)

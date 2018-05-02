@@ -11,7 +11,6 @@ import {
   isNil,
   length,
   reject,
-  path,
   pathOr,
   propOr,
 } from 'ramda'
@@ -22,16 +21,15 @@ import getErrorMessage from '../../utils/data/errorMessages'
 import { hasRequiredPageData } from '../../utils/validations'
 
 import {
-  Header,
-  Footer,
+  AnalysisInfo,
   Cart,
+  ErrorInfo,
+  Footer,
+  Header,
   LoadingInfo,
   SuccessInfo,
-  ErrorInfo,
-  AnalysisInfo,
 } from '../../components'
 
-import SuccessMessageInfo from '../../components/MessageInfo/Success'
 
 import CustomerPage from '../../pages/Customer'
 import BillingPage from '../../pages/Billing'
@@ -115,6 +113,65 @@ class Checkout extends Component {
       transactionError: true,
       ...getErrorMessage(response),
     }, this.props.transition('TRANSACTION_FAILURE'))
+  }
+
+  getProp = (item, props) => {
+    if (item === 'orderUrl') {
+      return pathOr({}, [
+        'apiData',
+        'configs',
+        'orderUrl',
+      ], props)
+    }
+
+    if (item === 'finalAmount') {
+      return pathOr({}, [
+        'finalAmount',
+      ], props)
+    }
+
+    if (item === 'boletoBarcode') {
+      return pathOr({}, [
+        'boletoBarcode',
+      ], props)
+    }
+
+    if (item === 'boletoUrl') {
+      return pathOr({}, [
+        'boletoUrl',
+      ], props)
+    }
+
+    if (item === 'boletoName') {
+      return pathOr({}, [
+        'apiData',
+        'transaction',
+        'paymentConfig',
+        'boleto',
+        'fileName',
+      ], props)
+    }
+
+    if (item === 'boletoExpiration') {
+      return pathOr({}, [
+        'apiData',
+        'transaction',
+        'paymentConfig',
+        'boleto',
+        'expirationAt',
+      ], props)
+    }
+
+    if (item === 'creditCardInstallmentsText') {
+      return pathOr({}, [
+        'pageInfo',
+        'payment',
+        'info',
+        'installmentText',
+      ], props)
+    }
+
+    return null
   }
 
   handleNewScreenSize = () => {
@@ -290,34 +347,22 @@ class Checkout extends Component {
           />
         </Action>
         <Action show="onTransactionSuccess">
-          <SuccessMessageInfo
-            amount={path(['finalAmount'], this.props)}
+          <SuccessInfo
+            amount={this.getProp('finalAmount', this.props)}
             boleto={{
-              barcode: this.state.boletoBarcode,
-              url: this.state.boletoUrl,
-              name: path([
-                'apiData',
-                'transaction',
-                'paymentConfig',
-                'boleto',
-                'fileName',
-              ], this.props),
-              expirationAt: path([
-                'apiData',
-                'transaction',
-                'paymentConfig',
-                'boleto',
-                'expirationAt',
-              ], this.props),
+              barcode: this.getProp('boletoBarcode', this.props),
+              url: this.getProp('boletoUrl', this.props),
+              name: this.getProp('boletoName', this.props),
+              expirationAt: this.getProp('boletoExpiration', this.props),
             }}
+            closeCheckout={this.close}
             creditCard={{
-              installmentText: path([
-                'pageInfo',
-                'payment',
-                'info',
-                'installmentText',
-              ], this.props),
+              installmentText: this.getProp(
+                'creditCardInstallmentsText',
+                this.props
+              ),
             }}
+            orderUrl={this.getProp('orderUrl', this.props)}
           />
         </Action>
         <State value="singleCreditCard">
