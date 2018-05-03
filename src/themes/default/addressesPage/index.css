@@ -43,6 +43,10 @@
   fill: var(--checkout-primary-color);
 }
 
+.alignEnd {
+  justify-content: flex-end;
+}
+
 .buttonContainer button:first-child {
   margin-left: var(--spacing-medium);
 }

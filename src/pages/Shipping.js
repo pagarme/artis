@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import {
@@ -7,12 +8,10 @@ import {
   isNil,
   merge,
   omit,
-  propOr,
   reject,
 } from 'ramda'
 import {
   Button,
-  Switch,
   FormInput,
   ThemeConsumer,
 } from 'former-kit'
@@ -33,21 +32,22 @@ import NavigateNext from './../../src/images/navigate_next.svg'
 
 const consumeTheme = ThemeConsumer('UIAddressesPage')
 
-class AddressesPage extends Component {
+class ShippingPage extends Component {
   constructor (props) {
     super(props)
 
-    const { billing } = props
+    const { billing, shipping } = props
 
-    this.state = {
-      ...billing,
-      sameAddressForShipping: propOr(true, 'sameAddressForShipping', billing),
-    }
+    this.state = typeof billing.sameAddressForShipping === 'undefined'
+      ? {}
+      : {
+        ...shipping,
+      }
   }
 
   componentWillUnmount () {
     this.props.handlePageChange({
-      page: 'billing',
+      page: 'shipping',
       pageInfo: this.state,
     })
   }
@@ -88,14 +88,6 @@ class AddressesPage extends Component {
     this.numberInput = input
   }
 
-  shippingZipcodeRef = (input) => {
-    this.shippingZipcodeInput = input
-  }
-
-  handleSameAddressChange = (value) => {
-    this.setState({ sameAddressForShipping: value })
-  }
-
   handleChangeForm = (values, errors) => {
     const {
       zipcode: oldZipcode,
@@ -114,7 +106,6 @@ class AddressesPage extends Component {
 
   render () {
     const {
-      sameAddressForShipping,
       isSearchingCPF,
     } = this.state
 
@@ -147,11 +138,6 @@ class AddressesPage extends Component {
             minLength(10),
             maxLength(40),
           ],
-          neighborhood: [
-            required,
-            minLength(4),
-            maxLength(15),
-          ],
           city: [
             required,
             minLength(4),
@@ -164,7 +150,7 @@ class AddressesPage extends Component {
         }}
       >
         <h2 className={theme.title}>
-          Qual é seu endereço de cobrança?
+          Onde devemos fazer a entrega?
         </h2>
         <div className={theme.inputsContainer}>
           <FormInput
@@ -212,30 +198,23 @@ class AddressesPage extends Component {
               placeholder="Escolha a UF"
             />
           </div>
-          <div className={theme.inputGroup}>
-            <p className={theme.switchLabel} >Entregar no mesmo endereço?</p>
-            <Switch
-              checked={sameAddressForShipping}
-              onChange={this.handleSameAddressChange}
-              strings={{
-                on: 'Sim',
-                off: 'Não',
-              }}
-            />
-          </div>
         </div>
-        <div className={theme.buttonContainer}>
-          <Button
+        <div className={classNames(theme.buttonContainer, {
+          [theme.alignEnd]: isNil(handlePreviousButton),
+        })}
+        >
+          {handlePreviousButton && <Button
             fill="outline"
             onClick={handlePreviousButton}
             icon={<NavigateBack />}
           >
-              Ops Voltar
-          </Button>
+            Ops, voltar
+          </Button>}
           <Button
             type="submit"
             iconAlignment="end"
             icon={<NavigateNext />}
+            fill="gradient"
             disabled={!this.state.formValid}
           >
             Confirmar
@@ -246,7 +225,7 @@ class AddressesPage extends Component {
   }
 }
 
-AddressesPage.propTypes = {
+ShippingPage.propTypes = {
   theme: PropTypes.shape({
     addressForm: PropTypes.string,
     inputsContainer: PropTypes.string,
@@ -262,6 +241,9 @@ AddressesPage.propTypes = {
   handlePageChange: PropTypes.func.isRequired,
   handlePreviousButton: PropTypes.func.isRequired,
   billing: PropTypes.shape({
+    sameAddressForShipping: PropTypes.bool,
+  }),
+  shipping: PropTypes.shape({
     name: PropTypes.string,
     street: PropTypes.string,
     number: PropTypes.oneOfType([
@@ -269,22 +251,23 @@ AddressesPage.propTypes = {
       PropTypes.number,
     ]),
     complement: PropTypes.string,
-    neighborhood: PropTypes.string,
     city: PropTypes.string,
     state: PropTypes.string,
     zipcode: PropTypes.string,
   }),
 }
 
-AddressesPage.defaultProps = {
+ShippingPage.defaultProps = {
   theme: {},
+  shipping: {},
   billing: {},
 }
 
 const mapStateToProps = ({ pageInfo }) => ({
+  shipping: pageInfo.shipping,
   billing: pageInfo.billing,
 })
 
 export default connect(mapStateToProps, {
   handlePageChange: addPageInfo,
-})(consumeTheme(AddressesPage))
+})(consumeTheme(ShippingPage))

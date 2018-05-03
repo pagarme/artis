@@ -3,20 +3,31 @@ export default {
   states: {
     customer: {
       on: {
-        NEXT: 'addresses',
+        NEXT: 'billing',
       },
       onEntry: ['navigateToPage'],
     },
-    addresses: {
+    billing: {
       on: {
         PREV: 'customer',
+        NEXT: 'shipping',
+        SAME_SHIPPING_ADDRESS: 'payment',
+        DIFFERENT_SHIPPING_ADDRESS: 'shipping',
+      },
+      onEntry: ['navigateToPage'],
+    },
+    shipping: {
+      on: {
+        PREV: 'billing',
+        PREV_FILLED_BILLING: 'customer',
         NEXT: 'payment',
       },
       onEntry: ['navigateToPage'],
     },
     payment: {
       on: {
-        PREV: 'addresses',
+        PREV_SAME_SHIPPING_ADDRESS: 'billing',
+        PREV_DIFFERENT_SHIPPING_ADDRESS: 'shipping',
         NEXT: 'transaction',
         SINGLE_CREDITCARD: 'singleCreditCard',
         SINGLE_BOLETO: 'singleBoleto',

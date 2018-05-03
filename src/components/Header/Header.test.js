@@ -5,7 +5,6 @@ import Header from './index'
 import { ProgressBar } from '..'
 import steps from '../../containers/Checkout/steps'
 
-
 describe('Header', () => {
   it('should mount', () => {
     const component = mount(
@@ -16,7 +15,7 @@ describe('Header', () => {
   })
 
   it('should filter visible steps', () => {
-    const activeStep = 'addresses'
+    const activeStep = 'billing'
 
     const component = mount(
       <Header
@@ -25,11 +24,11 @@ describe('Header', () => {
       />
     )
 
-    expect(component.find(ProgressBar).props().steps).toHaveLength(4)
+    expect(component.find(ProgressBar).props().steps).toHaveLength(5)
   })
 
-  it('should calculate progress 50 percent', () => {
-    const activeStep = 'addresses'
+  it('should calculate progress 40 percent', () => {
+    const activeStep = 'billing'
 
     const component = mount(
       <Header
@@ -38,7 +37,7 @@ describe('Header', () => {
       />
     )
 
-    expect(component.find(ProgressBar).props().percentage).toBe(50)
+    expect(component.find(ProgressBar).props().percentage).toBe(40)
   })
 
   it('should calculate progress 100 percent', () => {
