@@ -9,6 +9,8 @@ import {
   ThemeConsumer,
 } from 'former-kit'
 
+import NavigateNext from './../../src/images/navigate_next.svg'
+
 import {
   required,
   isEmail,
@@ -120,9 +122,11 @@ class CustomerPage extends Component {
           <Button
             fill="gradient"
             type="submit"
+            iconAlignment="end"
+            icon={<NavigateNext />}
             disabled={!this.state.formValid}
           >
-            Confirmar
+            Continuar
           </Button>
         </div>
       </Form>

@@ -7,7 +7,8 @@ import {
 } from 'former-kit'
 import {
   concat,
-  equals,
+  contains,
+  not,
   reduce,
 } from 'ramda'
 
@@ -55,11 +56,8 @@ class PaymentOptionsPage extends React.Component {
     } = this.props
     const { paymentMethods } = this.props.transaction
 
-    const hasThisPaymentType = paymentType =>
-      paymentMethods.find(item => equals(item, paymentType))
-
     const multipaymentButtons = reduce(
-      (buttons, option, index) => {
+      (buttons, option) => {
         const {
           paymentType,
           title,
@@ -67,11 +65,11 @@ class PaymentOptionsPage extends React.Component {
           transitionTo,
         } = option
 
-        if (!hasThisPaymentType(paymentType)) {
+        if (not(contains(paymentType, paymentMethods))) {
           return buttons
         }
 
-        const key = `${theme.paymentTitle}${index}`
+        const key = paymentType.toString()
 
         return concat(
           buttons,
@@ -161,7 +159,7 @@ class PaymentOptionsPage extends React.Component {
             disabled={!this.state.transitionTo}
             onClick={handlePageTransition(this.state.transitionTo)}
           >
-            Confirmar
+            Pagar
           </Button>
         </div>
       </div>
@@ -173,13 +171,25 @@ PaymentOptionsPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
   }),
-  transaction: PropTypes.shape().isRequired,
   handlePageTransition: PropTypes.func.isRequired,
-  handlePreviousButton: PropTypes.func.isRequired,
+  handlePreviousButton: PropTypes.func,
+  transaction: PropTypes.shape({
+    amount: PropTypes.number,
+    defaultMethod: PropTypes.string,
+    finalAmount: PropTypes.number,
+    paymentConfig: PropTypes.shape({
+      creditcard: PropTypes.shape({
+        installments: PropTypes.arrayOf(PropTypes.object),
+        invoiceDescriptor: PropTypes.string,
+      }),
+    }),
+    paymentMethods: PropTypes.arrayOf(PropTypes.array),
+  }).isRequired,
 }
 
 PaymentOptionsPage.defaultProps = {
   theme: {},
+  handlePreviousButton: null,
 }
 
 export default consumeTheme(PaymentOptionsPage)

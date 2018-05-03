@@ -62,7 +62,6 @@ class EmailForm extends React.Component {
               className={theme.emailFormClose}
               fill="clean"
               onClick={handleClose}
-              relevance="high"
               icon={<CloseIcon size={20} />}
             />
           </Col>

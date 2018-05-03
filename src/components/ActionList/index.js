@@ -23,7 +23,6 @@ const ActionList = ({ theme, buttons }) => (
           >
             <Button
               textAlign="left"
-              relevance="low"
               fill="outline"
               disabled={buttonInfo.disabled || false}
               full

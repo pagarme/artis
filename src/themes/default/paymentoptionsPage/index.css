@@ -1,6 +1,5 @@
 @import "../colors.css";
 @import "../typography.css";
-@import "../media.css";
 @import "../spacing.css";
 
 .page {
@@ -15,7 +14,7 @@
   margin-top: var(--spacing-large);
   font-family: var(--primary-font-family);
   font-weight: 900;
-  font-size: var(--font-size-large);
+  font-size: var(--font-size-xlarge);
   color: var(--color-title);
   letter-spacing: 0.02em;
   justify-content: center;
@@ -74,6 +73,10 @@
 
 .optionsContainer button:focus {
   border-color: #54d894;
+}
+
+.optionsContainer button:hover {
+  border-color: var(--color-grey-33);
 }
 
 .optionsContainer button svg {
