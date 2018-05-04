@@ -172,6 +172,8 @@ const integrations = {
 const checkoutFormButtons = document.querySelectorAll('.checkout-button')
 const isSimpleIntegration = checkoutFormButtons.length
 
+window.CheckoutSimple = integrations.simple
+
 if (isSimpleIntegration) {
   integrations.simple(checkoutFormButtons)
 } else {

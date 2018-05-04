@@ -7,30 +7,36 @@
     <link rel="stylesheet" href="assets/css/styles.css">
   </head>
   <body>
-    <div class="box box-custom">
-      <h2>Custom API parameters</h2>
-      <button id="btn-open-custom" class="btn-open">Open</button>
-      <button id="btn-reset-custom" class="btn-reset">Reset</button>
-      <div id="custom-panel"></div>
+    <div class="box box-simple">
+      <h2>Simple Version</h2>
+      <button id="btn-open-simple" class="btn-open">Open</button>
+      <div id="simple-panel"></div>      
     </div>
-    <div class="box box-full">
-      <h2>Full API Parameters</h2>
+    <div id="simple-page">
+      <button id="simple-btn-close">x</button>
+    </div>
+    <div class="box box-custom">
+      <h2>Custom Version</h2>
       <div class="companies">
         <label>
-          <input id="opt-set-pagarme" type="radio" name="company" checked/>
-          Pagar.me
+          <input id="opt-set-pagarme" type="radio" name="company" checked/> Pagar.me
         </label>
         <label>
-          <input id="opt-set-mundipagg" type="radio" name="company" />
-          Mundipagg
+          <input id="opt-set-mundipagg" type="radio" name="company" /> Mundipagg
         </label>
       </div>
-      <button id="btn-open-full" class="btn-open">Open</button>
-      <div id="full-panel"></div>
+      <button id="btn-open-custom" class="btn-open">Open</button>
+      <button id="btn-reset-custom" class="btn-reset">Reset</button>
+      <button id="btn-see-all" class="btn-see-all">see all</button>
+      <div id="custom-panel"></div>
     </div>
-  </body>
-  <script src="assets/js/vendor/ace.js" type="text/javascript" charset="utf-8"></script>
-  <script src="assets/js/panel.js" type="text/javascript" charset="utf-8"></script>
-  <script src="assets/js/apiParameters.js" type="text/javascript" charset="utf-8"></script>
+    <div class="box box-see-all">
+      <div id="see-all-panel"></div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="assets/js/vendor/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="assets/js/customParameters.js" type="text/javascript" charset="utf-8"></script>
+    <script src="assets/js/simpleParameters.js" type="text/javascript" charset="utf-8"></script>
+    <script src="assets/js/panel.js" type="text/javascript" charset="utf-8"></script>
   </body>
 </html>
