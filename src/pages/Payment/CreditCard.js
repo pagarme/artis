@@ -2,7 +2,14 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
-import { isEmpty, reject, isNil, prop } from 'ramda'
+import {
+  isEmpty,
+  isNil,
+  merge,
+  path,
+  prop,
+  reject,
+} from 'ramda'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
 import {
@@ -47,13 +54,6 @@ class CreditCardPage extends Component {
     }
   }
 
-  componentWillUnmount () {
-    this.props.handlePageChange({
-      page: 'customer',
-      pageInfo: this.state,
-    })
-  }
-
   handleChangeForm = (values, errors) => {
     this.setState({
       ...values,
@@ -82,6 +82,24 @@ class CreditCardPage extends Component {
   }
 
   handleFormSubmit = (values, errors) => {
+    const paymentConfig = path(['transaction', 'paymentConfig'], this.props)
+
+    const method = merge(
+      paymentConfig.creditcard,
+      { type: 'creditcard' },
+    )
+
+    const payment = {
+      method,
+      type: 'creditcard',
+      info: this.state,
+    }
+
+    this.props.handlePageChange({
+      page: 'payment',
+      pageInfo: payment,
+    })
+
     this.setState({
       formValid: isEmpty(reject(isNil, errors)),
     })
