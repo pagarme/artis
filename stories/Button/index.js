@@ -7,6 +7,7 @@ import { Button } from 'former-kit'
 import CloseIcon from 'react-icons/lib/io/android-close'
 import BackIcon from 'react-icons/lib/io/android-arrow-back'
 import NavigateNext from './../../src/images/navigate_next.svg'
+import NavigateBack from './../../src/images/navigate_back.svg'
 import style from './style.css'
 
 storiesOf('Buttons', module)
@@ -22,7 +23,7 @@ storiesOf('Buttons', module)
       <div>
         <h2>Fill Gradient</h2>
         <Button fill="gradient">
-              Label
+          Label
         </Button>
       </div>
 
@@ -40,11 +41,32 @@ storiesOf('Buttons', module)
         >
           Label
         </Button>
+        <Button
+          fill="outline"
+          icon={<NavigateBack />}
+        >
+          Voltar
+        </Button>
+        <Button
+          fill="outline"
+          icon={<NavigateNext />}
+          iconAlignment="end"
+        >
+          Continuar
+        </Button>
       </div>
 
       <div>
         <h2>Disabled</h2>
         <Button disabled>Label</Button>
+        <Button
+          fill="gradient"
+          icon={<NavigateNext />}
+          iconAlignment="end"
+          disabled
+        >
+          disabled
+        </Button>
       </div>
 
       <div>
@@ -56,8 +78,8 @@ storiesOf('Buttons', module)
 
       <div>
         <h2>Clean buttons for icons</h2>
-        <Button fill="clean" relevance="low" icon={<BackIcon size={30} />} />
-        <Button fill="clean" relevance="high" icon={<CloseIcon size={30} />} />
+        <Button fill="clean" icon={<BackIcon size={30} />} />
+        <Button fill="clean" icon={<CloseIcon size={30} />} />
       </div>
     </div>
   ))

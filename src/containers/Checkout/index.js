@@ -33,10 +33,8 @@ import {
 import CustomerPage from '../../pages/Customer'
 import BillingPage from '../../pages/Billing'
 import ShippingPage from '../../pages/Shipping'
-import PaymentPage from '../../pages/Payment'
+import PaymentOptionsPage from '../../pages/Payment/PaymentOptions'
 import CreditCardPage from '../../pages/Payment/CreditCard'
-import CreditCardAndBoletoPage from '../../pages/Payment/CreditCardAndBoleto'
-import MultipleCreditCardsPage from '../../pages/Payment/MultipleCreditCards'
 
 import CloseIcon from '../../images/close.svg'
 
@@ -263,16 +261,13 @@ class Checkout extends Component {
           />
         </State>
         <State value="payment">
-          <PaymentPage
-            base={base}
+          <PaymentOptionsPage
             handlePreviousButton={
               pages[0].page === 'payment'
                 ? null
                 : this.navigatePreviousPage
             }
             handlePageTransition={this.handlePageTransition}
-            handleSubmit={this.handleFormSubmit}
-            title="Dados de Pagamento"
             transaction={transaction}
           />
         </State>
@@ -302,29 +297,6 @@ class Checkout extends Component {
         <State value="singleCreditCard">
           <CreditCardPage
             handlePreviousButton={this.navigatePreviousPage}
-            handleSubmit={this.handleFormSubmit}
-            transaction={transaction}
-          />
-        </State>
-        <State value="singleBoleto">
-          {/* <SwitchPayment
-            base={base}
-            defaultMethod={'boleto'}
-            handleSubmit={this.handleFormSubmit}
-            paymentType={'boleto'}
-            transaction={transaction}
-          /> */}
-        </State>
-        <State value="creditCardAndBoleto">
-          <CreditCardAndBoletoPage
-            base={base}
-            handleSubmit={this.handleFormSubmit}
-            transaction={transaction}
-          />
-        </State>
-        <State value="multipleCreditCards">
-          <MultipleCreditCardsPage
-            base={base}
             handleSubmit={this.handleFormSubmit}
             transaction={transaction}
           />

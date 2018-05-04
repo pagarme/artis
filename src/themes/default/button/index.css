@@ -2,13 +2,13 @@
 @import "../typography.css";
 
 :root {
-  --button-padding-top-tiny: 8px;
+  --button-padding-top-tiny: 0;
   --button-padding-left-tiny: 8px;
 
-  --button-padding-top-default: 13px;
+  --button-padding-top-default: 0;
   --button-padding-left-default: 20px;
 
-  --button-padding-top-huge: 17px;
+  --button-padding-top-huge: 0;
   --button-padding-left-huge: 48px;
 }
 
@@ -18,20 +18,25 @@
 
 .button {
   align-items: center;
+  background: linear-gradient(to left, var(--checkout-secondary-color), var(--checkout-primary-color));
   border: none;
   border-radius: 20px;
-  background: linear-gradient(to left, var(--checkout-secondary-color), var(--checkout-primary-color));
+  box-sizing: border-box;
   color: var(--color-white);
   cursor: pointer;
   display: inline-flex;
   font-family: var(--primary-font-family);
   font-weight: var(--title-font-normal);
   font-size: 14px;
+  justify-content: center;
   letter-spacing: var(--letter-spacing);
   outline: none;
-  position: relative;
   text-decoration: none;
   text-transform: capitalize;
+  user-select: none;
+  vertical-align: text-top;
+  white-space: nowrap;
+  word-break: keep-all;
 }
 
 .button:hover {
@@ -41,6 +46,7 @@
 .button > svg {
   margin-right: 5px;
   margin-left: 5px;
+  fill: var(--color-white);
 }
 
 .gradient {
@@ -60,6 +66,10 @@
   background: #484848;
   color: #909090;
   cursor: not-allowed;
+}
+
+.button:disabled > svg {
+  fill: #909090;
 }
 
 /*
@@ -83,6 +93,14 @@
   background: transparent;
 }
 
+.outline svg {
+  fill: var(--checkout-primary-color);
+}
+
+.outline:hover svg {
+  fill: var(--color-black);
+}
+
 .outline:hover {
   background: var(--checkout-primary-color);
   color: var(--color-black);
@@ -96,37 +114,17 @@
   padding: var(--button-padding-top-tiny) var(--button-padding-left-tiny);
   font-size: var(--font-size-tiny);
   text-transform: none;
-  line-height: 10px;
+  height: 24px;
 }
 
 .default {
   padding: var(--button-padding-top-default) var(--button-padding-left-default);
   font-size: var(--font-size-small);
-  line-height: var(--font-size-small);
-  line-height: 10px;
+  height: 36px;
 }
 
 .huge {
   padding: var(--button-padding-top-huge) var(--button-padding-left-huge);
   font-size: var(--font-size-medium);
-  line-height: 12px;
-}
-
-/*
-* LIGHT THEME
-*/
-
-.light.button {
-  color: var(--color-white);
-}
-
-.light.clean,
-.light.clean:active,
-.light.clean:focus {
-  color: var(--checkout-primary-color);
-}
-
-.light.clean:hover {
-  background-color: transparent;
-  color: var(--checkout-secondary-color);
+  height: 44px;
 }
