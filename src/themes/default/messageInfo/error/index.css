@@ -1,0 +1,102 @@
+@import "../../colors.css";
+@import "../../typography.css";
+@import "../../spacing.css";
+@import "../../media.css";
+@import "../../margin.css";
+
+.wrapper {
+  display: flex;
+}
+
+.box {
+  padding-top: 37px;
+  width: 100%;
+  max-width: 450px;
+}
+
+.wrapper,
+.box,
+.box * {
+  font-family: var(--primary-font-family);
+  justify-content: center;
+  text-align: center;
+}
+
+.box h1,
+.box h2,
+.box p {
+  width: 100%;
+}
+
+.title {
+  color: var(--color-error);
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 3px;
+  margin-top: 0;
+}
+
+.subtitle {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+
+.question {
+  font-size: 18px;
+  margin-bottom: 0;
+  margin-top: 0;
+  line-height: 25px;
+}
+
+.subtitle,
+.question {
+  color: var(--color-white);
+}
+
+.questionList {
+  list-style: none;
+  padding-left: 0;
+}
+
+.line {
+  width: 100%;
+  display: inline-flex;
+  height: 1px;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-color: var(--color-error);
+  padding-left: 0;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  border-style: dotted;
+}
+
+.questionTitle {
+  font-size: 14px;
+  color: var(--color-grey-11);
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.wrapper button {
+  font-weight: 900;
+  margin-top: 35px;
+}
+
+.wrapper button > svg {
+  fill: var(--color-success);
+}
+
+.wrapper button:hover > svg {
+  fill: #000000;
+}
+
+.icon {
+  fill: var(--color-error);
+  width: 43px;
+  margin-bottom: 18px;
+}

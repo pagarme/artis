@@ -8,7 +8,7 @@ import UICreditCardPage from './creditcardPage/index.css'
 import UICustomerPage from './customerPage/index.css'
 import UIDropdown from './dropdown/index.css'
 import UIEmailForm from './emailForm/index.css'
-import UIErrorInfo from './errorInfo/index.css'
+import UIErrorMessageInfo from './messageInfo/error/index.css'
 import UIErrorPage from './errorPage/index.css'
 import UIFooter from './footer/index.css'
 import UIGrid from './grid/index.css'
@@ -34,7 +34,7 @@ export default {
   UICustomerPage,
   UIDropdown,
   UIEmailForm,
-  UIErrorInfo,
+  UIErrorMessageInfo,
   UIErrorPage,
   UIFooter,
   UIGrid,
