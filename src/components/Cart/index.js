@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { connect } from 'react-redux'
 import { Scrollbars } from 'react-custom-scrollbars'
 import {
   always,
@@ -18,6 +19,7 @@ import {
   ThemeConsumer,
 } from 'former-kit'
 
+import { toggleCart } from '../../actions'
 import { formatToBRL } from '../../utils/masks/'
 
 import CartIcon from '../../images/cart.svg'
@@ -65,15 +67,7 @@ const sumItem = (total, { unitPrice, quantity }) => (
   )
 )
 
-class Cart extends React.PureComponent {
-  state = {
-    collapsed: true,
-  }
-
-  handleToggleCollapsed = () => {
-    this.setState(({ collapsed }) => ({ collapsed: !collapsed }))
-  }
-
+class Cart extends React.Component {
   renderItems = ({
     id,
     title,
@@ -112,6 +106,7 @@ class Cart extends React.PureComponent {
       shipping,
       theme,
       items,
+      closeCart,
     } = this.props
 
     const shippingFee = propOr(0, 'fee')(shipping)
@@ -122,7 +117,7 @@ class Cart extends React.PureComponent {
       theme.cart,
       theme[base],
       {
-        [theme.collapsed]: this.state.collapsed,
+        [theme.collapsed]: this.props.collapsed,
       }
     )
 
@@ -138,18 +133,12 @@ class Cart extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <button
-          className={theme.openCart}
-          onClick={this.handleToggleCollapsed}
-        >
-          <CartIcon />
-        </button>
         <section className={cartClasses}>
           <h1 className={theme.title}>
             <CartIcon />
             <span>Sua compra</span>
             <CloseIcon
-              onClick={this.handleToggleCollapsed}
+              onClick={closeCart}
               className={theme.closeIcon}
             />
           </h1>
@@ -208,13 +197,15 @@ class Cart extends React.PureComponent {
 }
 
 Cart.propTypes = {
-  theme: PropTypes.shape(),
   base: PropTypes.string,
-  items: PropTypes.arrayOf(PropTypes.object),
+  collapsed: PropTypes.bool,
   customer: PropTypes.shape({
     name: PropTypes.string,
     email: PropTypes.string,
   }),
+  closeCart: PropTypes.func,
+  theme: PropTypes.shape(),
+  items: PropTypes.arrayOf(PropTypes.object),
   shipping: PropTypes.shape({
     street: PropTypes.string,
     number: PropTypes.string,
@@ -234,12 +225,14 @@ Cart.propTypes = {
 }
 
 Cart.defaultProps = {
-  theme: {},
   base: 'dark',
+  collapsed: true,
   customer: {
     name: '',
     email: '',
   },
+  closeCart: null,
+  items: [],
   shipping: {
     street: '',
     number: '',
@@ -249,7 +242,13 @@ Cart.defaultProps = {
     zipcode: '',
     fee: null,
   },
-  items: [],
+  theme: {},
 }
 
-export default consumeTheme(Cart)
+const mapStateToProps = ({ cart }) => ({
+  collapsed: cart.collapsed,
+})
+
+export default connect(mapStateToProps, {
+  closeCart: toggleCart,
+})(consumeTheme(Cart))

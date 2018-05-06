@@ -35,7 +35,7 @@
   font-weight: 900;
   height: var(--switch-height);
   position: relative;
-  width: 100%;
+  width: 70px;
 }
 
 .switch,

@@ -4,6 +4,9 @@ describe('checkout reduceres', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
       pageInfo: {},
+      cart: {
+        collapsed: true,
+      },
       screenSize: {
         isBigScreen: false,
       },
@@ -116,6 +119,9 @@ describe('checkout reduceres', () => {
       })
     ).toEqual({
       pageInfo: {},
+      cart: {
+        collapsed: true,
+      },
       screenSize: {
         isBigScreen: false,
       },
@@ -145,10 +151,40 @@ describe('checkout reduceres', () => {
       screenSize: {
         isBigScreen: false,
       },
+      cart: {
+        collapsed: true,
+      },
       transactionValues: {
         amount: 0,
         defaultMethod: 'boleto',
         finalAmount: -1000,
+        paymentConfig: {
+          boleto: {},
+          creditcard: {
+            installments: [],
+          },
+        },
+        paymentMethods: [],
+      },
+    })
+  })
+
+  it('should handle TOGGLE', () => {
+    expect(
+      reducer({}, {
+        type: 'TOGGLE',
+      })
+    ).toEqual({
+      pageInfo: {},
+      screenSize: {
+        isBigScreen: false,
+      },
+      cart: {
+        collapsed: false,
+      },
+      transactionValues: {
+        amount: 0,
+        defaultMethod: 'boleto',
         paymentConfig: {
           boleto: {},
           creditcard: {

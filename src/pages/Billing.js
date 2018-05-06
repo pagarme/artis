@@ -21,7 +21,7 @@ import {
 import options from '../utils/data/states'
 import { removeMask } from '../utils/masks/'
 import getAddress from '../utils/helpers/getAddress'
-import { addPageInfo } from '../actions'
+import { addPageInfo, toggleCart } from '../actions'
 import {
   required,
   isNumber,
@@ -31,6 +31,7 @@ import {
 
 import NavigateBack from './../../src/images/navigate_back.svg'
 import NavigateNext from './../../src/images/navigate_next.svg'
+import CartIcon from './../../src/images/cart.svg'
 
 const consumeTheme = ThemeConsumer('UIAddressesPage')
 
@@ -126,7 +127,12 @@ class BillingPage extends Component {
       theme,
       handlePreviousButton,
       allowSwitchChooseSameAddress,
+      openCart,
     } = this.props
+
+    const buttonContainerClasses = classNames(theme.buttonContainer, {
+      [theme.hidePrevButton]: isNil(handlePreviousButton),
+    })
 
     return (
       <Form
@@ -212,29 +218,33 @@ class BillingPage extends Component {
               placeholder="Escolha a UF"
             />
           </div>
-          {allowSwitchChooseSameAddress && <div className={theme.inputGroup}>
-            <p className={theme.switchLabel} >Entregar no mesmo endereço?</p>
-            <Switch
-              checked={sameAddressForShipping}
-              onChange={this.handleSameAddressChange}
-              strings={{
-                on: 'Sim',
-                off: 'Não',
-              }}
-            />
-          </div>}
+          {
+            allowSwitchChooseSameAddress && <div className={theme.inputGroup}>
+              <p className={theme.switchLabel} >Entregar no mesmo endereço?</p>
+              <Switch
+                checked={sameAddressForShipping}
+                onChange={this.handleSameAddressChange}
+                strings={{
+                  on: 'Sim',
+                  off: 'Não',
+                }}
+              />
+            </div>
+          }
         </div>
-        <div className={classNames(theme.buttonContainer, {
-          [theme.alignEnd]: isNil(handlePreviousButton),
-        })}
-        >
-          {handlePreviousButton && <Button
+        <div className={buttonContainerClasses}>
+          <Button
             fill="outline"
             onClick={handlePreviousButton}
             icon={<NavigateBack />}
           >
             Ops, voltar
-          </Button>}
+          </Button>
+          <Button
+            fill="gradient"
+            onClick={openCart}
+            icon={<CartIcon />}
+          />
           <Button
             fill="gradient"
             type="submit"
@@ -242,7 +252,7 @@ class BillingPage extends Component {
             icon={<NavigateNext />}
             disabled={!this.state.formValid}
           >
-            Confirmar
+            Continuar
           </Button>
         </div>
       </Form>
@@ -278,12 +288,14 @@ BillingPage.propTypes = {
     state: PropTypes.string,
     zipcode: PropTypes.string,
   }),
+  openCart: PropTypes.func,
 }
 
 BillingPage.defaultProps = {
   theme: {},
   billing: {},
   allowSwitchChooseSameAddress: true,
+  openCart: null,
 }
 
 const mapStateToProps = ({ pageInfo }) => ({
@@ -292,4 +304,5 @@ const mapStateToProps = ({ pageInfo }) => ({
 
 export default connect(mapStateToProps, {
   handlePageChange: addPageInfo,
+  openCart: toggleCart,
 })(consumeTheme(BillingPage))

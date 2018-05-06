@@ -17,33 +17,8 @@
   transition: scale 0.3s var(--toggle-transition);
 }
 
-.openCart {
-  position: absolute;
-  background: var(--checkout-primary-color);
-  top: -50px;
-  left: -50px;
-  z-index: 2;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  outline: none;
-  text-decoration: none;
-  border: none;
-  transform: scale(0);
-  transition: scale 0.3s var(--toggle-transition);
-}
-
-.closeIcon:active,
-.openCart:active {
+.closeIcon:active {
   transform: scale(0.95);
-}
-
-.openCart > svg {
-  fill: var(--color-white);
-  width: 25px;
-  position: absolute;
-  bottom: 15px;
-  right: 18px;
 }
 
 .cart {
@@ -256,10 +231,6 @@
   .closeIcon {
     display: block;
     margin-right: 18px;
-  }
-
-  .openCart {
-    transform: scale(1);
   }
 
   .itemsWrapper {

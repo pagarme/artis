@@ -43,10 +43,6 @@
   fill: var(--checkout-primary-color);
 }
 
-.alignEnd {
-  justify-content: flex-end;
-}
-
 .buttonContainer button:first-child {
   margin-left: var(--spacing-medium);
 }
@@ -55,14 +51,38 @@
   fill: var(--color-black);
 }
 
+.buttonContainer button:nth-child(2) {
+  display: none;
+}
+
 .buttonContainer button:last-child {
   margin-right: var(--spacing-medium);
+}
+
+.hidePrevButton {
+  justify-content: flex-end;
+}
+
+.hidePrevButton button:first-child {
+  display: none;
 }
 
 .fieldNumber,
 .fieldNumber input {
   width: 18%;
 }
+
+/* stylelint-disable */
+.fieldNumber input[type='number'] {
+  -moz-appearance:textfield;
+}
+
+.fieldNumber input::-webkit-outer-spin-button,
+.fieldNumber input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* stylelint-enable */
 
 .fieldComplement,
 .fieldComplement input {
@@ -100,13 +120,47 @@
 
   .title {
     font-size: var(--font-size-medium);
+    margin: 0;
+    margin-top: 32px;
   }
 
   .inputsContainer {
-    width: 87%;
+    width: 90%;
+  }
+
+  .buttonContainer {
+    margin-top: 17px;
+    margin-bottom: 14px;
+    width: 90%;
+    justify-content: space-between;
   }
 
   .buttonContainer button {
     font-size: 13px;
+  }
+
+  .buttonContainer button:first-child {
+    display: none;
+  }
+
+  .buttonContainer button:last-child {
+    width: 80%;
+    margin-right: 0;
+    position: relative;
+  }
+
+  .buttonContainer button:last-child svg {
+    position: absolute;
+    right: 10px;
+  }
+
+  .buttonContainer button:nth-child(2) {
+    display: flex;
+    width: 36px;
+    padding: 0;
+  }
+
+  .buttonContainer button:nth-child(2) svg {
+    width: 20px;
   }
 }
