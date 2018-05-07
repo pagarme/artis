@@ -66,6 +66,11 @@ export default {
             actions: ['onTransactionSuccess'],
           },
         },
+        TRANSACTION_ANALYSIS: {
+          confirmation: {
+            actions: ['onTransactionAnalysis'],
+          },
+        },
         TRANSACTION_FAILURE: {
           confirmation: {
             actions: ['onTransactionError'],

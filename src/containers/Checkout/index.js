@@ -28,6 +28,7 @@ import {
   LoadingInfo,
   SuccessInfo,
   ErrorInfo,
+  AnalysisInfo,
 } from '../../components'
 
 import CustomerPage from '../../pages/Customer'
@@ -98,6 +99,10 @@ class Checkout extends Component {
       return this.setState({
         ...successState,
       }, this.props.transition('TRANSACTION_SUCCESS'))
+    }
+
+    if (status === 'processing' || status === 'pending_review') {
+      return this.props.transition('TRANSACTION_ANALYSIS')
     }
 
     if (onError) {
@@ -277,6 +282,11 @@ class Checkout extends Component {
         <Action show="onTransactionError">
           <ErrorInfo
             navigatePreviousPage={this.navigatePreviousPage}
+          />
+        </Action>
+        <Action show="onTransactionAnalysis">
+          <AnalysisInfo
+            closeCheckout={this.close}
           />
         </Action>
         <Action show="onTransactionSuccess">
