@@ -1,6 +1,7 @@
 @import "../colors.css";
-@import "../typography.css";
+@import "../media.css";
 @import "../spacing.css";
+@import "../typography.css";
 
 .contentWrapper {
   display: flex;
@@ -22,10 +23,10 @@
 }
 
 .creditcardForm {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 100%;
+  flex: 1;
   justify-content: space-around;
 }
 
@@ -71,8 +72,20 @@
 }
 
 .buttonContainer {
-  width: 95%;
+  width: 91%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+@media (--media-palm) {
+
+  .paymentCardContainer,
+  .inputsContainer {
+    width: 90%;
+  }
+
+  .contentWrapper {
+    flex-direction: column-reverse;
+  }
 }
