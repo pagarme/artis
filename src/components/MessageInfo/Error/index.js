@@ -35,9 +35,9 @@ const Error = ({ navigatePreviousPage, theme }) => {
         <h1 className={theme.title}>Algo deu errado...</h1>
         <h2 className={theme.subtitle}>Sua transação foi recusada</h2>
         <hr className={theme.line} />
-        <p className={theme.questionTitle}>
+        <h3 className={theme.questionTitle}>
           O que pode ter acontecido?
-        </p>
+        </h3>
         <ul className={theme.questionList}>
           {makeQuestionsList(questions)}
         </ul>
