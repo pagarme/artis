@@ -1,0 +1,77 @@
+@import "../../colors.css";
+@import "../../typography.css";
+@import "../../spacing.css";
+@import "../../media.css";
+@import "../../margin.css";
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 90%;
+  max-width: 450px;
+  font-family: var(--primary-font-family);
+  justify-content: center;
+  text-align: center;
+}
+
+.title {
+  color: #f5a623;
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 14px;
+  font-weight: 900;
+  margin: 5px 0 0;
+}
+
+.question {
+  font-size: 18px;
+  margin-bottom: 0;
+  margin-top: 0;
+  line-height: 25px;
+}
+
+.subtitle,
+.question {
+  color: var(--color-white);
+}
+
+.line {
+  width: 100%;
+  display: inline-flex;
+  height: 1px;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-color: #f5a623;
+  padding-left: 0;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  border-style: dotted;
+}
+
+.infoTitle {
+  font-size: 18px;
+  color: #a7a7a7;
+}
+
+.infoSubtitle {
+  font-size: 14px;
+  color: var(--color-white);
+}
+
+.wrapper button {
+  margin-top: 35px;
+  text-transform: none;
+}
+
+.icon {
+  fill: #f5a623;
+  width: 43px;
+  margin-bottom: 18px;
+}

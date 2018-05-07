@@ -1,5 +1,6 @@
 import UIActionList from './actionList/index.css'
 import UIAddressesPage from './addressesPage/index.css'
+import UIAnalysisMessageInfo from './messageInfo/analysis/index.css'
 import UIAutocomplete from './autocomplete/index.css'
 import UIButton from './button/index.css'
 import UICart from './cart/index.css'
@@ -26,6 +27,7 @@ import UITooltip from './tooltip/index.css'
 export default {
   UIActionList,
   UIAddressesPage,
+  UIAnalysisMessageInfo,
   UIAutocomplete,
   UIButton,
   UICart,
