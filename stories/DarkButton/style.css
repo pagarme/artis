@@ -1,0 +1,14 @@
+.bg {
+  background: #2b2b2b;
+  display: flex;
+  padding-left: 30px;
+  align-items: center;
+}
+
+.bg:first-child {
+  padding-top: 50px;
+}
+
+.bg:last-child {
+  padding-bottom: 30px;
+}

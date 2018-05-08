@@ -9,6 +9,7 @@ const pagarmeApi = `var configs = {
     secondaryColor: '#46b67c',
     backgroundColor: '#2b2b2b',
     postback: 'http://pagar.me',
+    orderUrl: 'http://www.google.com',
     enableCart: true,
     onTransactionSuccess: (data) => {
       console.log('onTransactionSuccess callback', data);

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import {
   Button,
   ThemeConsumer,
@@ -12,6 +11,7 @@ import {
   reduce,
 } from 'ramda'
 
+import { DarkButton } from '../../components'
 import BoletoIcon from '../../images/boleto.svg'
 import CreditCardIcon from '../../images/credit-card.svg'
 import TwoCreditCards from '../../images/two-credit-cards.svg'
@@ -75,18 +75,12 @@ class PaymentOptionsPage extends React.Component {
           buttons,
           [
             (
-              <Button
+              <DarkButton
                 key={key}
-                className={theme.paymentOption}
-                icon={icon}
                 onClick={this.handleSelectOption(transitionTo)}
-              >
-                <div className={theme.paymentOptionText}>
-                  <p className={theme.paymentTitle}>
-                    {title}
-                  </p>
-                </div>
-              </Button>
+                title={title}
+                icon={icon}
+              />
             ),
           ]
         )
@@ -97,48 +91,24 @@ class PaymentOptionsPage extends React.Component {
 
     const { paymentConfig } = transaction
     const { creditcard, boleto } = paymentConfig
-    const optionsClasses = classNames(
-      theme.optionsContainer,
-      {
-        [theme.multipayments]: multipaymentButtons.length,
-      }
-    )
 
     return (
       <div className={theme.page}>
         <h2 className={theme.title}>
           Como quer pagar?
         </h2>
-        <div className={optionsClasses} >
-          <Button
-            className={theme.paymentOption}
-            onClick={this.handleSelectOption('SINGLE_CREDITCARD')}
+        <div className={theme.optionsContainer} >
+          <DarkButton
+            title="Cartão de cŕedito"
+            subtitle={creditcard.subtitle}
             icon={<CreditCardIcon />}
-          >
-            <div className={theme.paymentOptionText}>
-              <p className={theme.paymentTitle}>
-                Cartão de crédito
-              </p>
-              <p className={theme.paymentSubtitle}>
-                {creditcard.subtitle}
-              </p>
-            </div>
-          </Button>
+          />
           { multipaymentButtons }
-          <Button
-            className={theme.paymentOption}
-            onClick={this.handleSelectOption('SINGLE_BOLETO')}
+          <DarkButton
+            title="Boleto"
+            subtitle={boleto.subtitle}
             icon={<BoletoIcon />}
-          >
-            <div className={theme.paymentOptionText}>
-              <p className={theme.paymentTitle}>
-                Boleto
-              </p>
-              <p className={theme.paymentSubtitle}>
-                {boleto.subtitle}
-              </p>
-            </div>
-          </Button>
+          />
         </div>
         <div className={theme.buttonContainer}>
           {

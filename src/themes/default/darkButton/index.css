@@ -1,0 +1,79 @@
+@import "../colors.css";
+@import "../typography.css";
+@import "../spacing.css";
+@import "../media.css";
+@import "../margin.css";
+
+.wrapper {
+  display: inline-flex;
+  max-width: 213px;
+}
+
+.wrapper,
+.wrapper * {
+  box-sizing: border-box;
+}
+
+.wrapper button {
+  width: 205px;
+  height: 76px;
+  background: var(--color-black);
+  border: 2px solid #4b4b4b;
+  border-radius: 5px;
+  box-shadow: 0 2px 11px 4px rgba(0, 0, 0, 0.26);
+  padding: 18px;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
+
+.wrapper button,
+.wrapper button:active,
+.wrapper button:hover,
+.wrapper button:focus {
+  background: var(--color-black);
+}
+
+.wrapper button:hover {
+  border-color: var(--color-grey-33);
+}
+
+.wrapper button:focus {
+  border-color: #54d894;
+}
+
+.wrapper button svg {
+  width: 51px;
+  max-width: 51px;
+  max-height: 51px;
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  height: 39px;
+}
+
+.title {
+  color: var(--color-white);
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+
+.subtitle {
+  color: #a7a7a7;
+  margin-bottom: 3px;
+  margin-top: 1px;
+}
+
+.title,
+.subtitle {
+  font-size: 10px;
+}

@@ -1,0 +1,149 @@
+@import "../../colors.css";
+@import "../../typography.css";
+@import "../../spacing.css";
+@import "../../media.css";
+@import "../../margin.css";
+@import "../../switch/index.css";
+
+.wrapper {
+  display: flex;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.box {
+  padding-top: 30px;
+}
+
+.wrapper,
+.box,
+.box * {
+  justify-content: center;
+}
+
+.box * {
+  box-sizing: border-box;
+  font-family: var(--primary-font-family);
+  text-align: center;
+}
+
+.headerIcon {
+  fill: var(--color-success);
+}
+
+.title {
+  color: var(--checkout-primary-color);
+  font-size: 22px;
+  font-weight: 900;
+  padding-left: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.line {
+  min-width: 390px;
+  max-width: 390px;
+  display: block;
+  height: 1px;
+  border-color: #a1a1a1;
+  padding-left: 0;
+  padding-bottom: 0;
+  margin: 15px auto;
+  border-style: dotted;
+}
+
+.subtitle,
+.value {
+  width: 100%;
+  margin-top: 0;
+  padding-left: 0;
+  padding-bottom: 0;
+}
+
+.subtitle {
+  color: #a0a0a0;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.value {
+  color: var(--color-white);
+  font-weight: 900;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+.noPadding {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.noPaddingBottom {
+  padding-bottom: 0;
+}
+
+.buttonsWrapper {
+  width: 100%;
+  max-width: 320px;
+}
+
+.boletoButtonsWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  max-width: 569px;
+}
+
+.boletoButtonsWrapper > div > div > button {
+  height: 40px;
+  width: 180px;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.boletoButtonsWrapper > div > div > button > svg {
+  max-width: 21px;
+  max-height: 15px;
+}
+
+.boletoButtonsWrapper button div {
+  justify-content: center;
+}
+
+.boletoButtonsWrapper button p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.centerJustifyContent {
+  justify-content: center;
+}
+
+.buttonColumn {
+  display: inline-flex;
+}
+
+.buttonColumn:first-child {
+  padding-right: 5px;
+}
+
+.buttonColumn:last-child {
+  padding-left: 5px;
+}
+
+.buttonColumn > button {
+  width: 100%;
+  justify-content: center;
+}
+
+.buttonColumn svg {
+  max-width: 15px;
+  max-height: 15px;
+}
+
+.whiteIcon {
+  fill: var(--color-white);
+}
