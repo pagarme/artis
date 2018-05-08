@@ -46,8 +46,9 @@
 }
 
 .content {
+  display: flex;
   flex: 1;
-  height: 428px;
+  min-height: 428px;
   background: var(--color-grey-83);
 }
 
@@ -64,6 +65,7 @@
 
   .content {
     width: 100%;
-    height: initial;
+    height: 80%;
+    max-height: 80%;
   }
 }
