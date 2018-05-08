@@ -4,12 +4,13 @@ import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import { isEmpty, reject, isNil } from 'ramda'
 import {
-  Button,
   FormInput,
   ThemeConsumer,
 } from 'former-kit'
 
-import NavigateNext from './../../src/images/navigate_next.svg'
+import {
+  NavigationBar,
+} from '../components'
 
 import {
   required,
@@ -119,15 +120,10 @@ class CustomerPage extends Component {
           />
         </div>
         <div className={theme.buttonContainer}>
-          <Button
-            fill="gradient"
-            type="submit"
-            iconAlignment="end"
-            icon={<NavigateNext />}
-            disabled={!this.state.formValid}
-          >
-            Continuar
-          </Button>
+          <NavigationBar
+            formValid={!this.state.formValid}
+            nextTitle="Continuar"
+          />
         </div>
       </Form>
     )

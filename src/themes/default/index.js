@@ -24,6 +24,7 @@ import UIProgressBar from './progressBar/index.css'
 import UISuccessMessageInfo from './messageInfo/success/index.css'
 import UISwitch from './switch/index.css'
 import UITooltip from './tooltip/index.css'
+import UINavigationBar from './navigation-bar/index.css'
 
 export default {
   UIActionList,
@@ -46,6 +47,7 @@ export default {
   UIInputForm,
   UILinearProgress,
   UILoadingInfo,
+  UINavigationBar,
   UINormalizeCSS,
   UIPaymentOptionsPage,
   UIProgressBar,

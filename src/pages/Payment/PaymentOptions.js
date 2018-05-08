@@ -10,14 +10,15 @@ import {
   not,
   reduce,
 } from 'ramda'
+import {
+  NavigationBar,
+} from '../../components'
 
 import { DarkButton } from '../../components'
 import BoletoIcon from '../../images/boleto.svg'
 import CreditCardIcon from '../../images/credit-card.svg'
 import TwoCreditCards from '../../images/two-credit-cards.svg'
 import CradiCardMoreBoleto from '../../images/credit-card-more-boleto.svg'
-import NavigateBack from '../../images/navigate_back.svg'
-import NavigateNext from '../../images/navigate_next.svg'
 
 const consumeTheme = ThemeConsumer('UIPaymentOptionsPage')
 
@@ -112,28 +113,13 @@ class PaymentOptionsPage extends React.Component {
             title="Boleto"
           />
         </div>
-        <div className={theme.buttonContainer}>
-          {
-            handlePreviousButton ?
-              <Button
-                fill="outline"
-                onClick={handlePreviousButton}
-                icon={<NavigateBack />}
-              >
-                  Ops, Voltar
-              </Button> :
-              <div />
-          }
-          <Button
-            type="submit"
-            iconAlignment="end"
-            icon={<NavigateNext />}
-            disabled={!this.state.transitionTo}
-            onClick={handlePageTransition(this.state.transitionTo)}
-          >
-            Pagar
-          </Button>
-        </div>
+        <NavigationBar
+          handlePreviousButton={handlePreviousButton}
+          handleNextButton={handlePageTransition(this.state.transitionTo)}
+          formValid={!this.state.transitionTo}
+          prevTitle="Ops, voltar"
+          nextTitle="Pagar"
+        />
       </div>
     )
   }

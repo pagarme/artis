@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import {
@@ -12,7 +11,6 @@ import {
   reject,
 } from 'ramda'
 import {
-  Button,
   Switch,
   FormInput,
   ThemeConsumer,
@@ -21,17 +19,16 @@ import {
 import options from '../utils/data/states'
 import { removeMask } from '../utils/masks/'
 import getAddress from '../utils/helpers/getAddress'
-import { addPageInfo, toggleCart } from '../actions'
+import { addPageInfo } from '../actions'
 import {
   required,
   isNumber,
   minLength,
   maxLength,
 } from '../utils/validations'
-
-import NavigateBack from './../../src/images/navigate_back.svg'
-import NavigateNext from './../../src/images/navigate_next.svg'
-import CartIcon from './../../src/images/cart.svg'
+import {
+  NavigationBar,
+} from '../components'
 
 const consumeTheme = ThemeConsumer('UIAddressesPage')
 
@@ -127,12 +124,7 @@ class BillingPage extends Component {
       theme,
       handlePreviousButton,
       allowSwitchChooseSameAddress,
-      openCart,
     } = this.props
-
-    const buttonContainerClasses = classNames(theme.buttonContainer, {
-      [theme.hidePrevButton]: isNil(handlePreviousButton),
-    })
 
     return (
       <Form
@@ -232,29 +224,12 @@ class BillingPage extends Component {
             </div>
           }
         </div>
-        <div className={buttonContainerClasses}>
-          <Button
-            fill="outline"
-            onClick={handlePreviousButton}
-            icon={<NavigateBack />}
-          >
-            Ops, voltar
-          </Button>
-          <Button
-            fill="gradient"
-            onClick={openCart}
-            icon={<CartIcon />}
-          />
-          <Button
-            fill="gradient"
-            type="submit"
-            iconAlignment="end"
-            icon={<NavigateNext />}
-            disabled={!this.state.formValid}
-          >
-            Continuar
-          </Button>
-        </div>
+        <NavigationBar
+          handlePreviousButton={handlePreviousButton}
+          formValid={!this.state.formValid}
+          prevTitle="Ops, voltar"
+          nextTitle="Continuar"
+        />
       </Form>
     )
   }
@@ -274,7 +249,7 @@ BillingPage.propTypes = {
   }),
   handleSubmit: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  handlePreviousButton: PropTypes.func.isRequired,
+  handlePreviousButton: PropTypes.func,
   allowSwitchChooseSameAddress: PropTypes.bool,
   billing: PropTypes.shape({
     name: PropTypes.string,
@@ -288,14 +263,14 @@ BillingPage.propTypes = {
     state: PropTypes.string,
     zipcode: PropTypes.string,
   }),
-  openCart: PropTypes.func,
 }
 
 BillingPage.defaultProps = {
-  theme: {},
-  billing: {},
   allowSwitchChooseSameAddress: true,
+  billing: {},
+  handlePreviousButton: null,
   openCart: null,
+  theme: {},
 }
 
 const mapStateToProps = ({ pageInfo }) => ({
@@ -304,5 +279,4 @@ const mapStateToProps = ({ pageInfo }) => ({
 
 export default connect(mapStateToProps, {
   handlePageChange: addPageInfo,
-  openCart: toggleCart,
 })(consumeTheme(BillingPage))

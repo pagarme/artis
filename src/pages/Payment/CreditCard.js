@@ -13,7 +13,6 @@ import {
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
 import {
-  Button,
   Dropdown,
   FormInput,
   ThemeConsumer,
@@ -29,9 +28,9 @@ import {
   addPageInfo,
   incrementFinalAmount,
 } from '../../actions'
-
-import NavigateBack from '../../../src/images/navigate_back.svg'
-import NavigateNext from '../../../src/images/navigate_next.svg'
+import {
+  NavigationBar,
+} from '../../components'
 
 import getInstallments from './../../utils/helpers/getInstallments'
 import changeInstallmentsToArray from './../../utils/helpers/changeInstallmentsToArray' // eslint-disable-line
@@ -240,24 +239,12 @@ class CreditCardPage extends Component {
             </div>
           </div>
         </div>
-        <div className={theme.buttonContainer}>
-          <Button
-            fill="outline"
-            icon={<NavigateBack />}
-            onClick={handlePreviousButton}
-          >
-            Ops, voltar
-          </Button>
-          <Button
-            disabled={!this.state.formValid}
-            fill="gradient"
-            icon={<NavigateNext />}
-            iconAlignment="end"
-            type="submit"
-          >
-            {`Pagar ${formatToBRL(finalAmount)}`}
-          </Button>
-        </div>
+        <NavigationBar
+          handlePreviousButton={handlePreviousButton}
+          formValid={!this.state.formValid}
+          prevTitle="Ops, voltar"
+          nextTitle={`Pagar ${formatToBRL(finalAmount)}`}
+        />
       </Form>
     )
   }
