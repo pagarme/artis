@@ -57,7 +57,7 @@ storiesOf('Pages', module)
       <Analysis />
     </div>
   ))
-  .add('Success', () => (
+  .add('Success creditcard', () => (
     <div
       className={style.bg}
     >
@@ -66,6 +66,12 @@ storiesOf('Pages', module)
         creditCard={creditCard}
         orderUrl={url}
       />
+    </div>
+  ))
+  .add('Success boleto', () => (
+    <div
+      className={style.bg}
+    >
       <SuccessInfo
         amount={amount}
         boleto={boleto}

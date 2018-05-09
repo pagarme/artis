@@ -1,10 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import moment from 'moment'
 import {
-  Row,
-  Col,
   ThemeConsumer,
   Button,
 } from 'former-kit'
@@ -64,20 +61,10 @@ const Success = ({
     if (installmentText.length > 0) {
       return (
         <Fragment>
-          <Row className={theme.noPadding}>
-            <Col
-              tv={12}
-              desk={12}
-              tablet={12}
-              palm={12}
-              className={theme.noPaddingBottom}
-            >
-              <p className={theme.subtitle}>Parcelamento:</p>
-              <p className={theme.value}>
-                {creditCard.installmentText}
-              </p>
-            </Col>
-          </Row>
+          <h3 className={theme.infoField}>Parcelamento:</h3>
+          <p className={theme.infoValue}>
+            {creditCard.installmentText}
+          </p>
         </Fragment>
       )
     }
@@ -85,63 +72,26 @@ const Success = ({
     if (boleto.url) {
       return (
         <Fragment>
-          <Row className={theme.noPadding}>
-            <Col
-              tv={12}
-              desk={12}
-              tablet={12}
-              palm={12}
-              className={theme.noPaddingBottom}
-            >
-              <p className={theme.subtitle}>Vencimento:</p>
-              <p className={theme.value}>
-                {formatExpirationAt(boleto.expirationAt)}
-              </p>
-            </Col>
-          </Row>
-          <Row className={theme.noPadding}>
-            <Col
-              tv={12}
-              desk={12}
-              tablet={12}
-              palm={12}
-              className={theme.noPaddingBottom}
-            >
-              <p className={theme.subtitle}>Código de barras:</p>
-              <p className={theme.value}>
-                {boleto.barcode}
-              </p>
-            </Col>
-          </Row>
-
-          <Row className={theme.boletoButtonsWrapper}>
-            <Col
-              tv={6}
-              desk={6}
-              tablet={6}
-              palm={6}
-              className={theme.noPaddingBottom}
-            >
-              <DarkButton
-                onClick={handleBarcodeCopy(boleto.barcode)}
-                title="Copiar código"
-                icon={<CopyIcon className={theme.whiteIcon} />}
-              />
-            </Col>
-            <Col
-              tv={6}
-              desk={6}
-              tablet={6}
-              palm={6}
-              className={theme.noPaddingBottom}
-            >
-              <DarkButton
-                onClick={handleBoletoSaveFile(boleto.url)}
-                title="Salvar código"
-                icon={<DownloadIcon className={theme.whiteIcon} />}
-              />
-            </Col>
-          </Row>
+          <h3 className={theme.infoField}>Vencimento:</h3>
+          <p className={theme.infoValue}>
+            {formatExpirationAt(boleto.expirationAt)}
+          </p>
+          <h3 className={theme.infoField}>Código de barras:</h3>
+          <p className={theme.infoValue}>
+            {boleto.barcode}
+          </p>
+          <div className={theme.boletoButtonsWrapper}>
+            <DarkButton
+              onClick={handleBarcodeCopy(boleto.barcode)}
+              title="Copiar código"
+              icon={<CopyIcon className={theme.whiteIcon} />}
+            />
+            <DarkButton
+              onClick={handleBoletoSaveFile(boleto.url)}
+              title="Salvar código"
+              icon={<DownloadIcon className={theme.whiteIcon} />}
+            />
+          </div>
         </Fragment >
       )
     }
@@ -152,90 +102,37 @@ const Success = ({
   return (
     <div className={theme.wrapper}>
       <div className={theme.box}>
-        <Row className={theme.noPadding}>
-          <Col
-            tv={12}
-            desk={12}
-            tablet={12}
-            palm={12}
-            className={theme.noPaddingBottom}
-          >
-            <SuccessIcon className={theme.headerIcon} />
-          </Col>
-        </Row>
-        <Row className={theme.noPadding}>
-          <Col
-            tv={12}
-            desk={12}
-            tablet={12}
-            palm={12}
-            className={theme.noPaddingBottom}
-          >
-            <h1 className={theme.title}>Deu tudo certo!</h1>
-            <hr className={theme.line} />
-          </Col>
-        </Row>
-        <Row className={theme.noPadding}>
-          <Col
-            tv={12}
-            desk={12}
-            tablet={12}
-            palm={12}
-            className={theme.noPaddingBottom}
-          >
-            <p className={theme.subtitle}>
-              {
-                boleto.url ? 'Valor a pagar:' : 'Valor pago:'
-              }
-            </p>
-            <p className={theme.value}>{formatToBRL(amount)}</p>
-          </Col>
-        </Row>
+        <SuccessIcon className={theme.icon} />
+        <h1 className={theme.title}>Deu tudo certo!</h1>
+        <hr className={theme.line} />
+        <h3 className={theme.infoField}>
+          {
+            boleto.url ? 'Valor a pagar:' : 'Valor pago:'
+          }
+        </h3>
+        <p className={theme.infoValue}>{formatToBRL(amount)}</p>
         { renderTexts() }
-
-        <Row className={
-          classNames(theme.noPadding, theme.centerJustifyContent)}
+        <div
+          className={theme.buttonsWrapper}
         >
-          <div
-            className={theme.buttonsWrapper}
-          >
-            <Col
-              tv={6}
-              desk={6}
-              tablet={6}
-              palm={6}
-              className={theme.buttonColumn}
+          {
+            orderUrl &&
+            <Button
+              fill="outline"
+              icon={<OrderIcon className={theme.whiteIcon} />}
+              onClick={openLink(orderUrl)}
             >
-              <Button
-                fill="gradient"
-                icon={<CloseXIcon className={theme.whiteIcon} />}
-                onClick={closeCheckout}
-                size="tiny"
-              >
-                Fechar
-              </Button>
-            </Col>
-            {
-              orderUrl &&
-              <Col
-                tv={6}
-                desk={6}
-                tablet={6}
-                palm={6}
-                className={theme.buttonColumn}
-              >
-                <Button
-                  fill="outline"
-                  icon={<OrderIcon className={theme.whiteIcon} />}
-                  onClick={openLink(orderUrl)}
-                  size="tiny"
-                >
-                  Ver pedido
-                </Button>
-              </Col>
-            }
-          </div>
-        </Row>
+              Ver pedido
+            </Button>
+          }
+          <Button
+            fill="gradient"
+            icon={<CloseXIcon className={theme.whiteIcon} />}
+            onClick={closeCheckout}
+          >
+            Fechar
+          </Button>
+        </div>
       </div>
     </div>
   )
@@ -253,15 +150,16 @@ Success.propTypes = {
     installmentText: PropTypes.string,
   }),
   theme: PropTypes.shape({
-    buttonColumn: PropTypes.string,
+    boletoButtonsWrapper: PropTypes.string,
+    box: PropTypes.string,
     buttonsWrapper: PropTypes.string,
-    centerJustifyContent: PropTypes.string,
-    noPadding: PropTypes.string,
-    noPaddingBottom: PropTypes.string,
-    subtitle: PropTypes.string,
+    icon: PropTypes.string,
+    infoField: PropTypes.string,
+    infoValue: PropTypes.string,
+    line: PropTypes.string,
     title: PropTypes.string,
-    value: PropTypes.string,
     whiteIcon: PropTypes.string,
+    wrapper: PropTypes.string,
   }).isRequired,
   closeCheckout: PropTypes.func,
   orderUrl: PropTypes.string,
