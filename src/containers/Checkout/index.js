@@ -13,6 +13,7 @@ import {
   reject,
   pathOr,
   propOr,
+  prop,
 } from 'ramda'
 
 import { changeScreenSize } from '../../actions'
@@ -74,7 +75,6 @@ class Checkout extends Component {
 
   onTransactionReturn = ({
     response,
-    onTransactionSuccess,
     onError,
   }) => {
     const {
@@ -84,17 +84,13 @@ class Checkout extends Component {
     } = response
 
     if (status === 'authorized' || status === 'waiting_payment') {
-      let successState = { }
+      let successState = {}
 
       if (boletoBarcode || boletoUrl) {
         successState = {
           boletoUrl,
           boletoBarcode,
         }
-      }
-
-      if (onTransactionSuccess) {
-        onTransactionSuccess(response)
       }
 
       return this.setState({
@@ -126,21 +122,15 @@ class Checkout extends Component {
     }
 
     if (item === 'finalAmount') {
-      return pathOr({}, [
-        'finalAmount',
-      ], props)
+      return prop('finalAmount', props)
     }
 
     if (item === 'boletoBarcode') {
-      return pathOr({}, [
-        'boletoBarcode',
-      ], props)
+      return prop('boletoBarcode', this.state)
     }
 
     if (item === 'boletoUrl') {
-      return pathOr({}, [
-        'boletoUrl',
-      ], props)
+      return prop('boletoUrl', this.state)
     }
 
     if (item === 'boletoName') {

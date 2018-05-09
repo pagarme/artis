@@ -59,7 +59,7 @@ const Success = ({
     }
 
   const renderTexts = () => {
-    if (creditCard.installmentText) {
+    if (creditCard.installmentText && creditCard.installmentText.length > 0) {
       return (
         <Fragment>
           <Row className={theme.noPadding}>

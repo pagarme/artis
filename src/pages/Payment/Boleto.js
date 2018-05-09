@@ -122,10 +122,10 @@ class Boleto extends React.PureComponent {
         </header>
         <div className={theme.content}>
           <BoletoDark className={theme.icon} />
-          <p className={theme.amountTitle}>
+          <h3 className={theme.amountTitle}>
             {this.getValueToPayText(transaction)}
-          </p>
-          <p className={theme.amount}>{formatToBRL(finalAmount)}</p>
+          </h3>
+          <span className={theme.amount}>{formatToBRL(finalAmount)}</span>
           <p className={theme.warning}>
             Ao continuar, seu boleto bancário será criado para
             que você faça o pagamento</p>
