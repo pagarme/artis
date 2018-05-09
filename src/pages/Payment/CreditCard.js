@@ -54,6 +54,19 @@ class CreditCardPage extends Component {
     }
   }
 
+  getInstallmentText = () => {
+    const { installments } = this.state
+    const paymentConfig = path(['transaction', 'paymentConfig'], this.props)
+    const creditcard = changeInstallmentsToArray(paymentConfig.creditcard)
+    const installmentsList = getInstallments(this.props.amount, creditcard, 0)
+
+    const selectedInstallment = installmentsList.find(elem => (
+      elem.value === installments
+    ))
+
+    return selectedInstallment.name
+  }
+
   handleChangeForm = (values, errors) => {
     this.setState({
       ...values,
@@ -83,6 +96,7 @@ class CreditCardPage extends Component {
 
   handleFormSubmit = (values, errors) => {
     const paymentConfig = path(['transaction', 'paymentConfig'], this.props)
+    const installmentText = this.getInstallmentText()
 
     const method = merge(
       paymentConfig.creditcard,
@@ -92,7 +106,12 @@ class CreditCardPage extends Component {
     const payment = {
       method,
       type: 'creditcard',
-      info: this.state,
+      info: merge(
+        this.state,
+        {
+          installmentText,
+        }
+      ),
     }
 
     this.props.handlePageChange({

@@ -76,10 +76,10 @@ class PaymentOptionsPage extends React.Component {
           [
             (
               <DarkButton
+                icon={icon}
                 key={key}
                 onClick={this.handleSelectOption(transitionTo)}
                 title={title}
-                icon={icon}
               />
             ),
           ]
@@ -99,15 +99,17 @@ class PaymentOptionsPage extends React.Component {
         </h2>
         <div className={theme.optionsContainer} >
           <DarkButton
-            title="Cartão de cŕedito"
-            subtitle={creditcard.subtitle}
             icon={<CreditCardIcon />}
+            onClick={this.handleSelectOption('SINGLE_CREDITCARD')}
+            subtitle={creditcard.subtitle}
+            title="Cartão de cŕedito"
           />
           { multipaymentButtons }
           <DarkButton
-            title="Boleto"
-            subtitle={boleto.subtitle}
             icon={<BoletoIcon />}
+            onClick={this.handleSelectOption('SINGLE_BOLETO')}
+            subtitle={boleto.subtitle}
+            title="Boleto"
           />
         </div>
         <div className={theme.buttonContainer}>
