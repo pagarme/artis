@@ -1,9 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Button,
-  ThemeConsumer,
-} from 'former-kit'
+import { ThemeConsumer } from 'former-kit'
 import {
   concat,
   contains,
@@ -12,9 +9,9 @@ import {
 } from 'ramda'
 import {
   NavigationBar,
+  DarkButton,
 } from '../../components'
 
-import { DarkButton } from '../../components'
 import BoletoIcon from '../../images/boleto.svg'
 import CreditCardIcon from '../../images/credit-card.svg'
 import TwoCreditCards from '../../images/two-credit-cards.svg'

@@ -106,7 +106,7 @@ class Cart extends React.Component {
       shipping,
       theme,
       items,
-      closeCart,
+      handleToggleCart,
     } = this.props
 
     const shippingFee = propOr(0, 'fee')(shipping)
@@ -138,7 +138,7 @@ class Cart extends React.Component {
             <CartIcon />
             <span>Sua compra</span>
             <CloseIcon
-              onClick={closeCart}
+              onClick={handleToggleCart}
               className={theme.closeIcon}
             />
           </h1>
@@ -203,7 +203,7 @@ Cart.propTypes = {
     name: PropTypes.string,
     email: PropTypes.string,
   }),
-  closeCart: PropTypes.func,
+  handleToggleCart: PropTypes.func,
   theme: PropTypes.shape(),
   items: PropTypes.arrayOf(PropTypes.object),
   shipping: PropTypes.shape({
@@ -231,7 +231,7 @@ Cart.defaultProps = {
     name: '',
     email: '',
   },
-  closeCart: null,
+  handleToggleCart: null,
   items: [],
   shipping: {
     street: '',
@@ -250,5 +250,5 @@ const mapStateToProps = ({ cart }) => ({
 })
 
 export default connect(mapStateToProps, {
-  closeCart: toggleCart,
+  handleToggleCart: toggleCart,
 })(consumeTheme(Cart))

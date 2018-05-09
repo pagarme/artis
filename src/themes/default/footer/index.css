@@ -1,7 +1,6 @@
 @import "../spacing.css";
 @import "../colors.css";
 @import "../typography.css";
-@import "../media.css";
 
 .wrapper {
   width: 100%;
@@ -43,11 +42,4 @@
 .companyName {
   color: var(--color-white);
   font-weight: bold;
-}
-
-@media (--media-palm) {
-
-  .wrapper {
-    display: none;
-  }
 }

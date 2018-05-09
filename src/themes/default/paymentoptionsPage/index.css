@@ -1,4 +1,5 @@
 @import "../colors.css";
+@import "../media.css";
 @import "../typography.css";
 @import "../spacing.css";
 
@@ -58,4 +59,11 @@
 
 .buttonContainer button:last-child {
   margin-right: var(--spacing-medium);
+}
+
+@media (--media-palm) {
+
+  .optionsContainer {
+    height: 100%;
+  }
 }
