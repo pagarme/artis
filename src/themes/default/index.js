@@ -25,6 +25,7 @@ import UISuccessMessageInfo from './messageInfo/success/index.css'
 import UISwitch from './switch/index.css'
 import UITooltip from './tooltip/index.css'
 import UINavigationBar from './navigation-bar/index.css'
+import UIBoletoPage from './boletoPage/index.css'
 
 export default {
   UIActionList,
@@ -54,4 +55,5 @@ export default {
   UISuccessMessageInfo,
   UISwitch,
   UITooltip,
+  UIBoletoPage,
 }

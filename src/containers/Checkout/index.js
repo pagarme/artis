@@ -36,6 +36,7 @@ import BillingPage from '../../pages/Billing'
 import ShippingPage from '../../pages/Shipping'
 import PaymentOptionsPage from '../../pages/Payment/PaymentOptions'
 import CreditCardPage from '../../pages/Payment/CreditCard'
+import BoletoPage from '../../pages/Payment/Boleto'
 
 import CloseIcon from '../../images/checkout-close.svg'
 
@@ -367,6 +368,13 @@ class Checkout extends Component {
         </Action>
         <State value="singleCreditCard">
           <CreditCardPage
+            handlePreviousButton={this.navigatePreviousPage}
+            handleSubmit={this.handleFormSubmit}
+            transaction={transaction}
+          />
+        </State>
+        <State value="singleBoleto">
+          <BoletoPage
             handlePreviousButton={this.navigatePreviousPage}
             handleSubmit={this.handleFormSubmit}
             transaction={transaction}
