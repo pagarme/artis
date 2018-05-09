@@ -3,6 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
 import moment from 'moment'
+import { pipe, split, map, of } from 'ramda'
 import 'moment/locale/pt-br'
 
 import App from './App'
@@ -138,25 +139,40 @@ const integrations = {
     buttons.forEach((button) => {
       const {
         key,
-        image,
-        locale,
-        theme,
-        amount,
-        paymentMethod,
+        logo,
+        themeBase = 'dark',
+        primaryColor,
+        secondaryColor,
+        backgroundColor,
+        amount = '0',
+        paymentMethod = 'creditcard,boleto',
       } = button.dataset
 
       const configs = {
-        image,
-        locale,
-        theme,
+        logo,
+        themeBase,
+        primaryColor,
+        secondaryColor,
+        backgroundColor,
       }
 
-      const params = {
+      const generatePaymentMethods = pipe(
+        split('.'),
+        map(of)
+      )
+
+      const paymentMethods = generatePaymentMethods(paymentMethod)
+
+      const transaction = {
         amount: parseFloat(amount),
-        paymentMethod,
+        paymentMethods,
       }
 
-      const open = preRender({ key, configs, params })
+      const open = preRender({
+        key,
+        configs,
+        transaction,
+      })
 
       button.addEventListener('click', (e) => {
         e.preventDefault()
