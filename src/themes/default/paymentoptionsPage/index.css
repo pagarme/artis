@@ -24,13 +24,13 @@
 }
 
 .optionsContainer {
+  align-content: flex-start;
   align-items: center;
   display: flex;
   flex-wrap: wrap;
   height: 265px;
   margin-top: 37px;
   width: calc(100% - 60px);
-  align-content: flex-start;
 }
 
 .paymentTitle {
@@ -65,5 +65,15 @@
 
   .optionsContainer {
     height: 100%;
+    justify-content: center;
   }
+
+  .footer {
+    max-width: 330px;
+  }
+}
+
+.footer,
+.footer > div {
+  width: 100%;
 }
