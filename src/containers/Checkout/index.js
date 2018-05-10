@@ -75,6 +75,8 @@ class Checkout extends Component {
 
   onTransactionReturn = ({
     response,
+    onTransactionSuccess,
+    onReturnPayload,
     onError,
   }) => {
     const {
@@ -82,6 +84,14 @@ class Checkout extends Component {
       boleto_barcode: boletoBarcode,
       boleto_url: boletoUrl,
     } = response
+
+    if (isNil(status)) {
+      if (onReturnPayload) {
+        onReturnPayload(response)
+      }
+
+      return this.close()
+    }
 
     if (status === 'authorized' || status === 'waiting_payment') {
       let successState = {}
@@ -91,6 +101,10 @@ class Checkout extends Component {
           boletoUrl,
           boletoBarcode,
         }
+      }
+
+      if (onTransactionSuccess) {
+        onTransactionSuccess(response)
       }
 
       return this.setState({
@@ -251,11 +265,17 @@ class Checkout extends Component {
       cart,
     } = apiData
 
-    const { onTransactionSuccess, onError } = configs
+    const {
+      createTransaction,
+      onTransactionSuccess,
+      onReturnPayload,
+      onError,
+    } = configs
     const items = propOr([], 'items', cart)
 
     const requestPayload = {
       ...pageInfo,
+      createTransaction,
       items,
       key,
       token,
@@ -269,6 +289,7 @@ class Checkout extends Component {
         this.onTransactionReturn({
           response,
           onTransactionSuccess,
+          onReturnPayload,
           onError,
         })
       })

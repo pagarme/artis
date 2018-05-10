@@ -16,6 +16,10 @@ const pagarmeApi = `var configs = {
     postback: 'http://pagar.me',
     orderUrl: 'http://www.google.com',
     enableCart: true,
+    createTransaction: true,
+    onReturnPayload: (data) => {
+      console.log('payload returned', data);
+    },
     onTransactionSuccess: (data) => {
       console.log('onTransactionSuccess callback', data);
     },
