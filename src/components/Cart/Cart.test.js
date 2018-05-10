@@ -3,6 +3,13 @@ import { mount } from 'enzyme'
 
 import { formatToBRL } from '../../utils/masks/'
 import Cart from './index'
+import createStore from '../../store'
+
+const store = createStore({
+  transaction: {
+    amount: 10000,
+  },
+})
 
 const items = [
   {
@@ -47,7 +54,11 @@ const amount = {
 describe('Cart', () => {
   it('should render shipping fee value', () => {
     const component = mount(
-      <Cart shipping={shipping} />
+      <Cart
+        amount={amount}
+        shipping={shipping}
+        store={store}
+      />
     )
 
     expect(
@@ -63,6 +74,7 @@ describe('Cart', () => {
     const component = mount(
       <Cart
         amount={amount}
+        store={store}
       />
     )
 
@@ -75,6 +87,7 @@ describe('Cart', () => {
   it('should decrease amount using shipping fee', () => {
     const component = mount(
       <Cart
+        store={store}
         amount={amount}
         items={items}
         shipping={shipping}
@@ -90,6 +103,8 @@ describe('Cart', () => {
   it('should render items', () => {
     const component = mount(
       <Cart
+        amount={amount}
+        store={store}
         items={items}
       />
     )
@@ -100,7 +115,10 @@ describe('Cart', () => {
 
   it('should not render name without customer', () => {
     const component = mount(
-      <Cart />
+      <Cart
+        amount={amount}
+        store={store}
+      />
     )
 
     expect(component.contains('Nome')).toBeFalsy()
@@ -108,7 +126,11 @@ describe('Cart', () => {
 
   it('should render name and email', () => {
     const component = mount(
-      <Cart customer={customer} />
+      <Cart
+        amount={amount}
+        store={store}
+        customer={customer}
+      />
     )
 
     expect(component.contains('Nome')).toBeTruthy()
@@ -119,7 +141,11 @@ describe('Cart', () => {
 
   it('should not render delivery whithout shipping', () => {
     const component = mount(
-      <Cart customer={customer} />
+      <Cart
+        amount={amount}
+        store={store}
+        customer={customer}
+      />
     )
 
     expect(component.contains('Entrega')).toBeFalsy()
@@ -127,7 +153,11 @@ describe('Cart', () => {
 
   it('should not render delivery', () => {
     const component = mount(
-      <Cart shipping={shipping} />
+      <Cart
+        amount={amount}
+        store={store}
+        shipping={shipping}
+      />
     )
 
     const shippingLines = component.debug()

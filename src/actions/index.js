@@ -21,3 +21,7 @@ export const incrementFinalAmount = payload => ({
 export const resetFinalAmount = () => ({
   type: 'RESET_FINAL_AMOUNT',
 })
+
+export const toggleCart = () => ({
+  type: 'TOGGLE',
+})

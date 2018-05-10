@@ -34,35 +34,22 @@
   text-align: center;
 }
 
-.buttonContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: var(--spacing-medium);
-  fill: var(--checkout-primary-color);
-}
-
-.alignEnd {
-  justify-content: flex-end;
-}
-
-.buttonContainer button:first-child {
-  margin-left: var(--spacing-medium);
-}
-
-.buttonContainer button:first-child:hover {
-  fill: var(--color-black);
-}
-
-.buttonContainer button:last-child {
-  margin-right: var(--spacing-medium);
-}
-
 .fieldNumber,
 .fieldNumber input {
   width: 18%;
 }
+
+/* stylelint-disable */
+.fieldNumber input[type='number'] {
+  -moz-appearance:textfield;
+}
+
+.fieldNumber input::-webkit-outer-spin-button,
+.fieldNumber input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* stylelint-enable */
 
 .fieldComplement,
 .fieldComplement input {
@@ -100,13 +87,11 @@
 
   .title {
     font-size: var(--font-size-medium);
+    margin: 0;
+    margin-top: 32px;
   }
 
   .inputsContainer {
-    width: 87%;
-  }
-
-  .buttonContainer button {
-    font-size: 13px;
+    width: 90%;
   }
 }

@@ -37,7 +37,7 @@ import ShippingPage from '../../pages/Shipping'
 import PaymentOptionsPage from '../../pages/Payment/PaymentOptions'
 import CreditCardPage from '../../pages/Payment/CreditCard'
 
-import CloseIcon from '../../images/close.svg'
+import CloseIcon from '../../images/checkout-close.svg'
 
 import statechart from './statechart'
 import steps from './steps'

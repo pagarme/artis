@@ -1,0 +1,75 @@
+@import "../colors.css";
+@import "../media.css";
+@import "../spacing.css";
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-medium);
+  fill: var(--checkout-primary-color);
+}
+
+.buttonContainer button:first-child {
+  margin-left: var(--spacing-medium);
+}
+
+.buttonContainer button:first-child:hover {
+  fill: var(--color-black);
+}
+
+.buttonContainer button:nth-child(2) {
+  display: none;
+}
+
+.buttonContainer button:last-child {
+  margin-right: var(--spacing-medium);
+}
+
+.hidePrevButton {
+  justify-content: flex-end;
+}
+
+.hidePrevButton button:first-child {
+  display: none;
+}
+
+@media (--media-palm) {
+
+  .buttonContainer {
+    margin-top: 17px;
+    margin-bottom: 14px;
+    width: 90%;
+    justify-content: space-between;
+  }
+
+  .buttonContainer button {
+    font-size: 13px;
+  }
+
+  .buttonContainer button:first-child {
+    display: none;
+  }
+
+  .buttonContainer button:last-child {
+    width: 80%;
+    margin-right: 0;
+    position: relative;
+  }
+
+  .buttonContainer button:last-child svg {
+    position: absolute;
+    right: 10px;
+  }
+
+  .buttonContainer button:nth-child(2) {
+    display: flex;
+    width: 36px;
+    padding: 0;
+  }
+
+  .buttonContainer button:nth-child(2) svg {
+    width: 20px;
+  }
+}

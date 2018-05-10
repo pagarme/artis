@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import {
@@ -12,7 +11,6 @@ import {
   reject,
 } from 'ramda'
 import {
-  Button,
   Switch,
   FormInput,
   ThemeConsumer,
@@ -28,9 +26,9 @@ import {
   minLength,
   maxLength,
 } from '../utils/validations'
-
-import NavigateBack from './../../src/images/navigate_back.svg'
-import NavigateNext from './../../src/images/navigate_next.svg'
+import {
+  NavigationBar,
+} from '../components'
 
 const consumeTheme = ThemeConsumer('UIAddressesPage')
 
@@ -212,39 +210,26 @@ class BillingPage extends Component {
               placeholder="Escolha a UF"
             />
           </div>
-          {allowSwitchChooseSameAddress && <div className={theme.inputGroup}>
-            <p className={theme.switchLabel} >Entregar no mesmo endereço?</p>
-            <Switch
-              checked={sameAddressForShipping}
-              onChange={this.handleSameAddressChange}
-              strings={{
-                on: 'Sim',
-                off: 'Não',
-              }}
-            />
-          </div>}
+          {
+            allowSwitchChooseSameAddress && <div className={theme.inputGroup}>
+              <p className={theme.switchLabel} >Entregar no mesmo endereço?</p>
+              <Switch
+                checked={sameAddressForShipping}
+                onChange={this.handleSameAddressChange}
+                strings={{
+                  on: 'Sim',
+                  off: 'Não',
+                }}
+              />
+            </div>
+          }
         </div>
-        <div className={classNames(theme.buttonContainer, {
-          [theme.alignEnd]: isNil(handlePreviousButton),
-        })}
-        >
-          {handlePreviousButton && <Button
-            fill="outline"
-            onClick={handlePreviousButton}
-            icon={<NavigateBack />}
-          >
-            Ops, voltar
-          </Button>}
-          <Button
-            fill="gradient"
-            type="submit"
-            iconAlignment="end"
-            icon={<NavigateNext />}
-            disabled={!this.state.formValid}
-          >
-            Confirmar
-          </Button>
-        </div>
+        <NavigationBar
+          handlePreviousButton={handlePreviousButton}
+          formValid={!this.state.formValid}
+          prevTitle="Ops, voltar"
+          nextTitle="Continuar"
+        />
       </Form>
     )
   }
@@ -264,7 +249,7 @@ BillingPage.propTypes = {
   }),
   handleSubmit: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  handlePreviousButton: PropTypes.func.isRequired,
+  handlePreviousButton: PropTypes.func,
   allowSwitchChooseSameAddress: PropTypes.bool,
   billing: PropTypes.shape({
     name: PropTypes.string,
@@ -281,9 +266,11 @@ BillingPage.propTypes = {
 }
 
 BillingPage.defaultProps = {
-  theme: {},
-  billing: {},
   allowSwitchChooseSameAddress: true,
+  billing: {},
+  handlePreviousButton: null,
+  openCart: null,
+  theme: {},
 }
 
 const mapStateToProps = ({ pageInfo }) => ({
