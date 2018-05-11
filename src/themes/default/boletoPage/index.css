@@ -1,7 +1,5 @@
 @import "../colors.css";
 @import "../typography.css";
-@import "../media.css";
-@import "../spacing.css";
 
 .wrapper {
   padding-left: 23px;

@@ -10,6 +10,7 @@ import {
 } from 'former-kit'
 import ReactGA from 'react-ga'
 import copy from 'copy-to-clipboard'
+import { propOr } from 'ramda'
 
 import { DarkButton } from './../../'
 import { formatToBRL } from '../../../utils/masks/'
@@ -59,7 +60,8 @@ const Success = ({
     }
 
   const renderTexts = () => {
-    if (creditCard.installmentText && creditCard.installmentText.length > 0) {
+    const installmentText = propOr('', 'installmentText', creditCard)
+    if (installmentText.length > 0) {
       return (
         <Fragment>
           <Row className={theme.noPadding}>

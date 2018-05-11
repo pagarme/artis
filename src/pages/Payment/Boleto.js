@@ -6,8 +6,15 @@ import {
   ThemeConsumer,
 } from 'former-kit'
 import {
+  __,
+  always,
+  assoc,
+  divide,
+  ifElse,
+  isNil,
+  multiply,
   path,
-  merge,
+  pipe,
 } from 'ramda'
 
 import {
@@ -48,34 +55,38 @@ class Boleto extends React.PureComponent {
     let value = discountValue
 
     if (discountType === 'percentage') {
-      value = (discountValue / 100) * amount
+      value = pipe(
+        divide(__, 100),
+        multiply(amount)
+      )(discountValue)
     }
 
-    handleDecrementFinalAmount(value)
+    if (value) {
+      handleDecrementFinalAmount(value)
+    }
   }
 
-  getSubtitle = transaction => (
+  getSubtitle =(
     path([
       'paymentConfig',
       'boleto',
       'subtitle',
-    ], transaction)
+    ])
   )
 
-  getValueToPayText = (transaction) => {
-    const value = path([
-      'paymentConfig',
-      'boleto',
-      'discount',
-      'value',
-    ], transaction)
-
-    if (value) {
-      return 'Valor com desconto'
-    }
-
-    return 'Valor a pagar'
-  }
+  getValueToPayText = ifElse(
+    pipe(
+      path([
+        'paymentConfig',
+        'boleto',
+        'discount',
+        'value',
+      ]),
+      isNil,
+    ),
+    always('Valor a pagar'),
+    always('Valor com desconto')
+  )
 
   handleClick = () => {
     const errors = {}
@@ -83,9 +94,10 @@ class Boleto extends React.PureComponent {
     const values = { boleto: true }
     const type = 'boleto'
 
-    const method = merge(
+    const method = assoc(
+      'type',
+      type,
       paymentConfig.boleto,
-      { type },
     )
 
     const payment = {
