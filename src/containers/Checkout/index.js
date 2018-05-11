@@ -13,6 +13,7 @@ import {
   reject,
   pathOr,
   propOr,
+  prop,
 } from 'ramda'
 
 import { changeScreenSize } from '../../actions'
@@ -36,6 +37,7 @@ import BillingPage from '../../pages/Billing'
 import ShippingPage from '../../pages/Shipping'
 import PaymentOptionsPage from '../../pages/Payment/PaymentOptions'
 import CreditCardPage from '../../pages/Payment/CreditCard'
+import BoletoPage from '../../pages/Payment/Boleto'
 
 import CloseIcon from '../../images/checkout-close.svg'
 
@@ -73,7 +75,6 @@ class Checkout extends Component {
 
   onTransactionReturn = ({
     response,
-    onTransactionSuccess,
     onError,
   }) => {
     const {
@@ -83,17 +84,13 @@ class Checkout extends Component {
     } = response
 
     if (status === 'authorized' || status === 'waiting_payment') {
-      let successState = { }
+      let successState = {}
 
       if (boletoBarcode || boletoUrl) {
         successState = {
           boletoUrl,
           boletoBarcode,
         }
-      }
-
-      if (onTransactionSuccess) {
-        onTransactionSuccess(response)
       }
 
       return this.setState({
@@ -125,21 +122,15 @@ class Checkout extends Component {
     }
 
     if (item === 'finalAmount') {
-      return pathOr({}, [
-        'finalAmount',
-      ], props)
+      return prop('finalAmount', props)
     }
 
     if (item === 'boletoBarcode') {
-      return pathOr({}, [
-        'boletoBarcode',
-      ], props)
+      return prop('boletoBarcode', this.state)
     }
 
     if (item === 'boletoUrl') {
-      return pathOr({}, [
-        'boletoUrl',
-      ], props)
+      return prop('boletoUrl', this.state)
     }
 
     if (item === 'boletoName') {
@@ -367,6 +358,13 @@ class Checkout extends Component {
         </Action>
         <State value="singleCreditCard">
           <CreditCardPage
+            handlePreviousButton={this.navigatePreviousPage}
+            handleSubmit={this.handleFormSubmit}
+            transaction={transaction}
+          />
+        </State>
+        <State value="singleBoleto">
+          <BoletoPage
             handlePreviousButton={this.navigatePreviousPage}
             handleSubmit={this.handleFormSubmit}
             transaction={transaction}

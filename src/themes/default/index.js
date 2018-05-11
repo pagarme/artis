@@ -2,6 +2,7 @@ import UIActionList from './actionList/index.css'
 import UIAddressesPage from './addressesPage/index.css'
 import UIAnalysisMessageInfo from './messageInfo/analysis/index.css'
 import UIAutocomplete from './autocomplete/index.css'
+import UIBoletoPage from './boletoPage/index.css'
 import UIButton from './button/index.css'
 import UICart from './cart/index.css'
 import UICheckout from './checkout/index.css'
@@ -18,19 +19,20 @@ import UIHeader from './header/index.css'
 import UIInputForm from './input/index.css'
 import UILinearProgress from './linear-progress/index.css'
 import UILoadingInfo from './loadingInfo/index.css'
+import UINavigationBar from './navigation-bar/index.css'
 import UINormalizeCSS from './normalize.css'
 import UIPaymentOptionsPage from './paymentoptionsPage/index.css'
 import UIProgressBar from './progressBar/index.css'
 import UISuccessMessageInfo from './messageInfo/success/index.css'
 import UISwitch from './switch/index.css'
 import UITooltip from './tooltip/index.css'
-import UINavigationBar from './navigation-bar/index.css'
 
 export default {
   UIActionList,
   UIAddressesPage,
   UIAnalysisMessageInfo,
   UIAutocomplete,
+  UIBoletoPage,
   UIButton,
   UICart,
   UICheckout,

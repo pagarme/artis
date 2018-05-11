@@ -1,0 +1,92 @@
+@import "../colors.css";
+@import "../typography.css";
+
+.wrapper {
+  padding-left: 23px;
+  padding-right: 23px;
+  justify-content: space-around;
+}
+
+.content,
+.footer,
+.header,
+.wrapper {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+}
+
+.wrapper,
+.content,
+.header {
+  flex-direction: column;
+}
+
+.content {
+  align-items: center;
+}
+
+.amount,
+.amountTitle,
+.subtitle,
+.title,
+.warning {
+  font-family: var(--primary-font-family);
+  text-align: center;
+}
+
+.title {
+  color: var(--color-title);
+  font-size: var(--font-size-xlarge);
+  font-weight: 900;
+  margin-bottom: 3px;
+  margin-top: 0;
+  text-transform: capitalize;
+}
+
+.subtitle {
+  color: var(--color-white);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.icon {
+  margin-bottom: 22px;
+  max-width: 126px;
+  color: var(--color-black);
+}
+
+.amountTitle {
+  color: var(--color-grey-35);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  margin-bottom: 7px;
+  margin-top: 0;
+}
+
+.amount {
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  margin-bottom: 30px;
+  margin-top: 0;
+}
+
+.warning {
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  margin-bottom: 0;
+  margin-top: 0;
+  max-width: 316px;
+}
+
+.footer {
+  flex-direction: row;
+  justify-content: space-between;
+}
