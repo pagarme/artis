@@ -55,6 +55,11 @@ class CreditCardPage extends Component {
 
   getInstallmentText = () => {
     const { installments } = this.state
+
+    if (!installments) {
+      return ''
+    }
+
     const paymentConfig = path(['transaction', 'paymentConfig'], this.props)
     const creditcard = changeInstallmentsToArray(paymentConfig.creditcard)
     const installmentsList = getInstallments(this.props.amount, creditcard, 0)
