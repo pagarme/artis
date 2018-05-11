@@ -64,9 +64,9 @@ describe('Cart', () => {
     expect(
       component
         .find('div')
-        .last()
+        .at(9)
         .find('p')
-        .contains('R$ 50.00')
+        .at(4)
     ).toBeTruthy()
   })
 
