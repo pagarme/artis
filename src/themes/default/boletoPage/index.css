@@ -1,4 +1,5 @@
 @import "../colors.css";
+@import "../media.css";
 @import "../typography.css";
 
 .wrapper {
@@ -87,6 +88,14 @@
 }
 
 .footer {
+  width: 100%;
   flex-direction: row;
   justify-content: space-between;
+}
+
+@media (--media-palm) {
+
+  .footer > div {
+    width: 100%;
+  }
 }

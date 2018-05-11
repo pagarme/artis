@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
-  Button,
   ThemeConsumer,
 } from 'former-kit'
 import {
@@ -18,6 +17,9 @@ import {
 } from 'ramda'
 
 import {
+  NavigationBar,
+} from '../../components'
+import {
   addPageInfo,
   decrementFinalAmount,
 } from '../../actions'
@@ -25,8 +27,6 @@ import {
   formatToBRL,
 } from './../../utils/masks/'
 import BoletoDark from '../../../src/images/boleto-dark.svg'
-import NavigateBack from '../../../src/images/navigate_back.svg'
-import NavigateNext from '../../../src/images/navigate_next.svg'
 
 const consumeTheme = ThemeConsumer('UIBoletoPage')
 
@@ -143,22 +143,11 @@ class Boleto extends React.PureComponent {
             que você faça o pagamento</p>
         </div>
         <footer className={theme.footer}>
-          <Button
-            fill="outline"
-            icon={<NavigateBack />}
-            onClick={handlePreviousButton}
-          >
-            Ops, voltar
-          </Button>
-          <Button
-            fill="gradient"
-            icon={<NavigateNext />}
-            iconAlignment="end"
-            onClick={this.handleClick}
-            type="submit"
-          >
-            {`Pagar ${formatToBRL(finalAmount)}`}
-          </Button>
+          <NavigationBar
+            handlePreviousButton={handlePreviousButton}
+            prevTitle="Ops, voltar"
+            nextTitle={`Pagar ${formatToBRL(finalAmount)}`}
+          />
         </footer>
       </section>
     )
