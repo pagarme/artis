@@ -1,4 +1,5 @@
 @import "../colors.css";
+@import "../media.css";
 
 .logo {
   max-width: 110px;
@@ -19,5 +20,36 @@
   align-items: center;
   display: flex;
   height: 81px;
-  justify-content: center;
+  justify-content: space-around;
 }
+
+.back,
+.close {
+  display: none;
+  transition: transform 300ms ease;
+
+  & :active {
+    transform: scale(0.85);
+  }
+}
+
+.back {
+  height: 19px;
+  width: 11px;
+  fill: var(--color-white);
+}
+
+.close {
+  height: 17px;
+  width: 17px;
+  fill: #686868;
+}
+
+@media (--media-palm) {
+
+  .back,
+  .close {
+    display: block;
+  }
+}
+
