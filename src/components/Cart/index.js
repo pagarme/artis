@@ -16,6 +16,7 @@ import {
   propOr,
 } from 'ramda'
 import {
+  Button,
   ThemeConsumer,
 } from 'former-kit'
 
@@ -24,6 +25,7 @@ import { formatToBRL } from '../../utils/masks/'
 
 import CartIcon from '../../images/cart.svg'
 import CloseIcon from '../../images/clear-close.svg'
+import NavigateBack from '../../images/navigate_back.svg'
 
 const consumeTheme = ThemeConsumer('UICart')
 
@@ -103,10 +105,10 @@ class Cart extends React.Component {
       amount,
       base,
       customer,
+      handleToggleCart,
+      items,
       shipping,
       theme,
-      items,
-      handleToggleCart,
     } = this.props
 
     const shippingFee = propOr(0, 'fee')(shipping)
@@ -135,7 +137,7 @@ class Cart extends React.Component {
       <React.Fragment>
         <section className={cartClasses}>
           <h1 className={theme.title}>
-            <CartIcon />
+            <CartIcon className={theme.cartIcon} />
             <span>Sua compra</span>
             <CloseIcon
               onClick={handleToggleCart}
@@ -189,6 +191,14 @@ class Cart extends React.Component {
               }
               <p>{formatToBRL(finalAmount)}</p>
             </div>
+          </div>
+          <div className={theme.footerWrapper}>
+            <Button
+              onClick={handleToggleCart}
+              icon={<NavigateBack />}
+            >
+              continuar pagando
+            </Button>
           </div>
         </section>
       </React.Fragment>
