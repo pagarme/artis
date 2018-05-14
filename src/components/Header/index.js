@@ -3,6 +3,7 @@ import { ThemeConsumer } from 'former-kit'
 import PropTypes from 'prop-types'
 
 import {
+  isNil,
   length,
   prop,
   propEq,
@@ -12,6 +13,9 @@ import {
 } from 'ramda'
 
 import { ProgressBar } from '..'
+
+import BackIcon from '../../images/navigate_back.svg'
+import CloseIcon from '../../images/closeX.svg'
 
 const consumeTheme = ThemeConsumer('UIHeader')
 
@@ -37,6 +41,8 @@ const Header = ({
   activeStep,
   theme,
   base,
+  handlePreviousButton,
+  handleCloseButton,
 }) => {
   const {
     percentage,
@@ -48,6 +54,14 @@ const Header = ({
     <header className={theme.header}>
       <div className={theme.logoWrapper}>
         {
+          isNil(handlePreviousButton) ?
+            <span /> :
+            <BackIcon
+              onClick={handlePreviousButton}
+              className={theme.back}
+            />
+        }
+        {
           logoSrc
             ? <img
               className={theme.logo}
@@ -56,6 +70,10 @@ const Header = ({
             />
             : ''
         }
+        <CloseIcon
+          className={theme.close}
+          onClick={handleCloseButton}
+        />
       </div>
       <ProgressBar
         base={base}
@@ -74,6 +92,8 @@ Header.propTypes = {
     header: PropTypes.string,
   }),
   base: PropTypes.string,
+  handleCloseButton: PropTypes.func,
+  handlePreviousButton: PropTypes.func,
   logoSrc: PropTypes.string,
   logoAlt: PropTypes.string,
   steps: PropTypes.arrayOf(PropTypes.object),
@@ -83,6 +103,8 @@ Header.propTypes = {
 Header.defaultProps = {
   theme: {},
   base: 'dark',
+  handleCloseButton: null,
+  handlePreviousButton: null,
   logoSrc: '',
   logoAlt: '',
   steps: [],

@@ -412,6 +412,8 @@ class Checkout extends Component {
       .filter(value => !hasRequiredPageData(value.page, this.props))
       .map(makeStepInvisible)
 
+    const isNotFirstPage = pages[0].page !== machineState.value
+
     return (
       <div
         className={classNames(
@@ -446,6 +448,12 @@ class Checkout extends Component {
             logoSrc={logo}
             steps={pages}
             activeStep={machineState.value}
+            handleCloseButton={this.close}
+            handlePreviousButton={
+              isNotFirstPage
+                ? this.navigatePreviousPage
+                : null
+            }
           />
           <main
             className={theme.content}
