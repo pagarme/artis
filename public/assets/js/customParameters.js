@@ -1,4 +1,9 @@
 /* eslint-disable */
+
+const mundipaggApi = `var configs = {
+  token: 'SOME_TOKEN_HERE',
+};`
+
 const pagarmeApi = `var configs = {
   key: 'ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz',
   configs: {
@@ -151,30 +156,3 @@ const pagarmeApi = `var configs = {
     },
   }
 };`
-
-const mundipaggApi = `var configs = {
-  token: 'SOME_TOKEN_HERE',
-};`
-
-const storagedCustomCode = window.localStorage.getItem('custom')
-if (storagedCustomCode) {
-  customPanel.setValue(storagedCustomCode)
-  customPanel.clearSelection()
-} else {
-  customPanel.setValue(pagarmeApi)
-  customPanel.clearSelection()
-}
-
-const optSetMundipagg = document.querySelector('#opt-set-mundipagg');
-optSetMundipagg.addEventListener('click', () => {
-  fullPanel.setValue(mundipaggApi);
-  fullPanel.clearSelection()
-})
-
-const optSetPagarme = document.querySelector('#opt-set-pagarme')
-optSetPagarme.addEventListener('click', () => {
-  fullPanel.setValue(pagarmeApi);
-  fullPanel.clearSelection()
-})
-
-optSetPagarme.click()
