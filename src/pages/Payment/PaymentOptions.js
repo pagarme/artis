@@ -110,13 +110,15 @@ class PaymentOptionsPage extends React.Component {
             title="Boleto"
           />
         </div>
-        <NavigationBar
-          handlePreviousButton={handlePreviousButton}
-          handleNextButton={handlePageTransition(this.state.transitionTo)}
-          formValid={!this.state.transitionTo}
-          prevTitle="Ops, voltar"
-          nextTitle="Pagar"
-        />
+        <div className={theme.footer}>
+          <NavigationBar
+            handlePreviousButton={handlePreviousButton}
+            handleNextButton={handlePageTransition(this.state.transitionTo)}
+            formValid={!this.state.transitionTo}
+            prevTitle="Ops, voltar"
+            nextTitle="Pagar"
+          />
+        </div>
       </div>
     )
   }

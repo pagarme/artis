@@ -4,10 +4,10 @@
 @import "../media.css";
 
 .customerForm {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 100%;
+  flex: 1;
 }
 
 .inputsContainer {
@@ -23,13 +23,11 @@
 }
 
 .buttonContainer {
-  width: 100%;
-  max-width: 330px;
+  align-items: flex-end;
   display: flex;
   flex-direction: column;
   justify-items: flex-end;
-  align-items: flex-end;
-  margin-bottom: var(--spacing-medium);
+  width: 100%;
 }
 
 .title {
@@ -47,7 +45,12 @@
 @media (--media-palm) {
 
   .buttonContainer {
-    margin-top: 22px;
+    max-width: 330px;
+    justify-content: space-between;
+  }
+
+  .buttonContainer > div {
+    width: 100%;
   }
 
   .buttonContainer > button {
