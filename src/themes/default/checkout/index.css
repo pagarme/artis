@@ -51,10 +51,10 @@
 }
 
 .content {
+  justify-content: center;
   background: var(--color-grey-83);
   display: flex;
   flex: 1;
-  align-items: center;
 }
 
 @media (--media-palm) {

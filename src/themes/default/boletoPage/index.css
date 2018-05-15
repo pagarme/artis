@@ -3,45 +3,42 @@
 @import "../typography.css";
 
 .wrapper {
-  padding-left: 23px;
-  padding-right: 23px;
-  justify-content: space-around;
-}
-
-.content,
-.footer,
-.header,
-.wrapper {
-  box-sizing: border-box;
+  align-items: center;
   display: flex;
-  width: 100%;
-}
-
-.wrapper,
-.content,
-.header {
   flex-direction: column;
+  flex: 1;
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  flex: 10;
 }
 
 .amount,
 .amountTitle,
-.subtitle,
-.title,
 .warning {
   font-family: var(--primary-font-family);
   text-align: center;
 }
 
+.header {
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+  display: flex;
+  flex: 2;
+  font-family: var(--primary-font-family);
+}
+
 .title {
   color: var(--color-title);
-  font-size: var(--font-size-xlarge);
+  font-size: var(--font-size-large);
+  font-family: var(--primary-font-family);
   font-weight: 900;
-  margin-bottom: 3px;
-  margin-top: 0;
+  margin: 0;
   text-transform: capitalize;
 }
 
@@ -50,8 +47,7 @@
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.04em;
-  margin-bottom: 0;
-  margin-top: 0;
+  margin: 0;
 }
 
 .icon {
@@ -88,14 +84,15 @@
 }
 
 .footer {
+  align-items: center;
+  flex: 2;
+  display: flex;
   width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 @media (--media-palm) {
 
-  .footer > div {
-    width: 100%;
+  .wrapper {
+    max-width: 92%;
   }
 }

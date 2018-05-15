@@ -8,6 +8,7 @@ import {
   anyPass,
   equals,
   insert,
+  isEmpty,
   isNil,
   ifElse,
   join,
@@ -103,7 +104,6 @@ class Cart extends React.Component {
   render () {
     const {
       amount,
-      base,
       customer,
       handleToggleCart,
       items,
@@ -111,13 +111,15 @@ class Cart extends React.Component {
       theme,
     } = this.props
 
-    const shippingFee = propOr(0, 'fee')(shipping)
+    if (isEmpty(items)) {
+      return null
+    }
 
+    const shippingFee = propOr(0, 'fee', shipping)
     const shouldRenderShippingFee = !isNil(shipping.fee)
 
     const cartClasses = classNames(
       theme.cart,
-      theme[base],
       {
         [theme.collapsed]: this.props.collapsed,
       }
@@ -176,18 +178,24 @@ class Cart extends React.Component {
           </div>
           <div className={theme.amountResume}>
             <div className={theme.labels}>
-              <p>Valor</p>
               {
-                shouldRenderShippingFee
-                && <p>Frete</p>
+                shouldRenderShippingFee && (
+                  <React.Fragment>
+                    <p>Valor</p>
+                    <p>Frete</p>
+                  </React.Fragment>
+                )
               }
               <p>Total</p>
             </div>
             <div className={theme.values}>
-              <p>{formatToBRL(subtotal)}</p>
               {
-                shouldRenderShippingFee &&
-                <p>{formatShippingFee(shippingFee)}</p>
+                shouldRenderShippingFee && (
+                  <React.Fragment>
+                    <p>{formatToBRL(subtotal)}</p>
+                    <p>{formatShippingFee(shippingFee)}</p>
+                  </React.Fragment>
+                )
               }
               <p>{formatToBRL(finalAmount)}</p>
             </div>
@@ -207,7 +215,6 @@ class Cart extends React.Component {
 }
 
 Cart.propTypes = {
-  base: PropTypes.string,
   collapsed: PropTypes.bool,
   customer: PropTypes.shape({
     name: PropTypes.string,

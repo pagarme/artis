@@ -13,13 +13,13 @@ const defaultState = {
 }
 
 const transactionValues = (state = defaultState, action) => {
-  const { payload = {} } = action
+  const { payload = 0 } = action
 
   switch (action.type) {
     case 'UPDATE_FINAL_AMOUNT':
       return {
         ...state,
-        finalAmount: payload.finalAmount,
+        finalAmount: payload,
       }
 
     default:

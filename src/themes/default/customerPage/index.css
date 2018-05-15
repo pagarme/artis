@@ -10,50 +10,41 @@
   flex: 1;
 }
 
-.inputsContainer {
+.content {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 10;
   max-width: 330px;
   width: 100%;
 
-  & > * {
+  & > *:not(:first-child) {
     padding-top: var(--spacing-medium);
   }
 }
 
-.buttonContainer {
-  align-items: flex-end;
-  display: flex;
-  flex-direction: column;
-  justify-items: flex-end;
-  width: 100%;
-}
-
 .title {
-  width: 100%;
-  margin-top: var(--spacing-large);
+  margin: 0;
   font-family: var(--primary-font-family);
   font-weight: 900;
   font-size: var(--font-size-large);
   color: var(--color-title);
+  text-align: center;
   letter-spacing: 0.02em;
-  justify-content: center;
+  align-items: center;
   display: flex;
+  flex: 2;
+}
+
+.footer {
+  align-items: center;
+  flex: 2;
+  display: flex;
+  width: 100%;
 }
 
 @media (--media-palm) {
 
-  .buttonContainer {
-    max-width: 330px;
-    justify-content: space-between;
-  }
-
-  .buttonContainer > div {
-    width: 100%;
-  }
-
-  .buttonContainer > button {
-    width: 60%;
+  .customerForm {
+    max-width: 92%;
   }
 }

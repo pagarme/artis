@@ -13,37 +13,32 @@ const stepsTitles = [
     page: 'customer',
     title: 'Identificação',
     icon: <UserIcon />,
-    visible: true,
   },
   {
     page: 'addresses',
     title: 'Endereços',
     icon: <MapIcon />,
-    visible: true,
   },
   {
     page: 'payment',
     title: 'Forma de Pagamento',
     icon: <PaymentIcon />,
-    visible: true,
   },
   {
     page: 'confirmation',
     title: 'Confirmação',
     icon: <ConfirmationIcon />,
-    visible: true,
   },
 ]
 
-const activeStepIndex = 1
+const activeStep = 'addresses'
 
 describe('ProgressBar', () => {
   it('should not render with steps', () => {
     const component = shallow(
       <ProgressBar
         steps={[]}
-        activeStepIndex={0}
-        percentage={0}
+        activeStep={''}
       />
     ).dive()
 
@@ -54,8 +49,7 @@ describe('ProgressBar', () => {
     const component = mount(
       <ProgressBar
         steps={stepsTitles}
-        activeStepIndex={activeStepIndex}
-        percentage={0}
+        activeStep={activeStep}
       />
     )
 
@@ -72,8 +66,7 @@ describe('ProgressBar', () => {
     const component = shallow(
       <ProgressBar
         steps={stepsTitles}
-        activeStepIndex={activeStepIndex}
-        percentage={100}
+        activeStep={activeStep}
       />
     )
 

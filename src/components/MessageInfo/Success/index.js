@@ -100,11 +100,12 @@ const Success = ({
   }
 
   return (
-    <div className={theme.wrapper}>
-      <div className={theme.box}>
+    <section className={theme.wrapper}>
+      <header className={theme.header}>
         <SuccessIcon className={theme.icon} />
         <h1 className={theme.title}>Deu tudo certo!</h1>
-        <hr className={theme.line} />
+      </header>
+      <main className={theme.content}>
         <h3 className={theme.infoField}>
           {
             boleto.url ? 'Valor a pagar:' : 'Valor pago:'
@@ -112,29 +113,29 @@ const Success = ({
         </h3>
         <p className={theme.infoValue}>{formatToBRL(amount)}</p>
         { renderTexts() }
-        <div
-          className={theme.buttonsWrapper}
-        >
-          {
-            orderUrl &&
-            <Button
-              fill="outline"
-              icon={<OrderIcon className={theme.whiteIcon} />}
-              onClick={openLink(orderUrl)}
-            >
-              Ver pedido
-            </Button>
-          }
+      </main>
+      <footer
+        className={theme.footer}
+      >
+        {
+          orderUrl &&
           <Button
-            fill="gradient"
-            icon={<CloseXIcon className={theme.whiteIcon} />}
-            onClick={closeCheckout}
+            fill="outline"
+            icon={<OrderIcon className={theme.whiteIcon} />}
+            onClick={openLink(orderUrl)}
           >
-            Fechar
+            Ver pedido
           </Button>
-        </div>
-      </div>
-    </div>
+        }
+        <Button
+          fill="gradient"
+          icon={<CloseXIcon className={theme.whiteIcon} />}
+          onClick={closeCheckout}
+        >
+          Fechar
+        </Button>
+      </footer>
+    </section>
   )
 }
 
@@ -142,21 +143,21 @@ Success.propTypes = {
   amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   boleto: PropTypes.shape({
     barcode: PropTypes.number,
+    expirationAt: PropTypes.string,
     name: PropTypes.string,
     url: PropTypes.string,
-    expirationAt: PropTypes.string,
   }),
   creditCard: PropTypes.shape({
     installmentText: PropTypes.string,
   }),
   theme: PropTypes.shape({
     boletoButtonsWrapper: PropTypes.string,
-    box: PropTypes.string,
-    buttonsWrapper: PropTypes.string,
+    content: PropTypes.string,
+    footer: PropTypes.string,
+    header: PropTypes.string,
     icon: PropTypes.string,
     infoField: PropTypes.string,
     infoValue: PropTypes.string,
-    line: PropTypes.string,
     title: PropTypes.string,
     whiteIcon: PropTypes.string,
     wrapper: PropTypes.string,

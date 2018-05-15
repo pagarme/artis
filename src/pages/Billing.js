@@ -3,16 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import {
-  isEmpty,
-  isNil,
   merge,
   omit,
-  propOr,
-  reject,
 } from 'ramda'
 import {
-  Switch,
   FormInput,
+  Switch,
   ThemeConsumer,
 } from 'former-kit'
 
@@ -21,16 +17,27 @@ import { removeMask } from '../utils/masks/'
 import getAddress from '../utils/helpers/getAddress'
 import { addPageInfo } from '../actions'
 import {
-  required,
+  isFormValid,
   isNumber,
-  minLength,
   maxLength,
+  minLength,
+  required,
 } from '../utils/validations'
 import {
   NavigationBar,
 } from '../components'
 
 const consumeTheme = ThemeConsumer('UIAddressesPage')
+
+const defaultBillingAddress = {
+  city: '',
+  complement: '',
+  number: '',
+  state: '',
+  street: '',
+  zipcode: '',
+  sameAddressForShipping: true,
+}
 
 class BillingPage extends Component {
   constructor (props) {
@@ -39,8 +46,7 @@ class BillingPage extends Component {
     const { billing } = props
 
     this.state = {
-      ...billing,
-      sameAddressForShipping: propOr(true, 'sameAddressForShipping', billing),
+      ...merge(defaultBillingAddress, billing),
     }
   }
 
@@ -98,19 +104,18 @@ class BillingPage extends Component {
     this.setState({ sameAddressForShipping: value })
   }
 
-  handleChangeForm = (values, errors) => {
-    const {
-      zipcode: oldZipcode,
-    } = this.state
+  handleChangeZipcode = (event) => {
+    const zipcode = event.target.value
 
+    if (removeMask(zipcode).length === 8) {
+      this.autocompleteAddress(zipcode)
+    }
+  }
+
+  handleChangeForm = (values, errors) => {
     this.setState({
       ...values,
-      formValid: isEmpty(reject(isNil, errors)),
-    }, () => {
-      if (values.zipcode !== oldZipcode &&
-        removeMask(values.zipcode).length === 8) {
-        this.autocompleteAddress(values.zipcode)
-      }
+      formValid: isFormValid(errors),
     })
   }
 
@@ -122,6 +127,7 @@ class BillingPage extends Component {
 
     const {
       theme,
+      enableCart,
       handlePreviousButton,
       allowSwitchChooseSameAddress,
     } = this.props
@@ -136,13 +142,11 @@ class BillingPage extends Component {
         validation={{
           zipcode: [
             required,
-            minLength(8),
             maxLength(8),
           ],
           number: [
             required,
             isNumber,
-            minLength(1),
             maxLength(5),
           ],
           complement: [
@@ -150,12 +154,10 @@ class BillingPage extends Component {
           ],
           street: [
             required,
-            minLength(10),
             maxLength(40),
           ],
           city: [
             required,
-            minLength(4),
             maxLength(25),
           ],
           state: [
@@ -168,55 +170,54 @@ class BillingPage extends Component {
         <h2 className={theme.title}>
           Qual é seu endereço de cobrança?
         </h2>
-        <div className={theme.inputsContainer}>
+        <main className={theme.content}>
           <FormInput
             disabled={isSearchingCPF}
-            name="zipcode"
             label="CEP"
             mask="11111-111"
+            name="zipcode"
+            onChange={this.handleChangeZipcode}
           />
           <FormInput
             disabled={isSearchingCPF}
-            name="street"
             label="Rua"
+            name="street"
             placeholder="Digite o endereço"
           />
           <div className={theme.inputGroup}>
             <FormInput
-              inputRef={this.handleNumberInputRef}
-              name="number"
               className={theme.fieldNumber}
+              inputRef={this.handleNumberInputRef}
               label="Nº"
-              placeholder="Digite o número"
+              name="number"
               type="number"
             />
             <FormInput
-              name="complement"
               className={theme.fieldComplement}
               label="Complemento"
-              placeholder="Digite o complemento do endereço"
+              name="complement"
             />
           </div>
           <div className={theme.inputGroup}>
             <FormInput
-              disabled={isSearchingCPF}
-              name="city"
               className={theme.fieldCity}
+              disabled={isSearchingCPF}
               label="Cidade"
+              name="city"
               placeholder="Digite a cidade"
             />
             <FormInput
-              disabled={isSearchingCPF}
-              options={options}
-              name="state"
               className={theme.fieldState}
+              disabled={isSearchingCPF}
               label="Estado"
+              name="state"
+              options={options}
               placeholder="Escolha a UF"
             />
           </div>
           {
             allowSwitchChooseSameAddress && <div className={theme.inputGroup}>
-              <p className={theme.switchLabel} >Entregar no mesmo endereço?</p>
+              <p className={theme.switchLabel}>Entregar no mesmo endereço?</p>
               <Switch
                 checked={sameAddressForShipping}
                 onChange={this.handleSameAddressChange}
@@ -227,13 +228,16 @@ class BillingPage extends Component {
               />
             </div>
           }
-        </div>
-        <NavigationBar
-          handlePreviousButton={handlePreviousButton}
-          formValid={!this.state.formValid}
-          prevTitle="Ops, voltar"
-          nextTitle="Continuar"
-        />
+        </main>
+        <footer className={theme.footer}>
+          <NavigationBar
+            enableCart={enableCart}
+            handlePreviousButton={handlePreviousButton}
+            formValid={!this.state.formValid}
+            prevTitle="Ops, voltar"
+            nextTitle="Continuar"
+          />
+        </footer>
       </Form>
     )
   }
@@ -242,8 +246,8 @@ class BillingPage extends Component {
 BillingPage.propTypes = {
   theme: PropTypes.shape({
     addressForm: PropTypes.string,
-    inputsContainer: PropTypes.string,
-    buttonContainer: PropTypes.string,
+    content: PropTypes.string,
+    footer: PropTypes.string,
     fieldNumber: PropTypes.string,
     fieldComplement: PropTypes.string,
     fieldCity: PropTypes.string,
@@ -251,10 +255,11 @@ BillingPage.propTypes = {
     inputGroup: PropTypes.string,
     switchLabel: PropTypes.string,
   }),
-  handleSubmit: PropTypes.func.isRequired,
+  allowSwitchChooseSameAddress: PropTypes.bool,
+  enableCart: PropTypes.bool,
   handlePageChange: PropTypes.func.isRequired,
   handlePreviousButton: PropTypes.func,
-  allowSwitchChooseSameAddress: PropTypes.bool,
+  handleSubmit: PropTypes.func.isRequired,
   billing: PropTypes.shape({
     name: PropTypes.string,
     street: PropTypes.string,
@@ -272,6 +277,7 @@ BillingPage.propTypes = {
 BillingPage.defaultProps = {
   allowSwitchChooseSameAddress: true,
   billing: {},
+  enableCart: false,
   handlePreviousButton: null,
   openCart: null,
   theme: {},

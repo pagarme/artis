@@ -1,6 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import {
+  __,
+  clamp,
+  divide,
+  equals,
+  findIndex,
+  inc,
+  length,
+  lt,
+  multiply,
+  pipe,
+  propEq,
+} from 'ramda'
 import classNames from 'classnames'
 import {
   LinearProgress,
@@ -17,8 +29,8 @@ const renderSteps = (steps, activeStep, theme) => (
           key={`step-${index + 1}`}
           className={
             classNames(theme.step, {
-              [theme.active]: index === activeStep,
-              [theme.passed]: index < activeStep,
+              [theme.active]: equals(inc(index), activeStep),
+              [theme.passed]: lt(inc(index), activeStep),
             })
           }
         >
@@ -33,34 +45,41 @@ const renderSteps = (steps, activeStep, theme) => (
 )
 
 const ProgressBar = ({
-  theme,
-  base,
+  activeStep,
   steps,
-  activeStepIndex,
-  percentage,
-}) => (
-  <div className={theme[base]}>
-    {
-      steps.length &&
-      renderSteps(steps, activeStepIndex, theme)
-    }
-    <LinearProgress label="Linear Progress" percent={percentage} />
-  </div>
-)
+  theme,
+}) => {
+  const activeStepIndex = inc(findIndex(propEq('page', activeStep), steps))
+
+  const calculateTotalPercentage = pipe(
+    length,
+    divide(100, __),
+    multiply(activeStepIndex))
+
+  const percentage = clamp(0, 100, calculateTotalPercentage(steps))
+
+  return (
+    <div>
+      {
+        steps.length &&
+        renderSteps(steps, activeStepIndex, theme)
+      }
+      <LinearProgress
+        label="Porcentagem concluída do Checkout"
+        percent={percentage}
+      />
+    </div>
+  )
+}
 
 ProgressBar.propTypes = {
   theme: PropTypes.shape(),
-  base: PropTypes.string,
+  activeStep: PropTypes.string.isRequired,
   steps: PropTypes.arrayOf(PropTypes.object).isRequired,
-  activeStepIndex: PropTypes.number,
-  percentage: PropTypes.number,
 }
 
 ProgressBar.defaultProps = {
   theme: {},
-  base: 'dark',
-  activeStepIndex: 0,
-  percentage: 0,
 }
 
 export default consumeTheme(ProgressBar)

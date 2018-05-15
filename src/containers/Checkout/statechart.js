@@ -1,34 +1,24 @@
-export default {
-  initial: 'customer',
+const addressesStates = {
+  initial: 'billing',
   states: {
-    customer: {
-      on: {
-        NEXT: 'billing',
-      },
-      onEntry: ['navigateToPage'],
-    },
     billing: {
       on: {
-        PREV: 'customer',
-        NEXT: 'shipping',
-        SAME_SHIPPING_ADDRESS: 'payment',
-        DIFFERENT_SHIPPING_ADDRESS: 'shipping',
+        SHIPPING: 'shipping',
       },
-      onEntry: ['navigateToPage'],
     },
     shipping: {
       on: {
-        PREV: 'billing',
-        PREV_FILLED_BILLING: 'customer',
-        NEXT: 'payment',
+        BILLING: 'billing',
       },
-      onEntry: ['navigateToPage'],
     },
-    payment: {
+  },
+}
+
+const paymentStates = {
+  initial: 'selection',
+  states: {
+    selection: {
       on: {
-        PREV_SAME_SHIPPING_ADDRESS: 'billing',
-        PREV_DIFFERENT_SHIPPING_ADDRESS: 'shipping',
-        NEXT: 'transaction',
         SINGLE_CREDITCARD: 'singleCreditCard',
         SINGLE_BOLETO: 'singleBoleto',
         CREDITCARD_AND_BOLETO: 'creditCardAndBoleto',
@@ -37,52 +27,77 @@ export default {
     },
     singleCreditCard: {
       on: {
-        PREV: 'payment',
-        NEXT: 'transaction',
+        SELECTION: 'selection',
+        TRANSACTION: 'transaction',
       },
     },
     singleBoleto: {
       on: {
-        PREV: 'payment',
-        NEXT: 'transaction',
+        SELECTION: 'selection',
+        TRANSACTION: 'transaction',
       },
     },
     creditCardAndBoleto: {
       on: {
-        PREV: 'payment',
-        NEXT: 'transaction',
+        SELECTION: 'selection',
+        TRANSACTION: 'transaction',
       },
     },
     multipleCreditCards: {
       on: {
-        PREV: 'payment',
-        NEXT: 'transaction',
+        SELECTION: 'selection',
+        TRANSACTION: 'transaction',
       },
     },
+  },
+}
+
+const confirmationStates = {
+  initial: 'transaction',
+  states: {
     transaction: {
       on: {
-        TRANSACTION_SUCCESS: {
-          confirmation: {
-            actions: ['onTransactionSuccess'],
-          },
-        },
-        TRANSACTION_ANALYSIS: {
-          confirmation: {
-            actions: ['onTransactionAnalysis'],
-          },
-        },
-        TRANSACTION_FAILURE: {
-          confirmation: {
-            actions: ['onTransactionError'],
-          },
-        },
+        TRANSACTION_SUCCESS: 'success',
+        TRANSACTION_ANALYSIS: 'analysis',
+        TRANSACTION_FAILURE: 'failure',
       },
       onEntry: 'enterLoading',
     },
+    success: {},
+    analysis: {},
+    failure: {},
+  },
+}
+
+export default {
+  initial: 'customer',
+  states: {
+    customer: {
+      on: {
+        NEXT: 'addresses',
+      },
+      onEntry: 'navigateToPage',
+    },
+    addresses: {
+      on: {
+        PREV: 'customer.$history',
+        NEXT: 'payment',
+      },
+      onEntry: 'navigateToPage',
+      ...addressesStates,
+    },
+    payment: {
+      on: {
+        PREV: 'addresses.$history',
+        NEXT: 'confirmation',
+      },
+      ...paymentStates,
+    },
     confirmation: {
       on: {
-        PREV: 'payment',
+        PREV: 'payment.$history',
       },
+      ...confirmationStates,
     },
   },
 }

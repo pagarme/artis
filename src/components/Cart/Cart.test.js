@@ -73,6 +73,7 @@ describe('Cart', () => {
   it('should render amount', () => {
     const component = mount(
       <Cart
+        items={items}
         amount={amount}
         store={store}
       />
@@ -127,6 +128,7 @@ describe('Cart', () => {
   it('should render name and email', () => {
     const component = mount(
       <Cart
+        items={items}
         amount={amount}
         store={store}
         customer={customer}
@@ -154,6 +156,7 @@ describe('Cart', () => {
   it('should not render delivery', () => {
     const component = mount(
       <Cart
+        items={items}
         amount={amount}
         store={store}
         shipping={shipping}

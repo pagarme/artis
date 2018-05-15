@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
-import { isEmpty, reject, isNil } from 'ramda'
+import {
+  merge,
+} from 'ramda'
+
 import {
   FormInput,
   ThemeConsumer,
@@ -13,15 +16,22 @@ import {
 } from '../components'
 
 import {
-  required,
-  isEmail,
-  minLength,
-  maxLength,
   isCpf,
+  isEmail,
+  isFormValid,
+  maxLength,
+  required,
 } from '../utils/validations'
 import { addPageInfo } from '../actions'
 
 const consumeTheme = ThemeConsumer('UICustomerPage')
+
+const defaultCustomerInfo = {
+  documentNumber: '',
+  email: '',
+  name: '',
+  phoneNumber: '',
+}
 
 class CustomerPage extends Component {
   constructor (props) {
@@ -42,13 +52,13 @@ class CustomerPage extends Component {
   handleChangeForm = (values, errors) => {
     this.setState({
       ...values,
-      formValid: isEmpty(reject(isNil, errors)),
+      formValid: isFormValid(errors),
     })
   }
 
   handleFormSubmit = (values, errors) => {
     this.setState({
-      formValid: isEmpty(reject(isNil, errors)),
+      formValid: isFormValid(errors),
     })
 
     this.props.handleSubmit(values, errors)
@@ -58,11 +68,12 @@ class CustomerPage extends Component {
     const {
       theme,
       customer,
+      enableCart,
     } = this.props
 
     return (
       <Form
-        data={customer}
+        data={merge(defaultCustomerInfo, customer)}
         className={theme.customerForm}
         onChange={this.handleChangeForm}
         onSubmit={this.handleFormSubmit}
@@ -70,61 +81,55 @@ class CustomerPage extends Component {
         validation={{
           name: [
             required,
-            minLength(10),
             maxLength(30),
           ],
           email: [
             required,
             isEmail,
-            minLength(10),
-            maxLength(30),
           ],
           documentNumber: [
             required,
-            minLength(11),
-            maxLength(11),
             isCpf,
           ],
           phoneNumber: [
             required,
-            minLength(10),
-            maxLength(11),
           ],
         }}
       >
         <h2 className={theme.title}>
           Olá, precisamos dos seus dados básicos
         </h2>
-        <div className={theme.inputsContainer}>
+        <main className={theme.content}>
           <FormInput
-            name="name"
             label="Qual seu nome?"
+            name="name"
             placeholder="Digite seu nome"
           />
           <FormInput
-            name="email"
             label="E-mail"
+            name="email"
             placeholder="Digite seu e-mail"
           />
           <FormInput
-            name="documentNumber"
             label="CPF"
             mask="111.111.111-11"
+            name="documentNumber"
             placeholder="Digite seu CPF"
           />
           <FormInput
-            name="phoneNumber"
             label="DDD + Telefone"
             mask="(11) 11111-1111"
+            name="phoneNumber"
             placeholder="Digite seu telefone"
           />
-        </div>
-        <div className={theme.buttonContainer}>
+        </main>
+        <footer className={theme.footer}>
           <NavigationBar
+            enableCart={enableCart}
             formValid={!this.state.formValid}
             nextTitle="Continuar"
           />
-        </div>
+        </footer>
       </Form>
     )
   }
@@ -134,8 +139,8 @@ CustomerPage.propTypes = {
   theme: PropTypes.shape({
     title: PropTypes.string,
     customerForm: PropTypes.string,
-    inputsContainer: PropTypes.string,
-    buttonContainer: PropTypes.string,
+    content: PropTypes.string,
+    footer: PropTypes.string,
   }),
   customer: PropTypes.shape({
     name: PropTypes.string,
@@ -143,6 +148,7 @@ CustomerPage.propTypes = {
     documentNumber: PropTypes.string,
     phoneNumber: PropTypes.string,
   }),
+  enableCart: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
 }
@@ -150,7 +156,7 @@ CustomerPage.propTypes = {
 CustomerPage.defaultProps = {
   theme: {},
   customer: {},
-  base: 'dark',
+  enableCart: false,
 }
 
 const mapStateToProps = ({ pageInfo }) => ({
