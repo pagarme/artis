@@ -4,6 +4,7 @@ module.exports = {
   ],
   setupFiles: [
     '<rootDir>/config/jest/setupTests.js',
+    '<rootDir>/config/jest/browserMocks.js',
   ],
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.js?(x)',
