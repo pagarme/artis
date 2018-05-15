@@ -145,6 +145,7 @@ class Boleto extends React.PureComponent {
         <footer className={theme.footer}>
           <NavigationBar
             handlePreviousButton={handlePreviousButton}
+            handleNextButton={this.handleClick}
             prevTitle="Ops, voltar"
             nextTitle={`Pagar ${formatToBRL(finalAmount)}`}
           />
