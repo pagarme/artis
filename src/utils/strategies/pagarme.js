@@ -1,14 +1,16 @@
 import {
   always,
   applySpec,
-  cond,
+  assoc,
   concat,
+  cond,
   defaultTo,
   equals,
   identity,
-  merge,
   map,
+  merge,
   of,
+  omit,
   path,
   pathOr,
   pipe,
@@ -18,7 +20,7 @@ import {
   T,
   toString,
 } from 'ramda'
-
+import pagarme from 'pagarme'
 import URLS from './urls'
 import { removeMask } from '../masks/'
 
@@ -128,6 +130,28 @@ const strategy = (data) => {
   const commonPayload = parseToPayload(data)
   const paymentData = getPaymentMethodData(data)
   const fullPayload = merge(paymentData, commonPayload)
+
+  if (propOr(true, 'createTransaction', data) === false) {
+    if (commonPayload.payment_method === 'credit_card') {
+      return pagarme.client
+        .connect({ encryption_key: commonPayload.encryption_key })
+        .then(client => client.security.encrypt(paymentData))
+        .then(cardHash => (
+          assoc(
+            'card_hash',
+            cardHash,
+            omit([
+              'card_cvv',
+              'card_expiration_date',
+              'card_holder_name',
+              'card_number',
+            ], fullPayload)
+          )
+        ))
+    }
+
+    return new Promise(resolve => resolve(fullPayload))
+  }
 
   return fetch(URLS.pagarme.transaction, {
     headers: {

@@ -138,6 +138,7 @@ const integrations = {
   simple: (buttons) => {
     buttons.forEach((button) => {
       const {
+        createTransaction,
         key,
         logo,
         themeBase = 'dark',
@@ -149,11 +150,12 @@ const integrations = {
       } = button.dataset
 
       const configs = {
+        backgroundColor,
+        createTransaction,
         logo,
-        themeBase,
         primaryColor,
         secondaryColor,
-        backgroundColor,
+        themeBase,
       }
 
       const generatePaymentMethods = pipe(
