@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
 import moment from 'moment'
-import { pipe, split, map, of } from 'ramda'
+import { pipe, split, map, merge, of } from 'ramda'
 import 'moment/locale/pt-br'
 
 import App from './App'
@@ -28,6 +28,10 @@ const openCheckout = ({
   apiData,
   acquirer,
 }) => {
+  const storagedPageInfo = JSON.parse(
+    localStorage.getItem('pageInfo')
+  )
+
   const {
     configs = {},
     customer,
@@ -36,7 +40,7 @@ const openCheckout = ({
     cart,
     transaction = {},
     key,
-  } = apiData
+  } = merge(apiData, storagedPageInfo)
 
   const {
     target = 'checkout-wrapper',
