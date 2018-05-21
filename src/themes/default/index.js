@@ -10,7 +10,6 @@ import UICreditCardPage from './creditcardPage/index.css'
 import UICustomerPage from './customerPage/index.css'
 import UIDarkButton from './darkButton/index.css'
 import UIDropdown from './dropdown/index.css'
-import UIEmailForm from './emailForm/index.css'
 import UIErrorMessageInfo from './messageInfo/error/index.css'
 import UIErrorPage from './errorPage/index.css'
 import UIFooter from './footer/index.css'
@@ -40,7 +39,6 @@ export default {
   UICustomerPage,
   UIDarkButton,
   UIDropdown,
-  UIEmailForm,
   UIErrorMessageInfo,
   UIErrorPage,
   UIFooter,
