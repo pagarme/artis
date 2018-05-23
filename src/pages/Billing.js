@@ -145,6 +145,9 @@ class BillingPage extends Component {
             minLength(1),
             maxLength(5),
           ],
+          complement: [
+            maxLength(65),
+          ],
           street: [
             required,
             minLength(10),
