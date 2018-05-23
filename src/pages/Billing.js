@@ -157,7 +157,8 @@ class BillingPage extends Component {
           ],
           state: [
             required,
-            maxLength(19),
+            minLength(2),
+            maxLength(2),
           ],
         }}
       >
