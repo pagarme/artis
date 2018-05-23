@@ -1,7 +1,7 @@
 describe('Pagarme', () => {
   describe('Simple', () => {
-    describe('Billing', () => {
-      it('should validate cep', () => {
+    describe('Shipping', () => {
+      it('should validate zipcode', () => {
         cy.visit('/')
 
         // Open checkout
@@ -13,6 +13,13 @@ describe('Pagarme', () => {
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
+        cy.get('[type="submit"]').click()
+
+        // Fill billing inputs
+        cy.get('[name="zipcode"]').type('03675030')
+        cy.wait(500)
+        cy.get('[name="number"]').type('1234')
+        cy.get('input[type="checkbox"]').click()
         cy.get('[type="submit"]').click()
 
         // Required
@@ -40,7 +47,6 @@ describe('Pagarme', () => {
           .get('.addressesPage__inputsContainer > div:first p')
           .should('not.exist')
       })
-
       it('should validate street', () => {
         cy.visit('/')
 
@@ -53,6 +59,13 @@ describe('Pagarme', () => {
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
+        cy.get('[type="submit"]').click()
+
+        // Fill billing inputs
+        cy.get('[name="zipcode"]').type('03675030')
+        cy.wait(500)
+        cy.get('[name="number"]').type('1234')
+        cy.get('input[type="checkbox"]').click()
         cy.get('[type="submit"]').click()
 
         // Required
@@ -105,6 +118,13 @@ describe('Pagarme', () => {
         cy.get('[name="phoneNumber"]').type('11985963625')
         cy.get('[type="submit"]').click()
 
+        // Fill billing inputs
+        cy.get('[name="zipcode"]').type('03675030')
+        cy.wait(500)
+        cy.get('[name="number"]').type('1234')
+        cy.get('input[type="checkbox"]').click()
+        cy.get('[type="submit"]').click()
+
         // Required
         cy.get('[name="number"]').type('1')
         cy.get('[name="number"]').type('{selectall}{backspace}')
@@ -146,6 +166,13 @@ describe('Pagarme', () => {
         cy.get('[name="phoneNumber"]').type('11985963625')
         cy.get('[type="submit"]').click()
 
+        // Fill billing inputs
+        cy.get('[name="zipcode"]').type('03675030')
+        cy.wait(500)
+        cy.get('[name="number"]').type('1234')
+        cy.get('input[type="checkbox"]').click()
+        cy.get('[type="submit"]').click()
+
         // Max length
         cy.get('[name="complement"]').clear()
         cy.get('[name="complement"]').type(`12345678912345678912345678912345678
@@ -176,6 +203,13 @@ describe('Pagarme', () => {
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
+        cy.get('[type="submit"]').click()
+
+        // Fill billing inputs
+        cy.get('[name="zipcode"]').type('03675030')
+        cy.wait(500)
+        cy.get('[name="number"]').type('1234')
+        cy.get('input[type="checkbox"]').click()
         cy.get('[type="submit"]').click()
 
         // Required
@@ -228,6 +262,13 @@ describe('Pagarme', () => {
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
+        cy.get('[type="submit"]').click()
+
+        // Fill billing inputs
+        cy.get('[name="zipcode"]').type('03675030')
+        cy.wait(500)
+        cy.get('[name="number"]').type('1234')
+        cy.get('input[type="checkbox"]').click()
         cy.get('[type="submit"]').click()
 
         // Required
