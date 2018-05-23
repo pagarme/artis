@@ -1,13 +1,6 @@
-
-Cypress.on('uncaught:exception', (err, runnable) => {
-  // returning false here prevents Cypress from
-  // failing the test
-  return false
-})
-
 describe('Pagarme', () => {
   describe('Simple', () => {
-    it('should make a boleto transaction', () => {
+    it('should make a credit card transaction', () => {
       cy.visit('/')
 
       //Open checkout
@@ -28,10 +21,15 @@ describe('Pagarme', () => {
       cy.get('[type="submit"]').click()
 
       //Choose boleto option
-      cy.get('.paymentoptionsPage__optionsContainer > .darkButton__wrapper:last').click()
+      cy.get('.paymentoptionsPage__optionsContainer > .darkButton__wrapper:first').click()
       cy.get('[type="submit"]:last').click()
 
       //Choose pay boleto
+      cy.get('[name="cardNumber"]').type('4556599125465782')
+      cy.get('[name="holderName"]').type('joao da silva')
+      cy.get('[name="expiration"]').type('0822')
+      cy.get('[name="cvv"]').type('545')
+      cy.get('.dropdown__select').select('1x de R$ 20,00 sem juros')
       cy.get('[type="submit"]:last').click()
 
       //Success page
