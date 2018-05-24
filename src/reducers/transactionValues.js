@@ -7,7 +7,11 @@ const defaultState = {
   paymentConfig: {
     boleto: {},
     creditcard: {
-      installments: [],
+      installments: [{
+        free: 10,
+        initial: 2,
+        max: 10,
+      }],
     },
   },
 }
