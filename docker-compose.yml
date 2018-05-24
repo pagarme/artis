@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: artis
+    command: yarn start
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "3000:3000"
+
+  storybook:
+    image: artis_app
+    container_name: storybook
+    command: yarn storybook
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "6006:6006"
+    depends_on:
+      - app
+

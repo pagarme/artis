@@ -21,6 +21,29 @@ Nos arquivos [custom.html](./webapp/public/custom.html) e [simple.html](./webapp
 
 Este projeto foi iniciado com [Create React App](https://github.com/facebookincubator/create-react-app) e recomendamos o uso do [Yarn](https://yarnpkg.com/en/) para o fluxo de desenvolvimento.
 
+### Docker
+Caso não queira executar os comandos que colocarei posteriormente, você pode executar os arquivos contidos na pasta `docker`:
+* `docker_bootstrap` - Cria imagem e sobe o container;
+* `docker_run` - Sobe o container;
+* `docker_bash` - Acessa o bash do container.
+
+#### Criando a imagem e subindo container
+
+```sh
+docker-compose up
+```
+
+Caso queira rodar o container em **background**
+```sh
+docker-compose up -d
+```
+
+#### Acessando o bash
+
+```sh
+docker exec -it artis sh
+```
+
 ### Instalação
 
 Para instalar as dependências do projeto usando `yarn`:
@@ -33,7 +56,7 @@ Usando `npm`:
 $ `npm i`
 ```
 
-### Outos scripts disponíveis
+### Outros scripts disponíveis
 
 #### `start`
 
@@ -178,4 +201,4 @@ Este projeto está licenciado sob a [Licença MIT](./LICENSE), ou seja, você po
 ## Equipe
 
 | [<img src="https://avatars2.githubusercontent.com/u/12722087?v=4&s=115"><br><sub>Ieda Otero<br>Business Leader</sub>](https://github.com/IedaOtero) | [<img src="https://avatars1.githubusercontent.com/u/37185254?s=115&v=4"><br><sub>Karoline Morone<br>People Leader</sub>](https://github.com/morokaro) | [<img src="https://avatars0.githubusercontent.com/u/19213244?v=3&s=115"><br><sub>Thiago Medeiros<br>Developer</sub>](https://github.com/thiagommedeiros) | [<img src="https://avatars0.githubusercontent.com/u/10222646?v=3&s=115"><br><sub>Augusto Amaral<br>Developer</sub>](https://github.com/augusto-jm-amaral) | [<img src="https://avatars0.githubusercontent.com/u/14620121?v=3&s=115"><br><sub>Vitor Capretz<br>Developer</sub>](https://github.com/vcapretz) | [<img src="https://avatars1.githubusercontent.com/u/4103305?s=115&v=4"><br><sub>Allan Ramos<br>Developer</sub>](https://github.com/allangrds) |
-| :---: |  :---: |  :---: | :---: | :---: | :---: | 
+| :---: |  :---: |  :---: | :---: | :---: | :---: |
