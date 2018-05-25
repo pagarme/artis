@@ -23,6 +23,8 @@ import {
   T,
 } from 'ramda'
 
+import { formatInstallments } from '../masks/'
+import { generateInstallments } from './../calculations'
 import URLS from './urls'
 
 const dotsRegex = /\./g
@@ -276,16 +278,21 @@ const getTransactionData = pipe(
   )
 )
 
-const getTokenData = token => fetch(
-  `${URLS.mundipagg.token}/${token}`, {
+const getTokenData = (token) => {
+  const url = `${URLS.mundipagg.token}/${token}`
+
+  const configs = {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     method: 'GET',
-  })
-  .then(res => res.json())
-  .then(parseTokenData)
+  }
+
+  return fetch(url, configs)
+    .then(res => res.json())
+    .then(parseTokenData)
+}
 
 const getBoletoBarcode = pipe(
   prop('payments'),
@@ -316,7 +323,7 @@ const parseStatus = (data) => {
   return { ...data, status }
 }
 
-const parseResponseStrategy = pipe(
+const parseResponse = pipe(
   applySpec({
     boleto_url: getBoletoUrl,
     boleto_barcode: getBoletoBarcode,
@@ -327,23 +334,48 @@ const parseResponseStrategy = pipe(
   parseStatus,
 )
 
-const strategy = (data) => {
-  const payload = getTransactionData(data)
+const getInstallments = (amount, installment) => {
+  const installments = formatInstallments(
+    generateInstallments(amount, installment)
+  )
 
-  return fetch(`${URLS.mundipagg.payment}?appId=${data.key}`, {
+  return Promise.resolve(installments)
+}
+
+const request = (data) => {
+  const payload = getTransactionData(data)
+  const url = `${URLS.mundipagg.payment}?appId=${data.key}`
+
+  const configs = {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     method: 'POST',
     body: JSON.stringify(payload),
-  })
+  }
+
+  return fetch(url, configs)
     .then(response => response.json())
-    .then(parseResponseStrategy)
+    .then(parseResponse)
 }
 
-export {
-  getTokenData,
+const prepare = (apiData) => {
+  const { token, amount, transaction } = apiData
+
+  const installments = pathOr({}, [
+    'paymentConfig',
+    'creditcard',
+    'installments',
+  ], transaction)
+
+  return Promise.all([
+    getTokenData(token),
+    getInstallments(amount, installments),
+  ])
 }
 
-export default strategy
+export default {
+  prepare,
+  request,
+}

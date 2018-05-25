@@ -16,20 +16,10 @@ const transactionValues = (state = defaultState, action) => {
   const { payload = {} } = action
 
   switch (action.type) {
-    case 'DECREMENT_FINAL_AMOUNT':
+    case 'UPDATE_FINAL_AMOUNT':
       return {
         ...state,
-        finalAmount: state.amount - payload,
-      }
-    case 'INCREMENT_FINAL_AMOUNT':
-      return {
-        ...state,
-        finalAmount: payload + state.amount,
-      }
-    case 'RESET_FINAL_AMOUNT':
-      return {
-        ...state,
-        finalAmount: state.amount,
+        finalAmount: payload.finalAmount,
       }
 
     default:

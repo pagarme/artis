@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
 import moment from 'moment'
-import { pipe, split, map, of } from 'ramda'
+import { always, equals, ifElse, pipe, split, map, merge, of } from 'ramda'
 import 'moment/locale/pt-br'
 
 import App from './App'
@@ -14,37 +14,88 @@ import createElement from './utils/helpers/createElement'
 import setTheme from './utils/helpers/setTheme'
 import setColors from './utils/helpers/setColors'
 import DEFAULT_COLORS from './utils/data/colors'
+import strategies from './utils/strategies'
 import getStrategyName from './utils/strategies/getStrategyName'
-import { getTokenData } from './utils/strategies/mundipagg'
-
-import defaultLogo from './images/logo_pagarme.png'
 
 moment.locale('pt-br')
 
 ReactGA.initialize('UA-113290482-1')
 
-const openCheckout = ({
-  getMundipaggData,
-  apiData,
-  acquirer,
-}) => {
+const renderLoading = (target) => {
+  ReactDOM.render(
+    <App
+      loadingScreen
+      loadingTitle="Carregando"
+      loadingSubtitle="Aguarde..."
+    />,
+    target
+  )
+}
+
+const unrenderLoading = (target) => {
+  ReactDOM.unmountComponentAtNode(target)
+}
+
+const openCheckout = (apiData, clientThemeBase) => {
   const {
     configs = {},
-    customer,
-    billing,
-    shipping,
-    cart,
-    transaction = {},
     key,
+    token,
   } = apiData
 
+  const { target = 'checkout-wrapper' } = configs
+
+  const acquirerName = getStrategyName(apiData)
+  const acquirer = strategies[acquirerName]
+
+  const clientTarget = createElement('div', target, 'body')
+
+  ReactGA.event({
+    category: 'API',
+    action: 'Customer Key',
+    label: key || token,
+  })
+
+  const apiErrors = ifElse(
+    equals('pagarme'),
+    always(apiValidation(apiData)),
+    always([]),
+  )(acquirer)
+
+  renderLoading(clientTarget)
+
+  acquirer.prepare(apiData)
+    .then((response) => {
+      const [checkoutData, installments] = response
+
+      const store = createStore(checkoutData)
+      const data = merge(checkoutData, { key, token, configs })
+
+      unrenderLoading(clientTarget)
+
+      ReactDOM.render(
+        <App
+          apiData={data}
+          apiErrors={apiErrors}
+          store={store}
+          acquirer={acquirerName}
+          installments={installments}
+          clientTarget={clientTarget}
+          clientThemeBase={clientThemeBase}
+        />,
+        clientTarget
+      )
+    })
+}
+
+const preRender = (apiData) => {
+  const { configs = {} } = apiData
+
   const {
-    target = 'checkout-wrapper',
     themeBase,
     primaryColor,
     secondaryColor,
     backgroundColor,
-    image,
   } = configs
 
   const clientThemeBase = themeBase || setTheme(primaryColor) || 'dark'
@@ -59,79 +110,7 @@ const openCheckout = ({
 
   setColors(pColor, sColor, bColor)
 
-  const clientTarget = createElement('div', target, 'body')
-
-  ReactGA.event({
-    category: 'API',
-    action: 'Customer Key',
-    label: key,
-  })
-
-  let apiErrors
-
-  if (acquirer === 'pagarme') {
-    apiErrors = apiValidation(apiData)
-
-    const store = createStore({
-      customer,
-      billing,
-      shipping,
-      cart,
-      transaction,
-    })
-
-    const apiDataWithDefaults = {
-      ...apiData,
-      configs: {
-        ...apiData.configs,
-        image: image || defaultLogo,
-      },
-    }
-
-    ReactDOM.render(
-      <App
-        apiData={apiDataWithDefaults}
-        apiErrors={apiErrors}
-        store={store}
-        acquirer={acquirer}
-        clientTarget={clientTarget}
-        clientThemeBase={clientThemeBase}
-      />,
-      clientTarget
-    )
-  }
-
-  if (acquirer === 'mundipagg') {
-    getMundipaggData.then((data) => {
-      const store = createStore(data)
-
-      ReactDOM.render(
-        <App
-          apiData={data}
-          apiErrors={apiErrors}
-          store={store}
-          acquirer={acquirer}
-          clientTarget={clientTarget}
-          clientThemeBase={clientThemeBase}
-        />,
-        clientTarget
-      )
-    })
-  }
-}
-
-const preRender = (apiData) => {
-  const acquirer = getStrategyName(apiData)
-
-  const getMundipaggData = acquirer === 'mundipagg'
-    ? getTokenData(apiData.token)
-    : null
-
-  return () => openCheckout({
-    getMundipaggData,
-    apiData,
-    acquirer,
-  })
+  return () => openCheckout(apiData, clientThemeBase)
 }
 
 const integrations = {

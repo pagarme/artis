@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
+import classNames from 'classnames'
+import PaymentCard from 'react-payment-card-component'
+
 import {
   isEmpty,
   isNil,
@@ -10,8 +13,7 @@ import {
   prop,
   reject,
 } from 'ramda'
-import classNames from 'classnames'
-import PaymentCard from 'react-payment-card-component'
+
 import {
   Dropdown,
   FormInput,
@@ -24,16 +26,18 @@ import {
   minLength,
   maxLength,
 } from '../../utils/validations'
+
 import {
   addPageInfo,
-  incrementFinalAmount,
+  updateFinalAmount,
 } from '../../actions'
+
 import {
   NavigationBar,
 } from '../../components'
 
-import getInstallments from './../../utils/helpers/getInstallments'
 import changeInstallmentsToArray from './../../utils/helpers/changeInstallmentsToArray' // eslint-disable-line
+
 import {
   formatToBRL,
   removeMaskPlaceholder,
@@ -53,24 +57,6 @@ class CreditCardPage extends Component {
     }
   }
 
-  getInstallmentText = () => {
-    const { installments } = this.state
-
-    if (!installments) {
-      return ''
-    }
-
-    const paymentConfig = path(['transaction', 'paymentConfig'], this.props)
-    const creditcard = changeInstallmentsToArray(paymentConfig.creditcard)
-    const installmentsList = getInstallments(this.props.amount, creditcard, 0)
-
-    const selectedInstallment = installmentsList.find(elem => (
-      elem.value === installments
-    ))
-
-    return selectedInstallment.name
-  }
-
   handleChangeForm = (values, errors) => {
     this.setState({
       ...values,
@@ -80,27 +66,21 @@ class CreditCardPage extends Component {
 
   handleInstallmentsChange = (e) => {
     const {
-      amount,
-      handleIncrementFinalAmount,
-      transaction,
+      handleUpdateFinalAmount,
+      installments,
     } = this.props
 
-    const { paymentConfig } = transaction
     const selectedInstallment = e.target.value
-    const installmentsList = getInstallments(
-      amount, paymentConfig.creditcard, 0
-    )
+    const installment = installments[selectedInstallment - 1]
+    const finalAmount = prop('amount', installment)
 
-    const installment = installmentsList[selectedInstallment - 1]
-
-    const interest = prop('interest', installment)
-
-    handleIncrementFinalAmount(interest)
+    handleUpdateFinalAmount({ finalAmount })
   }
 
   handleFormSubmit = (values, errors) => {
     const paymentConfig = path(['transaction', 'paymentConfig'], this.props)
-    const installmentText = this.getInstallmentText()
+    const { installments } = this.props
+    const installmentText = prop('name', installments[values.installments - 1])
 
     const method = merge(
       paymentConfig.creditcard,
@@ -147,15 +127,11 @@ class CreditCardPage extends Component {
     } = this.state
 
     const {
-      amount,
       finalAmount,
       handlePreviousButton,
       theme,
-      transaction,
+      installments,
     } = this.props
-
-    const { paymentConfig } = transaction
-    const creditcard = changeInstallmentsToArray(paymentConfig.creditcard)
 
     return (
       <Form
@@ -235,12 +211,15 @@ class CreditCardPage extends Component {
               />
             </div>
             <div className={theme.dropdownContainer}>
-              <Dropdown
-                options={getInstallments(amount, creditcard, 0)}
-                name="installments"
-                placeholder="Em quantas parcelas?"
-                onChange={this.handleInstallmentsChange}
-              />
+              {
+                !isEmpty(installments) &&
+                <Dropdown
+                  options={installments}
+                  name="installments"
+                  placeholder="Em quantas parcelas?"
+                  onChange={this.handleInstallmentsChange}
+                />
+              }
             </div>
           </div>
         </div>
@@ -257,23 +236,23 @@ class CreditCardPage extends Component {
 
 CreditCardPage.propTypes = {
   theme: PropTypes.shape(),
-  amount: PropTypes.number.isRequired,
   finalAmount: PropTypes.number.isRequired,
   transaction: PropTypes.shape({
     amount: PropTypes.number,
     defaultMethod: PropTypes.string,
     paymentConfig: PropTypes.shape({
       creditcard: PropTypes.shape({
-        installments: PropTypes.arrayOf(PropTypes.object),
+        installments: PropTypes.shape(),
         invoiceDescriptor: PropTypes.string,
       }),
     }),
     paymentMethods: PropTypes.arrayOf(PropTypes.array),
   }),
+  installments: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   handlePreviousButton: PropTypes.func.isRequired,
-  handleIncrementFinalAmount: PropTypes.func.isRequired,
+  handleUpdateFinalAmount: PropTypes.func.isRequired,
 }
 
 CreditCardPage.defaultProps = {
@@ -289,5 +268,5 @@ const mapStateToProps = ({ screenSize, transactionValues }) => ({
 
 export default connect(mapStateToProps, {
   handlePageChange: addPageInfo,
-  handleIncrementFinalAmount: incrementFinalAmount,
+  handleUpdateFinalAmount: updateFinalAmount,
 })(consumeTheme(CreditCardPage))

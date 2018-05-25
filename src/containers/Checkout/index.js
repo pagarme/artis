@@ -282,7 +282,7 @@ class Checkout extends Component {
       amount: finalAmount,
     }
 
-    const request = strategies[acquirer]
+    const request = strategies[acquirer].request
 
     request(requestPayload)
       .then((response) => {
@@ -296,7 +296,7 @@ class Checkout extends Component {
   }
 
   renderPages (pages) {
-    const { base, transaction } = this.props
+    const { base, transaction, installments } = this.props
 
     return (
       <React.Fragment>
@@ -346,7 +346,10 @@ class Checkout extends Component {
           />
         </State>
         <State value="transaction">
-          <LoadingInfo />
+          <LoadingInfo
+            title="Processando sua compra"
+            subtitle="Aguenta firme, é rapidinho"
+          />
         </State>
         <Action show="onTransactionError">
           <ErrorInfo
@@ -381,6 +384,7 @@ class Checkout extends Component {
           <CreditCardPage
             handlePreviousButton={this.navigatePreviousPage}
             handleSubmit={this.handleFormSubmit}
+            installments={installments}
             transaction={transaction}
           />
         </State>
@@ -503,7 +507,8 @@ Checkout.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]).isRequired,
-  finalAmount: PropTypes.number.isRequired, //eslint-disable-line
+  finalAmount: PropTypes.number.isRequired,
+  installments: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 Checkout.defaultProps = {

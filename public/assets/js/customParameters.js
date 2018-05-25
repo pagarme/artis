@@ -120,42 +120,12 @@ const pagarmeApi = `var configs = {
       creditcard: {
         subtitle: 'Em até 3x sem juros!',
         invoiceDescriptor: 'Mercurio :)',
-        installments: [
-          {
-            initial: 2,
-            max: 10,
-            free: 3,
-            interestRate: [
-              {
-                installment: 3,
-                type: 'percentage',
-                value: 10,
-              },
-              {
-                installment: 6,
-                type: 'amount',
-                value: 12000,
-              },
-            ]
-          },
-          {
-            initial: 3,
-            max: 6,
-            free: 1,
-            interestRate: [
-              {
-                installment: 3,
-                type: 'percentage',
-                value: 10,
-              },
-              {
-                installment: 6,
-                type: 'amount',
-                value: 12000,
-              },
-            ]
-          },
-        ]
+        installments: {
+          initial: 2,
+          max: 10,
+          free: 3,
+          interestRate: 12,
+        },
       },
     },
   }

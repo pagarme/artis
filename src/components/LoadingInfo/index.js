@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import {
   Grid,
   Row,
@@ -11,9 +12,16 @@ const consumeTheme = ThemeConsumer('UILoadingInfo')
 
 const defaultColSize = 12
 
-const LoadingInfo = ({ theme }) => (
+const LoadingInfo = ({
+  theme,
+  title,
+  subtitle,
+  fullscreen,
+}) => (
   <Grid
-    className={theme.page}
+    className={classNames(theme.page, {
+      [theme.fullscreen]: fullscreen,
+    })}
   >
     <Row>
       <Col
@@ -23,8 +31,8 @@ const LoadingInfo = ({ theme }) => (
         palm={defaultColSize}
         align={'center'}
       >
-        <p className={theme.title}>Processando sua compra</p>
-        <p className={theme.subtitle}>Aguenta firme, é rapidinho</p>
+        <p className={theme.title}>{title}</p>
+        <p className={theme.subtitle}>{subtitle}</p>
         <div className={theme.wrapper}>
           <div className={theme.loadingAnimation} />
         </div>
@@ -43,10 +51,14 @@ LoadingInfo.propTypes = {
     col: PropTypes.string,
     row: PropTypes.string,
   }),
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+  fullscreen: PropTypes.bool,
 }
 
 LoadingInfo.defaultProps = {
   theme: {},
+  fullscreen: false,
 }
 
 export default consumeTheme(LoadingInfo)
