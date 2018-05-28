@@ -131,6 +131,9 @@ class ShippingPage extends Component {
             minLength(1),
             maxLength(5),
           ],
+          complement: [
+            maxLength(65),
+          ],
           street: [
             required,
             minLength(10),
@@ -143,7 +146,8 @@ class ShippingPage extends Component {
           ],
           state: [
             required,
-            maxLength(19),
+            minLength(2),
+            maxLength(2),
           ],
         }}
       >
