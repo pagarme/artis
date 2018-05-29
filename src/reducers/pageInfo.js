@@ -1,4 +1,4 @@
-const defaultState = { }
+const defaultState = {}
 
 const pageInfo = (state = defaultState, action) => {
   const { payload = {} } = action

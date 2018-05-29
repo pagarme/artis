@@ -111,11 +111,11 @@ describe('checkout reduceres', () => {
     })
   })
 
-  it('should handle INCREMENT_FINAL_AMOUNT', () => {
+  it('should handle UPDATE_FINAL_AMOUNT', () => {
     expect(
       reducer({}, {
-        type: 'INCREMENT_FINAL_AMOUNT',
-        payload: 1000,
+        type: 'UPDATE_FINAL_AMOUNT',
+        payload: { finalAmount: 1000 },
       })
     ).toEqual({
       pageInfo: {},
@@ -129,35 +129,6 @@ describe('checkout reduceres', () => {
         amount: 0,
         defaultMethod: 'boleto',
         finalAmount: 1000,
-        paymentConfig: {
-          boleto: {},
-          creditcard: {
-            installments: [],
-          },
-        },
-        paymentMethods: [],
-      },
-    })
-  })
-
-  it('should handle DECREMENT_FINAL_AMOUNT 1', () => {
-    expect(
-      reducer({}, {
-        type: 'DECREMENT_FINAL_AMOUNT',
-        payload: 1000,
-      })
-    ).toEqual({
-      pageInfo: {},
-      screenSize: {
-        isBigScreen: false,
-      },
-      cart: {
-        collapsed: true,
-      },
-      transactionValues: {
-        amount: 0,
-        defaultMethod: 'boleto',
-        finalAmount: -1000,
         paymentConfig: {
           boleto: {},
           creditcard: {

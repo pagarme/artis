@@ -19,10 +19,14 @@ import {
   replace,
   T,
   toString,
+  values,
 } from 'ramda'
 import pagarme from 'pagarme'
+
+import { formatToBRL, removeMask } from '../masks'
 import URLS from './urls'
-import { removeMask } from '../masks/'
+
+const apiVersion = '2017-08-28'
 
 const getPaymentMethodType = path(['payment', 'method', 'type'])
 
@@ -126,7 +130,99 @@ const getPaymentMethodData = (data) => {
   }
 }
 
-const strategy = (data) => {
+const buildInstallmentName = (interestRate, free) => (installment) => {
+  const {
+    installment: index,
+    installment_amount: installmentAmount,
+  } = installment
+
+  const hasInterestRate = index <= free
+    ? 'sem juros'
+    : 'com juros'
+
+  return `${index}x de ${formatToBRL(installmentAmount)} ${hasInterestRate}`
+}
+
+const parseInterestRate = (interestRate, free) => ({ installment }) => (
+  installment <= free ? 0 : interestRate
+)
+
+const getInstallmentPayload = applySpec({
+  encryption_key: prop('key'),
+  amount: prop('amount'),
+  free_installments: prop('free'),
+  max_installments: prop('max'),
+  interest_rate: prop('interestRate'),
+})
+
+const getCheckoutData = ({
+  customer,
+  billing,
+  shipping,
+  cart,
+  transaction,
+}) =>
+  Promise.resolve({
+    customer,
+    billing,
+    shipping,
+    cart,
+    transaction,
+  })
+
+const getInstallments = (key, amount, installment) => {
+  const url = new URL(URLS.pagarme.installments)
+
+  const payload = getInstallmentPayload(
+    merge({ key, amount }, installment)
+  )
+
+  const {
+    interest_rate: interestRate,
+    free_installments: freeInstallments,
+  } = payload
+
+  Object.keys(payload).forEach(objKey =>
+    url.searchParams.append(objKey, payload[objKey])
+  )
+
+  const configs = {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'X-PagarMe-Version': apiVersion,
+    },
+    method: 'GET',
+  }
+
+  const parseInstallmentResponse = pipe(
+    propOr({}, 'installments'),
+    values,
+    map(applySpec({
+      installment: prop('installment'),
+      amount: prop('amount'),
+      installmentAmount: prop('installment_amount'),
+      interest: parseInterestRate(
+        interestRate,
+        payload.free_installments,
+      ),
+      value: pipe(
+        prop('installment'),
+        toString,
+      ),
+      name: buildInstallmentName(
+        interestRate,
+        freeInstallments,
+      ),
+    }))
+  )
+
+  return fetch(url, configs)
+    .then(response => response.json())
+    .then(parseInstallmentResponse)
+}
+
+const request = (data) => {
   const commonPayload = parseToPayload(data)
   const paymentData = getPaymentMethodData(data)
   const fullPayload = merge(paymentData, commonPayload)
@@ -150,20 +246,43 @@ const strategy = (data) => {
         ))
     }
 
-    return new Promise(resolve => resolve(fullPayload))
+    return Promise.resolve(fullPayload)
   }
 
-  return fetch(URLS.pagarme.transaction, {
+  const url = URLS.pagarme.transaction
+
+  const configs = {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      'X-PagarMe-Version': '2017-08-28',
+      'X-PagarMe-Version': apiVersion,
     },
     method: 'POST',
     body: JSON.stringify(fullPayload),
-  })
+  }
+
+  return fetch(url, configs)
     .then(response => response.json())
     .then(getPaymentMethodType(data))
 }
 
-export default strategy
+const prepare = (apiData) => {
+  const { key, transaction } = apiData
+  const amount = propOr(0, 'amount', transaction)
+
+  const installments = pathOr({}, [
+    'paymentConfig',
+    'creditcard',
+    'installments',
+  ], transaction)
+
+  return Promise.all([
+    getCheckoutData(apiData),
+    getInstallments(key, amount, installments),
+  ])
+}
+
+export default {
+  prepare,
+  request,
+}

@@ -6,6 +6,7 @@ import { ThemeProvider } from 'former-kit'
 import Checkout from './containers/Checkout'
 import ErrorPage from './pages/Error'
 import NormalizeCSS from './components/NormalizeCSS'
+import LoadingInfo from './components/LoadingInfo'
 import ErrorBoundary from './components/ErrorBoundary'
 
 import defaultTheme from './themes/default'
@@ -17,6 +18,10 @@ const App = ({
   acquirer,
   clientTarget,
   clientThemeBase,
+  installments,
+  loadingScreen,
+  loadingTitle,
+  loadingSubtitle,
 }) => (
   <Provider store={store}>
     <ThemeProvider theme={{
@@ -26,13 +31,22 @@ const App = ({
     >
       <ErrorBoundary CrashReportComponent={<ErrorPage />}>
         <NormalizeCSS>
-          <Checkout
-            apiData={apiData}
-            apiErrors={apiErrors}
-            acquirer={acquirer}
-            targetElement={clientTarget}
-            base={clientThemeBase}
-          />
+          {
+            loadingScreen
+              ? <LoadingInfo
+                title={loadingTitle}
+                subtitle={loadingSubtitle}
+                fullscreen
+              />
+              : <Checkout
+                apiData={apiData}
+                apiErrors={apiErrors}
+                acquirer={acquirer}
+                installments={installments}
+                targetElement={clientTarget}
+                base={clientThemeBase}
+              />
+          }
         </NormalizeCSS>
       </ErrorBoundary>
     </ThemeProvider>
@@ -46,10 +60,15 @@ App.propTypes = {
   acquirer: PropTypes.string.isRequired,
   clientTarget: PropTypes.shape().isRequired,
   clientThemeBase: PropTypes.string.isRequired,
+  installments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loadingScreen: PropTypes.bool,
+  loadingTitle: PropTypes.string.isRequired,
+  loadingSubtitle: PropTypes.string.isRequired,
 }
 
 App.defaultProps = {
   apiErrors: [],
+  loadingScreen: false,
 }
 
 export default App
