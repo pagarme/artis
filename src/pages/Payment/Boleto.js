@@ -9,6 +9,8 @@ import {
   always,
   assoc,
   divide,
+  equals,
+  identity,
   ifElse,
   isNil,
   multiply,
@@ -21,7 +23,7 @@ import {
 } from '../../components'
 import {
   addPageInfo,
-  decrementFinalAmount,
+  updateFinalAmount,
 } from '../../actions'
 import {
   formatToBRL,
@@ -33,36 +35,43 @@ const consumeTheme = ThemeConsumer('UIBoletoPage')
 class Boleto extends React.PureComponent {
   componentDidMount = () => {
     const {
-      handleDecrementFinalAmount,
+      handleUpdateFinalAmount,
       transaction,
     } = this.props
 
     const amount = path([
       'amount',
     ], transaction)
+
     const discountType = path([
       'paymentConfig',
       'boleto',
       'discount',
       'type',
     ], transaction)
+
     const discountValue = path([
       'paymentConfig',
       'boleto',
       'discount',
       'value',
     ], transaction)
-    let value = discountValue
 
-    if (discountType === 'percentage') {
-      value = pipe(
-        divide(__, 100),
-        multiply(amount)
-      )(discountValue)
-    }
+    const calculatePercentage = pipe(
+      divide(__, 100),
+      multiply(amount)
+    )
 
-    if (value) {
-      handleDecrementFinalAmount(value)
+    const getFinalDiscount = ifElse(
+      equals('percentage'),
+      always(calculatePercentage),
+      always(identity),
+    )
+
+    const finalDiscount = getFinalDiscount(discountType)(discountValue)
+
+    if (discountValue) {
+      handleUpdateFinalAmount(amount - finalDiscount)
     }
   }
 
@@ -116,6 +125,7 @@ class Boleto extends React.PureComponent {
 
   render () {
     const {
+      enableCart,
       finalAmount,
       handlePreviousButton,
       theme,
@@ -126,13 +136,13 @@ class Boleto extends React.PureComponent {
     return (
       <section className={theme.wrapper}>
         <header className={theme.header}>
-          <h1 className={theme.title}>boleto bancário</h1>
+          <h1 className={theme.title}>Boleto bancário</h1>
           {
             subtitle &&
             <h2 className={theme.subtitle}>{ subtitle }</h2>
           }
         </header>
-        <div className={theme.content}>
+        <main className={theme.content}>
           <BoletoDark className={theme.icon} />
           <h3 className={theme.amountTitle}>
             {this.getValueToPayText(transaction)}
@@ -141,9 +151,10 @@ class Boleto extends React.PureComponent {
           <p className={theme.warning}>
             Ao continuar, seu boleto bancário será criado para
             que você faça o pagamento</p>
-        </div>
+        </main>
         <footer className={theme.footer}>
           <NavigationBar
+            enableCart={enableCart}
             handlePreviousButton={handlePreviousButton}
             handleNextButton={this.handleClick}
             prevTitle="Ops, voltar"
@@ -157,11 +168,6 @@ class Boleto extends React.PureComponent {
 
 
 Boleto.propTypes = {
-  finalAmount: PropTypes.number.isRequired,
-  handleDecrementFinalAmount: PropTypes.func.isRequired,
-  handlePageChange: PropTypes.func.isRequired,
-  handlePreviousButton: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   theme: PropTypes.shape({
     amount: PropTypes.string,
     amountTitle: PropTypes.string,
@@ -174,6 +180,12 @@ Boleto.propTypes = {
     warning: PropTypes.string,
     wrapper: PropTypes.string,
   }).isRequired,
+  enableCart: PropTypes.bool,
+  finalAmount: PropTypes.number.isRequired,
+  handlePageChange: PropTypes.func.isRequired,
+  handlePreviousButton: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleUpdateFinalAmount: PropTypes.func.isRequired,
   transaction: PropTypes.shape({
     amount: PropTypes.number,
     paymentConfig: PropTypes.shape({
@@ -189,12 +201,16 @@ Boleto.propTypes = {
   }).isRequired,
 }
 
+Boleto.defaultProps = {
+  enableCart: false,
+}
+
 const mapStateToProps = ({ transactionValues }) => ({
   finalAmount: transactionValues.finalAmount,
 })
 
 const mapDispatchToProps = {
-  handleDecrementFinalAmount: decrementFinalAmount,
+  handleUpdateFinalAmount: updateFinalAmount,
   handlePageChange: addPageInfo,
 }
 

@@ -3,8 +3,9 @@
 @import "../spacing.css";
 @import "../typography.css";
 
-.contentWrapper {
+.content {
   display: flex;
+  flex: 10;
   justify-content: space-around;
   width: 100%;
   align-items: center;
@@ -15,11 +16,11 @@
 }
 
 .paymentCard {
-  transform: scale(0.9);
+  transform: scale(0.85);
 }
 
 .cardFlipped {
-  transform: scale(0.9) rotateY(180deg);
+  transform: scale(0.85) rotateY(180deg);
 }
 
 .creditcardForm {
@@ -27,7 +28,6 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  justify-content: space-around;
 }
 
 .dropdownContainer {
@@ -45,15 +45,15 @@
 }
 
 .title {
-  width: 100%;
   font-family: var(--primary-font-family);
   font-weight: 900;
-  font-size: var(--font-size-xlarge);
+  font-size: var(--font-size-large);
   color: var(--color-title);
   letter-spacing: 0.02em;
-  justify-content: center;
-  display: flex;
   margin: 0;
+  align-items: center;
+  display: flex;
+  flex: 2;
 }
 
 .inputGroup {
@@ -71,21 +71,29 @@
   width: 50%;
 }
 
-.buttonContainer {
-  width: 91%;
+.footer {
+  align-items: center;
+  flex: 2;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  width: 100%;
 }
 
 @media (--media-palm) {
+
+  .content {
+    align-items: flex-start;
+  }
 
   .paymentCardContainer,
   .inputsContainer {
     width: 90%;
   }
 
-  .contentWrapper {
-    flex-direction: column-reverse;
+  .creditcardForm {
+    max-width: 92%;
+  }
+
+  .paymentCardContainer {
+    display: none;
   }
 }

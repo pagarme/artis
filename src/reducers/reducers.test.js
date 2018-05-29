@@ -7,9 +7,6 @@ describe('checkout reduceres', () => {
       cart: {
         collapsed: true,
       },
-      screenSize: {
-        isBigScreen: false,
-      },
       transactionValues: {
         amount: 0,
         defaultMethod: 'boleto',
@@ -21,26 +18,6 @@ describe('checkout reduceres', () => {
           },
         },
       },
-    })
-  })
-
-  it('should handle CHANGE_SCREEN_SIZE', () => {
-    expect(
-      reducer({}, {
-        type: 'CHANGE_SCREEN_SIZE',
-        size: 500,
-      })
-    ).toHaveProperty('screenSize', {
-      isBigScreen: false,
-    })
-
-    expect(
-      reducer({}, {
-        type: 'CHANGE_SCREEN_SIZE',
-        size: 1000,
-      })
-    ).toHaveProperty('screenSize', {
-      isBigScreen: true,
     })
   })
 
@@ -115,20 +92,17 @@ describe('checkout reduceres', () => {
     expect(
       reducer({}, {
         type: 'UPDATE_FINAL_AMOUNT',
-        payload: { finalAmount: 1000 },
+        payload: 88712,
       })
     ).toEqual({
       pageInfo: {},
       cart: {
         collapsed: true,
       },
-      screenSize: {
-        isBigScreen: false,
-      },
       transactionValues: {
         amount: 0,
         defaultMethod: 'boleto',
-        finalAmount: 1000,
+        finalAmount: 88712,
         paymentConfig: {
           boleto: {},
           creditcard: {
@@ -147,9 +121,6 @@ describe('checkout reduceres', () => {
       })
     ).toEqual({
       pageInfo: {},
-      screenSize: {
-        isBigScreen: false,
-      },
       cart: {
         collapsed: false,
       },

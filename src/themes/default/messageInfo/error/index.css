@@ -5,35 +5,47 @@
 @import "../../margin.css";
 
 .wrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.box {
-  display: flex;
   align-items: center;
+  display: flex;
   flex-direction: column;
   width: 90%;
   max-width: 450px;
   font-family: var(--primary-font-family);
-  justify-content: center;
   text-align: center;
+}
+
+.header {
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  display: flex;
+  flex: 2;
+}
+
+.content {
+  border-top: 1px dotted var(--color-error);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 3;
+
+  & > * {
+    padding-top: var(--spacing-tiny);
+  }
 }
 
 .title {
   color: var(--color-error);
   font-size: 22px;
   font-weight: 900;
-  margin-bottom: 3px;
-  margin-top: 0;
+  margin: 0;
 }
 
 .subtitle {
   font-size: 14px;
   font-weight: 900;
-  margin: 5px 0 0;
+  margin: 0;
 }
 
 .question {
@@ -51,41 +63,36 @@
   padding-left: 0;
 }
 
-.line {
-  width: 100%;
-  display: inline-flex;
-  height: 1px;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  border-color: var(--color-error);
-  padding-left: 0;
-  padding-bottom: 0;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  border-style: dotted;
-}
-
 .questionTitle {
   font-size: 14px;
   color: #a7a7a7;
   margin: 0;
 }
 
-.wrapper button {
-  margin-top: 35px;
+.footer {
+  align-items: center;
+  flex: 1;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.footer > button {
   text-transform: none;
 }
 
 .icon {
   fill: var(--color-error);
   width: 43px;
-  margin-bottom: 18px;
 }
 
 @media (--media-palm) {
 
-  .wrapper {
-    padding: 24px 0;
+  .header {
+    flex: 3;
+  }
+
+  .content {
+    flex: 5;
   }
 }

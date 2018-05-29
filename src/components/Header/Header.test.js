@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { LinearProgress } from 'former-kit'
 
 import Header from './index'
 import { ProgressBar } from '..'
@@ -15,7 +16,7 @@ describe('Header', () => {
   })
 
   it('should filter visible steps', () => {
-    const activeStep = 'billing'
+    const activeStep = 'addresses'
 
     const component = mount(
       <Header
@@ -24,11 +25,11 @@ describe('Header', () => {
       />
     )
 
-    expect(component.find(ProgressBar).props().steps).toHaveLength(5)
+    expect(component.find(ProgressBar).props().steps).toHaveLength(4)
   })
 
-  it('should calculate progress 40 percent', () => {
-    const activeStep = 'billing'
+  it('should calculate progress 50 percent', () => {
+    const activeStep = 'addresses'
 
     const component = mount(
       <Header
@@ -37,7 +38,7 @@ describe('Header', () => {
       />
     )
 
-    expect(component.find(ProgressBar).props().percentage).toBe(40)
+    expect(component.find(LinearProgress).props().percent).toBe(50)
   })
 
   it('should calculate progress 100 percent', () => {
@@ -50,6 +51,6 @@ describe('Header', () => {
       />
     )
 
-    expect(component.find(ProgressBar).props().percentage).toBe(100)
+    expect(component.find(LinearProgress).props().percent).toBe(100)
   })
 })

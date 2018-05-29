@@ -20,7 +20,7 @@ const questions = [
 const Error = ({ navigatePreviousPage, theme }) => {
   const makeQuestionsList = arr => (
     arr.map(item => (
-      <li className={theme.question}>
+      <li className={theme.question} key={item}>
         { item }
       </li>
     ))
@@ -28,38 +28,44 @@ const Error = ({ navigatePreviousPage, theme }) => {
 
   return (
     <div className={theme.wrapper}>
-      <div className={theme.box}>
+      <header className={theme.header}>
         <Closes
           className={theme.icon}
         />
         <h1 className={theme.title}>Algo deu errado...</h1>
         <h2 className={theme.subtitle}>Sua transação foi recusada</h2>
-        <hr className={theme.line} />
+      </header>
+      <main className={theme.content}>
         <h3 className={theme.questionTitle}>
           O que pode ter acontecido?
         </h3>
         <ul className={theme.questionList}>
           {makeQuestionsList(questions)}
         </ul>
+      </main>
+      <footer className={theme.footer}>
         <Button
           fill="outline"
           icon={<NavigateBack />}
           iconAlignment="start"
-          onClick={navigatePreviousPage}
+          onClick={navigatePreviousPage()}
         >
           Revisar pagamento
         </Button>
-      </div>
+      </footer>
     </div>
   )
 }
 
 Error.propTypes = {
   theme: PropTypes.shape({
-    wrapper: PropTypes.string,
-    title: PropTypes.string,
-    subtitle: PropTypes.string,
+    content: PropTypes.string,
+    footer: PropTypes.string,
+    header: PropTypes.string,
     question: PropTypes.string,
+    subtitle: PropTypes.string,
+    title: PropTypes.string,
+    wrapper: PropTypes.string,
   }).isRequired,
   navigatePreviousPage: PropTypes.func.isRequired,
 }

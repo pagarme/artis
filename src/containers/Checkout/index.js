@@ -1,25 +1,36 @@
-import React, { Component } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { ThemeConsumer } from 'former-kit'
 import { connect } from 'react-redux'
-import { State, Action, withStatechart } from 'react-automata'
+import { State, withStatechart } from 'react-automata'
 import ReactGA from 'react-ga'
 import {
-  isEmpty,
+  and,
+  complement,
+  equals,
+  filter,
+  head,
+  identity,
+  ifElse,
   isNil,
+  keys,
   length,
-  reject,
+  not,
   pathOr,
-  propOr,
+  pipe,
   prop,
+  propOr,
+  type,
 } from 'ramda'
 
-import { changeScreenSize } from '../../actions'
 import strategies from '../../utils/strategies'
 import getErrorMessage from '../../utils/data/errorMessages'
-import { hasRequiredPageData } from '../../utils/validations'
+import {
+  hasRequiredPageData,
+  isFormValid,
+} from '../../utils/validations'
 
 import {
   AnalysisInfo,
@@ -30,7 +41,6 @@ import {
   LoadingInfo,
   SuccessInfo,
 } from '../../components'
-
 
 import CustomerPage from '../../pages/Customer'
 import BillingPage from '../../pages/Billing'
@@ -46,9 +56,16 @@ import steps from './steps'
 
 const consumeTheme = ThemeConsumer('UICheckout')
 
-class Checkout extends Component {
+const getActiveStep = ifElse(
+  pipe(type, equals('Object')),
+  pipe(keys, head),
+  identity,
+)
+
+class Checkout extends React.Component {
   state = {
     closingEffect: false,
+    steps,
   }
 
   componentWillMount () {
@@ -64,15 +81,6 @@ class Checkout extends Component {
     }
   }
 
-  componentDidMount () {
-    this.props.changeScreenSize(window.innerWidth)
-    window.addEventListener('resize', this.handleNewScreenSize)
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('resize', this.handleNewScreenSize)
-  }
-
   onTransactionReturn = ({
     response,
     onTransactionSuccess,
@@ -83,9 +91,10 @@ class Checkout extends Component {
       status,
       boleto_barcode: boletoBarcode,
       boleto_url: boletoUrl,
+      errors,
     } = response
 
-    if (isNil(status)) {
+    if (isNil(status) && isNil(errors)) {
       if (onReturnPayload) {
         onReturnPayload(response)
       }
@@ -179,28 +188,71 @@ class Checkout extends Component {
     return null
   }
 
-  handleNewScreenSize = () => {
-    this.props.changeScreenSize(window.innerWidth)
-  }
-
   navigateToPage () {
-    const { machineState } = this.props
-    const { value, history } = machineState
+    const value = pathOr('', ['machineState', 'value'], this.props)
 
-    if (!hasRequiredPageData(value, this.props)) {
+    const page = getActiveStep(value)
+    if (!hasRequiredPageData(page, this.props)) {
       return
     }
 
-    if (pathOr('', ['value'], history) === 'shipping') {
-      this.navigatePreviousPage()
-      return
-    }
+    this.setState({
+      steps: filter(pipe(
+        prop('page'), complement(equals)(page)
+      ), this.state.steps),
+    })
 
     this.navigateNextPage()
   }
 
+  handlePageTransition = page => () => this.props.transition(page)
+
   navigatePreviousPage = () => {
-    this.props.transition('PREV')
+    const value = pathOr('', ['machineState', 'value'], this.props)
+
+    const isFirstPage = equals(
+      pipe(
+        head,
+        prop('page'),
+      )(this.state.steps)
+    )
+
+    if (isFirstPage(value)) {
+      return false
+    }
+
+    const currentStateKey = head(Object.keys(value))
+    const currentStateValue = head(Object.values(value))
+
+    if (and(
+      equals(currentStateKey, 'confirmation'),
+      complement(equals)(currentStateValue, 'failure')
+    )) {
+      return false
+    }
+
+    if (and(
+      isFirstPage('payment'),
+      and(
+        equals(currentStateKey, 'payment'),
+        equals(currentStateValue, 'selection')
+      )
+    )) {
+      return false
+    }
+
+    if (equals('shipping', currentStateValue)) {
+      return () => this.props.transition('BILLING')
+    }
+
+    if (and(
+      equals('payment', currentStateKey),
+      complement(equals)('selection', currentStateValue),
+    )) {
+      return () => this.props.transition('SELECTION')
+    }
+
+    return () => this.props.transition('PREV')
   }
 
   navigateNextPage = () => {
@@ -208,7 +260,7 @@ class Checkout extends Component {
   }
 
   handleFormSubmit = (values, errors) => {
-    if (isEmpty(values) || !isEmpty(reject(isNil, errors))) {
+    if (not(isFormValid(errors))) {
       return
     }
 
@@ -216,22 +268,20 @@ class Checkout extends Component {
   }
 
   handleBillingFormSubmit = (values, errors) => {
-    if (isEmpty(values) || !isEmpty(reject(isNil, errors))) {
+    if (not(isFormValid(errors))) {
       return
     }
 
     const { sameAddressForShipping } = values
 
-    if (isNil(sameAddressForShipping) || sameAddressForShipping) {
-      this.props.transition('SAME_SHIPPING_ADDRESS')
+    if (sameAddressForShipping) {
+      this.props.transition('NEXT')
     }
 
     if (!sameAddressForShipping) {
-      this.props.transition('DIFFERENT_SHIPPING_ADDRESS')
+      this.props.transition('SHIPPING')
     }
   }
-
-  handlePageTransition = page => () => this.props.transition(page)
 
   close = () => {
     const { targetElement } = this.props
@@ -295,73 +345,90 @@ class Checkout extends Component {
       })
   }
 
-  renderPages (pages) {
-    const { base, transaction, installments } = this.props
+  renderPages () {
+    const {
+      apiData,
+      installments,
+      transaction,
+    } = this.props
+
+    const {
+      configs,
+    } = apiData
+
+    const { enableCart } = configs
 
     return (
       <React.Fragment>
         <State value="customer">
           <CustomerPage
-            base={base}
+            enableCart={enableCart}
             handleSubmit={this.handleFormSubmit}
           />
         </State>
-        <State value="billing">
+        <State value="addresses.billing">
           <BillingPage
             allowSwitchChooseSameAddress={
-              !hasRequiredPageData(
+              true || !hasRequiredPageData(
                 'shipping',
                 this.props
               )
             }
-            handlePreviousButton={
-              pages[0].page === 'billing'
-                ? null
-                : this.navigatePreviousPage
-            }
-            base={base}
+            handlePreviousButton={this.navigatePreviousPage}
+            enableCart={enableCart}
             handleSubmit={this.handleBillingFormSubmit}
           />
         </State>
-        <State value="shipping">
+        <State value="addresses.shipping">
           <ShippingPage
-            handlePreviousButton={
-              pages[0].page === 'shipping'
-                ? null
-                : this.navigatePreviousPage
-            }
-            base={base}
+            enableCart={enableCart}
+            handlePreviousButton={this.navigatePreviousPage}
             handleSubmit={this.handleFormSubmit}
           />
         </State>
-        <State value="payment">
+        <State value="payment.selection">
           <PaymentOptionsPage
-            handlePreviousButton={
-              pages[0].page === 'payment'
-                ? null
-                : this.navigatePreviousPage
-            }
+            enableCart={enableCart}
+            handlePreviousButton={this.navigatePreviousPage}
             handlePageTransition={this.handlePageTransition}
             transaction={transaction}
           />
         </State>
-        <State value="transaction">
-          <LoadingInfo
-            title="Processando sua compra"
-            subtitle="Aguenta firme, é rapidinho"
+        <State value="payment.singleCreditCard">
+          <CreditCardPage
+            enableCart={enableCart}
+            handlePreviousButton={this.navigatePreviousPage}
+            handleSubmit={this.handleFormSubmit}
+            installments={installments}
+            transaction={transaction}
           />
         </State>
-        <Action show="onTransactionError">
+        <State value="payment.singleBoleto">
+          <BoletoPage
+            enableCart={enableCart}
+            handlePreviousButton={this.navigatePreviousPage}
+            handleSubmit={this.handleFormSubmit}
+            transaction={transaction}
+          />
+        </State>
+
+        <State value="confirmation.transaction">
+          <LoadingInfo
+            subtitle="Aguenta firme, é rapidinho"
+            title="Processando sua compra"
+          />
+        </State>
+        <State value="confirmation.failure">
           <ErrorInfo
             navigatePreviousPage={this.navigatePreviousPage}
           />
-        </Action>
-        <Action show="onTransactionAnalysis">
+        </State>
+        <State value="confirmation.analysis">
           <AnalysisInfo
             closeCheckout={this.close}
           />
-        </Action>
-        <Action show="onTransactionSuccess">
+        </State>
+        <State value="confirmation.success">
           <SuccessInfo
             amount={this.getProp('finalAmount', this.props)}
             boleto={{
@@ -378,21 +445,6 @@ class Checkout extends Component {
               ),
             }}
             orderUrl={this.getProp('orderUrl', this.props)}
-          />
-        </Action>
-        <State value="singleCreditCard">
-          <CreditCardPage
-            handlePreviousButton={this.navigatePreviousPage}
-            handleSubmit={this.handleFormSubmit}
-            installments={installments}
-            transaction={transaction}
-          />
-        </State>
-        <State value="singleBoleto">
-          <BoletoPage
-            handlePreviousButton={this.navigatePreviousPage}
-            handleSubmit={this.handleFormSubmit}
-            transaction={transaction}
           />
         </State>
       </React.Fragment>
@@ -419,25 +471,6 @@ class Checkout extends Component {
     const { enableCart, companyName, logo } = configs
     const { amount } = transaction
     const { shipping, customer } = pageInfo
-
-    const makeStepInvisible = (step, index, defaultSteps) => {
-      if (step.page === 'shipping'
-        && index > 0
-        && defaultSteps[index - 1].page === 'billing') {
-        return {
-          ...step,
-          visible: false,
-        }
-      }
-
-      return step
-    }
-
-    const pages = steps
-      .filter(value => !hasRequiredPageData(value.page, this.props))
-      .map(makeStepInvisible)
-
-    const isNotFirstPage = pages[0].page !== machineState.value
 
     return (
       <div
@@ -468,22 +501,17 @@ class Checkout extends Component {
         }
         <div className={theme.checkout}>
           <Header
-            base={base}
+            activeStep={getActiveStep(machineState.value)}
+            handleCloseButton={this.close}
+            handlePreviousButton={this.navigatePreviousPage}
             logoAlt={companyName}
             logoSrc={logo}
-            steps={pages}
-            activeStep={machineState.value}
-            handleCloseButton={this.close}
-            handlePreviousButton={
-              isNotFirstPage
-                ? this.navigatePreviousPage
-                : null
-            }
+            steps={this.state.steps}
           />
           <main
             className={theme.content}
           >
-            {this.renderPages(pages)}
+            {this.renderPages()}
           </main>
           <Footer />
         </div>
@@ -495,38 +523,36 @@ class Checkout extends Component {
 Checkout.propTypes = {
   theme: PropTypes.shape(),
   acquirer: PropTypes.string.isRequired,
-  transaction: PropTypes.shape(),
-  apiErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
   apiData: PropTypes.shape().isRequired,
+  apiErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
   base: PropTypes.string.isRequired,
-  changeScreenSize: PropTypes.func.isRequired,
-  targetElement: PropTypes.object.isRequired, // eslint-disable-line
-  pageInfo: PropTypes.object.isRequired, // eslint-disable-line
-  transition: PropTypes.func.isRequired,
+  finalAmount: PropTypes.number.isRequired, //eslint-disable-line
+  installments: PropTypes.arrayOf(PropTypes.object).isRequired,
   machineState: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
   ]).isRequired,
-  finalAmount: PropTypes.number.isRequired,
-  installments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  pageInfo: PropTypes.object.isRequired, // eslint-disable-line
+  targetElement: PropTypes.object.isRequired, // eslint-disable-line
+  transaction: PropTypes.shape(),
+  transition: PropTypes.func.isRequired,
 }
 
 Checkout.defaultProps = {
-  theme: {},
-  customer: {},
-  shipping: {},
-  payment: {},
   apiData: {},
-  isBigScreen: false,
+  customer: {},
+  payment: {},
+  shipping: {},
+  theme: {},
   transaction: {},
 }
 
 const mapStateToProps = ({ pageInfo, transactionValues }) => ({
+  finalAmount: transactionValues.finalAmount,
   pageInfo,
   transaction: transactionValues,
-  finalAmount: transactionValues.finalAmount,
 })
 
-export default connect(mapStateToProps, {
-  changeScreenSize,
-})(consumeTheme(withStatechart(statechart)(Checkout)))
+export default connect(mapStateToProps)(
+  consumeTheme(withStatechart(statechart)(Checkout))
+)

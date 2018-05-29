@@ -3,9 +3,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import {
-  isNil,
-} from 'ramda'
-import {
   Button,
   ThemeConsumer,
 } from 'former-kit'
@@ -19,23 +16,27 @@ import CartIcon from './../../images/cart.svg'
 const consumeTheme = ThemeConsumer('UINavigationBar')
 
 const NavigationBar = ({
-  theme,
-  handleToggleCart,
+  enableCart,
   formValid,
-  prevTitle,
-  nextTitle,
-  handlePreviousButton,
   handleNextButton,
+  handlePreviousButton,
+  handleToggleCart,
+  nextTitle,
+  prevTitle,
+  theme,
 }) => {
   const buttonContainerClasses = classNames(theme.buttonContainer, {
-    [theme.hidePrevButton]: isNil(handlePreviousButton),
+    [theme.hidePrevButton]: !handlePreviousButton || !handlePreviousButton(),
+    [theme.hideCartButton]: !enableCart,
   })
 
   return (
     <div className={buttonContainerClasses}>
       <Button
         fill="outline"
-        onClick={handlePreviousButton}
+        onClick={handlePreviousButton && handlePreviousButton()
+          ? handlePreviousButton()
+          : undefined}
         icon={<NavigateBack />}
       >
         {prevTitle}
@@ -60,9 +61,10 @@ const NavigationBar = ({
 }
 
 NavigationBar.propTypes = {
+  enableCart: PropTypes.bool,
   formValid: PropTypes.bool,
-  handlePreviousButton: PropTypes.func,
   handleNextButton: PropTypes.func,
+  handlePreviousButton: PropTypes.func,
   handleToggleCart: PropTypes.func.isRequired,
   nextTitle: PropTypes.string,
   prevTitle: PropTypes.string,
@@ -74,6 +76,7 @@ NavigationBar.propTypes = {
 
 NavigationBar.defaultProps = {
   theme: {},
+  enableCart: false,
   formValid: false,
   prevTitle: 'Ops, voltar',
   nextTitle: 'Continuar',

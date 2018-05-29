@@ -1,10 +1,13 @@
 import {
-  always,
   allPass,
+  always,
+  anyPass,
   isEmpty,
   isNil,
-  prop,
   pathOr,
+  pipe,
+  prop,
+  reject,
 } from 'ramda'
 import { removeMask } from '../masks/'
 
@@ -75,16 +78,11 @@ const hasRequiredPageData = (page, props) => {
     prop('zipcode'),
   ])
 
-  if (page === 'billing') {
+  if (page === 'addresses') {
     const billing = pathOr({}, ['apiData', 'billing'], props)
-
-    return addressHasAllProps(billing)
-  }
-
-  if (page === 'shipping') {
     const shipping = pathOr({}, ['apiData', 'shipping'], props)
 
-    return addressHasAllProps(shipping)
+    return addressHasAllProps(billing) && addressHasAllProps(shipping)
   }
 
   return false
@@ -98,11 +96,16 @@ const isValidDate = value => (!isDate(value)
   ? 'Data inválida'
   : false)
 
+const isFormValid = anyPass(
+  [isEmpty, isNil, pipe(reject(isNil), isEmpty)]
+)
+
 export {
-  isCpf,
   hasRequiredPageData,
-  isNumber,
+  isCpf,
   isEmail,
+  isFormValid,
+  isNumber,
   isValidDate,
   maxLength,
   minLength,

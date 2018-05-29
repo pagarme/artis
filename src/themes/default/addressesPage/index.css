@@ -10,33 +10,34 @@
   flex: 1;
 }
 
-.inputsContainer {
-  flex: 1;
-  width: 50%;
+.content {
+  flex: 10;
+  max-width: 330px;
+  width: 100%;
   display: flex;
   flex-direction: column;
 
-  & > * {
+  & > *:not(:first-child) {
     padding-top: var(--spacing-medium);
   }
 }
 
 .title {
-  width: 100%;
-  margin-top: var(--spacing-large);
+  margin: 0;
   font-family: var(--primary-font-family);
   font-weight: 900;
   font-size: var(--font-size-large);
   color: var(--color-title);
-  letter-spacing: 0.02em;
-  justify-content: center;
-  display: flex;
   text-align: center;
+  letter-spacing: 0.02em;
+  display: flex;
+  flex: 2;
+  align-items: center;
 }
 
 .fieldNumber,
 .fieldNumber input {
-  width: 18%;
+  width: 19%;
 }
 
 /* stylelint-disable */
@@ -53,7 +54,7 @@
 
 .fieldComplement,
 .fieldComplement input {
-  width: 72%;
+  width: 70%;
 }
 
 .fieldCity,
@@ -83,15 +84,16 @@
   font-size: 13px;
 }
 
+.footer {
+  align-items: center;
+  flex: 2;
+  display: flex;
+  width: 100%;
+}
+
 @media (--media-palm) {
 
-  .title {
-    font-size: var(--font-size-medium);
-    margin: 0;
-    margin-top: 32px;
-  }
-
-  .inputsContainer {
-    width: 90%;
+  .addressForm {
+    max-width: 92%;
   }
 }

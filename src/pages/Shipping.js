@@ -3,11 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Form from 'react-vanilla-form'
 import {
-  isEmpty,
-  isNil,
   merge,
   omit,
-  reject,
 } from 'ramda'
 import {
   FormInput,
@@ -19,16 +16,26 @@ import { removeMask } from '../utils/masks/'
 import getAddress from '../utils/helpers/getAddress'
 import { addPageInfo } from '../actions'
 import {
-  required,
+  isFormValid,
   isNumber,
-  minLength,
   maxLength,
+  minLength,
+  required,
 } from '../utils/validations'
 import {
   NavigationBar,
 } from '../components'
 
 const consumeTheme = ThemeConsumer('UIAddressesPage')
+
+const defaultShippingAddress = {
+  city: '',
+  complement: '',
+  number: '',
+  state: '',
+  street: '',
+  zipcode: '',
+}
 
 class ShippingPage extends Component {
   constructor (props) {
@@ -37,9 +44,11 @@ class ShippingPage extends Component {
     const { billing, shipping } = props
 
     this.state = typeof billing.sameAddressForShipping === 'undefined'
-      ? {}
+      ? {
+        fee: shipping.fee,
+      }
       : {
-        ...shipping,
+        ...merge(defaultShippingAddress, shipping),
       }
   }
 
@@ -86,19 +95,18 @@ class ShippingPage extends Component {
     this.numberInput = input
   }
 
-  handleChangeForm = (values, errors) => {
-    const {
-      zipcode: oldZipcode,
-    } = this.state
+  handleChangeZipcode = (event) => {
+    const zipcode = event.target.value
 
+    if (removeMask(zipcode).length === 8) {
+      this.autocompleteAddress(zipcode)
+    }
+  }
+
+  handleChangeForm = (values, errors) => {
     this.setState({
       ...values,
-      formValid: isEmpty(reject(isNil, errors)),
-    }, () => {
-      if (values.zipcode !== oldZipcode &&
-        removeMask(values.zipcode).length === 8) {
-        this.autocompleteAddress(values.zipcode)
-      }
+      formValid: isFormValid(errors),
     })
   }
 
@@ -109,6 +117,7 @@ class ShippingPage extends Component {
 
     const {
       theme,
+      enableCart,
       handlePreviousButton,
     } = this.props
 
@@ -122,13 +131,10 @@ class ShippingPage extends Component {
         validation={{
           zipcode: [
             required,
-            minLength(8),
-            maxLength(8),
           ],
           number: [
             required,
             isNumber,
-            minLength(1),
             maxLength(5),
           ],
           complement: [
@@ -136,12 +142,10 @@ class ShippingPage extends Component {
           ],
           street: [
             required,
-            minLength(10),
             maxLength(40),
           ],
           city: [
             required,
-            minLength(4),
             maxLength(25),
           ],
           state: [
@@ -154,59 +158,61 @@ class ShippingPage extends Component {
         <h2 className={theme.title}>
           Onde devemos fazer a entrega?
         </h2>
-        <div className={theme.inputsContainer}>
+        <main className={theme.content}>
           <FormInput
             disabled={isSearchingCPF}
-            name="zipcode"
             label="CEP"
             mask="11111-111"
+            name="zipcode"
+            onChange={this.handleChangeZipcode}
           />
           <FormInput
             disabled={isSearchingCPF}
-            name="street"
             label="Rua"
+            name="street"
             placeholder="Digite o endereço"
           />
           <div className={theme.inputGroup}>
             <FormInput
-              inputRef={this.handleNumberInputRef}
-              name="number"
               className={theme.fieldNumber}
+              inputRef={this.handleNumberInputRef}
               label="Nº"
-              placeholder="Digite o número"
+              name="number"
               type="number"
             />
             <FormInput
-              name="complement"
               className={theme.fieldComplement}
               label="Complemento"
-              placeholder="Digite o complemento do endereço"
+              name="complement"
             />
           </div>
           <div className={theme.inputGroup}>
             <FormInput
-              disabled={isSearchingCPF}
-              name="city"
               className={theme.fieldCity}
+              disabled={isSearchingCPF}
               label="Cidade"
+              name="city"
               placeholder="Digite a cidade"
             />
             <FormInput
-              disabled={isSearchingCPF}
-              options={options}
-              name="state"
               className={theme.fieldState}
+              disabled={isSearchingCPF}
               label="Estado"
+              name="state"
+              options={options}
               placeholder="Escolha a UF"
             />
           </div>
-        </div>
-        <NavigationBar
-          handlePreviousButton={handlePreviousButton}
-          formValid={!this.state.formValid}
-          prevTitle="Ops, voltar"
-          nextTitle="Continuar"
-        />
+        </main>
+        <footer className={theme.footer}>
+          <NavigationBar
+            enableCart={enableCart}
+            formValid={!this.state.formValid}
+            handlePreviousButton={handlePreviousButton}
+            nextTitle="Continuar"
+            prevTitle="Ops, voltar"
+          />
+        </footer>
       </Form>
     )
   }
@@ -215,8 +221,8 @@ class ShippingPage extends Component {
 ShippingPage.propTypes = {
   theme: PropTypes.shape({
     addressForm: PropTypes.string,
-    inputsContainer: PropTypes.string,
-    buttonContainer: PropTypes.string,
+    content: PropTypes.string,
+    footer: PropTypes.string,
     fieldNumber: PropTypes.string,
     fieldComplement: PropTypes.string,
     fieldCity: PropTypes.string,
@@ -224,6 +230,7 @@ ShippingPage.propTypes = {
     inputGroup: PropTypes.string,
     switchLabel: PropTypes.string,
   }),
+  enableCart: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   handlePreviousButton: PropTypes.func.isRequired,
@@ -248,6 +255,7 @@ ShippingPage.defaultProps = {
   theme: {},
   shipping: {},
   billing: {},
+  enableCart: false,
 }
 
 const mapStateToProps = ({ pageInfo }) => ({

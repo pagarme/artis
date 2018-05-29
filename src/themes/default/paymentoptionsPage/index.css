@@ -7,30 +7,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: inherit;
+  flex: 1;
 }
 
 .title {
-  width: 100%;
-  margin-top: var(--spacing-large);
+  margin: 0;
   font-family: var(--primary-font-family);
   font-weight: 900;
-  font-size: var(--font-size-xlarge);
+  font-size: var(--font-size-large);
   color: var(--color-title);
   letter-spacing: 0.02em;
-  justify-content: center;
+  align-items: center;
   display: flex;
-  text-align: center;
+  flex: 2;
 }
 
 .optionsContainer {
-  align-content: flex-start;
+  align-content: center;
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  height: 265px;
-  margin-top: 37px;
-  width: calc(100% - 60px);
+  flex: 10;
+  justify-content: start;
+  width: 92%;
 }
 
 .paymentTitle {
@@ -40,25 +39,16 @@
   margin-top: 3px;
 }
 
-.buttonContainer {
-  width: 100%;
+.column {
+  justify-content: center;
+  flex-direction: column;
+}
+
+.footer {
+  align-items: center;
+  flex: 2;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: var(--spacing-medium);
-  fill: var(--checkout-primary-color);
-}
-
-.buttonContainer button:first-child {
-  margin-left: var(--spacing-medium);
-}
-
-.buttonContainer button:first-child:hover {
-  fill: var(--color-black);
-}
-
-.buttonContainer button:last-child {
-  margin-right: var(--spacing-medium);
+  width: 100%;
 }
 
 @media (--media-palm) {
@@ -68,12 +58,7 @@
     justify-content: center;
   }
 
-  .footer {
-    max-width: 330px;
+  .page {
+    max-width: 92%;
   }
-}
-
-.footer,
-.footer > div {
-  width: 100%;
 }
