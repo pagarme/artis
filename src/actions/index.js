@@ -1,6 +1,6 @@
-export const changeScreenSize = size => ({
-  type: 'CHANGE_SCREEN_SIZE',
-  size,
+export const addInstallments = payload => ({
+  type: 'ADD_INSTALLMENTS',
+  payload,
 })
 
 export const addPageInfo = payload => ({
@@ -8,11 +8,22 @@ export const addPageInfo = payload => ({
   payload,
 })
 
-export const updateFinalAmount = payload => ({
-  type: 'UPDATE_FINAL_AMOUNT',
+export const addTransactionValues = payload => ({
+  type: 'ADD_TRANSACTIONS_VALUES',
   payload,
+})
+
+export const changeScreenSize = size => ({
+  type: 'CHANGE_SCREEN_SIZE',
+  size,
 })
 
 export const toggleCart = () => ({
   type: 'TOGGLE',
 })
+
+export const updateFinalAmount = payload => ({
+  type: 'UPDATE_FINAL_AMOUNT',
+  payload,
+})
+

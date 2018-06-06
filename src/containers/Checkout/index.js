@@ -18,6 +18,7 @@ import {
   keys,
   length,
   not,
+  path,
   pathOr,
   pipe,
   prop,
@@ -25,6 +26,11 @@ import {
   type,
 } from 'ramda'
 
+import {
+  addInstallments,
+  addPageInfo,
+  addTransactionValues,
+} from '../../actions'
 import strategies from '../../utils/strategies'
 import getErrorMessage from '../../utils/data/errorMessages'
 import {
@@ -70,7 +76,10 @@ class Checkout extends React.Component {
 
   componentWillMount () {
     const { apiData, apiErrors } = this.props
-    const { onError } = apiData.configs || null
+    const onError = pathOr(null, [
+      'configs',
+      'onError',
+    ], apiData)
 
     if (length(apiErrors)) {
       onError({
@@ -87,6 +96,10 @@ class Checkout extends React.Component {
     onReturnPayload,
     onError,
   }) => {
+    const {
+      transition,
+    } = this.props
+
     const {
       status,
       boleto_barcode: boletoBarcode,
@@ -118,11 +131,11 @@ class Checkout extends React.Component {
 
       return this.setState({
         ...successState,
-      }, this.props.transition('TRANSACTION_SUCCESS'))
+      }, transition('TRANSACTION_SUCCESS'))
     }
 
     if (status === 'processing' || status === 'pending_review') {
-      return this.props.transition('TRANSACTION_ANALYSIS')
+      return transition('TRANSACTION_ANALYSIS')
     }
 
     if (onError) {
@@ -132,7 +145,7 @@ class Checkout extends React.Component {
     return this.setState({
       transactionError: true,
       ...getErrorMessage(response),
-    }, this.props.transition('TRANSACTION_FAILURE'))
+    }, transition('TRANSACTION_FAILURE'))
   }
 
   getProp = (item, props) => {
@@ -186,6 +199,79 @@ class Checkout extends React.Component {
     }
 
     return null
+  }
+
+  getInitialData = () => {
+    const {
+      acquirerName,
+      apiData,
+      handleAddInstallments,
+    } = this.props
+    const acquirer = strategies[acquirerName]
+
+    acquirer.prepare(apiData)
+      .then((response) => {
+        const [checkoutData, installments] = response //eslint-disable-line
+
+        this.saveAllPageInfos(checkoutData)
+        this.saveTransactionValues(checkoutData)
+        handleAddInstallments(installments)
+
+        this.navigateNextPage()
+      })
+  }
+
+  saveTransactionValues = (checkoutData) => {
+    const { handleAddTransactionValues } = this.props
+
+    const amount = path([
+      'transaction',
+      'amount',
+    ], checkoutData)
+    const defaultMethod = path([
+      'transaction',
+      'defaultMethod',
+    ], checkoutData)
+    const paymentConfig = path([
+      'transaction',
+      'paymentConfig',
+    ], checkoutData)
+
+    handleAddTransactionValues({
+      amount,
+      defaultMethod,
+      paymentConfig,
+    })
+  }
+
+  saveAllPageInfos = (checkoutData) => {
+    const {
+      cart,
+      customer,
+      billing,
+      shipping,
+    } = checkoutData
+    const { handleAddPageInfo } = this.props
+
+    handleAddPageInfo({
+      page: 'cart',
+      pageInfo: cart,
+    })
+
+    handleAddPageInfo({
+      page: 'customer',
+      pageInfo: customer,
+    })
+
+    handleAddPageInfo({
+      page: 'billing',
+      pageInfo: billing,
+    })
+
+    handleAddPageInfo({
+      page: 'shipping',
+      pageInfo: shipping,
+    })
   }
 
   navigateToPage () {
@@ -302,7 +388,7 @@ class Checkout extends React.Component {
 
   enterLoading = () => {
     const {
-      acquirer,
+      acquirerName,
       pageInfo,
       apiData,
       finalAmount,
@@ -332,7 +418,7 @@ class Checkout extends React.Component {
       amount: finalAmount,
     }
 
-    const request = strategies[acquirer].request
+    const request = strategies[acquirerName].request
 
     request(requestPayload)
       .then((response) => {
@@ -352,14 +438,25 @@ class Checkout extends React.Component {
       transaction,
     } = this.props
 
-    const {
-      configs,
-    } = apiData
-
-    const { enableCart } = configs
+    const enableCart = pathOr(false, [
+      'configs',
+      'enableCart',
+    ], apiData)
 
     return (
       <React.Fragment>
+        <State value="initialData">
+          <LoadingInfo
+            title="Carregando"
+            subtitle="Aguarde..."
+          />
+        </State>
+        <State value="saveCreditCard">
+          <LoadingInfo
+            title="Salvando seu cartão"
+            subtitle="Aguarde..."
+          />
+        </State>
         <State value="customer">
           <CustomerPage
             enableCart={enableCart}
@@ -397,6 +494,7 @@ class Checkout extends React.Component {
         <State value="payment.singleCreditCard">
           <CreditCardPage
             enableCart={enableCart}
+            handlePageTransition={this.handlePageTransition}
             handlePreviousButton={this.navigatePreviousPage}
             handleSubmit={this.handleFormSubmit}
             installments={installments}
@@ -461,15 +559,15 @@ class Checkout extends React.Component {
       finalAmount,
     } = this.props
 
-    const {
-      transaction,
-      configs,
-      cart,
-    } = apiData
+    const amount = pathOr(0, ['transaction', 'amount'], apiData)
 
+    const cart = pathOr({}, ['cart'], apiData)
     const items = pathOr([], ['items'], cart)
-    const { enableCart, companyName, logo } = configs
-    const { amount } = transaction
+
+    const enableCart = pathOr(false, ['configs', 'enableCart'], apiData)
+    const companyName = pathOr('', ['configs', 'companyName'], apiData)
+    const logo = pathOr('', ['configs', 'logo'], apiData)
+
     const { shipping, customer } = pageInfo
 
     return (
@@ -521,12 +619,14 @@ class Checkout extends React.Component {
 }
 
 Checkout.propTypes = {
-  theme: PropTypes.shape(),
-  acquirer: PropTypes.string.isRequired,
+  acquirerName: PropTypes.string.isRequired,
   apiData: PropTypes.shape().isRequired,
   apiErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
   base: PropTypes.string.isRequired,
-  finalAmount: PropTypes.number.isRequired, //eslint-disable-line
+  finalAmount: PropTypes.number.isRequired,
+  handleAddInstallments: PropTypes.func.isRequired,
+  handleAddPageInfo: PropTypes.func.isRequired,
+  handleAddTransactionValues: PropTypes.func.isRequired,
   installments: PropTypes.arrayOf(PropTypes.object).isRequired,
   machineState: PropTypes.oneOfType([
     PropTypes.string,
@@ -534,6 +634,7 @@ Checkout.propTypes = {
   ]).isRequired,
   pageInfo: PropTypes.object.isRequired, // eslint-disable-line
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
+  theme: PropTypes.shape(),
   transaction: PropTypes.shape(),
   transition: PropTypes.func.isRequired,
 }
@@ -553,6 +654,8 @@ const mapStateToProps = ({ pageInfo, transactionValues }) => ({
   transaction: transactionValues,
 })
 
-export default connect(mapStateToProps)(
-  consumeTheme(withStatechart(statechart)(Checkout))
-)
+export default connect(mapStateToProps, {
+  handleAddPageInfo: addPageInfo,
+  handleAddTransactionValues: addTransactionValues,
+  handleAddInstallments: addInstallments,
+})(consumeTheme(withStatechart(statechart)(Checkout)))

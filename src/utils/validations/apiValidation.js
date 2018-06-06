@@ -1,6 +1,8 @@
-const apiValidation = (apiData) => {
-  const { key, transaction } = apiData
-  const { amount } = transaction
+import { pathOr } from 'ramda'
+
+const apiValidation = apiData => () => {
+  const key = pathOr(null, ['key'], apiData)
+  const amount = pathOr(null, ['transaction', 'amount'], apiData)
 
   const errors = []
 

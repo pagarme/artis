@@ -65,7 +65,7 @@ const hasRequiredPageData = (page, props) => {
   if (page === 'customer') {
     const customer = pathOr({}, ['apiData', 'customer'], props)
 
-    const customerHasAllProps = customerRequiredParams[props.acquirer]
+    const customerHasAllProps = customerRequiredParams[props.acquirerName]
 
     return customerHasAllProps(customer)
   }

@@ -22,6 +22,14 @@ const transactionValues = (state = defaultState, action) => {
         finalAmount: payload,
       }
 
+    case 'ADD_TRANSACTIONS_VALUES':
+      return {
+        ...state,
+        amount: payload.amount,
+        defaultMethod: payload.defaultMethod,
+        paymentConfig: payload.paymentConfig,
+      }
+
     default:
       return merge(defaultState, state)
   }

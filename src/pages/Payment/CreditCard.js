@@ -6,15 +6,18 @@ import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
 
 import {
+  __,
   always,
   either,
   equals,
   ifElse,
+  is,
   isEmpty,
   isNil,
   merge,
   path,
   prop,
+  values,
 } from 'ramda'
 
 import {
@@ -79,9 +82,9 @@ class CreditCardPage extends Component {
     }
   }
 
-  handleChangeForm = (values, errors) => {
+  handleChangeForm = (formValues, errors) => {
     this.setState({
-      ...values,
+      ...formValues,
       formValid: isFormValid(errors),
     })
   }
@@ -99,10 +102,13 @@ class CreditCardPage extends Component {
     handleUpdateFinalAmount(finalAmount)
   }
 
-  handleFormSubmit = (values, errors) => {
+  handleFormSubmit = (formValues, errors) => {
     const paymentConfig = path(['transaction', 'paymentConfig'], this.props)
     const { installments } = this.props
-    const installmentText = prop('name', installments[values.installments - 1])
+    const installmentText = prop(
+      'name',
+      installments[formValues.installments - 1]
+    )
 
     const method = merge(
       paymentConfig.creditcard,
@@ -129,7 +135,7 @@ class CreditCardPage extends Component {
       formValid: isFormValid(errors),
     })
 
-    this.props.handleSubmit(values, errors)
+    this.props.handleSubmit(formValues, errors)
   }
 
   handleFlipCard = () => {
@@ -154,8 +160,13 @@ class CreditCardPage extends Component {
       handlePreviousButton,
       payment,
       theme,
-      installments,
     } = this.props
+
+    const installments = ifElse(
+      is(Array),
+      always(__),
+      values(__)
+    )(this.props.installments)
 
     return (
       <Form
@@ -277,7 +288,10 @@ CreditCardPage.propTypes = {
   handlePreviousButton: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleUpdateFinalAmount: PropTypes.func.isRequired,
-  installments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  installments: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+  ]).isRequired,
   payment: PropTypes.shape({
     info: PropTypes.shape({
       cardNumber: PropTypes.string,
@@ -306,9 +320,10 @@ CreditCardPage.defaultProps = {
   transaction: {},
 }
 
-const mapStateToProps = ({ transactionValues, pageInfo }) => ({
+const mapStateToProps = ({ installments, transactionValues, pageInfo }) => ({
   amount: transactionValues.amount,
   finalAmount: transactionValues.finalAmount,
+  installments,
   payment: pageInfo.payment,
 })
 

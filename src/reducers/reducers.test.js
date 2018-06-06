@@ -7,6 +7,8 @@ describe('checkout reduceres', () => {
       cart: {
         collapsed: true,
       },
+      creditCard: {},
+      installments: {},
       transactionValues: {
         amount: 0,
         defaultMethod: 'boleto',
@@ -99,6 +101,8 @@ describe('checkout reduceres', () => {
       cart: {
         collapsed: true,
       },
+      creditCard: {},
+      installments: {},
       transactionValues: {
         amount: 0,
         defaultMethod: 'boleto',
@@ -124,6 +128,8 @@ describe('checkout reduceres', () => {
       cart: {
         collapsed: false,
       },
+      creditCard: {},
+      installments: {},
       transactionValues: {
         amount: 0,
         defaultMethod: 'boleto',
