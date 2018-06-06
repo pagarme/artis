@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux'
-import { pathOr } from 'ramda'
+import { path, pathOr } from 'ramda'
 import reducers from './reducers'
 
 const middlewares = []
@@ -10,6 +10,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export default ({
+  configs,
   customer,
   shipping,
   billing,
@@ -19,6 +20,9 @@ export default ({
   createStore(
     reducers,
     {
+      creditCard: {
+        cardId: path(['cardId'], configs),
+      },
       pageInfo: {
         customer,
         shipping,

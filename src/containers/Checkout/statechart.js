@@ -104,6 +104,7 @@ export default {
         NEXT: 'confirmation',
         SAVE_CREDIT_CARD: 'saveCreditCard',
       },
+      onEntry: 'navigateToPage',
       ...paymentStates,
     },
     confirmation: {
