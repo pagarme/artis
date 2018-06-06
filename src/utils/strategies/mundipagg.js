@@ -375,7 +375,10 @@ const prepare = (apiData) => {
   ])
 }
 
+const createCard = payload => Promise.resolve(payload)
+
 export default {
+  createCard,
   prepare,
   request,
 }

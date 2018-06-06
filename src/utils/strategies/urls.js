@@ -5,9 +5,11 @@ export default {
   mundipagg: {
     payment: `${mundipagg}${'payments'}`,
     token: `${mundipagg}${'tokens'}`,
+    cards: `${mundipagg}${'cards'}`,
   },
   pagarme: {
     transaction: `${pagarme}${'transactions'}`,
     installments: `${pagarme}${'transactions/calculate_installments_amount'}`,
+    cards: `${pagarme}${'cards'}`,
   },
 }

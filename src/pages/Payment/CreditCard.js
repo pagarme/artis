@@ -23,6 +23,7 @@ import {
 import {
   Dropdown,
   FormInput,
+  Switch,
   ThemeConsumer,
 } from 'former-kit'
 
@@ -35,6 +36,7 @@ import {
 } from '../../utils/validations'
 
 import {
+  addCreditCard,
   addPageInfo,
   updateFinalAmount,
 } from '../../actions'
@@ -79,6 +81,7 @@ class CreditCardPage extends Component {
     this.state = {
       ...transaction,
       flipped: false,
+      saveCart: false,
     }
   }
 
@@ -102,12 +105,35 @@ class CreditCardPage extends Component {
     handleUpdateFinalAmount(finalAmount)
   }
 
+<<<<<<< HEAD
   handleFormSubmit = (formValues, errors) => {
     const paymentConfig = path(['transaction', 'paymentConfig'], this.props)
     const { installments } = this.props
     const installmentText = prop(
       'name',
       installments[formValues.installments - 1]
+=======
+  formatCreditCardForm = formValues => ({
+    card_cvv: formValues.cvv,
+    card_expiration_date: formValues.expiration.replace(/[^0-9]/g, ''),
+    card_holder_name: formValues.holderName,
+    card_number: formValues.cardNumber,
+  })
+
+  handleFormSubmit = (formValues, errors) => {
+    const { saveCart } = this.state
+    const paymentConfig = path(['transaction', 'paymentConfig'], this.props)
+    const {
+      installments,
+      handleAddCreditCard,
+      handlePageTransition,
+      handleSubmit,
+      handlePageChange,
+    } = this.props
+    const installmentText = prop(
+      'name',
+      installments[formValues.installments - 1],
+>>>>>>> f5846c6... creditcard: add a method generate card_id
     )
 
     const method = merge(
@@ -126,22 +152,41 @@ class CreditCardPage extends Component {
       ),
     }
 
-    this.props.handlePageChange({
+    handlePageChange({
       page: 'payment',
       pageInfo: payment,
     })
 
-    this.setState({
-      formValid: isFormValid(errors),
-    })
+    const { formValid } = isFormValid(errors)
 
+    this.setState({ formValid })
+
+    if (saveCart && !formValid) {
+      const cardData = this.formatCreditCardForm(formValues)
+      handleAddCreditCard(cardData)
+      handlePageTransition('SAVE_CREDIT_CARD')()
+    }
+
+<<<<<<< HEAD
     this.props.handleSubmit(formValues, errors)
+=======
+    if (!saveCart) {
+      handleSubmit(formValues, errors)
+    }
+>>>>>>> f5846c6... creditcard: add a method generate card_id
   }
 
   handleFlipCard = () => {
     this.setState(previousState => ({
       ...previousState,
       flipped: !previousState.flipped,
+    }))
+  }
+
+  handleSaveCartChange = () => {
+    this.setState(previousState => ({
+      ...previousState,
+      saveCart: !previousState.saveCart,
     }))
   }
 
@@ -152,6 +197,7 @@ class CreditCardPage extends Component {
       holderName,
       expiration,
       cvv,
+      saveCart,
     } = this.state
 
     const {
@@ -211,6 +257,15 @@ class CreditCardPage extends Component {
               flipped={flipped}
               holderName={defaultHolderName(holderName)}
               number={defaultCardNumber(cardNumber)}
+            />
+            <p>Salvar esse cartão</p>
+            <Switch
+              checked={saveCart}
+              onChange={this.handleSaveCartChange}
+              strings={{
+                on: 'Sim',
+                off: 'Não',
+              }}
             />
           </div>
           <div className={theme.inputsContainer}>
@@ -284,10 +339,12 @@ CreditCardPage.propTypes = {
   }),
   enableCart: PropTypes.bool,
   finalAmount: PropTypes.number.isRequired,
+  handleAddCreditCard: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   handlePreviousButton: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleUpdateFinalAmount: PropTypes.func.isRequired,
+  handlePageTransition: PropTypes.func.isRequired,
   installments: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.object,
@@ -330,4 +387,5 @@ const mapStateToProps = ({ installments, transactionValues, pageInfo }) => ({
 export default connect(mapStateToProps, {
   handlePageChange: addPageInfo,
   handleUpdateFinalAmount: updateFinalAmount,
+  handleAddCreditCard: addCreditCard,
 })(consumeTheme(CreditCardPage))

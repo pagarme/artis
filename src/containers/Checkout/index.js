@@ -17,6 +17,7 @@ import {
   isNil,
   keys,
   length,
+  merge,
   not,
   path,
   pathOr,
@@ -30,6 +31,7 @@ import {
   addInstallments,
   addPageInfo,
   addTransactionValues,
+  updateCardId,
 } from '../../actions'
 import strategies from '../../utils/strategies'
 import getErrorMessage from '../../utils/data/errorMessages'
@@ -106,6 +108,10 @@ class Checkout extends React.Component {
       boleto_url: boletoUrl,
       errors,
     } = response
+
+    const {
+      transition,
+    } = this.props
 
     if (isNil(status) && isNil(errors)) {
       if (onReturnPayload) {
@@ -394,6 +400,8 @@ class Checkout extends React.Component {
       finalAmount,
     } = this.props
 
+    const cardId = propOr(null, ['creditCard', 'cardId'], this.props)
+
     const {
       configs = {},
       key,
@@ -407,9 +415,11 @@ class Checkout extends React.Component {
       onReturnPayload,
       onError,
     } = configs
+
     const items = propOr([], 'items', cart)
 
     const requestPayload = {
+      cardId,
       ...pageInfo,
       createTransaction,
       items,
@@ -428,6 +438,23 @@ class Checkout extends React.Component {
           onReturnPayload,
           onError,
         })
+      })
+  }
+
+  saveCreditCard = () => {
+    const { creditCard, acquirerName } = this.props
+    const key = path(['apiData', 'key'], this.props)
+
+    const payload = merge({
+      encryption_key: key,
+    }, creditCard)
+
+    const request = strategies[acquirerName].createCard
+
+    return request(payload)
+      .then((response) => {
+        this.props.updateCardId(response)
+        this.navigateNextPage()
       })
   }
 
@@ -498,6 +525,7 @@ class Checkout extends React.Component {
             handlePreviousButton={this.navigatePreviousPage}
             handleSubmit={this.handleFormSubmit}
             installments={installments}
+            saveCreditCard={this.saveCreditCard}
             transaction={transaction}
           />
         </State>
@@ -623,6 +651,9 @@ Checkout.propTypes = {
   apiData: PropTypes.shape().isRequired,
   apiErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
   base: PropTypes.string.isRequired,
+  creditCard: PropTypes.shape({
+    cardId: PropTypes.string,
+  }),
   finalAmount: PropTypes.number.isRequired,
   handleAddInstallments: PropTypes.func.isRequired,
   handleAddPageInfo: PropTypes.func.isRequired,
@@ -637,10 +668,12 @@ Checkout.propTypes = {
   theme: PropTypes.shape(),
   transaction: PropTypes.shape(),
   transition: PropTypes.func.isRequired,
+  updateCardId: PropTypes.func.isRequired,
 }
 
 Checkout.defaultProps = {
   apiData: {},
+  creditCard: {},
   customer: {},
   payment: {},
   shipping: {},
@@ -648,7 +681,8 @@ Checkout.defaultProps = {
   transaction: {},
 }
 
-const mapStateToProps = ({ pageInfo, transactionValues }) => ({
+const mapStateToProps = ({ creditCard, pageInfo, transactionValues }) => ({
+  creditCard,
   finalAmount: transactionValues.finalAmount,
   pageInfo,
   transaction: transactionValues,
@@ -657,5 +691,6 @@ const mapStateToProps = ({ pageInfo, transactionValues }) => ({
 export default connect(mapStateToProps, {
   handleAddPageInfo: addPageInfo,
   handleAddTransactionValues: addTransactionValues,
+  updateCardId,
   handleAddInstallments: addInstallments,
 })(consumeTheme(withStatechart(statechart)(Checkout)))
