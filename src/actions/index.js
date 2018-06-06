@@ -23,20 +23,16 @@ export const changeScreenSize = size => ({
   size,
 })
 
-export const toggleCart = () => ({
-  type: 'TOGGLE',
-})
-
-<<<<<<< HEAD
-=======
 export const updateCardId = payload => ({
   type: 'UPDATE_CARD_ID',
   payload,
 })
 
->>>>>>> f5846c6... creditcard: add a method generate card_id
 export const updateFinalAmount = payload => ({
   type: 'UPDATE_FINAL_AMOUNT',
   payload,
 })
 
+export const toggleCart = () => ({
+  type: 'TOGGLE',
+})

@@ -7,17 +7,21 @@ import { connect } from 'react-redux'
 import { State, withStatechart } from 'react-automata'
 import ReactGA from 'react-ga'
 import {
+  __,
+  always,
   and,
+  assoc,
   complement,
+  dissoc,
   equals,
   filter,
+  has,
   head,
   identity,
   ifElse,
   isNil,
   keys,
   length,
-  merge,
   not,
   path,
   pathOr,
@@ -78,12 +82,12 @@ class Checkout extends React.Component {
 
   componentWillMount () {
     const { apiData, apiErrors } = this.props
-    const onError = pathOr(null, [
+    const onError = path([
       'configs',
       'onError',
     ], apiData)
 
-    if (length(apiErrors)) {
+    if (onError && length(apiErrors)) {
       onError({
         name: 'API_ERROR',
         message: apiErrors,
@@ -99,6 +103,7 @@ class Checkout extends React.Component {
     onError,
   }) => {
     const {
+      creditCard,
       transition,
     } = this.props
 
@@ -109,13 +114,13 @@ class Checkout extends React.Component {
       errors,
     } = response
 
-    const {
-      transition,
-    } = this.props
-
     if (isNil(status) && isNil(errors)) {
       if (onReturnPayload) {
-        onReturnPayload(response)
+        const payload = this.replaceCardhashIfCardIdIsPresent(
+          response,
+          creditCard
+        )
+        onReturnPayload(payload)
       }
 
       return this.close()
@@ -132,7 +137,12 @@ class Checkout extends React.Component {
       }
 
       if (onTransactionSuccess) {
-        onTransactionSuccess(response)
+        const payload = this.replaceCardhashIfCardIdIsPresent(
+          response,
+          creditCard
+        )
+
+        onTransactionSuccess(payload)
       }
 
       return this.setState({
@@ -217,7 +227,7 @@ class Checkout extends React.Component {
 
     acquirer.prepare(apiData)
       .then((response) => {
-        const [checkoutData, installments] = response //eslint-disable-line
+        const [checkoutData, installments] = response
 
         this.saveAllPageInfos(checkoutData)
         this.saveTransactionValues(checkoutData)
@@ -227,21 +237,27 @@ class Checkout extends React.Component {
       })
   }
 
+  replaceCardhashIfCardIdIsPresent = (response, creditCard) => {
+    const addCardId = pipe(
+      prop('cardId'),
+      assoc('cardId', __, response),
+      dissoc('card_hash')
+    )
+
+    return ifElse(
+      has('cardId'),
+      addCardId,
+      always(response)
+    )(creditCard)
+  }
+
   saveTransactionValues = (checkoutData) => {
     const { handleAddTransactionValues } = this.props
+    const { transaction } = checkoutData
 
-    const amount = path([
-      'transaction',
-      'amount',
-    ], checkoutData)
-    const defaultMethod = path([
-      'transaction',
-      'defaultMethod',
-    ], checkoutData)
-    const paymentConfig = path([
-      'transaction',
-      'paymentConfig',
-    ], checkoutData)
+    const amount = prop('amount', transaction)
+    const defaultMethod = prop('defaultMethod', transaction)
+    const paymentConfig = prop('paymentConfig', transaction)
 
     handleAddTransactionValues({
       amount,
@@ -445,9 +461,7 @@ class Checkout extends React.Component {
     const { creditCard, acquirerName } = this.props
     const key = path(['apiData', 'key'], this.props)
 
-    const payload = merge({
-      encryption_key: key,
-    }, creditCard)
+    const payload = assoc('encryption_key', key, creditCard)
 
     const request = strategies[acquirerName].createCard
 

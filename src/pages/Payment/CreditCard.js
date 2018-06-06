@@ -6,16 +6,15 @@ import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
 
 import {
-  __,
   always,
   either,
   equals,
+  identity,
   ifElse,
   is,
   isEmpty,
   isNil,
   merge,
-  path,
   prop,
   values,
 } from 'ramda'
@@ -105,14 +104,6 @@ class CreditCardPage extends Component {
     handleUpdateFinalAmount(finalAmount)
   }
 
-<<<<<<< HEAD
-  handleFormSubmit = (formValues, errors) => {
-    const paymentConfig = path(['transaction', 'paymentConfig'], this.props)
-    const { installments } = this.props
-    const installmentText = prop(
-      'name',
-      installments[formValues.installments - 1]
-=======
   formatCreditCardForm = formValues => ({
     card_cvv: formValues.cvv,
     card_expiration_date: formValues.expiration.replace(/[^0-9]/g, ''),
@@ -122,18 +113,18 @@ class CreditCardPage extends Component {
 
   handleFormSubmit = (formValues, errors) => {
     const { saveCart } = this.state
-    const paymentConfig = path(['transaction', 'paymentConfig'], this.props)
     const {
       installments,
       handleAddCreditCard,
       handlePageTransition,
       handleSubmit,
       handlePageChange,
+      transaction,
     } = this.props
+    const paymentConfig = prop('paymentConfig', transaction)
     const installmentText = prop(
       'name',
       installments[formValues.installments - 1],
->>>>>>> f5846c6... creditcard: add a method generate card_id
     )
 
     const method = merge(
@@ -167,13 +158,9 @@ class CreditCardPage extends Component {
       handlePageTransition('SAVE_CREDIT_CARD')()
     }
 
-<<<<<<< HEAD
-    this.props.handleSubmit(formValues, errors)
-=======
     if (!saveCart) {
       handleSubmit(formValues, errors)
     }
->>>>>>> f5846c6... creditcard: add a method generate card_id
   }
 
   handleFlipCard = () => {
@@ -210,8 +197,8 @@ class CreditCardPage extends Component {
 
     const installments = ifElse(
       is(Array),
-      always(__),
-      values(__)
+      identity,
+      values,
     )(this.props.installments)
 
     return (
