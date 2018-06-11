@@ -6,6 +6,7 @@ import {
   cond,
   defaultTo,
   equals,
+  ifElse,
   identity,
   map,
   merge,
@@ -222,9 +223,17 @@ const getInstallments = (key, amount, installment) => {
     .then(parseInstallmentResponse)
 }
 
+const parseCardId = applySpec({
+  card_id: prop('cardId'),
+})
+
 const request = (data) => {
   const commonPayload = parseToPayload(data)
-  const paymentData = getPaymentMethodData(data)
+  const paymentData = ifElse(
+    prop('cardId'),
+    parseCardId,
+    getPaymentMethodData,
+  )(data)
   const fullPayload = merge(paymentData, commonPayload)
 
   if (propOr(true, 'createTransaction', data) === false) {
@@ -282,7 +291,25 @@ const prepare = (apiData) => {
   ])
 }
 
+const createCard = (payload) => {
+  const url = URLS.pagarme.cards
+
+  const configs = {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'X-PagarMe-Version': apiVersion,
+    },
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }
+
+  return fetch(url, configs)
+    .then(response => response.json())
+}
+
 export default {
+  createCard,
   prepare,
   request,
 }

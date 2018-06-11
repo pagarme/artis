@@ -3,11 +3,13 @@ const pagarme = 'https://api.pagar.me/1/'
 
 export default {
   mundipagg: {
-    payment: `${mundipagg}${'payments'}`,
-    token: `${mundipagg}${'tokens'}`,
+    payment: `${mundipagg}payments`,
+    token: `${mundipagg}tokens`,
+    cards: `${mundipagg}cards`,
   },
   pagarme: {
-    transaction: `${pagarme}${'transactions'}`,
-    installments: `${pagarme}${'transactions/calculate_installments_amount'}`,
+    transaction: `${pagarme}transactions`,
+    installments: `${pagarme}transactions/calculate_installments_amount`,
+    cards: `${pagarme}cards`,
   },
 }

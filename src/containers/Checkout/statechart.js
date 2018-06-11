@@ -70,8 +70,20 @@ const confirmationStates = {
 }
 
 export default {
-  initial: 'customer',
+  initial: 'initialData',
   states: {
+    initialData: {
+      on: {
+        NEXT: 'customer',
+      },
+      onEntry: 'getInitialData',
+    },
+    saveCreditCard: {
+      on: {
+        NEXT: 'confirmation',
+      },
+      onEntry: 'saveCreditCard',
+    },
     customer: {
       on: {
         NEXT: 'addresses',
@@ -90,6 +102,7 @@ export default {
       on: {
         PREV: 'addresses.$history',
         NEXT: 'confirmation',
+        SAVE_CREDIT_CARD: 'saveCreditCard',
       },
       ...paymentStates,
     },

@@ -3,7 +3,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
 import moment from 'moment'
-import { always, equals, ifElse, pipe, split, map, merge, of } from 'ramda'
+import {
+  always,
+  equals,
+  ifElse,
+  map,
+  of,
+  pipe,
+  split,
+} from 'ramda'
 import 'moment/locale/pt-br'
 
 import App from './App'
@@ -11,30 +19,14 @@ import createStore from './store'
 
 import apiValidation from './utils/validations/apiValidation'
 import createElement from './utils/helpers/createElement'
-import setTheme from './utils/helpers/setTheme'
-import setColors from './utils/helpers/setColors'
 import DEFAULT_COLORS from './utils/data/colors'
-import strategies from './utils/strategies'
 import getStrategyName from './utils/strategies/getStrategyName'
+import setColors from './utils/helpers/setColors'
+import setTheme from './utils/helpers/setTheme'
 
 moment.locale('pt-br')
 
 ReactGA.initialize('UA-113290482-1')
-
-const renderLoading = (target) => {
-  ReactDOM.render(
-    <App
-      loadingScreen
-      loadingTitle="Carregando"
-      loadingSubtitle="Aguarde..."
-    />,
-    target
-  )
-}
-
-const unrenderLoading = (target) => {
-  ReactDOM.unmountComponentAtNode(target)
-}
 
 const openCheckout = (apiData, clientThemeBase) => {
   const {
@@ -46,7 +38,6 @@ const openCheckout = (apiData, clientThemeBase) => {
   const { target = 'checkout-wrapper' } = configs
 
   const acquirerName = getStrategyName(apiData)
-  const acquirer = strategies[acquirerName]
 
   const clientTarget = createElement('div', target, 'body')
 
@@ -58,34 +49,23 @@ const openCheckout = (apiData, clientThemeBase) => {
 
   const apiErrors = ifElse(
     equals('pagarme'),
-    always(apiValidation(apiData)),
+    apiValidation(apiData),
     always([]),
-  )(acquirer)
+  )(acquirerName)
 
-  renderLoading(clientTarget)
+  const store = createStore(apiData)
 
-  acquirer.prepare(apiData)
-    .then((response) => {
-      const [checkoutData, installments] = response
-
-      const store = createStore(checkoutData)
-      const data = merge(checkoutData, { key, token, configs })
-
-      unrenderLoading(clientTarget)
-
-      ReactDOM.render(
-        <App
-          apiData={data}
-          apiErrors={apiErrors}
-          store={store}
-          acquirer={acquirerName}
-          installments={installments}
-          clientTarget={clientTarget}
-          clientThemeBase={clientThemeBase}
-        />,
-        clientTarget
-      )
-    })
+  ReactDOM.render(
+    <App
+      acquirerName={acquirerName}
+      apiData={apiData}
+      apiErrors={apiErrors}
+      clientTarget={clientTarget}
+      clientThemeBase={clientThemeBase}
+      store={store}
+    />,
+    clientTarget
+  )
 }
 
 const preRender = (apiData) => {
@@ -117,15 +97,15 @@ const integrations = {
   simple: (buttons) => {
     buttons.forEach((button) => {
       const {
+        amount = '0',
+        backgroundColor,
         createTransaction,
         key,
         logo,
-        themeBase = 'dark',
+        paymentMethod = 'creditcard,boleto',
         primaryColor,
         secondaryColor,
-        backgroundColor,
-        amount = '0',
-        paymentMethod = 'creditcard,boleto',
+        themeBase = 'dark',
       } = button.dataset
 
       const configs = {

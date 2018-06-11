@@ -6,7 +6,6 @@ import { ThemeProvider } from 'former-kit'
 import Checkout from './containers/Checkout'
 import ErrorPage from './pages/Error'
 import NormalizeCSS from './components/NormalizeCSS'
-import LoadingInfo from './components/LoadingInfo'
 import ErrorBoundary from './components/ErrorBoundary'
 
 import defaultTheme from './themes/default'
@@ -15,13 +14,9 @@ const App = ({
   apiData,
   apiErrors,
   store,
-  acquirer,
+  acquirerName,
   clientTarget,
   clientThemeBase,
-  installments,
-  loadingScreen,
-  loadingTitle,
-  loadingSubtitle,
 }) => (
   <Provider store={store}>
     <ThemeProvider theme={{
@@ -31,22 +26,13 @@ const App = ({
     >
       <ErrorBoundary CrashReportComponent={<ErrorPage />}>
         <NormalizeCSS>
-          {
-            loadingScreen
-              ? <LoadingInfo
-                title={loadingTitle}
-                subtitle={loadingSubtitle}
-                fullscreen
-              />
-              : <Checkout
-                apiData={apiData}
-                apiErrors={apiErrors}
-                acquirer={acquirer}
-                installments={installments}
-                targetElement={clientTarget}
-                base={clientThemeBase}
-              />
-          }
+          <Checkout
+            acquirerName={acquirerName}
+            apiData={apiData}
+            apiErrors={apiErrors}
+            base={clientThemeBase}
+            targetElement={clientTarget}
+          />
         </NormalizeCSS>
       </ErrorBoundary>
     </ThemeProvider>
@@ -54,16 +40,12 @@ const App = ({
 )
 
 App.propTypes = {
+  acquirerName: PropTypes.string.isRequired,
   apiData: PropTypes.shape().isRequired,
   apiErrors: PropTypes.arrayOf(PropTypes.string),
-  store: PropTypes.shape().isRequired,
-  acquirer: PropTypes.string.isRequired,
   clientTarget: PropTypes.shape().isRequired,
   clientThemeBase: PropTypes.string.isRequired,
-  installments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  loadingScreen: PropTypes.bool,
-  loadingTitle: PropTypes.string.isRequired,
-  loadingSubtitle: PropTypes.string.isRequired,
+  store: PropTypes.shape().isRequired,
 }
 
 App.defaultProps = {
