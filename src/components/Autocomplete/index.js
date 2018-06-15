@@ -9,7 +9,7 @@ const consumeTheme = ThemeConsumer('UIAutocomplete')
 
 class InputAutocomplete extends PureComponent {
   state = {
-    selected: '',
+    value: '',
   }
 
   getItensToRender = theme => (
