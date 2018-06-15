@@ -3,6 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
 import moment from 'moment'
+import Colr from 'colr'
 import {
   always,
   equals,
@@ -81,11 +82,10 @@ const preRender = (apiData) => {
   const clientThemeBase = themeBase || setTheme(primaryColor) || 'dark'
 
   const defaultPrimaryColor = DEFAULT_COLORS[clientThemeBase].primary
-  const defaultSecondaryColor = DEFAULT_COLORS[clientThemeBase].secondary
   const defaulBackgroundColor = DEFAULT_COLORS[clientThemeBase].backgroundColor
 
   const pColor = primaryColor || defaultPrimaryColor
-  const sColor = secondaryColor || defaultSecondaryColor
+  const sColor = secondaryColor || Colr.fromHex(pColor).darken(30).toHex()
   const bColor = backgroundColor || defaulBackgroundColor
 
   setColors(pColor, sColor, bColor)

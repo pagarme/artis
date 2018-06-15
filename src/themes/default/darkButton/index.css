@@ -39,7 +39,7 @@
 }
 
 .wrapper button:focus {
-  border-color: #54d894;
+  border-color: var(--checkout-primary-color);
 }
 
 .wrapper button svg {
