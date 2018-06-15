@@ -65,8 +65,9 @@ const ProgressBar = ({
         renderSteps(steps, activeStepIndex, theme)
       }
       <LinearProgress
-        label="Porcentagem concluída do Checkout"
-        percent={percentage}
+        max={100}
+        label={false}
+        value={percentage}
       />
     </div>
   )

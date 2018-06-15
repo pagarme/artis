@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {
-  ThemeConsumer,
-} from 'former-kit'
+import { ThemeConsumer } from 'former-kit'
 import {
   __,
   always,
@@ -18,16 +16,12 @@ import {
   pipe,
 } from 'ramda'
 
-import {
-  NavigationBar,
-} from '../../components'
+import { NavigationBar } from '../../components'
 import {
   addPageInfo,
   updateFinalAmount,
 } from '../../actions'
-import {
-  formatToBRL,
-} from './../../utils/masks/'
+import { formatToBRL } from './../../utils/masks/'
 import BoletoDark from '../../../src/images/boleto-dark.svg'
 
 const consumeTheme = ThemeConsumer('UIBoletoPage')
@@ -150,7 +144,8 @@ class Boleto extends React.PureComponent {
           <span className={theme.amount}>{formatToBRL(finalAmount)}</span>
           <p className={theme.warning}>
             Ao continuar, seu boleto bancário será criado para
-            que você faça o pagamento</p>
+            que você faça o pagamento
+          </p>
         </main>
         <footer className={theme.footer}>
           <NavigationBar

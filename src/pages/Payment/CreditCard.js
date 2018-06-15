@@ -40,11 +40,7 @@ import {
   updateFinalAmount,
 } from '../../actions'
 
-import {
-  NavigationBar,
-} from '../../components'
-
-import changeInstallmentsToArray from './../../utils/helpers/changeInstallmentsToArray' // eslint-disable-line
+import { NavigationBar } from '../../components'
 
 import {
   formatToBRL,

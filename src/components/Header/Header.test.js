@@ -38,7 +38,7 @@ describe('Header', () => {
       />
     )
 
-    expect(component.find(LinearProgress).props().percent).toBe(50)
+    expect(component.find(LinearProgress).props().value).toBe(50)
   })
 
   it('should calculate progress 100 percent', () => {
@@ -51,6 +51,6 @@ describe('Header', () => {
       />
     )
 
-    expect(component.find(LinearProgress).props().percent).toBe(100)
+    expect(component.find(LinearProgress).props().value).toBe(100)
   })
 })

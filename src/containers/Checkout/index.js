@@ -445,7 +445,7 @@ class Checkout extends React.Component {
       amount: finalAmount,
     }
 
-    const request = strategies[acquirerName].request
+    const { request } = strategies[acquirerName]
 
     request(requestPayload)
       .then((response) => {
@@ -687,11 +687,7 @@ Checkout.propTypes = {
 }
 
 Checkout.defaultProps = {
-  apiData: {},
   creditCard: {},
-  customer: {},
-  payment: {},
-  shipping: {},
   theme: {},
   transaction: {},
 }
