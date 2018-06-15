@@ -4,8 +4,8 @@
 
 :root {
   --toggle-transition: cubic-bezier(0.075, 0.82, 0.165, 1);
-  --cart-background-color: #6bb18d;
-  --cart-amount-background-color: #5d9c7c;
+  --cart-background-color: var(--checkout-primary-color);
+  --cart-amount-background-color: var(--checkout-secondary-color);
 }
 
 .closeIcon {

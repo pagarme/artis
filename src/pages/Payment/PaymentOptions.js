@@ -9,6 +9,7 @@ import {
   length,
   not,
   path,
+  pathOr,
   reduce,
 } from 'ramda'
 import {
@@ -106,8 +107,8 @@ class PaymentOptionsPage extends React.Component {
       allowedOptions
     )
 
-    const { paymentConfig } = transaction
-    const { creditcard, boleto } = paymentConfig
+    const creditcard = pathOr({}, ['paymentConfig', 'creditcard'], transaction)
+    const boleto = pathOr({}, ['paymentConfig', 'boleto'], transaction)
 
     return (
       <div className={theme.page}>
