@@ -350,6 +350,13 @@ class Checkout extends React.Component {
       return false
     }
 
+    if (and(
+      equals('billing', currentStateValue),
+      isFirstPage('addresses')
+    )) {
+      return false
+    }
+
     if (equals('shipping', currentStateValue)) {
       return () => this.props.transition('BILLING')
     }
