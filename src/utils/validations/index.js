@@ -63,26 +63,35 @@ const customerRequiredParams = {
 
 const hasRequiredPageData = (page, props) => {
   if (page === 'customer') {
-    const customer = pathOr({}, ['apiData', 'customer'], props)
-
     const customerHasAllProps = customerRequiredParams[props.acquirerName]
+    const customer = pathOr({}, ['apiData', 'customer'], props)
 
     return customerHasAllProps(customer)
   }
 
-  const addressHasAllProps = allPass([
-    prop('street'),
-    prop('number'),
-    prop('city'),
-    prop('state'),
-    prop('zipcode'),
-  ])
-
   if (page === 'addresses') {
+    const addressHasAllProps = allPass([
+      prop('street'),
+      prop('number'),
+      prop('city'),
+      prop('state'),
+      prop('zipcode'),
+    ])
+
     const billing = pathOr({}, ['apiData', 'billing'], props)
     const shipping = pathOr({}, ['apiData', 'shipping'], props)
 
     return addressHasAllProps(billing) && addressHasAllProps(shipping)
+  }
+
+  if (page === 'payment') {
+    const paymentHasAllProps = allPass([
+      prop('cardId'),
+    ])
+
+    const creditCard = pathOr({}, ['creditCard'], props)
+
+    return paymentHasAllProps(creditCard)
   }
 
   return false

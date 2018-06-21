@@ -220,10 +220,11 @@ class Checkout extends React.Component {
   getInitialData = () => {
     const {
       acquirerName,
-      apiData,
+      creditCard,
       handleAddInstallments,
     } = this.props
     const acquirer = strategies[acquirerName]
+    const apiData = assoc('creditCard', creditCard, this.props.apiData)
 
     acquirer.prepare(apiData)
       .then((response) => {
@@ -298,8 +299,8 @@ class Checkout extends React.Component {
 
   navigateToPage () {
     const value = pathOr('', ['machineState', 'value'], this.props)
-
     const page = getActiveStep(value)
+
     if (!hasRequiredPageData(page, this.props)) {
       return
     }
@@ -416,7 +417,7 @@ class Checkout extends React.Component {
       finalAmount,
     } = this.props
 
-    const cardId = propOr(null, ['creditCard', 'cardId'], this.props)
+    const cardId = pathOr(null, ['creditCard', 'cardId'], this.props)
 
     const {
       configs = {},
