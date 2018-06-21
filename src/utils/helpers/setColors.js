@@ -4,7 +4,7 @@ const setColors = (primaryColor, secondaryColor, backgroundColor) => {
 
   const css = `:root {
     --checkout-primary-color: ${primaryColor};
-    --checkout-secondary-color: ${secondaryColor || primaryColor};
+    --checkout-secondary-color: ${secondaryColor};
     --checkout-background-color: ${backgroundColor};
   }`
 

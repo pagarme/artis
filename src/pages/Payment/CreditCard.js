@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Form from 'react-vanilla-form'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
 
@@ -40,11 +39,7 @@ import {
   updateFinalAmount,
 } from '../../actions'
 
-import {
-  NavigationBar,
-} from '../../components'
-
-import changeInstallmentsToArray from './../../utils/helpers/changeInstallmentsToArray' // eslint-disable-line
+import { NavigationBar, Form } from '../../components'
 
 import {
   formatToBRL,

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Form from 'react-vanilla-form'
 import {
   merge,
   omit,
@@ -23,9 +22,7 @@ import {
   minLength,
   required,
 } from '../utils/validations'
-import {
-  NavigationBar,
-} from '../components'
+import { NavigationBar, Form } from '../components'
 
 const consumeTheme = ThemeConsumer('UIAddressesPage')
 
@@ -83,9 +80,8 @@ class BillingPage extends Component {
       this.numberInput.focus()
     }
 
-    const handleError = error =>
+    const handleError = () =>
       this.setState({
-        error: error.message,
         isSearchingCPF: false,
       })
 
@@ -216,7 +212,8 @@ class BillingPage extends Component {
             />
           </div>
           {
-            allowSwitchChooseSameAddress && <div className={theme.inputGroup}>
+            allowSwitchChooseSameAddress && (
+            <div className={theme.inputGroup}>
               <p className={theme.switchLabel}>Entregar no mesmo endereço?</p>
               <Switch
                 checked={sameAddressForShipping}
@@ -226,7 +223,7 @@ class BillingPage extends Component {
                   off: 'Não',
                 }}
               />
-            </div>
+            </div>)
           }
         </main>
         <footer className={theme.footer}>
@@ -279,7 +276,6 @@ BillingPage.defaultProps = {
   billing: {},
   enableCart: false,
   handlePreviousButton: null,
-  openCart: null,
   theme: {},
 }
 

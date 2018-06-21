@@ -50,7 +50,6 @@ App.propTypes = {
 
 App.defaultProps = {
   apiErrors: [],
-  loadingScreen: false,
 }
 
 export default App

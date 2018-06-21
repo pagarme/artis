@@ -29,7 +29,7 @@ const LoadingInfo = ({
         desk={defaultColSize}
         tablet={defaultColSize}
         palm={defaultColSize}
-        align={'center'}
+        align="center"
       >
         <p className={theme.title}>{title}</p>
         <p className={theme.subtitle}>{subtitle}</p>

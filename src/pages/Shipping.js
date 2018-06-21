@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Form from 'react-vanilla-form'
 import {
   merge,
   omit,
@@ -22,9 +21,7 @@ import {
   minLength,
   required,
 } from '../utils/validations'
-import {
-  NavigationBar,
-} from '../components'
+import { NavigationBar, Form } from '../components'
 
 const consumeTheme = ThemeConsumer('UIAddressesPage')
 
@@ -78,9 +75,8 @@ class ShippingPage extends Component {
       this.numberInput.focus()
     }
 
-    const handleError = error =>
+    const handleError = () =>
       this.setState({
-        error: error.message,
         isSearchingCPF: false,
       })
 
