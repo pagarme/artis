@@ -22,9 +22,7 @@ import {
   minLength,
   required,
 } from '../utils/validations'
-import {
-  NavigationBar,
-} from '../components'
+import { NavigationBar } from '../components'
 
 const consumeTheme = ThemeConsumer('UIAddressesPage')
 
@@ -78,9 +76,8 @@ class ShippingPage extends Component {
       this.numberInput.focus()
     }
 
-    const handleError = error =>
+    const handleError = () =>
       this.setState({
-        error: error.message,
         isSearchingCPF: false,
       })
 

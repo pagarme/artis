@@ -15,6 +15,7 @@ import {
   isEmpty,
   isNil,
   merge,
+  pathOr,
   prop,
   values,
 } from 'ramda'
@@ -40,11 +41,7 @@ import {
   updateFinalAmount,
 } from '../../actions'
 
-import {
-  NavigationBar,
-} from '../../components'
-
-import changeInstallmentsToArray from './../../utils/helpers/changeInstallmentsToArray' // eslint-disable-line
+import { NavigationBar } from '../../components'
 
 import {
   formatToBRL,
@@ -121,14 +118,14 @@ class CreditCardPage extends Component {
       handlePageChange,
       transaction,
     } = this.props
-    const paymentConfig = prop('paymentConfig', transaction)
+    const creditcard = pathOr({}, ['paymentConfig', 'creditcard'], transaction)
     const installmentText = prop(
       'name',
       installments[formValues.installments - 1],
     )
 
     const method = merge(
-      paymentConfig.creditcard,
+      creditcard,
       { type: 'creditcard' },
     )
 

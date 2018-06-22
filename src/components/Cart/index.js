@@ -242,7 +242,6 @@ Cart.propTypes = {
 }
 
 Cart.defaultProps = {
-  base: 'dark',
   collapsed: true,
   customer: {
     name: '',

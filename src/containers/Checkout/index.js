@@ -350,6 +350,13 @@ class Checkout extends React.Component {
       return false
     }
 
+    if (and(
+      equals('billing', currentStateValue),
+      isFirstPage('addresses')
+    )) {
+      return false
+    }
+
     if (equals('shipping', currentStateValue)) {
       return () => this.props.transition('BILLING')
     }
@@ -445,7 +452,7 @@ class Checkout extends React.Component {
       amount: finalAmount,
     }
 
-    const request = strategies[acquirerName].request
+    const { request } = strategies[acquirerName]
 
     request(requestPayload)
       .then((response) => {
@@ -687,11 +694,7 @@ Checkout.propTypes = {
 }
 
 Checkout.defaultProps = {
-  apiData: {},
   creditCard: {},
-  customer: {},
-  payment: {},
-  shipping: {},
   theme: {},
   transaction: {},
 }

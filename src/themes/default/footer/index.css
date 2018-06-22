@@ -23,6 +23,7 @@
 }
 
 .safe > svg {
+  fill: var(--checkout-primary-color);
   padding-right: var(--spacing-tiny);
 }
 
