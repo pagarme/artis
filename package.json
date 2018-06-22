@@ -33,7 +33,6 @@
     "react-maskedinput": "4.0.1",
     "react-payment-card-component": "0.2.0",
     "react-redux": "5.0.7",
-    "react-vanilla-form": "0.4.0",
     "redux": "3.7.2",
     "shortid": "2.2.8",
     "whatwg-fetch": "2.0.3"

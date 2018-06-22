@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Form from 'react-vanilla-form'
 import { merge } from 'ramda'
 
 import {
@@ -9,7 +8,7 @@ import {
   ThemeConsumer,
 } from 'former-kit'
 
-import { NavigationBar } from '../components'
+import { NavigationBar, Form } from '../components'
 
 import {
   isCpf,
