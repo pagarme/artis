@@ -1,3 +1,5 @@
+import { mergeDeepRight } from 'ramda'
+
 const defaultState = {}
 
 const pageInfo = (state = defaultState, action) => {
@@ -5,10 +7,9 @@ const pageInfo = (state = defaultState, action) => {
 
   switch (action.type) {
     case 'ADD_PAGE_INFO':
-      return {
-        ...state,
+      return mergeDeepRight(state, {
         [payload.page]: payload.pageInfo,
-      }
+      })
 
     default:
       return state
