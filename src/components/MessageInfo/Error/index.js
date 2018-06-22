@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ThemeConsumer } from 'former-kit'
 
 import NavigateBack from '../../../images/navigate_back.svg'
-import Closes from '../../../images/close.svg'
+import Close from '../../../images/close.svg'
 import { Button } from '../..'
 
 const consumeTheme = ThemeConsumer('UIErrorMessageInfo')
@@ -27,7 +27,7 @@ const Error = ({ navigatePreviousPage, theme }) => {
   return (
     <div className={theme.wrapper}>
       <header className={theme.header}>
-        <Closes
+        <Close
           className={theme.icon}
         />
         <h1 className={theme.title}>Algo deu errado...</h1>
