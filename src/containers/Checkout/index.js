@@ -604,12 +604,11 @@ class Checkout extends React.Component {
       theme,
       apiData,
       machineState,
-      base,
       pageInfo,
       finalAmount,
     } = this.props
 
-    const amount = pathOr(0, ['transaction', 'amount'], apiData)
+    const amount = path(['transaction', 'amount'], apiData)
 
     const cart = pathOr({}, ['cart'], apiData)
     const items = pathOr([], ['items'], cart)
@@ -636,7 +635,6 @@ class Checkout extends React.Component {
         {
           enableCart &&
           <Cart
-            base={base}
             items={items}
             amount={{
               initial: amount,
@@ -672,7 +670,6 @@ Checkout.propTypes = {
   acquirerName: PropTypes.string.isRequired,
   apiData: PropTypes.shape().isRequired,
   apiErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
-  base: PropTypes.string.isRequired,
   creditCard: PropTypes.shape({
     cardId: PropTypes.string,
   }),
