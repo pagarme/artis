@@ -1,11 +1,10 @@
 import React from 'react'
 
 import { storiesOf } from '@storybook/react'
-
-import { Button } from 'former-kit'
-
 import CloseIcon from 'react-icons/lib/io/android-close'
 import BackIcon from 'react-icons/lib/io/android-arrow-back'
+
+import { Button } from '../../src/components'
 import NavigateNext from './../../src/images/navigate_next.svg'
 import NavigateBack from './../../src/images/navigate_back.svg'
 import style from './style.css'

@@ -2,16 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import {
-  Button,
-  ThemeConsumer,
-} from 'former-kit'
+import { ThemeConsumer } from 'former-kit'
 
 import { toggleCart } from './../../actions'
 
 import NavigateBack from './../../images/navigate_back.svg'
 import NavigateNext from './../../images/navigate_next.svg'
 import CartIcon from './../../images/cart.svg'
+import { Button } from '../'
 
 const consumeTheme = ThemeConsumer('UINavigationBar')
 

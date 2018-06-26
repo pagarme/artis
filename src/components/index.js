@@ -1,6 +1,7 @@
 export { default as ActionList } from './ActionList'
 export { default as AnalysisInfo } from './MessageInfo/Analysis'
 export { default as Autocomplete } from './Autocomplete'
+export { default as Button } from './Button'
 export { default as Cart } from './Cart'
 export { default as DarkButton } from './DarkButton'
 export { default as ErrorBoundary } from './ErrorBoundary'

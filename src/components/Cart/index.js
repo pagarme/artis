@@ -16,13 +16,11 @@ import {
   prop,
   propOr,
 } from 'ramda'
-import {
-  Button,
-  ThemeConsumer,
-} from 'former-kit'
+import { ThemeConsumer } from 'former-kit'
 
 import { toggleCart } from '../../actions'
 import { formatToBRL } from '../../utils/masks/'
+import { Button } from '../'
 
 import CartIcon from '../../images/cart.svg'
 import CloseIcon from '../../images/clear-close.svg'

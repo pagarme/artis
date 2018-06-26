@@ -1,15 +1,12 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import {
-  ThemeConsumer,
-  Button,
-} from 'former-kit'
+import { ThemeConsumer } from 'former-kit'
 import ReactGA from 'react-ga'
 import copy from 'copy-to-clipboard'
 import { propOr } from 'ramda'
 
-import { DarkButton } from './../../'
+import { DarkButton, Button } from './../../'
 import { formatToBRL } from '../../../utils/masks/'
 import SuccessIcon from '../../../images/confirmacao_sucesso.svg'
 import CopyIcon from '../../../images/copy.svg'

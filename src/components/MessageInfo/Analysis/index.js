@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Button,
-  ThemeConsumer,
-} from 'former-kit'
+import { ThemeConsumer } from 'former-kit'
+
+import { Button } from '../..'
 
 import AnalysisImage from '../../../images/confirmacao_analise.svg'
 
