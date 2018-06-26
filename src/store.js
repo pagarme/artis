@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux'
-import { path, pathOr } from 'ramda'
+import { path, prop } from 'ramda'
 import reducers from './reducers'
 
 const middlewares = []
@@ -31,7 +31,7 @@ export default ({
       },
       transactionValues: {
         ...transaction,
-        finalAmount: pathOr(0, ['transaction', 'amount'], transaction),
+        finalAmount: prop('amount', transaction),
       },
     },
     applyMiddleware(...middlewares)

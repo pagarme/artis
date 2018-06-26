@@ -2,7 +2,10 @@ import React from 'react'
 import { ThemeConsumer } from 'former-kit'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-
+import {
+  equals,
+  not,
+} from 'ramda'
 import { ProgressBar } from '..'
 
 import BackIcon from '../../images/navigate_back.svg'
@@ -10,48 +13,60 @@ import CloseIcon from '../../images/closeX.svg'
 
 const consumeTheme = ThemeConsumer('UIHeader')
 
-const Header = ({
-  activeStep,
-  handleCloseButton,
-  handlePreviousButton,
-  logoAlt,
-  logoSrc,
-  steps,
-  theme,
-}) => (
-  <header className={theme.header}>
-    <div className={theme.logoWrapper}>
-      <BackIcon
-        className={classNames(theme.back, {
-          [theme.hidePrevButton]: (
-            !handlePreviousButton || !handlePreviousButton()
-          ),
-        })}
-        onClick={handlePreviousButton && handlePreviousButton()
-          ? handlePreviousButton()
-          : undefined}
-      />
-      {
-        logoSrc
-          ? <img
-            className={theme.logo}
-            src={logoSrc}
-            alt={logoAlt}
-          />
-          : false
-      }
-      <CloseIcon
-        className={theme.close}
-        onClick={handleCloseButton}
-      />
-    </div>
-    <ProgressBar
-      activeStep={activeStep}
-      steps={steps}
-    />
-  </header>
-)
+class Header extends React.Component {
+  shouldComponentUpdate (nextProps) {
+    const oldActiveStep = this.props.activeStep
+    const newActiveStep = nextProps.activeStep
 
+    return not(equals(oldActiveStep, newActiveStep))
+  }
+
+  render () {
+    const {
+      activeStep,
+      handleCloseButton,
+      handlePreviousButton,
+      logoAlt,
+      logoSrc,
+      steps,
+      theme,
+    } = this.props
+
+    return (
+      <header className={theme.header}>
+        <div className={theme.logoWrapper}>
+          <BackIcon
+            className={classNames(theme.back, {
+              [theme.hidePrevButton]: (
+                !handlePreviousButton || !handlePreviousButton()
+              ),
+            })}
+            onClick={handlePreviousButton && handlePreviousButton()
+              ? handlePreviousButton()
+              : undefined}
+          />
+          {
+            logoSrc
+              ? <img
+                className={theme.logo}
+                src={logoSrc}
+                alt={logoAlt}
+              />
+              : false
+          }
+          <CloseIcon
+            className={theme.close}
+            onClick={handleCloseButton}
+          />
+        </div>
+        <ProgressBar
+          activeStep={activeStep}
+          steps={steps}
+        />
+      </header>
+    )
+  }
+}
 
 Header.propTypes = {
   theme: PropTypes.shape({

@@ -12,6 +12,8 @@ import {
   isNil,
   ifElse,
   join,
+  not,
+  omit,
   pipe,
   prop,
   propOr,
@@ -71,6 +73,18 @@ const sumItem = (total, { unitPrice, quantity }) => (
 )
 
 class Cart extends React.Component {
+  shouldComponentUpdate (nextProps) {
+    const nonChangebleProps = [
+      'handleToggleCart',
+      'items', // remove this if someday we allow items to be updated
+      'theme',
+    ]
+    const usefulProps = omit(nonChangebleProps, this.props)
+    const usefulNextProps = omit(nonChangebleProps, nextProps)
+
+    return not(equals(usefulProps, usefulNextProps))
+  }
+
   renderItems = ({
     id,
     title,
@@ -136,80 +150,78 @@ class Cart extends React.Component {
       : ''
 
     return (
-      <React.Fragment>
-        <section className={cartClasses}>
-          <h1 className={theme.title}>
-            <CartIcon className={theme.cartIcon} />
-            <span>Sua compra</span>
-            <CloseIcon
-              onClick={handleToggleCart}
-              className={theme.closeIcon}
-            />
-          </h1>
-          <div className={theme.itemsWrapper}>
-            <Scrollbars
-              renderThumbVertical={this.renderScrollbarThumb}
-            >
-              {items.map(this.renderItems)}
-            </Scrollbars>
-          </div>
-          <div className={theme.customerResume}>
-            {
-              customerName &&
-              <div>
-                <p>Nome</p>
-                <p>{customerName}</p>
-              </div>
-            }
-            {
-              customerEmail &&
-              <div>
-                <p>E-mail</p>
-                <p>{customerEmail}</p>
-              </div>
-            }
-            {
-              shippingAddress &&
-              <div>
-                <p>Entrega</p>
-                <p>{shippingAddress}</p>
-              </div>
-            }
-          </div>
-          <div className={theme.amountResume}>
-            <div className={theme.labels}>
-              {
-                shouldRenderShippingFee && (
-                  <React.Fragment>
-                    <p>Valor</p>
-                    <p>Frete</p>
-                  </React.Fragment>
-                )
-              }
-              <p>Total</p>
+      <section className={cartClasses}>
+        <h1 className={theme.title}>
+          <CartIcon className={theme.cartIcon} />
+          <span>Sua compra</span>
+          <CloseIcon
+            onClick={handleToggleCart}
+            className={theme.closeIcon}
+          />
+        </h1>
+        <div className={theme.itemsWrapper}>
+          <Scrollbars
+            renderThumbVertical={this.renderScrollbarThumb}
+          >
+            {items.map(this.renderItems)}
+          </Scrollbars>
+        </div>
+        <div className={theme.customerResume}>
+          {
+            customerName &&
+            <div>
+              <p>Nome</p>
+              <p>{customerName}</p>
             </div>
-            <div className={theme.values}>
-              {
-                shouldRenderShippingFee && (
-                  <React.Fragment>
-                    <p>{formatToBRL(subtotal)}</p>
-                    <p>{formatShippingFee(shippingFee)}</p>
-                  </React.Fragment>
-                )
-              }
-              <p>{formatToBRL(finalAmount)}</p>
+          }
+          {
+            customerEmail &&
+            <div>
+              <p>E-mail</p>
+              <p>{customerEmail}</p>
             </div>
+          }
+          {
+            shippingAddress &&
+            <div>
+              <p>Entrega</p>
+              <p>{shippingAddress}</p>
+            </div>
+          }
+        </div>
+        <div className={theme.amountResume}>
+          <div className={theme.labels}>
+            {
+              shouldRenderShippingFee && (
+                <React.Fragment>
+                  <p>Valor</p>
+                  <p>Frete</p>
+                </React.Fragment>
+              )
+            }
+            <p>Total</p>
           </div>
-          <div className={theme.footerWrapper}>
-            <Button
-              onClick={handleToggleCart}
-              icon={<NavigateBack />}
-            >
-              continuar pagando
-            </Button>
+          <div className={theme.values}>
+            {
+              shouldRenderShippingFee && (
+                <React.Fragment>
+                  <p>{formatToBRL(subtotal)}</p>
+                  <p>{formatShippingFee(shippingFee)}</p>
+                </React.Fragment>
+              )
+            }
+            <p>{formatToBRL(finalAmount)}</p>
           </div>
-        </section>
-      </React.Fragment>
+        </div>
+        <div className={theme.footerWrapper}>
+          <Button
+            onClick={handleToggleCart}
+            icon={<NavigateBack />}
+          >
+            continuar pagando
+          </Button>
+        </div>
+      </section>
     )
   }
 }
