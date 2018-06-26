@@ -4,9 +4,9 @@ import { ThemeConsumer } from 'former-kit'
 
 import { Button } from '../'
 
-const consumeTheme = ThemeConsumer('UIDarkButton')
+const consumeTheme = ThemeConsumer('UIActionButton')
 
-const DarkButton = ({
+const ActionButton = ({
   icon,
   onClick,
   subtitle,
@@ -33,7 +33,7 @@ const DarkButton = ({
   </div>
 )
 
-DarkButton.propTypes = {
+ActionButton.propTypes = {
   icon: PropTypes.element,
   onClick: PropTypes.func.isRequired,
   subtitle: PropTypes.string,
@@ -46,9 +46,9 @@ DarkButton.propTypes = {
   title: PropTypes.string.isRequired,
 }
 
-DarkButton.defaultProps = {
+ActionButton.defaultProps = {
   icon: null,
   subtitle: '',
 }
 
-export default consumeTheme(DarkButton)
+export default consumeTheme(ActionButton)

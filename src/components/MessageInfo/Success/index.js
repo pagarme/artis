@@ -6,7 +6,7 @@ import ReactGA from 'react-ga'
 import copy from 'copy-to-clipboard'
 import { propOr } from 'ramda'
 
-import { DarkButton, Button } from './../../'
+import { ActionButton, Button } from './../../'
 import { formatToBRL } from '../../../utils/masks/'
 import SuccessIcon from '../../../images/confirmacao_sucesso.svg'
 import CopyIcon from '../../../images/copy.svg'
@@ -78,12 +78,12 @@ const Success = ({
             {boleto.barcode}
           </p>
           <div className={theme.boletoButtonsWrapper}>
-            <DarkButton
+            <ActionButton
               onClick={handleBarcodeCopy(boleto.barcode)}
               title="Copiar código"
               icon={<CopyIcon className={theme.whiteIcon} />}
             />
-            <DarkButton
+            <ActionButton
               onClick={handleBoletoSaveFile(boleto.url)}
               title="Salvar código"
               icon={<DownloadIcon className={theme.whiteIcon} />}

@@ -1,17 +1,17 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import DarkButton from '.'
+import ActionButton from '.'
 
 const theme = {}
 const title = 'Título'
 
-describe('DarkButton', () => {
+describe('ActionButton', () => {
   it('should render title', () => {
     const onClick = jest.fn()
 
     const component = shallow(
-      <DarkButton
+      <ActionButton
         onClick={onClick}
         title={title}
         theme={theme}
@@ -27,7 +27,7 @@ describe('DarkButton', () => {
     const onClick = jest.fn()
 
     const component = shallow(
-      <DarkButton
+      <ActionButton
         onClick={onClick}
         title={title}
         theme={theme}
