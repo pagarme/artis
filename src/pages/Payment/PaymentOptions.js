@@ -13,8 +13,8 @@ import {
   reduce,
 } from 'ramda'
 import {
+  ActionButton,
   NavigationBar,
-  DarkButton,
 } from '../../components'
 
 import BoletoIcon from '../../images/boleto.svg'
@@ -93,7 +93,7 @@ class PaymentOptionsPage extends React.Component {
           buttons,
           [
             (
-              <DarkButton
+              <ActionButton
                 icon={icon}
                 key={key}
                 onClick={this.handleSelectOption(transitionTo)}
@@ -120,14 +120,14 @@ class PaymentOptionsPage extends React.Component {
             [theme.column]: length(multipaymentButtons) === 0,
           })}
         >
-          <DarkButton
+          <ActionButton
             icon={<CreditCardIcon />}
             onClick={this.handleSelectOption('SINGLE_CREDITCARD')}
             subtitle={creditcard.subtitle}
             title="Cartão de crédito"
           />
           { multipaymentButtons }
-          <DarkButton
+          <ActionButton
             icon={<BoletoIcon />}
             onClick={this.handleSelectOption('SINGLE_BOLETO')}
             subtitle={boleto.subtitle}

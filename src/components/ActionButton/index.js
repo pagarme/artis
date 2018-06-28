@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Button,
-  ThemeConsumer,
-} from 'former-kit'
+import { ThemeConsumer } from 'former-kit'
 
-const consumeTheme = ThemeConsumer('UIDarkButton')
+import { Button } from '../'
 
-const DarkButton = ({
+const consumeTheme = ThemeConsumer('UIActionButton')
+
+const ActionButton = ({
   icon,
   onClick,
   subtitle,
@@ -34,7 +33,7 @@ const DarkButton = ({
   </div>
 )
 
-DarkButton.propTypes = {
+ActionButton.propTypes = {
   icon: PropTypes.element,
   onClick: PropTypes.func.isRequired,
   subtitle: PropTypes.string,
@@ -47,9 +46,9 @@ DarkButton.propTypes = {
   title: PropTypes.string.isRequired,
 }
 
-DarkButton.defaultProps = {
+ActionButton.defaultProps = {
   icon: null,
   subtitle: '',
 }
 
-export default consumeTheme(DarkButton)
+export default consumeTheme(ActionButton)

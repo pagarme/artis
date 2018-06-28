@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Button,
-  ThemeConsumer,
-} from 'former-kit'
+import { ThemeConsumer } from 'former-kit'
 
 import NavigateBack from '../../../images/navigate_back.svg'
 import Closes from '../../../images/close.svg'
+import { Button } from '../..'
 
 const consumeTheme = ThemeConsumer('UIErrorMessageInfo')
 

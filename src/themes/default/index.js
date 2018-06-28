@@ -8,7 +8,7 @@ import UICart from './cart/index.css'
 import UICheckout from './checkout/index.css'
 import UICreditCardPage from './creditcardPage/index.css'
 import UICustomerPage from './customerPage/index.css'
-import UIDarkButton from './darkButton/index.css'
+import UIActionButton from './actionButton/index.css'
 import UIDropdown from './dropdown/index.css'
 import UIErrorMessageInfo from './messageInfo/error/index.css'
 import UIErrorPage from './errorPage/index.css'
@@ -27,6 +27,7 @@ import UISwitch from './switch/index.css'
 import UITooltip from './tooltip/index.css'
 
 export default {
+  UIActionButton,
   UIActionList,
   UIAddressesPage,
   UIAnalysisMessageInfo,
@@ -37,7 +38,6 @@ export default {
   UICheckout,
   UICreditCardPage,
   UICustomerPage,
-  UIDarkButton,
   UIDropdown,
   UIErrorMessageInfo,
   UIErrorPage,
