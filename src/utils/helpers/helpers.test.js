@@ -1,26 +1,6 @@
-import getInputAmountValue from './getInputAmountValue'
 import changeInstallmentsToArray from './changeInstallmentsToArray'
 
 describe('test helper functions', () => {
-  it('should get input amount value', () => {
-    const formDataExample = {
-      'creditcard-amount': 1000,
-    }
-
-    const inputAmountNames = {
-      first: 'creditcard-amount',
-      second: 'boleto-amount',
-    }
-
-    expect(
-      getInputAmountValue(formDataExample, inputAmountNames, 'first')
-    ).toBe(100000)
-
-    expect(
-      getInputAmountValue(formDataExample, inputAmountNames, 'second', 5000)
-    ).toBe(5000)
-  })
-
   it('should modify installments prop if is object', () => {
     const creditcardExample1 = {
       invoiceDescriptor: 'Mercurio :)',

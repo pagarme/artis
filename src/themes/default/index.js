@@ -1,4 +1,4 @@
-import UIActionList from './actionList/index.css'
+import UIActionButton from './actionButton/index.css'
 import UIAddressesPage from './addressesPage/index.css'
 import UIAnalysisMessageInfo from './messageInfo/analysis/index.css'
 import UIAutocomplete from './autocomplete/index.css'
@@ -8,7 +8,6 @@ import UICart from './cart/index.css'
 import UICheckout from './checkout/index.css'
 import UICreditCardPage from './creditcardPage/index.css'
 import UICustomerPage from './customerPage/index.css'
-import UIActionButton from './actionButton/index.css'
 import UIDropdown from './dropdown/index.css'
 import UIErrorMessageInfo from './messageInfo/error/index.css'
 import UIErrorPage from './errorPage/index.css'
@@ -28,7 +27,6 @@ import UITooltip from './tooltip/index.css'
 
 export default {
   UIActionButton,
-  UIActionList,
   UIAddressesPage,
   UIAnalysisMessageInfo,
   UIAutocomplete,
