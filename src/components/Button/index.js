@@ -40,7 +40,7 @@ const Button = ({
       type={type}
     >
       {(!isNil(icon) && iconAlignment === 'start') && icon}
-      {!isNil(children) && <span>{children}</span>}
+      {!isNil(children) && children }
       {(!isNil(icon) && iconAlignment === 'end') && icon}
     </button>
   )
