@@ -74,7 +74,11 @@ export default {
   states: {
     initialData: {
       on: {
-        NEXT: 'customer',
+        NEXT: {
+          customer: {
+            actions: ['navigateToPage'],
+          },
+        },
       },
       onEntry: 'getInitialData',
     },
@@ -86,21 +90,27 @@ export default {
     },
     customer: {
       on: {
-        NEXT: 'addresses',
+        NEXT: {
+          addresses: {
+            actions: ['navigateToPage'],
+          },
+        },
       },
-      onEntry: 'navigateToPage',
     },
     addresses: {
       on: {
-        PREV: 'customer.$history',
+        PREV: 'customer',
         NEXT: 'payment',
       },
-      onEntry: 'navigateToPage',
       ...addressesStates,
     },
     payment: {
       on: {
-        PREV: 'addresses.$history',
+        PREV: {
+          addresses: {
+            actions: ['navigateBackToPage'],
+          },
+        },
         NEXT: 'confirmation',
         SAVE_CREDIT_CARD: 'saveCreditCard',
       },
@@ -109,7 +119,7 @@ export default {
     },
     confirmation: {
       on: {
-        PREV: 'payment.$history',
+        PREV: 'payment',
       },
       ...confirmationStates,
     },

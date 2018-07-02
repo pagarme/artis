@@ -42,7 +42,9 @@ class ShippingPage extends Component {
 
     this.state = typeof billing.sameAddressForShipping === 'undefined'
       ? {
-        fee: shipping.fee,
+        ...merge(defaultShippingAddress, {
+          fee: shipping.fee,
+        }),
       }
       : {
         ...merge(defaultShippingAddress, shipping),

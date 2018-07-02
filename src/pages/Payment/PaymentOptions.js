@@ -163,7 +163,7 @@ PaymentOptionsPage.propTypes = {
     finalAmount: PropTypes.number,
     paymentConfig: PropTypes.shape({
       creditcard: PropTypes.shape({
-        installments: PropTypes.arrayOf(PropTypes.object),
+        installments: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
         invoiceDescriptor: PropTypes.string,
       }),
     }),

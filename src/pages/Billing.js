@@ -125,7 +125,6 @@ class BillingPage extends Component {
       theme,
       enableCart,
       handlePreviousButton,
-      allowSwitchChooseSameAddress,
     } = this.props
 
     return (
@@ -211,20 +210,17 @@ class BillingPage extends Component {
               placeholder="Escolha a UF"
             />
           </div>
-          {
-            allowSwitchChooseSameAddress && (
-            <div className={theme.inputGroup}>
-              <p className={theme.switchLabel}>Entregar no mesmo endereço?</p>
-              <Switch
-                checked={sameAddressForShipping}
-                onChange={this.handleSameAddressChange}
-                strings={{
-                  on: 'Sim',
-                  off: 'Não',
-                }}
-              />
-            </div>)
-          }
+          <div className={theme.inputGroup}>
+            <p className={theme.switchLabel}>Entregar no mesmo endereço?</p>
+            <Switch
+              checked={sameAddressForShipping}
+              onChange={this.handleSameAddressChange}
+              strings={{
+                on: 'Sim',
+                off: 'Não',
+              }}
+            />
+          </div>
         </main>
         <footer className={theme.footer}>
           <NavigationBar
@@ -252,7 +248,6 @@ BillingPage.propTypes = {
     inputGroup: PropTypes.string,
     switchLabel: PropTypes.string,
   }),
-  allowSwitchChooseSameAddress: PropTypes.bool,
   enableCart: PropTypes.bool,
   handlePageChange: PropTypes.func.isRequired,
   handlePreviousButton: PropTypes.func,
@@ -272,7 +267,6 @@ BillingPage.propTypes = {
 }
 
 BillingPage.defaultProps = {
-  allowSwitchChooseSameAddress: true,
   billing: {},
   enableCart: false,
   handlePreviousButton: null,

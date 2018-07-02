@@ -314,6 +314,17 @@ class Checkout extends React.Component {
     this.navigateNextPage()
   }
 
+  navigateBackToPage () {
+    const value = pathOr('', ['machineState', 'value'], this.props)
+    const page = getActiveStep(value)
+
+    if (!hasRequiredPageData(page, this.props)) {
+      return
+    }
+
+    this.navigatePrevPage()
+  }
+
   handlePageTransition = page => () => this.props.transition(page)
 
   navigatePreviousPage = () => {
@@ -373,6 +384,10 @@ class Checkout extends React.Component {
 
   navigateNextPage = () => {
     this.props.transition('NEXT')
+  }
+
+  navigatePrevPage = () => {
+    this.props.transition('PREV')
   }
 
   handleFormSubmit = (values, errors) => {
@@ -483,7 +498,6 @@ class Checkout extends React.Component {
   renderPages () {
     const {
       apiData,
-      installments,
       transaction,
     } = this.props
 
@@ -514,12 +528,6 @@ class Checkout extends React.Component {
         </State>
         <State value="addresses.billing">
           <BillingPage
-            allowSwitchChooseSameAddress={
-              true || !hasRequiredPageData(
-                'shipping',
-                this.props
-              )
-            }
             handlePreviousButton={this.navigatePreviousPage}
             enableCart={enableCart}
             handleSubmit={this.handleBillingFormSubmit}
@@ -546,7 +554,6 @@ class Checkout extends React.Component {
             handlePageTransition={this.handlePageTransition}
             handlePreviousButton={this.navigatePreviousPage}
             handleSubmit={this.handleFormSubmit}
-            installments={installments}
             saveCreditCard={this.saveCreditCard}
             transaction={transaction}
           />
@@ -677,7 +684,6 @@ Checkout.propTypes = {
   handleAddInstallments: PropTypes.func.isRequired,
   handleAddPageInfo: PropTypes.func.isRequired,
   handleAddTransactionValues: PropTypes.func.isRequired,
-  installments: PropTypes.arrayOf(PropTypes.object).isRequired,
   machineState: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
