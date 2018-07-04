@@ -102,7 +102,7 @@ const Success = ({
         <SuccessIcon className={theme.icon} />
         <h1 className={theme.title}>Deu tudo certo!</h1>
       </header>
-      <main className={theme.content}>
+      <div className={theme.content}>
         <h3 className={theme.infoField}>
           {
             boleto.url ? 'Valor a pagar:' : 'Valor pago:'
@@ -110,7 +110,7 @@ const Success = ({
         </h3>
         <p className={theme.infoValue}>{formatToBRL(amount)}</p>
         { renderTexts() }
-      </main>
+      </div>
       <footer
         className={theme.footer}
       >

@@ -229,7 +229,7 @@ class CreditCardPage extends Component {
         <h2 className={theme.title}>
           Cartão de crédito
         </h2>
-        <main className={theme.content}>
+        <div className={theme.content}>
           <div className={theme.paymentCardContainer}>
             <PaymentCard
               className={classNames(theme.paymentCard, {
@@ -291,7 +291,7 @@ class CreditCardPage extends Component {
               }
             </div>
           </div>
-        </main>
+        </div>
         <footer className={theme.footer}>
           <NavigationBar
             enableCart={enableCart}

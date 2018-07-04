@@ -165,7 +165,7 @@ class BillingPage extends Component {
         <h2 className={theme.title}>
           Qual é seu endereço de cobrança?
         </h2>
-        <main className={theme.content}>
+        <div className={theme.content}>
           <FormInput
             disabled={isSearchingCPF}
             label="CEP"
@@ -221,7 +221,7 @@ class BillingPage extends Component {
               }}
             />
           </div>
-        </main>
+        </div>
         <footer className={theme.footer}>
           <NavigationBar
             enableCart={enableCart}

@@ -94,7 +94,7 @@ class CustomerPage extends Component {
         <h2 className={theme.title}>
           Olá, precisamos dos seus dados básicos
         </h2>
-        <main className={theme.content}>
+        <div className={theme.content}>
           <FormInput
             label="Qual seu nome?"
             name="name"
@@ -117,7 +117,7 @@ class CustomerPage extends Component {
             name="phoneNumber"
             placeholder="Digite seu telefone"
           />
-        </main>
+        </div>
         <footer className={theme.footer}>
           <NavigationBar
             enableCart={enableCart}
