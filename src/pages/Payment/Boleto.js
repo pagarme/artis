@@ -136,7 +136,7 @@ class Boleto extends React.PureComponent {
             <h2 className={theme.subtitle}>{ subtitle }</h2>
           }
         </header>
-        <main className={theme.content}>
+        <div className={theme.content}>
           <BoletoDark className={theme.icon} />
           <h3 className={theme.amountTitle}>
             {this.getValueToPayText(transaction)}
@@ -146,7 +146,7 @@ class Boleto extends React.PureComponent {
             Ao continuar, seu boleto bancário será criado para
             que você faça o pagamento
           </p>
-        </main>
+        </div>
         <footer className={theme.footer}>
           <NavigationBar
             enableCart={enableCart}

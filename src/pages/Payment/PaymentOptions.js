@@ -134,7 +134,7 @@ class PaymentOptionsPage extends React.Component {
             title="Boleto"
           />
         </div>
-        <div className={theme.footer}>
+        <footer className={theme.footer}>
           <NavigationBar
             enableCart={enableCart}
             handlePreviousButton={handlePreviousButton}
@@ -143,7 +143,7 @@ class PaymentOptionsPage extends React.Component {
             prevTitle="Ops, voltar"
             nextTitle="Pagar"
           />
-        </div>
+        </footer>
       </div>
     )
   }

@@ -156,7 +156,7 @@ class ShippingPage extends Component {
         <h2 className={theme.title}>
           Onde devemos fazer a entrega?
         </h2>
-        <main className={theme.content}>
+        <div className={theme.content}>
           <FormInput
             disabled={isSearchingCPF}
             label="CEP"
@@ -201,7 +201,7 @@ class ShippingPage extends Component {
               placeholder="Escolha a UF"
             />
           </div>
-        </main>
+        </div>
         <footer className={theme.footer}>
           <NavigationBar
             enableCart={enableCart}
