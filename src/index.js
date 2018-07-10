@@ -96,7 +96,9 @@ const preRender = (apiData) => {
 
   setColors(pColor, sColor, bColor)
 
-  return () => openCheckout(apiData, clientThemeBase)
+  return {
+    open: () => openCheckout(apiData, clientThemeBase),
+  }
 }
 
 const integrations = {
@@ -135,7 +137,7 @@ const integrations = {
         paymentMethods,
       }
 
-      const open = preRender({
+      const checkout = preRender({
         key,
         configs,
         transaction,
@@ -143,19 +145,19 @@ const integrations = {
 
       button.addEventListener('click', (e) => {
         e.preventDefault()
-        open()
+        checkout.open()
       })
     })
   },
   custom: () => {
-    window.Checkout = apiData => preRender(apiData)
+    window.createCheckout = apiData => preRender(apiData)
   },
 }
 
 const checkoutFormButtons = document.querySelectorAll('.checkout-button')
 const isSimpleIntegration = checkoutFormButtons.length
 
-window.CheckoutSimple = integrations.simple
+window.createCheckoutSimple = integrations.simple
 
 if (isSimpleIntegration) {
   integrations.simple(checkoutFormButtons)

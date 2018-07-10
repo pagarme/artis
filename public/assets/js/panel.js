@@ -14,7 +14,8 @@ $btnOpenCustom.click(() => {
   const code = customPanel.session.getDocument().getAllLines().join('\n')
   window.localStorage.setItem('custom', code)
   eval(code)
-  Checkout({ ...configs })()
+  const checkout = createCheckout({ ...configs })
+  checkout.open()
 })
 
 const $btnResetCustom = $('#btn-reset-custom')
@@ -47,7 +48,8 @@ $('#btn-open-simple').click(() => {
   
   const checkoutFormButtons = document.querySelectorAll('.checkout-button')
 
-  CheckoutSimple(checkoutFormButtons)
+  const checkout = createCheckoutSimple(checkoutFormButtons)
+  checkout.open()
 })
 
 $('#simple-btn-close').click(() => {
