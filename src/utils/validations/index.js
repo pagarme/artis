@@ -12,6 +12,7 @@ import {
 import { removeMask } from '../masks/'
 
 import cpf from './cpf'
+import cnpj from './cnpj'
 import isDate from './card/date'
 
 const isNumber = value => (!/^[0-9]+$/gi.test(value)
@@ -101,6 +102,10 @@ const isCpf = value => (!cpf(value)
   ? 'CPF inválido'
   : false)
 
+const isCnpj = value => (!cnpj(value)
+  ? 'CNPJ inválido'
+  : false)
+
 const isValidDate = value => (!isDate(value)
   ? 'Data inválida'
   : false)
@@ -112,6 +117,7 @@ const isFormValid = anyPass(
 export {
   hasRequiredPageData,
   isCpf,
+  isCnpj,
   isEmail,
   isFormValid,
   isNumber,
