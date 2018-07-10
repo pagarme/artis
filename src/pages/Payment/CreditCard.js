@@ -295,7 +295,6 @@ class CreditCardPage extends Component {
                   name="installments"
                   onChange={this.handleInstallmentsChange}
                   options={installments}
-                  value={2}
                   placeholder="Em quantas parcelas?"
                 />
               }

@@ -33,6 +33,7 @@ const pagarmeApi = `var configs = {
     documentNumber: '19981596639',
     email: 'mercurio@pagar.me',
     phoneNumber: '1130442277',
+    allowedDocuments: ['CPF', 'CNPJ'],
   },
   billing: {
     street: 'Rua Fidêncio Ramos',

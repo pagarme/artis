@@ -18,34 +18,34 @@ const isCNPJ = (value) => {
 
   let range = cnpj.length - 2
   let numbers = cnpj.substring(0, range)
-  const digitos = cnpj.substring(range)
-  let soma = 0
+  const digits = cnpj.substring(range)
+  let total = 0
   let pos = range - 7
 
   for (let i = range; i >= 1; i -= 1) {
-    soma += numbers.charAt(range - i) * pos-- // eslint-disable-line no-plusplus
+    total += numbers.charAt(range - i) * pos--// eslint-disable-line no-plusplus
 
     if (pos < 2) pos = 9
   }
 
-  let resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11)
+  let result = total % 11 < 2 ? 0 : 11 - (total % 11)
 
-  if (`${resultado}` !== digitos.charAt(0)) return false
+  if (`${result}` !== digits.charAt(0)) return false
 
   range += 1
   numbers = cnpj.substring(0, range)
-  soma = 0
+  total = 0
   pos = range - 7
 
   for (let i = range; i >= 1; i -= 1) {
-    soma += numbers.charAt(range - i) * pos-- // eslint-disable-line no-plusplus
+    total += numbers.charAt(range - i) * pos--// eslint-disable-line no-plusplus
 
     if (pos < 2) pos = 9
   }
 
-  resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11)
+  result = total % 11 < 2 ? 0 : 11 - (total % 11)
 
-  if (`${resultado}` !== digitos.charAt(1)) return false
+  if (`${result}` !== digits.charAt(1)) return false
 
   return true
 }
