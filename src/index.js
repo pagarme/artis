@@ -26,12 +26,25 @@ import DEFAULT_COLORS from './utils/data/colors'
 import getStrategyName from './utils/strategies/getStrategyName'
 import setColors from './utils/helpers/setColors'
 import setTheme from './utils/helpers/setTheme'
+import getParentElement from './utils/helpers/getParentElement'
 
 moment.locale('pt-br')
 
 ReactGA.initialize('UA-113290482-1')
 
-const open = (apiData, clientThemeBase) => {
+function createFormListener (button) {
+  const form = getParentElement(button, 'form')
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+    })
+  }
+
+  return form
+}
+
+const open = (apiData, clientThemeBase, form) => {
   const {
     configs = {},
     key,
@@ -65,13 +78,14 @@ const open = (apiData, clientThemeBase) => {
       apiErrors={apiErrors}
       clientTarget={clientTarget}
       clientThemeBase={clientThemeBase}
+      form={form}
       store={store}
     />,
     clientTarget
   )
 }
 
-const preRender = (apiData) => {
+const preRender = (apiData, form) => {
   const { configs = {} } = apiData
 
   const {
@@ -98,7 +112,7 @@ const preRender = (apiData) => {
   setColors(pColor, sColor, bColor)
 
   return {
-    open: () => open(apiData, clientThemeBase),
+    open: () => open(apiData, clientThemeBase, form),
   }
 }
 
@@ -122,12 +136,33 @@ const parseToApiData = applySpec({
   }),
 })
 
-const isSimpleIntegration = data => data.dataset instanceof DOMStringMap
+function createButtonListener (buttons) {
+  buttons.forEach((button) => {
+    const apiData = parseToApiData(button.dataset)
+
+    const form = createFormListener(button)
+
+    button.addEventListener('click', () => {
+      preRender(apiData, form).open()
+    })
+  })
+}
+
+const checkoutFormButtons = document.querySelectorAll('.checkout-button')
+const isSimpleIntegration = checkoutFormButtons.length
+
+if (isSimpleIntegration) {
+  createButtonListener(checkoutFormButtons)
+}
+
+window.createPanelEnvironment = (buttons) => {
+  createButtonListener(buttons)
+}
 
 window.createCheckout = (data) => {
-  const apiData = isSimpleIntegration(data)
+  const apiData = isSimpleIntegration
     ? parseToApiData(data.dataset)
     : data
 
-  return preRender(apiData)
+  return preRender(apiData, data)
 }
