@@ -119,6 +119,7 @@ const parseToPayload = applySpec({
     }),
   }),
   split_rules: path(['transaction', 'splitRules']),
+  shipping: prop('shipping'),
 })
 
 const getPaymentMethodData = (data) => {
