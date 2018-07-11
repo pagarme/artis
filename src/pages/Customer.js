@@ -35,6 +35,14 @@ class CustomerPage extends Component {
     const { customer } = props
 
     this.state = { ...customer }
+
+    this.setTextInputRef = (element) => {
+      this.firstInput = element
+    }
+  }
+
+  componentDidMount () {
+    this.firstInput.focus()
   }
 
   componentWillUnmount () {
@@ -99,6 +107,7 @@ class CustomerPage extends Component {
             label="Qual seu nome?"
             name="name"
             placeholder="Digite seu nome"
+            inputRef={this.setTextInputRef}
           />
           <FormInput
             label="E-mail"

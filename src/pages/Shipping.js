@@ -49,6 +49,14 @@ class ShippingPage extends Component {
       : {
         ...merge(defaultShippingAddress, shipping),
       }
+
+    this.setTextInputRef = (element) => {
+      this.firstInput = element
+    }
+  }
+
+  componentDidMount () {
+    this.firstInput.focus()
   }
 
   componentWillUnmount () {
@@ -163,6 +171,7 @@ class ShippingPage extends Component {
             mask="11111-111"
             name="zipcode"
             onChange={this.handleChangeZipcode}
+            inputRef={this.setTextInputRef}
           />
           <FormInput
             disabled={isSearchingCPF}
