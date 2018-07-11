@@ -6,8 +6,10 @@ import moment from 'moment'
 import Colr from 'colr'
 import {
   always,
+  applySpec,
   equals,
   ifElse,
+  prop,
   map,
   of,
   pipe,
@@ -29,7 +31,7 @@ moment.locale('pt-br')
 
 ReactGA.initialize('UA-113290482-1')
 
-const openCheckout = (apiData, clientThemeBase) => {
+const open = (apiData, clientThemeBase) => {
   const {
     configs = {},
     key,
@@ -85,6 +87,7 @@ const preRender = (apiData) => {
   const defaultSecondaryColor = DEFAULT_COLORS[clientThemeBase].secondary
   const defaulBackgroundColor = DEFAULT_COLORS[clientThemeBase].backgroundColor
 
+  const bColor = backgroundColor || defaulBackgroundColor
   const pColor = primaryColor || defaultPrimaryColor
   const sColor = secondaryColor || (
     pColor === defaultPrimaryColor
@@ -92,75 +95,39 @@ const preRender = (apiData) => {
       : Colr.fromHex(pColor).darken(30).toHex()
   )
 
-  const bColor = backgroundColor || defaulBackgroundColor
-
   setColors(pColor, sColor, bColor)
 
   return {
-    open: () => openCheckout(apiData, clientThemeBase),
+    open: () => open(apiData, clientThemeBase),
   }
 }
 
-const integrations = {
-  simple: (buttons) => {
-    buttons.forEach((button) => {
-      const {
-        amount = '0',
-        backgroundColor,
-        createTransaction,
-        key,
-        logo,
-        paymentMethod = 'creditcard,boleto',
-        primaryColor,
-        secondaryColor,
-        themeBase = 'dark',
-      } = button.dataset
+const parseToApiData = applySpec({
+  key: prop('key'),
+  configs: applySpec({
+    logo: prop('logo'),
+    primaryColor: prop('primaryColor'),
+    backgroundColor: prop('backgroundColor'),
+    secondaryColor: prop('secondaryColor'),
+    themeBase: prop('themeBase'),
+    createTransaction: prop('createTransaction'),
+  }),
+  transaction: applySpec({
+    amount: prop('amount'),
+    paymentMethod: pipe(
+      prop('paymentMethod'),
+      split(','),
+      map(of),
+    ),
+  }),
+})
 
-      const configs = {
-        backgroundColor,
-        createTransaction,
-        logo,
-        primaryColor,
-        secondaryColor,
-        themeBase,
-      }
+const isSimpleIntegration = data => data.dataset instanceof DOMStringMap
 
-      const generatePaymentMethods = pipe(
-        split('.'),
-        map(of)
-      )
+window.createCheckout = (data) => {
+  const apiData = isSimpleIntegration(data)
+    ? parseToApiData(data.dataset)
+    : data
 
-      const paymentMethods = generatePaymentMethods(paymentMethod)
-
-      const transaction = {
-        amount: parseFloat(amount),
-        paymentMethods,
-      }
-
-      const checkout = preRender({
-        key,
-        configs,
-        transaction,
-      })
-
-      button.addEventListener('click', (e) => {
-        e.preventDefault()
-        checkout.open()
-      })
-    })
-  },
-  custom: () => {
-    window.createCheckout = apiData => preRender(apiData)
-  },
-}
-
-const checkoutFormButtons = document.querySelectorAll('.checkout-button')
-const isSimpleIntegration = checkoutFormButtons.length
-
-window.createCheckoutSimple = integrations.simple
-
-if (isSimpleIntegration) {
-  integrations.simple(checkoutFormButtons)
-} else {
-  integrations.custom()
+  return preRender(apiData)
 }

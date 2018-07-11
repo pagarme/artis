@@ -2,7 +2,7 @@
 
 const simpleParameters = `<button
   type="button"
-  class="checkout-button"
+  onClick="createCheckout(this).open()"
   data-key="ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz"
   data-company-name="Pagar.me"
   data-logo="http://www.seusite.com/seu-logo.jpg"

@@ -40,16 +40,11 @@ $('#btn-open-simple').click(() => {
   const code = simplePanel.session.getDocument().getAllLines().join('\n')
 
   $('#simple-page')
-    .find('.checkout-button')
+    .find('button')
     .remove()
     .end()
     .append(code)
     .fadeIn()
-  
-  const checkoutFormButtons = document.querySelectorAll('.checkout-button')
-
-  const checkout = createCheckoutSimple(checkoutFormButtons)
-  checkout.open()
 })
 
 $('#simple-btn-close').click(() => {
