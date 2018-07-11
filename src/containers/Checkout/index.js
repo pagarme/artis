@@ -43,6 +43,7 @@ import {
   hasRequiredPageData,
   isFormValid,
 } from '../../utils/validations'
+import calcAmount from '../../utils/calculations/calcAmount'
 
 import {
   AnalysisInfo,
@@ -254,9 +255,9 @@ class Checkout extends React.Component {
 
   saveTransactionValues = (checkoutData) => {
     const { handleAddTransactionValues } = this.props
-    const { transaction } = checkoutData
+    const { transaction, cart, shipping } = checkoutData
 
-    const amount = prop('amount', transaction)
+    const amount = calcAmount(cart, shipping, transaction)
     const defaultMethod = prop('defaultMethod', transaction)
     const paymentConfig = prop('paymentConfig', transaction)
 
@@ -613,9 +614,10 @@ class Checkout extends React.Component {
       machineState,
       pageInfo,
       finalAmount,
+      transaction,
     } = this.props
 
-    const amount = path(['transaction', 'amount'], apiData)
+    const amount = prop('amount', transaction)
 
     const cart = pathOr({}, ['cart'], apiData)
     const items = pathOr([], ['items'], cart)

@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
-import { path, prop } from 'ramda'
+import { path } from 'ramda'
 import reducers from './reducers'
+import calcAmount from './utils/calculations/calcAmount'
 
 const middlewares = []
 
@@ -16,8 +17,10 @@ export default ({
   billing,
   cart,
   transaction,
-}) =>
-  createStore(
+}) => {
+  const amount = calcAmount(cart, shipping, transaction)
+
+  return createStore(
     reducers,
     {
       creditCard: {
@@ -31,8 +34,10 @@ export default ({
       },
       transactionValues: {
         ...transaction,
-        finalAmount: prop('amount', transaction),
+        amount,
+        finalAmount: amount,
       },
     },
     applyMiddleware(...middlewares)
   )
+}
