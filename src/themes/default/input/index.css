@@ -104,6 +104,19 @@
   min-width: 100%;
 }
 
+@keyframes autofill {
+
+  to {
+    color: var(--input-color);
+    background: transparent;
+  }
+}
+
+.container > input:-webkit-autofill {
+  animation-name: autofill;
+  animation-fill-mode: both;
+}
+
 .container > input {
   padding-top: var(--input-padding-top);
   padding-bottom: var(--input-padding-bottom);
