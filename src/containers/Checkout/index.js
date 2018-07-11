@@ -449,6 +449,7 @@ class Checkout extends React.Component {
     } = apiData
 
     const {
+      postback,
       createTransaction,
       onTransactionSuccess,
       onReturnPayload,
@@ -464,6 +465,7 @@ class Checkout extends React.Component {
       items,
       key,
       token,
+      postback,
       amount: finalAmount,
     }
 
