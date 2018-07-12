@@ -26,9 +26,11 @@ import {
 import pagarme from 'pagarme'
 
 import { formatToBRL, removeMask } from '../masks'
+import getCheckoutVersion from '../helpers/getCheckoutVersion'
 import URLS from './urls'
 
 const apiVersion = '2017-08-28'
+const checkoutVersion = getCheckoutVersion()
 
 const getPaymentMethodType = path(['payment', 'method', 'type'])
 
@@ -309,6 +311,7 @@ const createCard = (payload) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'X-PagarMe-Version': apiVersion,
+      'User-Agent': `Checkout/${checkoutVersion}`,
     },
     method: 'POST',
     body: JSON.stringify(payload),
