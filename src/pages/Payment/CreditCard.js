@@ -78,6 +78,14 @@ class CreditCardPage extends Component {
       flipped: false,
       saveCart: false,
     }
+
+    this.setTextInputRef = (element) => {
+      this.firstInput = element
+    }
+  }
+
+  componentDidMount () {
+    this.firstInput.focus()
   }
 
   handleChangeForm = (formValues, errors) => {
@@ -256,6 +264,7 @@ class CreditCardPage extends Component {
               label="Número do cartão"
               mask="1111 1111 1111 1111"
               name="cardNumber"
+              inputRef={this.setTextInputRef}
             />
             <FormInput
               label="Nome (igual o do cartão)"

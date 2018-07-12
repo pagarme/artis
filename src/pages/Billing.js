@@ -45,6 +45,14 @@ class BillingPage extends Component {
     this.state = {
       ...merge(defaultBillingAddress, billing),
     }
+
+    this.setTextInputRef = (element) => {
+      this.firstInput = element
+    }
+  }
+
+  componentDidMount () {
+    this.firstInput.focus()
   }
 
   componentWillUnmount () {
@@ -172,6 +180,7 @@ class BillingPage extends Component {
             mask="11111-111"
             name="zipcode"
             onChange={this.handleChangeZipcode}
+            inputRef={this.setTextInputRef}
           />
           <FormInput
             disabled={isSearchingCPF}
