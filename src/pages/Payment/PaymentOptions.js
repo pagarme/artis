@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { ThemeConsumer } from 'former-kit'
+import ReactGA from 'react-ga'
+
 import {
   concat,
   contains,
@@ -47,6 +49,7 @@ class PaymentOptionsPage extends React.Component {
   }
 
   componentDidMount = () => {
+    ReactGA.pageview('/paymentoptions')
     const {
       handleUpdateFinalAmount,
       transaction,

@@ -226,6 +226,7 @@ class Checkout extends React.Component {
     const acquirer = strategies[acquirerName]
     const apiData = assoc('creditCard', creditCard, this.props.apiData)
 
+    ReactGA.pageview('/loading')
     acquirer.prepare(apiData)
       .then((response) => {
         const [checkoutData, installments] = response
@@ -302,6 +303,7 @@ class Checkout extends React.Component {
     const page = getActiveStep(value)
 
     if (!hasRequiredPageData(page, this.props)) {
+      ReactGA.pageview(`/${page}`)
       return
     }
 
@@ -319,6 +321,7 @@ class Checkout extends React.Component {
     const page = getActiveStep(value)
 
     if (!hasRequiredPageData(page, this.props)) {
+      ReactGA.pageview(`/${page}`)
       return
     }
 
