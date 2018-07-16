@@ -1,7 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { merge } from 'ramda'
+import {
+  allPass,
+  always,
+  dissoc,
+  cond,
+  contains,
+  merge,
+  path,
+  pipe,
+  propOr,
+  replace,
+} from 'ramda'
 
 import {
   FormInput,
@@ -12,6 +23,7 @@ import { NavigationBar, Form } from '../components'
 
 import {
   isCpf,
+  isCnpj,
   isEmail,
   isFormValid,
   maxLength,
@@ -28,13 +40,57 @@ const defaultCustomerInfo = {
   phoneNumber: '',
 }
 
+const clean = replace(/[^0-9]/g, '')
+
+const documentValidationsAndMasks = {
+  CPF: {
+    mask: '111.111.111-11',
+    validation: isCpf,
+  },
+  CNPJ: {
+    mask: '11.111.111/1111-11',
+    validation: isCnpj,
+  },
+}
+
+const isCNPJ = contains('CNPJ')
+const cnpjConfig = {
+  documentLabel: 'CNPJ',
+  document: 'CNPJ',
+}
+
+const isCPF = contains('CPF')
+const cpfConfig = {
+  documentLabel: 'CPF',
+  document: 'CPF',
+}
+
+const isCPFAndCNPJ = allPass([isCPF, isCNPJ])
+const cpfAndCNPJ = {
+  documentLabel: 'CPF/CNPJ',
+  document: 'CPF',
+}
+
+const getAllowedDocuments = propOr(['CPF', 'CNPJ'], 'allowedDocuments')
+
+const getDocumentConfig = pipe(
+  getAllowedDocuments,
+  cond([
+    [isCPFAndCNPJ, always(cpfAndCNPJ)],
+    [isCPF, always(cpfConfig)],
+    [isCNPJ, always(cnpjConfig)],
+  ])
+)
+
 class CustomerPage extends Component {
   constructor (props) {
     super(props)
 
     const { customer } = props
 
-    this.state = { ...customer }
+    const documentConfigs = getDocumentConfig(customer)
+
+    this.state = { ...customer, ...documentConfigs }
 
     this.setTextInputRef = (element) => {
       this.firstInput = element
@@ -45,6 +101,8 @@ class CustomerPage extends Component {
     this.firstInput.focus()
   }
 
+  changePress = 0 // eslint-disable-line react/sort-comp
+
   componentWillUnmount () {
     this.props.handlePageChange({
       page: 'customer',
@@ -54,7 +112,7 @@ class CustomerPage extends Component {
 
   handleChangeForm = (values, errors) => {
     this.setState({
-      ...values,
+      ...dissoc('documentNumber', values),
       formValid: isFormValid(errors),
     })
   }
@@ -67,12 +125,42 @@ class CustomerPage extends Component {
     this.props.handleSubmit(values, errors)
   }
 
+  handleDocumentNumber = (event) => {
+    const { documentLabel } = this.state
+    let document = 'CPF'
+    let value = path(['target', 'value'], event)
+
+    if (documentLabel === 'CPF/CNPJ') {
+      const hasCPFLength = clean(value).length >= 11
+
+      if (hasCPFLength) {
+        this.changePress += 1
+      } else {
+        this.changePress = 0
+      }
+
+      if (hasCPFLength && this.changePress > 1) {
+        document = 'CNPJ'
+        value = `${value}${event.key}`
+      }
+    }
+
+    this.setState({
+      document,
+      documentNumber: value, // eslint-disable-line react/no-unused-state
+    })
+  }
+
   render () {
     const {
       theme,
       customer,
       enableCart,
     } = this.props
+
+    const { document, documentLabel } = this.state
+
+    const { mask, validation } = documentValidationsAndMasks[document]
 
     return (
       <Form
@@ -92,7 +180,7 @@ class CustomerPage extends Component {
           ],
           documentNumber: [
             required,
-            isCpf,
+            value => (validation(value) ? `${documentLabel} inválido` : false),
           ],
           phoneNumber: [
             required,
@@ -115,10 +203,11 @@ class CustomerPage extends Component {
             placeholder="Digite seu e-mail"
           />
           <FormInput
-            label="CPF"
-            mask="111.111.111-11"
+            label={documentLabel}
+            mask={mask}
             name="documentNumber"
-            placeholder="Digite seu CPF"
+            onKeyUp={this.handleDocumentNumber}
+            placeholder={`Digite seu ${documentLabel}`}
           />
           <FormInput
             label="DDD + Telefone"
