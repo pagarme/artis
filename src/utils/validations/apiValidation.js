@@ -3,6 +3,7 @@ import { pathOr } from 'ramda'
 const apiValidation = apiData => () => {
   const key = pathOr(null, ['key'], apiData)
   const amount = pathOr(null, ['transaction', 'amount'], apiData)
+  const cartItems = pathOr(null, ['cart', 'items'], apiData)
 
   const errors = []
 
@@ -13,8 +14,10 @@ const apiValidation = apiData => () => {
   }
 
   if (!key) errors.push(errorMessages.key)
-  if (!amount) errors.push(errorMessages.amount)
-  if (typeof amount !== 'number') errors.push(errorMessages.amountType)
+  if (!amount && !cartItems) errors.push(errorMessages.amount)
+  if (amount && typeof amount !== 'number') {
+    errors.push(errorMessages.amountType)
+  }
 
   return errors
 }
