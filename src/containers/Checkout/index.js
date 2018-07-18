@@ -437,7 +437,7 @@ class Checkout extends React.Component {
 
   close = () => {
     const { apiData, targetElement } = this.props
-    const onClose = pathOr(null, ['callbacks', 'onClose'], apiData)
+    const onClose = path(['callbacks', 'onClose'], apiData)
 
     ReactGA.event({
       category: 'Header',
@@ -540,6 +540,15 @@ class Checkout extends React.Component {
       'allowSaveCreditCard',
     ], apiData)
 
+    const pagesCallbacks = path(['callbacks', 'pages'], apiData)
+    const customerCallbacks = prop('customer')(pagesCallbacks)
+    const billingCallbacks = prop('billing')(pagesCallbacks)
+    const shippingCallbacks = prop('shipping')(pagesCallbacks)
+    const paymentCallbacks = prop('payment')(pagesCallbacks)
+    const selectionCallbacks = prop('selection', paymentCallbacks)
+    const singleCreditcardCallbacks = prop('singleCreditcard', paymentCallbacks)
+    const singleBoletoCallbacks = prop('singleBoleto', paymentCallbacks)
+
     return (
       <React.Fragment>
         <State value="initialData">
@@ -556,12 +565,14 @@ class Checkout extends React.Component {
         </State>
         <State value="customer">
           <CustomerPage
+            callbacks={customerCallbacks}
             enableCart={enableCart}
             handleSubmit={this.handleFormSubmit}
           />
         </State>
         <State value="addresses.billing">
           <BillingPage
+            callbacks={billingCallbacks}
             handlePreviousButton={this.navigatePreviousPage}
             enableCart={enableCart}
             handleSubmit={this.handleBillingFormSubmit}
@@ -569,6 +580,7 @@ class Checkout extends React.Component {
         </State>
         <State value="addresses.shipping">
           <ShippingPage
+            callbacks={shippingCallbacks}
             enableCart={enableCart}
             handlePreviousButton={this.navigatePreviousPage}
             handleSubmit={this.handleFormSubmit}
@@ -576,6 +588,7 @@ class Checkout extends React.Component {
         </State>
         <State value="payment.selection">
           <PaymentOptionsPage
+            callbacks={selectionCallbacks}
             enableCart={enableCart}
             handlePreviousButton={this.navigatePreviousPage}
             handlePageTransition={this.handlePageTransition}
@@ -584,6 +597,7 @@ class Checkout extends React.Component {
         </State>
         <State value="payment.singleCreditCard">
           <CreditCardPage
+            callbacks={singleCreditcardCallbacks}
             enableCart={enableCart}
             handlePageTransition={this.handlePageTransition}
             handlePreviousButton={this.navigatePreviousPage}
@@ -595,13 +609,13 @@ class Checkout extends React.Component {
         </State>
         <State value="payment.singleBoleto">
           <BoletoPage
+            callbacks={singleBoletoCallbacks}
             enableCart={enableCart}
             handlePreviousButton={this.navigatePreviousPage}
             handleSubmit={this.handleFormSubmit}
             transaction={transaction}
           />
         </State>
-
         <State value="confirmation.transaction">
           <LoadingInfo
             subtitle="Aguenta firme, é rapidinho"

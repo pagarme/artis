@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { ThemeConsumer } from 'former-kit'
+import ReactGA from 'react-ga'
 
 import {
   concat,
@@ -11,6 +12,7 @@ import {
   not,
   path,
   pathOr,
+  prop,
   reduce,
 } from 'ramda'
 import {
@@ -49,6 +51,7 @@ class PaymentOptionsPage extends React.Component {
 
   componentDidMount = () => {
     const {
+      callbacks,
       handleUpdateFinalAmount,
       transaction,
     } = this.props
@@ -57,8 +60,26 @@ class PaymentOptionsPage extends React.Component {
       'amount',
     ], transaction)
 
+    const onEnter = prop('onEnter', callbacks)
+
+    if (onEnter) {
+      onEnter()
+    }
+
+    ReactGA.pageview('/paymentoptions')
+
     handleUpdateFinalAmount(amount)
   }
+
+  componentWillUnmount () {
+    const { callbacks } = this.props
+    const onExit = prop('onExit', callbacks)
+
+    if (onExit) {
+      onExit()
+    }
+  }
+
   handleSelectOption = option => () => {
     this.setState({
       transitionTo: option,
@@ -154,6 +175,10 @@ PaymentOptionsPage.propTypes = {
   theme: PropTypes.shape({
     page: PropTypes.string,
   }),
+  callbacks: PropTypes.shape({
+    onEnter: PropTypes.func,
+    onExit: PropTypes.func,
+  }),
   enableCart: PropTypes.bool,
   handlePageTransition: PropTypes.func.isRequired,
   handlePreviousButton: PropTypes.func,
@@ -176,6 +201,7 @@ PaymentOptionsPage.defaultProps = {
   theme: {},
   handlePreviousButton: null,
   enableCart: false,
+  callbacks: {},
 }
 
 const mapDispatchToProps = {

@@ -138,13 +138,43 @@ const checkout = createCheckout({
   transaction,
 })
 
-const success = data => console.log('onSuccess', data)
-const error = err => console.log('error', err)
-const close = () => console.log('onClose')
+const onSuccess = data => console.log('onSuccess callback', data)
+const onError = err => console.log('onError callback', err)
+const onClose = () => console.log('onClose callback')
+
+const pages = {
+  customer: {
+    onEnter: () => console.log('customer page onEnter callback'),
+    onExit: () => console.log('customer page onExit callback'),
+  },
+  billing: {
+    onEnter: () => console.log('billing page onEnter callback'),
+    onExit: () => console.log('billing page onExit callback'),
+  },
+  shipping: {
+    onEnter: () => console.log('shipping page onEnter callback'),
+    onExit: () => console.log('shipping page onExit callback'),
+  },
+  payment: {
+    selection: {
+      onEnter: () => console.log('payment selection page onEnter callback'),
+      onExit: () => console.log('payment selection page onExit callback'),
+    },
+    singleCreditcard: {
+      onEnter: () => console.log('payment singleCreditcard page onEnter callback'),
+      onExit: () => console.log('payment singleCreditcard page onExit callback'),
+    },
+    singleBoleto: {
+      onEnter: () => console.log('payment singleBoleto page onEnter callback'),
+      onExit: () => console.log('payment singleBoleto page onExit callback'),
+    }
+  }
+}
 
 checkout
-  .onSuccess(success)
-  .onError(error)
-  .onClose(close)
+  .onSuccess(onSuccess)
+  .onError(onError)
+  .onClose(onClose)
+  .pages(pages)
   .open()
 `

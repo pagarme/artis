@@ -16,6 +16,7 @@ import {
   multiply,
   path,
   pipe,
+  prop,
 } from 'ramda'
 
 import { NavigationBar } from '../../components'
@@ -31,6 +32,7 @@ const consumeTheme = ThemeConsumer('UIBoletoPage')
 class Boleto extends React.PureComponent {
   componentDidMount = () => {
     const {
+      callbacks,
       handleUpdateFinalAmount,
       transaction,
     } = this.props
@@ -66,6 +68,12 @@ class Boleto extends React.PureComponent {
 
     const finalDiscount = getFinalDiscount(discountType)(discountValue)
 
+    const onEnter = prop('onEnter', callbacks)
+
+    if (onEnter) {
+      onEnter()
+    }
+
     ReactGA.pageview('/boleto')
 
     if (discountValue) {
@@ -73,7 +81,16 @@ class Boleto extends React.PureComponent {
     }
   }
 
-  getSubtitle =(
+  componentWillUnmount () {
+    const { callbacks } = this.props
+    const onExit = prop('onExit', callbacks)
+
+    if (onExit) {
+      onExit()
+    }
+  }
+
+  getSubtitle = (
     path([
       'paymentConfig',
       'boleto',
@@ -179,6 +196,10 @@ Boleto.propTypes = {
     warning: PropTypes.string,
     wrapper: PropTypes.string,
   }).isRequired,
+  callbacks: PropTypes.shape({
+    onEnter: PropTypes.func,
+    onExit: PropTypes.func,
+  }),
   enableCart: PropTypes.bool,
   finalAmount: PropTypes.number.isRequired,
   handlePageChange: PropTypes.func.isRequired,
@@ -202,6 +223,7 @@ Boleto.propTypes = {
 
 Boleto.defaultProps = {
   enableCart: false,
+  callbacks: {},
 }
 
 const mapStateToProps = ({ transactionValues }) => ({

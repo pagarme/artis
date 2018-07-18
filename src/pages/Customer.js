@@ -7,9 +7,11 @@ import {
   dissoc,
   cond,
   contains,
+  isEmpty,
   merge,
   path,
   pipe,
+  prop,
   propOr,
   replace,
 } from 'ramda'
@@ -98,13 +100,27 @@ class CustomerPage extends Component {
   }
 
   componentDidMount () {
+    const { callbacks, customer } = this.props
+    const onEnter = prop('onEnter', callbacks)
+
+    if (onEnter && isEmpty(customer)) {
+      onEnter()
+    }
+
     this.firstInput.focus()
   }
 
   changePress = 0 // eslint-disable-line react/sort-comp
 
   componentWillUnmount () {
-    this.props.handlePageChange({
+    const { customer, callbacks, handlePageChange } = this.props
+    const onExit = prop('onExit', callbacks)
+
+    if (onExit && isEmpty(customer)) {
+      onExit()
+    }
+
+    handlePageChange({
       page: 'customer',
       pageInfo: this.state,
     })
@@ -241,6 +257,10 @@ CustomerPage.propTypes = {
     documentNumber: PropTypes.string,
     phoneNumber: PropTypes.string,
   }),
+  callbacks: PropTypes.shape({
+    onEnter: PropTypes.func,
+    onExit: PropTypes.func,
+  }),
   enableCart: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
@@ -249,6 +269,7 @@ CustomerPage.propTypes = {
 CustomerPage.defaultProps = {
   theme: {},
   customer: {},
+  callbacks: {},
   enableCart: false,
 }
 

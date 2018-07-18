@@ -135,6 +135,10 @@ const preRender = (apiData, form = null) => {
       this.setCallback('onClose', fn)
       return this
     },
+    pages: function pages (fn) {
+      this.setCallback('pages', fn)
+      return this
+    },
     open: function open () {
       openCheckout(this.apiData, clientThemeBase, form)
     },
