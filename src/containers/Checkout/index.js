@@ -22,6 +22,7 @@ import {
   isNil,
   keys,
   length,
+  merge,
   not,
   path,
   pathOr,
@@ -475,7 +476,7 @@ class Checkout extends React.Component {
     request(requestPayload)
       .then((response) => {
         this.onTransactionReturn({
-          response,
+          response: merge(requestPayload, response),
           onTransactionSuccess,
           onReturnPayload,
           onError,
@@ -507,6 +508,11 @@ class Checkout extends React.Component {
     const enableCart = pathOr(false, [
       'configs',
       'enableCart',
+    ], apiData)
+
+    const allowSaveCreditCard = path([
+      'configs',
+      'allowSaveCreditCard',
     ], apiData)
 
     return (
@@ -558,6 +564,7 @@ class Checkout extends React.Component {
             handlePreviousButton={this.navigatePreviousPage}
             handleSubmit={this.handleFormSubmit}
             saveCreditCard={this.saveCreditCard}
+            allowSaveCreditCard={allowSaveCreditCard}
             transaction={transaction}
           />
         </State>

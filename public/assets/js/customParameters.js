@@ -7,6 +7,7 @@ const mundipaggApi = `var configs = {
 const pagarmeApi = `var configs = {
   key: 'ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz',
   configs: {
+    allowSaveCreditCard: true,
     companyName: 'Pagar.me',
     logo: './pagarme.png',
     themeBase: 'dark',
