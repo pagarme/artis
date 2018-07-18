@@ -102,6 +102,7 @@ const pagarmeApi = `var configs = {
   },
   transaction: {
     amount: 10000,
+    //cardId: 'card_cjjr96qt401k5236eaqvhpvpf',
     paymentMethods: [
       ['creditcard', 'creditcard'],
       ['creditcard', 'boleto'],
