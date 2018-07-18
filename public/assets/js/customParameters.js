@@ -17,17 +17,7 @@ const configs = {
   orderUrl: 'http://www.google.com',
   enableCart: true,
   createTransaction: true,
-  allowSaveCreditCard: true
-  onReturnPayload: (data) => {
-    console.log('payload returned', data);
-  },
-  onTransactionSuccess: (data) => {
-    console.log('onTransactionSuccess callback', data);
-  },
-  onError: (error) => {
-    console.log('onError callback', error)
-  },
-  onModalClose: () => {},
+  allowSaveCreditCard: true,
 }
 
 const customer = {
@@ -148,5 +138,13 @@ const checkout = createCheckout({
   transaction,
 })
 
-checkout.open()
+const success = data => console.log('onSuccess', data)
+const error = err => console.log('error', err)
+const close = () => console.log('onClose')
+
+checkout
+  .onSuccess(success)
+  .onError(error)
+  .onClose(close)
+  .open()
 `

@@ -75,6 +75,17 @@ const getActiveStep = ifElse(
   pipe(keys, head),
   identity,
 )
+
+const isOnlyCreationOfCardId = (status, errors) => (
+  isNil(status) && isNil(errors)
+)
+
+const isTransactionSuccess = status =>
+  status === 'authorized' || status === 'waiting_payment'
+
+const isTransactionAnalysis = status =>
+  status === 'processing' || status === 'pending_review'
+
 class Checkout extends React.Component {
   state = {
     closingEffect: false,
@@ -84,7 +95,7 @@ class Checkout extends React.Component {
   componentWillMount () {
     const { apiData, apiErrors } = this.props
     const onError = path([
-      'configs',
+      'callbacks',
       'onError',
     ], apiData)
 
@@ -99,8 +110,7 @@ class Checkout extends React.Component {
 
   onTransactionReturn = ({
     response,
-    onTransactionSuccess,
-    onReturnPayload,
+    onSuccess,
     onError,
   }) => {
     const {
@@ -115,36 +125,32 @@ class Checkout extends React.Component {
       errors,
     } = response
 
-    if (isNil(status) && isNil(errors)) {
-      if (onReturnPayload) {
-        const payload = this.replaceCardhashIfCardIdIsPresent(
-          response,
-          creditCard
-        )
-        onReturnPayload(payload)
+    const callbackPayload = this.replaceCardhashIfCardIdIsPresent(
+      response,
+      creditCard
+    )
+
+    if (isOnlyCreationOfCardId(status, errors)) {
+      if (onSuccess) {
+        onSuccess(callbackPayload)
       }
 
       return this.close()
     }
 
-    if (status === 'authorized' || status === 'waiting_payment') {
-      let successState = {}
-
-      if (boletoBarcode || boletoUrl) {
-        successState = {
-          boletoUrl,
-          boletoBarcode,
-        }
+    if (isTransactionSuccess(status)) {
+      const boleto = {
+        boletoUrl,
+        boletoBarcode,
       }
 
-      if (onTransactionSuccess) {
-        const payload = this.replaceCardhashIfCardIdIsPresent(
-          response,
-          creditCard
-        )
+      const successState = boletoBarcode || boletoUrl
+        ? boleto
+        : {}
 
+      if (onSuccess) {
         this.submitForm()
-        onTransactionSuccess(payload)
+        onSuccess(callbackPayload)
       }
 
       return this.setState({
@@ -152,17 +158,19 @@ class Checkout extends React.Component {
       }, transition('TRANSACTION_SUCCESS'))
     }
 
-    if (status === 'processing' || status === 'pending_review') {
+    if (isTransactionAnalysis(status)) {
       return transition('TRANSACTION_ANALYSIS')
     }
 
+    const errorMessage = getErrorMessage(response)
+
     if (onError) {
-      onError(response)
+      onError(errorMessage)
     }
 
     return this.setState({
       transactionError: true,
-      ...getErrorMessage(response),
+      ...errorMessage,
     }, transition('TRANSACTION_FAILURE'))
   }
 
@@ -428,7 +436,8 @@ class Checkout extends React.Component {
   }
 
   close = () => {
-    const { targetElement } = this.props
+    const { apiData, targetElement } = this.props
+    const onClose = pathOr(null, ['callbacks', 'onClose'], apiData)
 
     ReactGA.event({
       category: 'Header',
@@ -441,6 +450,9 @@ class Checkout extends React.Component {
       ReactDOM.unmountComponentAtNode(
         targetElement
       )
+      if (onClose) {
+        onClose()
+      }
     }, 500)
   }
 
@@ -459,15 +471,18 @@ class Checkout extends React.Component {
       key,
       token,
       cart,
+      callbacks = {},
     } = apiData
 
     const {
       postback,
       createTransaction,
-      onTransactionSuccess,
-      onReturnPayload,
-      onError,
     } = configs
+
+    const {
+      onSuccess,
+      onError,
+    } = callbacks
 
     const items = propOr([], 'items', cart)
 
@@ -488,8 +503,7 @@ class Checkout extends React.Component {
       .then((response) => {
         this.onTransactionReturn({
           response: merge(requestPayload, response),
-          onTransactionSuccess,
-          onReturnPayload,
+          onSuccess,
           onError,
         })
       })

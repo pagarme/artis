@@ -48,7 +48,7 @@ function createFormListener (button) {
   return form
 }
 
-const open = (apiData, clientThemeBase, form) => {
+const openCheckout = (apiData, clientThemeBase, form) => {
   const {
     configs = {},
     key,
@@ -89,7 +89,7 @@ const open = (apiData, clientThemeBase, form) => {
   )
 }
 
-const preRender = (apiData, form) => {
+const preRender = (apiData, form = null) => {
   const { configs = {} } = apiData
 
   const {
@@ -116,7 +116,28 @@ const preRender = (apiData, form) => {
   setColors(pColor, sColor, bColor)
 
   return {
-    open: () => open(apiData, clientThemeBase, form),
+    apiData: {
+      callbacks: {},
+      ...apiData,
+    },
+    setCallback: function setCallback (name, fn) {
+      this.apiData.callbacks[name] = fn
+    },
+    onSuccess: function onSuccess (fn) {
+      this.setCallback('onSuccess', fn)
+      return this
+    },
+    onError: function onError (fn) {
+      this.setCallback('onError', fn)
+      return this
+    },
+    onClose: function onClose (fn) {
+      this.setCallback('onClose', fn)
+      return this
+    },
+    open: function open () {
+      openCheckout(this.apiData, clientThemeBase, form)
+    },
   }
 }
 
@@ -168,5 +189,5 @@ window.createCheckout = (data) => {
     ? parseToApiData(data.dataset)
     : data
 
-  return preRender(apiData, data)
+  return preRender(apiData)
 }
