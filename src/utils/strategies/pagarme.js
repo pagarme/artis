@@ -120,7 +120,19 @@ const parseToPayload = applySpec({
     }),
   }),
   split_rules: path(['transaction', 'splitRules']),
-  shipping: prop('shipping'),
+  shipping: applySpec({
+    name: pathOr('Shipping Address', ['billing', 'name']),
+    fee: pathOr(0, ['shipping', 'fee']),
+    address: applySpec({
+      state: path(['shipping', 'state']),
+      city: path(['shipping', 'city']),
+      neighborhood: path(['shipping', 'neighborhood']),
+      street: path(['shipping', 'street']),
+      street_number: path(['shipping', 'number']),
+      zipcode: path(['shipping', 'zipcode']),
+      country: pathOr('br', ['shipping', 'country']),
+    }),
+  }),
 })
 
 const getPaymentMethodData = (data) => {
