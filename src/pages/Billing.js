@@ -162,6 +162,7 @@ class BillingPage extends Component {
           zipcode: [
             required,
             maxLength(8),
+            minLength(8),
           ],
           number: [
             required,
@@ -177,6 +178,7 @@ class BillingPage extends Component {
           ],
           city: [
             required,
+            minLength(4),
             maxLength(25),
           ],
           state: [

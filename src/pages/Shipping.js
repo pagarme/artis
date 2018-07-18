@@ -153,6 +153,8 @@ class ShippingPage extends Component {
         validation={{
           zipcode: [
             required,
+            minLength(8),
+            maxLength(8),
           ],
           number: [
             required,
@@ -168,6 +170,7 @@ class ShippingPage extends Component {
           ],
           city: [
             required,
+            minLength(4),
             maxLength(25),
           ],
           state: [

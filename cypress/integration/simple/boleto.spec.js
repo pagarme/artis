@@ -5,23 +5,23 @@ describe('Pagarme', () => {
 
       //Open checkout
       cy.get('#btn-open-simple').click()
-      cy.get('.checkout-button').click()
+      cy.get('#checkout-button').click()
 
       //Fill customer inputs
       cy.get('[name="name"]').type('João S. R. Silva')
       cy.get('[name="email"]').type('joao.silva@gmail.com')
       cy.get('[name="documentNumber"]').type('749.679.050-80')
       cy.get('[name="phoneNumber"]').type('11985963625')
-      cy.get('[type="submit"]').click()
+      cy.get('[type="submit"]:last').click()
 
       //Fill billing inputs
       cy.get('[name="zipcode"]').type('03675030')
-      cy.wait(520)
+      cy.wait(2000)
       cy.get('[name="number"]').type('123')
-      cy.get('[type="submit"]').click()
+      cy.get('[type="submit"]:last').click()
 
       //Choose boleto option
-      cy.get('.paymentoptionsPage__optionsContainer > .darkButton__wrapper:last').click()
+      cy.get('.paymentoptionsPage__optionsContainer .button__button:last').click()
       cy.get('[type="submit"]:last').click()
 
       //Choose pay boleto

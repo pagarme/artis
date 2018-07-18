@@ -245,6 +245,7 @@ class CreditCardPage extends Component {
         validation={{
           cardNumber: [
             required,
+            minLength(16),
             maxLength(16),
           ],
           holderName: [
