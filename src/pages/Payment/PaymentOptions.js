@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { ThemeConsumer } from 'former-kit'
+
 import {
   concat,
   contains,

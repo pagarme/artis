@@ -16,45 +16,58 @@ import OrderIcon from '../../../images/pedido.svg'
 
 const consumeTheme = ThemeConsumer('UISuccessMessageInfo')
 
-const Success = ({
-  amount,
-  boleto,
-  closeCheckout,
-  creditCard,
-  orderUrl,
-  theme,
-}) => {
-  const openLink = url => () => window.open(url, '_blank')
+const openLink = url => () => window.open(url, '_blank')
 
-  const formatExpirationAt = value => (
-    value
-      ? moment(value).format('L')
-      : moment().add(1, 'days').format('L')
-  )
+const formatExpirationAt = value => (
+  value
+    ? moment(value).format('L')
+    : moment().add(1, 'days').format('L')
+)
 
-  const handleBarcodeCopy = barcode => (
-    () => {
-      ReactGA.event({
-        category: 'Boleto',
-        action: 'Copy Bar Code',
-      })
+const handleBarcodeCopy = barcode => (
+  () => {
+    ReactGA.event({
+      category: 'Boleto',
+      action: 'Copy Bar Code',
+    })
 
-      copy(barcode)
-    }
-  )
+    copy(barcode)
+  }
+)
 
-  const handleBoletoSaveFile = fileUrl =>
-    () => {
-      ReactGA.event({
-        category: 'Boleto',
-        action: 'Download boleto',
-      })
+const handleSeeOrder = url => () => {
+  ReactGA.event({
+    category: 'Success',
+    action: 'See order',
+  })
 
-      openLink(fileUrl)
-    }
+  openLink(url)
+}
 
-  const renderTexts = () => {
+const handleBoletoSaveFile = fileUrl =>
+  () => {
+    ReactGA.event({
+      category: 'Boleto',
+      action: 'Download boleto',
+    })
+
+    openLink(fileUrl)
+  }
+
+class Success extends React.Component {
+  componentDidMount () {
+    ReactGA.pageview('/success')
+  }
+
+  renderTexts = () => {
+    const {
+      theme,
+      creditCard,
+      boleto,
+    } = this.props
+
     const installmentText = propOr('', 'installmentText', creditCard)
+
     if (installmentText.length > 0) {
       return (
         <Fragment>
@@ -96,46 +109,55 @@ const Success = ({
     return null
   }
 
-  return (
-    <section className={theme.wrapper}>
-      <header className={theme.header}>
-        <SuccessIcon className={theme.icon} />
-        <h1 className={theme.title}>Deu tudo certo!</h1>
-      </header>
-      <div className={theme.content}>
-        <h3 className={theme.infoField}>
-          {
-            boleto.url ? 'Valor a pagar:' : 'Valor pago:'
-          }
-        </h3>
-        <p className={theme.infoValue}>{formatToBRL(amount)}</p>
-        { renderTexts() }
-      </div>
-      <footer
-        className={theme.footer}
-      >
-        {
-          orderUrl &&
-          <Button
-            fill="outline"
-            icon={<OrderIcon className={theme.whiteIcon} />}
-            onClick={openLink(orderUrl)}
-          >
-            Ver pedido
-          </Button>
-        }
-        <Button
-          fill="gradient"
-          icon={<CloseXIcon className={theme.whiteIcon} />}
-          onClick={closeCheckout}
-        >
-          Fechar
-        </Button>
-      </footer>
-    </section>
-  )
-}
+  render () {
+    const {
+      amount,
+      boleto,
+      closeCheckout,
+      orderUrl,
+      theme,
+    } = this.props
 
+    return (
+      <section className={theme.wrapper}>
+        <header className={theme.header}>
+          <SuccessIcon className={theme.icon} />
+          <h1 className={theme.title}>Deu tudo certo!</h1>
+        </header>
+        <div className={theme.content}>
+          <h3 className={theme.infoField}>
+            {
+              boleto.url ? 'Valor a pagar:' : 'Valor pago:'
+            }
+          </h3>
+          <p className={theme.infoValue}>{formatToBRL(amount)}</p>
+          { this.renderTexts() }
+        </div>
+        <footer
+          className={theme.footer}
+        >
+          {
+            orderUrl &&
+            <Button
+              fill="outline"
+              icon={<OrderIcon className={theme.whiteIcon} />}
+              onClick={handleSeeOrder(orderUrl)}
+            >
+              Ver pedido
+            </Button>
+          }
+          <Button
+            fill="gradient"
+            icon={<CloseXIcon className={theme.whiteIcon} />}
+            onClick={closeCheckout}
+          >
+            Fechar
+          </Button>
+        </footer>
+      </section>
+    )
+  }
+}
 Success.propTypes = {
   amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   boleto: PropTypes.shape({

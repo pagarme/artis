@@ -29,7 +29,11 @@ import setTheme from './utils/helpers/setTheme'
 
 moment.locale('pt-br')
 
-ReactGA.initialize('UA-113290482-1')
+const isDevelopment = () => process.env.NODE_ENV === 'development'
+
+ReactGA.initialize('UA-113290482-1', {
+  debug: isDevelopment(),
+})
 
 const open = (apiData, clientThemeBase) => {
   const {

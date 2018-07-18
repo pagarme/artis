@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import PaymentCard from 'react-payment-card-component'
+import ReactGA from 'react-ga'
 
 import {
   always,
@@ -85,6 +86,7 @@ class CreditCardPage extends Component {
   }
 
   componentDidMount () {
+    ReactGA.pageview('/creaditcard')
     this.firstInput.focus()
   }
 
@@ -175,10 +177,20 @@ class CreditCardPage extends Component {
   }
 
   handleSaveCartChange = () => {
-    this.setState(previousState => ({
-      ...previousState,
-      saveCart: !previousState.saveCart,
-    }))
+    this.setState((previousState) => {
+      const newSaveCart = !previousState.saveCart
+
+      ReactGA.event({
+        category: 'CreditCard',
+        action: 'Change Save Cart',
+        label: `${newSaveCart}`,
+      })
+
+      return {
+        ...previousState,
+        saveCart: newSaveCart,
+      }
+    })
   }
 
   render () {
