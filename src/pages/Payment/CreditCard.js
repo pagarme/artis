@@ -204,6 +204,7 @@ class CreditCardPage extends Component {
     } = this.state
 
     const {
+      allowSaveCreditCard,
       enableCart,
       finalAmount,
       handlePreviousButton,
@@ -261,15 +262,20 @@ class CreditCardPage extends Component {
               holderName={defaultHolderName(holderName)}
               number={defaultCardNumber(cardNumber)}
             />
-            <p>Salvar esse cartão</p>
-            <Switch
-              checked={saveCart}
-              onChange={this.handleSaveCartChange}
-              strings={{
-                on: 'Sim',
-                off: 'Não',
-              }}
-            />
+            {
+              allowSaveCreditCard &&
+              <React.Fragment>
+                <p>Habilitar compra com 1 clique</p>
+                <Switch
+                  checked={saveCart}
+                  onChange={this.handleSaveCartChange}
+                  strings={{
+                    on: 'Sim',
+                    off: 'Não',
+                  }}
+                />
+              </React.Fragment>
+            }
           </div>
           <div className={theme.inputsContainer}>
             <FormInput
@@ -328,6 +334,7 @@ class CreditCardPage extends Component {
 }
 
 CreditCardPage.propTypes = {
+  allowSaveCreditCard: PropTypes.bool,
   theme: PropTypes.shape({
     creditcardForm: PropTypes.string,
     content: PropTypes.string,
@@ -375,6 +382,7 @@ CreditCardPage.propTypes = {
 }
 
 CreditCardPage.defaultProps = {
+  allowSaveCreditCard: false,
   payment: {},
   enableCart: false,
   theme: {},
