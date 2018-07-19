@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux'
-import { path } from 'ramda'
+import { prop } from 'ramda'
 import reducers from './reducers'
 import calcAmount from './utils/calculations/calcAmount'
 
@@ -11,7 +11,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export default ({
-  configs,
   customer,
   shipping,
   billing,
@@ -24,7 +23,7 @@ export default ({
     reducers,
     {
       creditCard: {
-        cardId: path(['cardId'], configs),
+        cardId: prop('cardId', transaction),
       },
       pageInfo: {
         customer,
