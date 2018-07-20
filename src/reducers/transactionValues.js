@@ -7,7 +7,10 @@ const defaultState = {
   paymentConfig: {
     boleto: {},
     creditcard: {
-      installments: [],
+      installments: {
+        initial: 1,
+        max: 1,
+      },
     },
   },
 }
@@ -26,8 +29,8 @@ const transactionValues = (state = defaultState, action) => {
       return {
         ...state,
         amount: payload.amount,
-        defaultMethod: payload.defaultMethod,
-        paymentConfig: payload.paymentConfig,
+        defaultMethod: payload.defaultMethod || state.defaultMethod,
+        paymentConfig: payload.paymentConfig || state.paymentConfig,
       }
 
     default:

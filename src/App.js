@@ -17,6 +17,7 @@ const App = ({
   acquirerName,
   clientTarget,
   clientThemeBase,
+  form,
 }) => (
   <Provider store={store}>
     <ThemeProvider theme={{
@@ -32,6 +33,7 @@ const App = ({
             apiErrors={apiErrors}
             base={clientThemeBase}
             targetElement={clientTarget}
+            form={form}
           />
         </NormalizeCSS>
       </ErrorBoundary>
@@ -46,10 +48,12 @@ App.propTypes = {
   clientTarget: PropTypes.shape().isRequired,
   clientThemeBase: PropTypes.string.isRequired,
   store: PropTypes.shape().isRequired,
+  form: PropTypes.node,
 }
 
 App.defaultProps = {
   apiErrors: [],
+  form: null,
 }
 
 export default App

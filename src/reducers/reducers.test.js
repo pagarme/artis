@@ -16,7 +16,10 @@ describe('checkout reduceres', () => {
         paymentConfig: {
           boleto: {},
           creditcard: {
-            installments: [],
+            installments: {
+              initial: 1,
+              max: 1,
+            },
           },
         },
       },
@@ -110,7 +113,10 @@ describe('checkout reduceres', () => {
         paymentConfig: {
           boleto: {},
           creditcard: {
-            installments: [],
+            installments: {
+              initial: 1,
+              max: 1,
+            },
           },
         },
         paymentMethods: [],
@@ -136,7 +142,10 @@ describe('checkout reduceres', () => {
         paymentConfig: {
           boleto: {},
           creditcard: {
-            installments: [],
+            installments: {
+              initial: 1,
+              max: 1,
+            },
           },
         },
         paymentMethods: [],

@@ -40,11 +40,15 @@ $('#btn-open-simple').click(() => {
   const code = simplePanel.session.getDocument().getAllLines().join('\n')
 
   $('#simple-page')
-    .find('button')
+    .find('.checkout-button')
     .remove()
     .end()
     .append(code)
     .fadeIn()
+
+    const checkoutFormButtons = document.querySelectorAll('.checkout-button')
+
+    createPanelEnvironment(checkoutFormButtons)
 })
 
 $('#simple-btn-close').click(() => {
@@ -109,7 +113,7 @@ let seeAllIsOpen = false
 $('.btn-see-all').click(function() {
   let animation
   seeAllIsOpen = seeAllIsOpen ? false : true
-  
+
   if (seeAllIsOpen) {
     $(this).text('[x] close')
     $('.box-see-all').fadeIn()

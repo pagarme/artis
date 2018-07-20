@@ -75,7 +75,6 @@ const getActiveStep = ifElse(
   pipe(keys, head),
   identity,
 )
-
 class Checkout extends React.Component {
   state = {
     closingEffect: false,
@@ -144,6 +143,7 @@ class Checkout extends React.Component {
           creditCard
         )
 
+        this.submitForm()
         onTransactionSuccess(payload)
       }
 
@@ -239,6 +239,14 @@ class Checkout extends React.Component {
 
         this.navigateNextPage()
       })
+  }
+
+  submitForm () {
+    const { form } = this.props
+
+    if (form) {
+      form.submit()
+    }
   }
 
   replaceCardhashIfCardIdIsPresent = (response, creditCard) => {
@@ -695,6 +703,7 @@ Checkout.propTypes = {
     cardId: PropTypes.string,
   }),
   finalAmount: PropTypes.number.isRequired,
+  form: PropTypes.node,
   handleAddInstallments: PropTypes.func.isRequired,
   handleAddPageInfo: PropTypes.func.isRequired,
   handleAddTransactionValues: PropTypes.func.isRequired,
@@ -712,6 +721,7 @@ Checkout.propTypes = {
 
 Checkout.defaultProps = {
   creditCard: {},
+  form: null,
   theme: {},
   transaction: {},
 }
