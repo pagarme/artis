@@ -86,8 +86,25 @@ class CreditCardPage extends Component {
   }
 
   componentDidMount () {
+    const { callbacks } = this.props
+    const onEnter = prop('onEnter', callbacks)
+
+    if (onEnter) {
+      onEnter()
+    }
+
     ReactGA.pageview('/creaditcard')
+
     this.firstInput.focus()
+  }
+
+  componentWillUnmount () {
+    const { callbacks } = this.props
+    const onExit = prop('onExit', callbacks)
+
+    if (onExit) {
+      onExit()
+    }
   }
 
   handleChangeForm = (formValues, errors) => {
@@ -348,6 +365,10 @@ CreditCardPage.propTypes = {
     paymentCard: PropTypes.string,
     cardFlipped: PropTypes.string,
   }),
+  callbacks: PropTypes.shape({
+    onEnter: PropTypes.func,
+    onExit: PropTypes.func,
+  }),
   enableCart: PropTypes.bool,
   finalAmount: PropTypes.number.isRequired,
   handleAddCreditCard: PropTypes.func.isRequired,
@@ -384,6 +405,7 @@ CreditCardPage.propTypes = {
 CreditCardPage.defaultProps = {
   allowSaveCreditCard: false,
   payment: {},
+  callbacks: {},
   enableCart: false,
   theme: {},
   transaction: {},

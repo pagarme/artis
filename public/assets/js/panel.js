@@ -14,8 +14,6 @@ $btnOpenCustom.click(() => {
   const code = customPanel.session.getDocument().getAllLines().join('\n')
   window.localStorage.setItem('custom', code)
   eval(code)
-  const checkout = createCheckout({ ...configs })
-  checkout.open()
 })
 
 const $btnResetCustom = $('#btn-reset-custom')

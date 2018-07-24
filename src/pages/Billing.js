@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+  isEmpty,
   merge,
   omit,
+  prop,
 } from 'ramda'
 import {
   FormInput,
@@ -52,17 +54,31 @@ class BillingPage extends Component {
   }
 
   componentDidMount () {
+    const { callbacks, billing } = this.props
+    const onEnter = prop('onEnter', callbacks)
+
+    if (onEnter && isEmpty(billing)) {
+      onEnter()
+    }
+
     this.firstInput.focus()
   }
 
   componentWillUnmount () {
-    this.props.handlePageChange({
+    const { callbacks, billing, handlePageChange } = this.props
+    const onExit = prop('onExit', callbacks)
+
+    if (onExit && isEmpty(billing)) {
+      onExit()
+    }
+
+    handlePageChange({
       page: 'billing',
       pageInfo: this.state,
     })
 
     if (this.state.sameAddressForShipping) {
-      this.props.handlePageChange({
+      handlePageChange({
         page: 'shipping',
         pageInfo: this.state,
       })
@@ -257,6 +273,10 @@ BillingPage.propTypes = {
     inputGroup: PropTypes.string,
     switchLabel: PropTypes.string,
   }),
+  callbacks: PropTypes.shape({
+    onEnter: PropTypes.func,
+    onExit: PropTypes.func,
+  }),
   enableCart: PropTypes.bool,
   handlePageChange: PropTypes.func.isRequired,
   handlePreviousButton: PropTypes.func,
@@ -277,6 +297,7 @@ BillingPage.propTypes = {
 
 BillingPage.defaultProps = {
   billing: {},
+  callbacks: {},
   enableCart: false,
   handlePreviousButton: null,
   theme: {},
