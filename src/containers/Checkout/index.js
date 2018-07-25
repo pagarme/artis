@@ -624,7 +624,7 @@ class Checkout extends React.Component {
         </State>
         <State value="confirmation.failure">
           <ErrorInfo
-            navigatePreviousPage={this.navigatePreviousPage}
+            handlePreviousButton={this.navigatePreviousPage}
           />
         </State>
         <State value="confirmation.analysis">
