@@ -1,0 +1,8 @@
+{
+    "dataSource": "prs",
+    "prefix": "",
+    "ignoreLabels": ["Criação", "blocker", "bug", "help wanted", "helper", "improvement", "in progress", "question", "waiting review"],
+    "onlyMilestones": false,
+    "groupBy": false,
+    "changelogFilename": "CHANGELOG.md"
+}
