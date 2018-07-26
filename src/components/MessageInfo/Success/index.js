@@ -5,6 +5,7 @@ import { ThemeConsumer } from 'former-kit'
 import ReactGA from 'react-ga'
 import copy from 'copy-to-clipboard'
 import { propOr } from 'ramda'
+import classNames from 'classnames'
 
 import { ActionButton, Button } from './../../'
 import { formatToBRL } from '../../../utils/masks/'
@@ -16,7 +17,7 @@ import OrderIcon from '../../../images/pedido.svg'
 
 const consumeTheme = ThemeConsumer('UISuccessMessageInfo')
 
-const openLink = url => () => window.open(url, '_blank')
+const openLink = url => window.open(url, '_blank')
 
 const formatExpirationAt = value => (
   value
@@ -41,7 +42,7 @@ const handleSeeOrder = url => () => {
     action: 'See order',
   })
 
-  openLink(url)
+  return openLink(url)
 }
 
 const handleBoletoSaveFile = fileUrl =>
@@ -118,6 +119,13 @@ class Success extends React.Component {
       theme,
     } = this.props
 
+    const footerClasses = classNames(
+      theme.footer,
+      {
+        [theme.centerAlign]: !orderUrl.length,
+      }
+    )
+
     return (
       <section className={theme.wrapper}>
         <header className={theme.header}>
@@ -134,10 +142,10 @@ class Success extends React.Component {
           { this.renderTexts() }
         </div>
         <footer
-          className={theme.footer}
+          className={footerClasses}
         >
           {
-            orderUrl &&
+            orderUrl.length &&
             <Button
               fill="outline"
               icon={<OrderIcon className={theme.whiteIcon} />}
