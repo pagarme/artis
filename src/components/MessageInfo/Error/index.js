@@ -27,7 +27,7 @@ class Error extends React.Component {
       action: 'Retry',
     })
 
-    this.props.navigatePreviousPage()
+    this.props.handlePreviousButton()()
   }
 
   render () {
@@ -74,6 +74,7 @@ class Error extends React.Component {
 }
 
 Error.propTypes = {
+  handlePreviousButton: PropTypes.func.isRequired,
   theme: PropTypes.shape({
     content: PropTypes.string,
     footer: PropTypes.string,
@@ -83,7 +84,6 @@ Error.propTypes = {
     title: PropTypes.string,
     wrapper: PropTypes.string,
   }).isRequired,
-  navigatePreviousPage: PropTypes.func.isRequired,
 }
 
 export default consumeTheme(Error)
