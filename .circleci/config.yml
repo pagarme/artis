@@ -25,6 +25,25 @@ jobs:
             root: build
             paths:
               - index.js
+
+  cypress:
+    docker:
+      - image: cypress/base:8
+        environment:
+          term: xterm
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - dependencies-{{ checksum "package.json" }}
+          - dependencies-
+
+      - run: |
+          yarn
+          yarn cy:startAndRun
+
+
   deploy_stg:
     machine:
         enabled: true
@@ -64,6 +83,10 @@ workflows:
   build-and-deploy:
     jobs:
     - build:
+        filters:
+          tags:
+            only: /^v.*/
+    - cypress:
         filters:
           tags:
             only: /^v.*/

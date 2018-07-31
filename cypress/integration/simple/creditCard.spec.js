@@ -6,23 +6,23 @@ describe('Pagarme', () => {
 
         //Open checkout
         cy.get('#btn-open-simple').click()
-        cy.get('.checkout-button').click()
+        cy.get('#checkout-button').click()
 
         //Fill customer inputs
         cy.get('[name="name"]').type('João S. R. Silva')
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         //Fill billing inputs
         cy.get('[name="zipcode"]').type('03675030')
-        cy.wait(520)
+        cy.wait(800)
         cy.get('[name="number"]').type('123')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         //Choose card option
-        cy.get('.paymentoptionsPage__optionsContainer > .darkButton__wrapper:first').click()
+        cy.get('.paymentoptionsPage__optionsContainer .button__button:first').click()
         cy.get('[type="submit"]:last').click()
 
         // Required
@@ -30,7 +30,7 @@ describe('Pagarme', () => {
         cy.get('[name="cardNumber"]').type('{selectall}{backspace}')
 
         cy
-          .get('.input__boxContainer:first > p')
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Este campo é obrigatório')
           })
@@ -39,7 +39,7 @@ describe('Pagarme', () => {
         cy.get('[name="cardNumber"]').type('{selectall}{backspace}')
         cy.get('[name="cardNumber"]').type('1')
         cy
-          .get('.input__boxContainer:first > p')
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Esse campo precisa de 16 caracteres')
           })
@@ -48,7 +48,7 @@ describe('Pagarme', () => {
         cy.get('[name="cardNumber"]').type('{selectall}{backspace}')
         cy.get('[name="cardNumber"]').type('4556599125465782')
         cy
-          .get('.input__boxContainer:first > p')
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
           .should('not.exist')
       })
 
@@ -57,23 +57,23 @@ describe('Pagarme', () => {
 
         //Open checkout
         cy.get('#btn-open-simple').click()
-        cy.get('.checkout-button').click()
+        cy.get('#checkout-button').click()
 
         //Fill customer inputs
         cy.get('[name="name"]').type('João S. R. Silva')
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         //Fill billing inputs
         cy.get('[name="zipcode"]').type('03675030')
-        cy.wait(520)
+        cy.wait(800)
         cy.get('[name="number"]').type('123')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         //Choose card option
-        cy.get('.paymentoptionsPage__optionsContainer > .darkButton__wrapper:first').click()
+        cy.get('.paymentoptionsPage__optionsContainer .button__button:first').click()
         cy.get('[type="submit"]:last').click()
 
         // Required
@@ -81,25 +81,16 @@ describe('Pagarme', () => {
         cy.get('[name="holderName"]').type('{selectall}{backspace}')
 
         cy
-          .get('.input__error p')
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Este campo é obrigatório')
-          })
-
-        // Min length
-        cy.get('[name="holderName"]').type('{selectall}{backspace}')
-        cy.get('[name="holderName"]').type('1')
-        cy
-          .get('.input__error p')
-          .should(($el) => {
-            expect($el).to.have.text('Esse campo precisa de 10 caracteres')
           })
 
         // Max length
         cy.get('[name="holderName"]').type('{selectall}{backspace}')
         cy.get('[name="holderName"]').type('123456789012345678912')
         cy
-          .get('.input__error p')
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Você excedeu o limite de 20 caracteres')
           })
@@ -108,7 +99,7 @@ describe('Pagarme', () => {
         cy.get('[name="holderName"]').type('{selectall}{backspace}')
         cy.get('[name="holderName"]').type('joao da silva')
         cy
-          .get('.creditcardPage__inputsContainer > .input__active:last p')
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
           .should('not.exist')
       })
 
@@ -117,23 +108,23 @@ describe('Pagarme', () => {
 
         //Open checkout
         cy.get('#btn-open-simple').click()
-        cy.get('.checkout-button').click()
+        cy.get('#checkout-button').click()
 
         //Fill customer inputs
         cy.get('[name="name"]').type('João S. R. Silva')
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         //Fill billing inputs
         cy.get('[name="zipcode"]').type('03675030')
-        cy.wait(520)
+        cy.wait(800)
         cy.get('[name="number"]').type('123')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         //Choose card option
-        cy.get('.paymentoptionsPage__optionsContainer > .darkButton__wrapper:first').click()
+        cy.get('.paymentoptionsPage__optionsContainer .button__button:first').click()
         cy.get('[type="submit"]:last').click()
 
         // Required
@@ -141,27 +132,34 @@ describe('Pagarme', () => {
         cy.get('[name="expiration"]').type('{selectall}{backspace}')
 
         cy
-          .get('.input__error p')
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Este campo é obrigatório')
           })
 
-        // Min length
+        // Invalid
         cy.get('[name="expiration"]').type('{selectall}{backspace}')
         cy.get('[name="expiration"]').type('1')
         cy
-          .get('.input__error p')
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
           .should(($el) => {
-            expect($el).to.have.text('Esse campo precisa de 4 caracteres')
+            expect($el).to.have.text('Data inválida')
           })
 
-        cy.get('.creditcardPage__inputGroup .input__boxContainer:first')
+        // Invalid
+        cy.get('[name="expiration"]').type('{selectall}{backspace}')
+        cy.get('[name="expiration"]').type('1111')
+        cy
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
+          .should(($el) => {
+            expect($el).to.have.text('Data inválida')
+          })
 
         // Expiration date valid
         cy.get('[name="expiration"]').type('{selectall}{backspace}')
         cy.get('[name="expiration"]').type('0520')
         cy
-          .get('.creditcardPage__inputGroup .input__boxContainer:first p')
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
           .should('not.exist')
       })
 
@@ -170,23 +168,23 @@ describe('Pagarme', () => {
 
         //Open checkout
         cy.get('#btn-open-simple').click()
-        cy.get('.checkout-button').click()
+        cy.get('#checkout-button').click()
 
         //Fill customer inputs
         cy.get('[name="name"]').type('João S. R. Silva')
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         //Fill billing inputs
         cy.get('[name="zipcode"]').type('03675030')
-        cy.wait(520)
+        cy.wait(800)
         cy.get('[name="number"]').type('123')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         //Choose card option
-        cy.get('.paymentoptionsPage__optionsContainer > .darkButton__wrapper:first').click()
+        cy.get('.paymentoptionsPage__optionsContainer .button__button:first').click()
         cy.get('[type="submit"]:last').click()
 
         // Required
@@ -194,7 +192,7 @@ describe('Pagarme', () => {
         cy.get('[name="cvv"]').type('{selectall}{backspace}')
 
         cy
-          .get('.input__error p')
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Este campo é obrigatório')
           })
@@ -203,18 +201,16 @@ describe('Pagarme', () => {
         cy.get('[name="cvv"]').type('{selectall}{backspace}')
         cy.get('[name="cvv"]').type('1')
         cy
-          .get('.input__error p')
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Esse campo precisa de 3 caracteres')
           })
-
-        cy.get('.creditcardPage__inputGroup .input__boxContainer:last')
 
         // cvv date valid
         cy.get('[name="cvv"]').type('{selectall}{backspace}')
         cy.get('[name="cvv"]').type('0520')
         cy
-          .get('.creditcardPage__inputGroup .input__boxContainer:last p')
+          .get('.creditcardPage__inputsContainer .input__secondaryText')
           .should('not.exist')
       })
 
@@ -223,23 +219,23 @@ describe('Pagarme', () => {
 
         //Open checkout
         cy.get('#btn-open-simple').click()
-        cy.get('.checkout-button').click()
+        cy.get('#checkout-button').click()
 
         //Fill customer inputs
         cy.get('[name="name"]').type('João S. R. Silva')
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         //Fill billing inputs
         cy.get('[name="zipcode"]').type('03675030')
-        cy.wait(520)
+        cy.wait(800)
         cy.get('[name="number"]').type('123')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         //Choose card option
-        cy.get('.paymentoptionsPage__optionsContainer > .darkButton__wrapper:first').click()
+        cy.get('.paymentoptionsPage__optionsContainer .button__button:first').click()
         cy.get('[type="submit"]:last').click()
 
         //Choose pay boleto

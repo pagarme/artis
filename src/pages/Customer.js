@@ -28,6 +28,7 @@ import {
   isCnpj,
   isEmail,
   isFormValid,
+  minLength,
   maxLength,
   required,
 } from '../utils/validations'
@@ -193,6 +194,7 @@ class CustomerPage extends Component {
           email: [
             required,
             isEmail,
+            maxLength(30),
           ],
           documentNumber: [
             required,
@@ -200,6 +202,8 @@ class CustomerPage extends Component {
           ],
           phoneNumber: [
             required,
+            minLength(10),
+            maxLength(11),
           ],
         }}
       >

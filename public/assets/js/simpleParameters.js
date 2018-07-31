@@ -3,6 +3,7 @@
 const simpleParameters = `<form action="/confirmacao" method="POST">
   <button
     type="submit"
+    id="checkout-button"
     class="checkout-button"
     data-key="ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz"
     data-company-name="Pagar.me"

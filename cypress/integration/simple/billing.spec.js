@@ -6,21 +6,21 @@ describe('Pagarme', () => {
 
         // Open checkout
         cy.get('#btn-open-simple').click()
-        cy.get('.checkout-button').click()
+        cy.get('#checkout-button').click()
 
         // Fill customer inputs
         cy.get('[name="name"]').type('João S. R. Silva')
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         // Required
         cy.get('[name="zipcode"]').type('1')
         cy.get('[name="zipcode"]').type('{selectall}{backspace}')
 
         cy
-          .get('.addressesPage__inputsContainer > div:first p')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Este campo é obrigatório')
           })
@@ -29,7 +29,7 @@ describe('Pagarme', () => {
         cy.get('[name="zipcode"]').type('{selectall}{backspace}')
         cy.get('[name="zipcode"]').type('1')
         cy
-          .get('.addressesPage__inputsContainer > div:first p')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Esse campo precisa de 8 caracteres')
           })
@@ -37,7 +37,7 @@ describe('Pagarme', () => {
         // CEP Valid
         cy.get('[name="zipcode"]').type('03675030')
         cy
-          .get('.addressesPage__inputsContainer > div:first p')
+          .get('.addressesPage__content .input__secondaryText')
           .should('not.exist')
       })
 
@@ -46,39 +46,30 @@ describe('Pagarme', () => {
 
         // Open checkout
         cy.get('#btn-open-simple').click()
-        cy.get('.checkout-button').click()
+        cy.get('#checkout-button').click()
 
         // Fill customer inputs
         cy.get('[name="name"]').type('João S. R. Silva')
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         // Required
         cy.get('[name="street"]').type('1')
         cy.get('[name="street"]').type('{selectall}{backspace}')
 
         cy
-          .get('.addressesPage__inputsContainer > div:nth-child(2) p')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Este campo é obrigatório')
-          })
-
-        // Min length
-        cy.get('[name="street"]').clear()
-        cy.get('[name="street"]').type('0')
-        cy
-          .get('.addressesPage__inputsContainer > div:nth-child(2) p')
-          .should(($el) => {
-            expect($el).to.have.text('Esse campo precisa de 10 caracteres')
           })
 
         // Max length
         cy.get('[name="street"]').clear()
         cy.get('[name="street"]').type('01234567890123456789012345678901234567890')
         cy
-          .get('.addressesPage__inputsContainer > div:nth-child(2) p')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Você excedeu o limite de 40 caracteres')
           })
@@ -87,7 +78,7 @@ describe('Pagarme', () => {
         cy.get('[name="street"]').type('{selectall}{backspace}')
         cy.get('[name="street"]').type('rua das dores')
         cy
-          .get('.customerPage__inputsContainer > div:nth-child(2) p')
+          .get('.addressesPage__inputsContainer > div:nth-child(2) p')
           .should('not.exist')
       })
 
@@ -96,21 +87,21 @@ describe('Pagarme', () => {
 
         // Open checkout
         cy.get('#btn-open-simple').click()
-        cy.get('.checkout-button').click()
+        cy.get('#checkout-button').click()
 
         // Fill customer inputs
         cy.get('[name="name"]').type('João S. R. Silva')
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         // Required
         cy.get('[name="number"]').type('1')
         cy.get('[name="number"]').type('{selectall}{backspace}')
 
         cy
-          .get('.addressesPage__inputsContainer > div:nth-child(3) p')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Este campo é obrigatório')
           })
@@ -119,7 +110,7 @@ describe('Pagarme', () => {
         cy.get('[name="number"]').clear()
         cy.get('[name="number"]').type('123456')
         cy
-          .get('.addressesPage__inputsContainer > div:nth-child(3) p')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Você excedeu o limite de 5 caracteres')
           })
@@ -128,7 +119,7 @@ describe('Pagarme', () => {
         cy.get('[name="number"]').type('{selectall}{backspace}')
         cy.get('[name="number"]').type('1')
         cy
-          .get('.customerPage__inputsContainer > div:nth-child(3) p')
+          .get('.addressesPage__inputsContainer > div:nth-child(3) p')
           .should('not.exist')
       })
 
@@ -137,21 +128,21 @@ describe('Pagarme', () => {
 
         // Open checkout
         cy.get('#btn-open-simple').click()
-        cy.get('.checkout-button').click()
+        cy.get('#checkout-button').click()
 
         // Fill customer inputs
         cy.get('[name="name"]').type('João S. R. Silva')
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         // Max length
         cy.get('[name="complement"]').clear()
         cy.get('[name="complement"]').type(`12345678912345678912345678912345678
         9123456789123456789123456789123`)
         cy
-          .get('.addressesPage__inputsContainer > div:nth-child(3) p:last')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Você excedeu o limite de 65 caracteres')
           })
@@ -160,7 +151,7 @@ describe('Pagarme', () => {
         cy.get('[name="complement"]').type('{selectall}{backspace}')
         cy.get('[name="complement"]').type('ape 303')
         cy
-          .get('.customerPage__inputsContainer > div:nth-child(3) p:last')
+          .get('.addressesPage__content .input__secondaryText')
           .should('not.exist')
       })
 
@@ -169,32 +160,30 @@ describe('Pagarme', () => {
 
         // Open checkout
         cy.get('#btn-open-simple').click()
-        cy.get('.checkout-button').click()
+        cy.get('#checkout-button').click()
 
         // Fill customer inputs
         cy.get('[name="name"]').type('João S. R. Silva')
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         // Required
         cy.get('[name="city"]').type('a')
         cy.get('[name="city"]').type('{selectall}{backspace}')
 
         cy
-          .get('.addressesPage__inputsContainer > div:nth-child(4) p:first')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Este campo é obrigatório')
           })
-
-        cy.get('.addressesPage__inputsContainer > div:nth-child(4)')
 
         // Min length
         cy.get('[name="city"]').clear()
         cy.get('[name="city"]').type('0')
         cy
-          .get('.addressesPage__inputsContainer > div:nth-child(4) p:first')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Esse campo precisa de 4 caracteres')
           })
@@ -203,7 +192,7 @@ describe('Pagarme', () => {
         cy.get('[name="city"]').clear()
         cy.get('[name="city"]').type('012345678901234567890123456')
         cy
-          .get('.addressesPage__inputsContainer > div:nth-child(4) p:first')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Você excedeu o limite de 25 caracteres')
           })
@@ -212,7 +201,7 @@ describe('Pagarme', () => {
         cy.get('[name="city"]').type('{selectall}{backspace}')
         cy.get('[name="city"]').type('são paulo')
         cy
-          .get('.customerPage__inputsContainer > div:nth-child(4) p:last')
+          .get('.addressesPage__content .input__secondaryText')
           .should('not.exist')
       })
 
@@ -221,32 +210,30 @@ describe('Pagarme', () => {
 
         // Open checkout
         cy.get('#btn-open-simple').click()
-        cy.get('.checkout-button').click()
+        cy.get('#checkout-button').click()
 
         // Fill customer inputs
         cy.get('[name="name"]').type('João S. R. Silva')
         cy.get('[name="email"]').type('joao.silva@gmail.com')
         cy.get('[name="documentNumber"]').type('749.679.050-80')
         cy.get('[name="phoneNumber"]').type('11985963625')
-        cy.get('[type="submit"]').click()
+        cy.get('[type="submit"]:last').click()
 
         // Required
         cy.get('[name="state"]').type('a')
         cy.get('[name="state"]').type('{selectall}{backspace}')
 
         cy
-          .get('.addressesPage__inputsContainer > div:nth-child(4) p:last')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Este campo é obrigatório')
           })
-
-        cy.get('.addressesPage__inputsContainer > div:nth-child(4)')
 
         // Min length
         cy.get('[name="state"]').clear()
         cy.get('[name="state"]').type('s')
         cy
-          .get('.addressesPage__inputsContainer > div:nth-child(4) p:last')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Esse campo precisa de 2 caracteres')
           })
@@ -255,7 +242,7 @@ describe('Pagarme', () => {
         cy.get('[name="state"]').clear()
         cy.get('[name="state"]').type('sao paulo')
         cy
-          .get('.addressesPage__inputsContainer > div:nth-child(4) p:last')
+          .get('.addressesPage__content .input__secondaryText')
           .should(($el) => {
             expect($el).to.have.text('Você excedeu o limite de 2 caracteres')
           })
@@ -264,7 +251,7 @@ describe('Pagarme', () => {
         cy.get('[name="state"]').type('{selectall}{backspace}')
         cy.get('[name="state"]').type('sp')
         cy
-          .get('.customerPage__inputsContainer > div:nth-child(4) p:last')
+          .get('.addressesPage__content .input__secondaryText')
           .should('not.exist')
       })
     })

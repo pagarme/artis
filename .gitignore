@@ -27,3 +27,5 @@ browserstack.err
 local.log
 
 /config/robrowser/auth.js
+cypress/plugins/
+cypress/support/
