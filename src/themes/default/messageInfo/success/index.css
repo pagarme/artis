@@ -65,6 +65,10 @@
   justify-content: space-between;
 }
 
+.centerAlign {
+  justify-content: center;
+}
+
 .footer > button > svg {
   max-width: 15px;
   max-height: 15px;
