@@ -7,10 +7,17 @@
     <link rel="stylesheet" href="assets/css/styles.css">
   </head>
   <body>
+    <div class="box box-without-ace hidden">
+      <h2>Without Ace Version</h2>
+      <button id="btn-close-textarea" class="btn-open">Close modal</button>
+      <textarea class="textarea-code" id="textarea-code" cols="30" rows="10"></textarea>
+      <button id="btn-open-checkout">Open checkout</button>
+    </div>
     <div class="box box-simple">
       <h2>Simple Version</h2>
+      <button id="btn-open-textarea" class="btn-open btn-open-ace">Open without ace</button>
       <button id="btn-open-simple" class="btn-open">Open</button>
-      <div id="simple-panel"></div>      
+      <div id="simple-panel"></div>
     </div>
     <div id="simple-page">
       <button id="simple-btn-close">x</button>
@@ -33,7 +40,7 @@
     <div class="box box-see-all">
       <div id="see-all-panel"></div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="assets/js/vendor/jquery_3.3.1.min.js"></script>
     <script src="assets/js/vendor/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="assets/js/customParameters.js" type="text/javascript" charset="utf-8"></script>
     <script src="assets/js/simpleParameters.js" type="text/javascript" charset="utf-8"></script>

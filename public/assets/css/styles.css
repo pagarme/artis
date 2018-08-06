@@ -54,6 +54,27 @@ h2 {
   background-color: #a1a1a1;
 }
 
+.btn-open-ace {
+  right: 120px;
+}
+
+.box-without-ace {
+  position: relative;
+  z-index: 1;
+  background: #5e5e5e;
+}
+
+.hidden {
+  display: none;
+}
+
+.textarea-code {
+  width: 90%;
+  left: 20px;
+  position: relative;
+  margin-top: 20px;
+}
+
 .btn-reset {
   position: absolute;
   top: 13px;

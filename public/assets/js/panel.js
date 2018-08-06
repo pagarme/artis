@@ -49,6 +49,22 @@ $('#btn-open-simple').click(() => {
     createPanelEnvironment(checkoutFormButtons)
 })
 
+$('#btn-open-textarea').click(() => {
+  $('.box-without-ace')
+    .toggle('hidden')
+})
+
+$('#btn-close-textarea').click(() => {
+  $('.box-without-ace')
+    .toggle('hidden')
+})
+
+$('#btn-open-checkout').click(() => {
+  const code = $("#textarea-code").val()
+  eval(code)
+})
+
+
 $('#simple-btn-close').click(() => {
   $('#simple-page').fadeOut()
 })

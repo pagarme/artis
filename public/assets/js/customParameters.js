@@ -5,7 +5,7 @@ const mundipaggApi = `const configs = {
 };`
 
 const pagarmeApi = `const key = 'ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz';
-  
+
 const configs = {
   companyName: 'Pagar.me',
   logo: './pagarme.png',
