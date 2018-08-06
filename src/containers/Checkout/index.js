@@ -104,6 +104,9 @@ class Checkout extends React.Component {
         name: 'API_ERROR',
         message: apiErrors,
       })
+    }
+
+    if (length(apiErrors)) {
       throw new Error(apiErrors)
     }
   }
