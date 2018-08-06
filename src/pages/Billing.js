@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+  allPass,
   isEmpty,
   merge,
   omit,
@@ -38,6 +39,16 @@ const defaultBillingAddress = {
   sameAddressForShipping: true,
 }
 
+const isBillingInformationsComplete = allPass(
+  [
+    prop('city'),
+    prop('number'),
+    prop('state'),
+    prop('street'),
+    prop('zipcode'),
+  ]
+)
+
 class BillingPage extends Component {
   constructor (props) {
     super(props)
@@ -50,6 +61,14 @@ class BillingPage extends Component {
 
     this.setTextInputRef = (element) => {
       this.firstInput = element
+    }
+  }
+
+  componentWillMount () {
+    if (isBillingInformationsComplete(this.state)) {
+      this.setState({
+        formValid: true,
+      })
     }
   }
 
