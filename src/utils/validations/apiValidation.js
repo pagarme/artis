@@ -15,7 +15,7 @@ const apiValidation = apiData => () => {
 
   if (!key) errors.push(errorMessages.key)
   if (!amount && !cartItems) errors.push(errorMessages.amount)
-  if (amount && typeof amount !== 'number') {
+  if (amount && typeof parseInt(amount) !== 'number') { //eslint-disable-line
     errors.push(errorMessages.amountType)
   }
 
