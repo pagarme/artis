@@ -99,7 +99,7 @@ class Success extends React.Component {
             />
             <ActionButton
               onClick={handleBoletoSaveFile(boleto.url)}
-              title="Salvar código"
+              title="Salvar boleto"
               icon={<DownloadIcon className={theme.whiteIcon} />}
             />
           </div>
