@@ -81,6 +81,47 @@ describe('Pagarme', () => {
             cy.get('.paymentoptionsPage__optionsContainer').should('not.exist')
           })
         })
+        describe('Credit Card', () => {
+          it("will close checkout using footer's button", () => {
+            openCustomWithParams(api)
+
+            cy.get('.paymentoptionsPage__optionsContainer > .actionButton__wrapper:first').click()
+
+            cy.get('[type="submit"]:last').click()
+
+            cy.get('[name="cardNumber"]').type('4556599125465782')
+            cy.get('[name="holderName"]').type('joao da silva')
+            cy.get('[name="expiration"]').type('0822')
+            cy.get('[name="cvv"]').type('545')
+            cy.get('[type="submit"]:last').click()
+
+            cy.wait(400)
+
+            cy.get('.success__footer > button:last').click()
+
+            cy.get('.paymentoptionsPage__optionsContainer').should('not.exist')
+          })
+
+          it.only("will close checkout using header's button", () => {
+            openCustomWithParams(api)
+
+            cy.get('.paymentoptionsPage__optionsContainer > .actionButton__wrapper:first').click()
+
+            cy.get('[type="submit"]:last').click()
+
+            cy.get('[name="cardNumber"]').type('4556599125465782')
+            cy.get('[name="holderName"]').type('joao da silva')
+            cy.get('[name="expiration"]').type('0822')
+            cy.get('[name="cvv"]').type('545')
+            cy.get('[type="submit"]:last').click()
+
+            cy.wait(400)
+
+            cy.get('.checkout__closeButton').click()
+
+            cy.get('.paymentoptionsPage__optionsContainer').should('not.exist')
+          })
+        })
       })
     })
   })
