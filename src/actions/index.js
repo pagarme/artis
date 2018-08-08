@@ -36,3 +36,7 @@ export const updateFinalAmount = payload => ({
 export const toggleCart = () => ({
   type: 'TOGGLE',
 })
+
+export const toggleSameAddressForShipping = () => ({
+  type: 'TOGGLE_SAME_ADDRESS_FOR_SHIPPING',
+})

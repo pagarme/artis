@@ -16,7 +16,7 @@ import {
 import options from '../utils/data/states'
 import { removeMask } from '../utils/masks/'
 import getAddress from '../utils/helpers/getAddress'
-import { addPageInfo } from '../actions'
+import { addPageInfo, toggleSameAddressForShipping } from '../actions'
 import {
   isFormValid,
   isNumber,
@@ -35,7 +35,6 @@ const defaultBillingAddress = {
   state: '',
   street: '',
   zipcode: '',
-  sameAddressForShipping: true,
 }
 
 class BillingPage extends Component {
@@ -77,7 +76,7 @@ class BillingPage extends Component {
       pageInfo: this.state,
     })
 
-    if (this.state.sameAddressForShipping) {
+    if (this.props.sameAddressForShipping) {
       handlePageChange({
         page: 'shipping',
         pageInfo: this.state,
@@ -120,8 +119,8 @@ class BillingPage extends Component {
     this.numberInput = input
   }
 
-  handleSameAddressChange = (value) => {
-    this.setState({ sameAddressForShipping: value })
+  handleSameAddressChange = () => {
+    this.props.handleToggleSameAddressForShipping()
   }
 
   handleChangeZipcode = (event) => {
@@ -141,7 +140,6 @@ class BillingPage extends Component {
 
   render () {
     const {
-      sameAddressForShipping,
       isSearchingCPF,
     } = this.state
 
@@ -149,6 +147,7 @@ class BillingPage extends Component {
       theme,
       enableCart,
       handlePreviousButton,
+      sameAddressForShipping,
     } = this.props
 
     return (
@@ -281,6 +280,7 @@ BillingPage.propTypes = {
   }),
   enableCart: PropTypes.bool,
   handlePageChange: PropTypes.func.isRequired,
+  handleToggleSameAddressForShipping: PropTypes.func.isRequired,
   handlePreviousButton: PropTypes.func,
   handleSubmit: PropTypes.func.isRequired,
   billing: PropTypes.shape({
@@ -295,6 +295,7 @@ BillingPage.propTypes = {
     state: PropTypes.string,
     zipcode: PropTypes.string,
   }),
+  sameAddressForShipping: PropTypes.bool.isRequired,
 }
 
 BillingPage.defaultProps = {
@@ -305,10 +306,12 @@ BillingPage.defaultProps = {
   theme: {},
 }
 
-const mapStateToProps = ({ pageInfo }) => ({
+const mapStateToProps = ({ pageInfo, addresses }) => ({
   billing: pageInfo.billing,
+  sameAddressForShipping: addresses.sameAddressForShipping,
 })
 
 export default connect(mapStateToProps, {
   handlePageChange: addPageInfo,
+  handleToggleSameAddressForShipping: toggleSameAddressForShipping,
 })(consumeTheme(BillingPage))

@@ -348,8 +348,19 @@ class Checkout extends React.Component {
 
   handlePageTransition = page => () => this.props.transition(page)
 
+  shouldRedirectToShipping = (machineState, sameAddressForShipping) => {
+    const addresses = path(['value', 'addresses'], machineState)
+    const payment = path(['history', 'value', 'payment'], machineState)
+
+    const isBillingPage = addresses === 'billing'
+    const isPrevPagePaymentOptions = payment === 'selection'
+
+    return isBillingPage && isPrevPagePaymentOptions && !sameAddressForShipping
+  }
+
   navigatePreviousPage = () => {
-    const value = pathOr('', ['machineState', 'value'], this.props)
+    const { machineState, sameAddressForShipping } = this.props
+    const { value } = machineState
 
     const isFirstPage = equals(
       pipe(
@@ -364,6 +375,10 @@ class Checkout extends React.Component {
 
     const currentStateKey = head(Object.keys(value))
     const currentStateValue = head(Object.values(value))
+
+    if (this.shouldRedirectToShipping(machineState, sameAddressForShipping)) { //eslint-disable-line
+      this.props.transition('SHIPPING')
+    }
 
     if (and(
       equals(currentStateKey, 'confirmation'),
@@ -424,7 +439,7 @@ class Checkout extends React.Component {
       return
     }
 
-    const { sameAddressForShipping } = values
+    const { sameAddressForShipping } = this.props
 
     if (sameAddressForShipping) {
       this.props.transition('NEXT')
@@ -740,6 +755,7 @@ Checkout.propTypes = {
     PropTypes.object,
   ]).isRequired,
   pageInfo: PropTypes.object.isRequired, // eslint-disable-line
+  sameAddressForShipping: PropTypes.bool.isRequired,
   targetElement: PropTypes.object.isRequired, // eslint-disable-line
   theme: PropTypes.shape(),
   transaction: PropTypes.shape(),
@@ -754,10 +770,13 @@ Checkout.defaultProps = {
   transaction: {},
 }
 
-const mapStateToProps = ({ creditCard, pageInfo, transactionValues }) => ({
+const mapStateToProps = ({
+  addresses, creditCard, pageInfo, transactionValues,
+}) => ({
   creditCard,
   finalAmount: transactionValues.finalAmount,
   pageInfo,
+  sameAddressForShipping: addresses.sameAddressForShipping,
   transaction: transactionValues,
 })
 

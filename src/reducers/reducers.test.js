@@ -4,6 +4,9 @@ describe('checkout reduceres', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
       pageInfo: {},
+      addresses: {
+        sameAddressForShipping: true,
+      },
       cart: {
         collapsed: true,
       },
@@ -101,6 +104,9 @@ describe('checkout reduceres', () => {
       })
     ).toEqual({
       pageInfo: {},
+      addresses: {
+        sameAddressForShipping: true,
+      },
       cart: {
         collapsed: true,
       },
@@ -131,6 +137,9 @@ describe('checkout reduceres', () => {
       })
     ).toEqual({
       pageInfo: {},
+      addresses: {
+        sameAddressForShipping: true,
+      },
       cart: {
         collapsed: false,
       },
