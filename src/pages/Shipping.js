@@ -40,9 +40,9 @@ class ShippingPage extends Component {
   constructor (props) {
     super(props)
 
-    const { billing, shipping } = props
+    const { sameAddressForShipping, shipping } = props
 
-    this.state = typeof billing.sameAddressForShipping === 'undefined'
+    this.state = !sameAddressForShipping
       ? {
         ...merge(defaultShippingAddress, {
           fee: shipping.fee,
@@ -261,9 +261,6 @@ ShippingPage.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   handlePreviousButton: PropTypes.func.isRequired,
-  billing: PropTypes.shape({
-    sameAddressForShipping: PropTypes.bool,
-  }),
   shipping: PropTypes.shape({
     name: PropTypes.string,
     street: PropTypes.string,
@@ -276,19 +273,19 @@ ShippingPage.propTypes = {
     state: PropTypes.string,
     zipcode: PropTypes.string,
   }),
+  sameAddressForShipping: PropTypes.bool.isRequired,
 }
 
 ShippingPage.defaultProps = {
   theme: {},
   shipping: {},
-  billing: {},
   callbacks: {},
   enableCart: false,
 }
 
-const mapStateToProps = ({ pageInfo }) => ({
+const mapStateToProps = ({ addresses, pageInfo }) => ({
   shipping: pageInfo.shipping,
-  billing: pageInfo.billing,
+  sameAddressForShipping: addresses.sameAddressForShipping,
 })
 
 export default connect(mapStateToProps, {
