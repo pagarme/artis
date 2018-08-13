@@ -1,11 +1,10 @@
 import { openCustomWithParams } from '../../../helpers/custom'
 
-describe('Pagarme', () => {
-  describe('Custom', () => {
-    describe('Flow', () => {
-      describe('Steps', () => {
-        it('will show Identificação, Endereços, Forma De Pagamento and Confirmação steps', () => {
-          const api = `
+describe('Custom', () => {
+  describe('Flow', () => {
+    describe('Steps', () => {
+      it('will show Identificação, Endereços, Forma De Pagamento and Confirmação steps', () => {
+        const api = `
           const key = 'ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz';
 
           const transaction = {
@@ -21,20 +20,20 @@ describe('Pagarme', () => {
             .open()
         `
 
-          openCustomWithParams(api)
-          cy.wait(700)
+        openCustomWithParams(api)
+        cy.wait(700)
 
-          cy.get('.progressBar__step').should('exist')
-          cy.get('.progressBar__step').then((elem) => {
-            expect(elem.length).to.equal(4)
-            expect(elem[0].innerText).to.equal('Identificação\n')
-            expect(elem[1].innerText).to.equal('Endereços\n')
-            expect(elem[2].innerText).to.equal('Forma De Pagamento\n')
-            expect(elem[3].innerText).to.equal('Confirmação\n')
-          })
+        cy.get('.progressBar__step').should('exist')
+        cy.get('.progressBar__step').then((elem) => {
+          expect(elem.length).to.equal(4)
+          expect(elem[0].innerText).to.equal('Identificação\n')
+          expect(elem[1].innerText).to.equal('Endereços\n')
+          expect(elem[2].innerText).to.equal('Forma De Pagamento\n')
+          expect(elem[3].innerText).to.equal('Confirmação\n')
         })
-        it('will show Endereços, Forma De Pagamento and Confirmação steps without billing and shipping', () => {
-          const api = `
+      })
+      it('will show Endereços, Forma De Pagamento and Confirmação steps without billing and shipping', () => {
+        const api = `
           const key = 'ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz';
 
           const transaction = {
@@ -59,19 +58,19 @@ describe('Pagarme', () => {
             .open()
         `
 
-          openCustomWithParams(api)
-          cy.wait(700)
+        openCustomWithParams(api)
+        cy.wait(700)
 
-          cy.get('.progressBar__step').should('exist')
-          cy.get('.progressBar__step').then((elem) => {
-            expect(elem.length).to.equal(3)
-            expect(elem[0].innerText).to.equal('Endereços\n')
-            expect(elem[1].innerText).to.equal('Forma De Pagamento\n')
-            expect(elem[2].innerText).to.equal('Confirmação\n')
-          })
+        cy.get('.progressBar__step').should('exist')
+        cy.get('.progressBar__step').then((elem) => {
+          expect(elem.length).to.equal(3)
+          expect(elem[0].innerText).to.equal('Endereços\n')
+          expect(elem[1].innerText).to.equal('Forma De Pagamento\n')
+          expect(elem[2].innerText).to.equal('Confirmação\n')
         })
-        it('will show Endereços, Forma De Pagamento and Confirmação steps without shipping', () => {
-          const api = `
+      })
+      it('will show Endereços, Forma De Pagamento and Confirmação steps without shipping', () => {
+        const api = `
           const key = 'ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz';
 
           const transaction = {
@@ -107,19 +106,19 @@ describe('Pagarme', () => {
             .open()
         `
 
-          openCustomWithParams(api)
-          cy.wait(700)
+        openCustomWithParams(api)
+        cy.wait(700)
 
-          cy.get('.progressBar__step').should('exist')
-          cy.get('.progressBar__step').then((elem) => {
-            expect(elem.length).to.equal(3)
-            expect(elem[0].innerText).to.equal('Endereços\n')
-            expect(elem[1].innerText).to.equal('Forma De Pagamento\n')
-            expect(elem[2].innerText).to.equal('Confirmação\n')
-          })
+        cy.get('.progressBar__step').should('exist')
+        cy.get('.progressBar__step').then((elem) => {
+          expect(elem.length).to.equal(3)
+          expect(elem[0].innerText).to.equal('Endereços\n')
+          expect(elem[1].innerText).to.equal('Forma De Pagamento\n')
+          expect(elem[2].innerText).to.equal('Confirmação\n')
         })
-        it('will show Forma De Pagamento and Confirmação steps', () => {
-          const api = `
+      })
+      it('will show Forma De Pagamento and Confirmação steps', () => {
+        const api = `
             const key = 'ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz';
 
             const transaction = {
@@ -167,15 +166,14 @@ describe('Pagarme', () => {
               .open()
           `
 
-          openCustomWithParams(api)
-          cy.wait(700)
+        openCustomWithParams(api)
+        cy.wait(700)
 
-          cy.get('.progressBar__step').should('exist')
-          cy.get('.progressBar__step').then((elem) => {
-            expect(elem.length).to.equal(2)
-            expect(elem[0].innerText).to.equal('Forma De Pagamento\n')
-            expect(elem[1].innerText).to.equal('Confirmação\n')
-          })
+        cy.get('.progressBar__step').should('exist')
+        cy.get('.progressBar__step').then((elem) => {
+          expect(elem.length).to.equal(2)
+          expect(elem[0].innerText).to.equal('Forma De Pagamento\n')
+          expect(elem[1].innerText).to.equal('Confirmação\n')
         })
       })
     })
