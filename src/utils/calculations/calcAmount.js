@@ -16,7 +16,11 @@ const calcAmount = (cart, shipping, transaction) => {
 
   const finalAmount = calcAmountFromCartItens(cart)
 
-  return fee + finalAmount
+  if (fee) {
+    return fee + finalAmount
+  }
+
+  return finalAmount
 }
 
 export default calcAmount

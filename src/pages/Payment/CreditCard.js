@@ -15,6 +15,7 @@ import {
   isEmpty,
   isNil,
   merge,
+  path,
   pathOr,
   prop,
   values,
@@ -67,6 +68,14 @@ const defaultCvv = defaultPlaceholder('•••')
 const defaultExpiration = defaultPlaceholder('MM/AA')
 const defaultHolderName = defaultPlaceholder('Nome Completo')
 const defaultCardNumber = defaultPlaceholder('•••• •••• •••• ••••')
+
+const getSubtitle = (
+  path([
+    'paymentConfig',
+    'creditcard',
+    'subtitle',
+  ])
+)
 
 class CreditCardPage extends Component {
   constructor (props) {
@@ -222,11 +231,12 @@ class CreditCardPage extends Component {
 
     const {
       allowSaveCreditCard,
-      enableCart,
       finalAmount,
+      enableCart,
       handlePreviousButton,
       payment,
       theme,
+      transaction,
     } = this.props
 
     const installments = ifElse(
@@ -234,6 +244,8 @@ class CreditCardPage extends Component {
       identity,
       values,
     )(this.props.installments)
+
+    const subtitle = getSubtitle(transaction)
 
     return (
       <Form
@@ -265,9 +277,13 @@ class CreditCardPage extends Component {
           ],
         }}
       >
-        <h2 className={theme.title}>
-          Cartão de crédito
-        </h2>
+        <header className={theme.header}>
+          <h1 className={theme.title}>Cartão de crédito</h1>
+          {
+            subtitle &&
+            <h2 className={theme.subtitle}>{ subtitle }</h2>
+          }
+        </header>
         <div className={theme.content}>
           <div className={theme.paymentCardContainer}>
             <PaymentCard

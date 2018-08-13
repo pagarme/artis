@@ -29,3 +29,5 @@ local.log
 /config/robrowser/auth.js
 cypress/plugins/
 cypress/support/
+cypress/screenshots
+cypress/videos
