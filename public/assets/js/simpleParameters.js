@@ -5,7 +5,7 @@ const simpleParameters = `<form action="/confirmacao" method="POST">
     type="submit"
     id="checkout-button"
     class="checkout-button"
-    data-key="ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz"
+    data-key="ek_test_f9cws0bU9700VqWE4UDuBlKLbvX4IO"
     data-company-name="Pagar.me"
     data-logo="http://www.seusite.com/seu-logo.jpg"
     data-theme-base="dark"

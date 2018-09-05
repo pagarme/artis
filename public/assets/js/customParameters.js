@@ -4,7 +4,7 @@ const mundipaggApi = `const configs = {
   token: 'SOME_TOKEN_HERE',
 };`
 
-const pagarmeApi = `const key = 'ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz';
+const pagarmeApi = `const key = 'ek_test_f9cws0bU9700VqWE4UDuBlKLbvX4IO';
 
 const configs = {
   companyName: 'Pagar.me',
@@ -102,6 +102,8 @@ const transaction = {
   paymentMethods: [
     ['creditcard', 'creditcard'],
     ['creditcard', 'boleto'],
+    'creditcard',
+    'boleto',
   ],
   defaultMethod: 'creditcard',
   paymentConfig: {
