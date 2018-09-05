@@ -101,7 +101,7 @@ describe('Custom', () => {
           cy.get('.paymentoptionsPage__optionsContainer').should('not.exist')
         })
 
-        it.only("will close checkout using header's button", () => {
+        it("will close checkout using header's button", () => {
           openCustomWithParams(api)
 
           cy.get('.paymentoptionsPage__optionsContainer > .actionButton__wrapper:first').click()

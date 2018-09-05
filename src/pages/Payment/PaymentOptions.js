@@ -42,6 +42,18 @@ const allowedOptions = [
     icon: <CradiCardMoreBoleto />,
     transitionTo: 'CREDITCARD_AND_BOLETO',
   },
+  {
+    paymentType: 'creditcard',
+    title: 'Cartão de crédito',
+    icon: <CreditCardIcon />,
+    transitionTo: 'SINGLE_CREDITCARD',
+  },
+  {
+    paymentType: 'boleto',
+    title: 'Boleto',
+    icon: <BoletoIcon />,
+    transitionTo: 'SINGLE_BOLETO',
+  },
 ]
 
 class PaymentOptionsPage extends React.Component {
@@ -90,11 +102,14 @@ class PaymentOptionsPage extends React.Component {
     const {
       enableCart,
       theme,
-      transaction,
       handlePageTransition,
       handlePreviousButton,
     } = this.props
-    const { paymentMethods } = this.props.transaction
+    const { paymentMethods, paymentConfig } = this.props.transaction
+
+    const methods = length(paymentMethods)
+      ? paymentMethods
+      : ['creditcard', 'boleto']
 
     const multipaymentButtons = reduce(
       (buttons, option) => {
@@ -105,11 +120,16 @@ class PaymentOptionsPage extends React.Component {
           transitionTo,
         } = option
 
-        if (not(contains(paymentType, paymentMethods))) {
+        if (not(contains(paymentType, methods))) {
           return buttons
         }
 
         const key = paymentType.toString()
+        const subtitle = pathOr(
+          '',
+          [paymentType, 'subtitle'],
+          paymentConfig
+        )
 
         return concat(
           buttons,
@@ -118,6 +138,7 @@ class PaymentOptionsPage extends React.Component {
               <ActionButton
                 icon={icon}
                 key={key}
+                subtitle={subtitle}
                 onClick={this.handleSelectOption(transitionTo)}
                 title={title}
               />
@@ -129,32 +150,21 @@ class PaymentOptionsPage extends React.Component {
       allowedOptions
     )
 
-    const creditcard = pathOr({}, ['paymentConfig', 'creditcard'], transaction)
-    const boleto = pathOr({}, ['paymentConfig', 'boleto'], transaction)
-
     return (
       <div className={theme.page}>
         <h2 className={theme.title}>
           Como quer pagar?
         </h2>
-        <div className={classNames(theme.optionsContainer,
-          {
-            [theme.column]: length(multipaymentButtons) === 0,
-          })}
+        <div className={
+          classNames(
+            theme.optionsContainer,
+            {
+              [theme.column]: true,
+            }
+          )
+        }
         >
-          <ActionButton
-            icon={<CreditCardIcon />}
-            onClick={this.handleSelectOption('SINGLE_CREDITCARD')}
-            subtitle={creditcard.subtitle}
-            title="Cartão de crédito"
-          />
           { multipaymentButtons }
-          <ActionButton
-            icon={<BoletoIcon />}
-            onClick={this.handleSelectOption('SINGLE_BOLETO')}
-            subtitle={boleto.subtitle}
-            title="Boleto"
-          />
         </div>
         <footer className={theme.footer}>
           <NavigationBar
