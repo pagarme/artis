@@ -10,6 +10,7 @@ import {
   __,
   always,
   and,
+  any,
   assoc,
   complement,
   dissoc,
@@ -28,7 +29,9 @@ import {
   pathOr,
   pipe,
   prop,
+  propEq,
   propOr,
+  reject,
   type,
 } from 'ramda'
 
@@ -322,6 +325,26 @@ class Checkout extends React.Component {
   navigateToPage () {
     const value = pathOr('', ['machineState', 'value'], this.props)
     const page = getActiveStep(value)
+    const tangible = prop('tangible')
+    const cartItems = pathOr([], ['apiData', 'cart', 'items'], this.props)
+
+    const isAllItemsTangible = any(tangible, cartItems)
+
+    if (
+      page === 'addresses' &&
+      hasRequiredPageData(page, this.props, 'billing') &&
+      !isAllItemsTangible &&
+      cartItems.length > 0
+    ) {
+      const haveAddresses = propEq('page', 'addresses')
+      this.setState({
+        steps: reject(haveAddresses, this.state.steps),
+      })
+
+      this.navigateNextPage()
+
+      return
+    }
 
     if (!hasRequiredPageData(page, this.props)) {
       ReactGA.pageview(`/${page}`)
@@ -558,6 +581,8 @@ class Checkout extends React.Component {
       'allowSaveCreditCard',
     ], apiData)
 
+    const antifraude = pathOr(true, ['configs', 'antifraude'], apiData)
+    const cartItems = pathOr([], ['cart', 'items'], apiData)
     const pagesCallbacks = path(['callbacks', 'pages'], apiData)
     const customerCallbacks = prop('customer')(pagesCallbacks)
     const billingCallbacks = prop('billing')(pagesCallbacks)
@@ -594,6 +619,8 @@ class Checkout extends React.Component {
             handlePreviousButton={this.navigatePreviousPage}
             enableCart={enableCart}
             handleSubmit={this.handleBillingFormSubmit}
+            antifraude={antifraude}
+            cartItems={cartItems}
           />
         </State>
         <State value="addresses.shipping">

@@ -62,7 +62,7 @@ const customerRequiredParams = {
   },
 }
 
-const hasRequiredPageData = (page, props) => {
+const hasRequiredPageData = (page, props, childrenPage) => {
   if (page === 'customer') {
     const customerHasAllProps = customerRequiredParams[props.acquirerName]
     const customer = pathOr({}, ['apiData', 'customer'], props)
@@ -81,6 +81,10 @@ const hasRequiredPageData = (page, props) => {
 
     const billing = pathOr({}, ['apiData', 'billing'], props)
     const shipping = pathOr({}, ['apiData', 'shipping'], props)
+
+    if (childrenPage === 'billing') {
+      return addressHasAllProps(billing)
+    }
 
     return addressHasAllProps(billing) && addressHasAllProps(shipping)
   }

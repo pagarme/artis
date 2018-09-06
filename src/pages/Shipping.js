@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import {
   isEmpty,
   merge,
+  mergeDeepLeft,
   omit,
   prop,
 } from 'ramda'
@@ -40,17 +41,9 @@ class ShippingPage extends Component {
   constructor (props) {
     super(props)
 
-    const { sameAddressForShipping, shipping } = props
+    const { shipping } = props
 
-    this.state = !sameAddressForShipping
-      ? {
-        ...merge(defaultShippingAddress, {
-          fee: shipping.fee,
-        }),
-      }
-      : {
-        ...merge(defaultShippingAddress, shipping),
-      }
+    this.state = mergeDeepLeft(shipping, defaultShippingAddress)
 
     this.setTextInputRef = (element) => {
       this.firstInput = element
@@ -273,7 +266,6 @@ ShippingPage.propTypes = {
     state: PropTypes.string,
     zipcode: PropTypes.string,
   }),
-  sameAddressForShipping: PropTypes.bool.isRequired,
 }
 
 ShippingPage.defaultProps = {
@@ -283,9 +275,8 @@ ShippingPage.defaultProps = {
   enableCart: false,
 }
 
-const mapStateToProps = ({ addresses, pageInfo }) => ({
+const mapStateToProps = ({ pageInfo }) => ({
   shipping: pageInfo.shipping,
-  sameAddressForShipping: addresses.sameAddressForShipping,
 })
 
 export default connect(mapStateToProps, {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
   allPass,
+  any,
   isEmpty,
   merge,
   omit,
@@ -47,6 +48,13 @@ const isBillingInformationsComplete = allPass(
     prop('zipcode'),
   ]
 )
+
+
+const isAllItemsTangible = (cartItems) => {
+  const tangible = prop('tangible')
+
+  return any(tangible, cartItems)
+}
 
 class BillingPage extends Component {
   constructor (props) {
@@ -163,11 +171,15 @@ class BillingPage extends Component {
     } = this.state
 
     const {
+      antifraude,
+      cartItems,
       theme,
       enableCart,
       handlePreviousButton,
       sameAddressForShipping,
     } = this.props
+
+    const showSwitch = antifraude && (isAllItemsTangible(cartItems) || cartItems.length === 0) //eslint-disable-line
 
     return (
       <Form
@@ -255,17 +267,20 @@ class BillingPage extends Component {
               placeholder="Escolha a UF"
             />
           </div>
-          <div className={theme.inputGroup}>
-            <p className={theme.switchLabel}>Entregar no mesmo endereço?</p>
-            <Switch
-              checked={sameAddressForShipping}
-              onChange={this.handleSameAddressChange}
-              strings={{
-                on: 'Sim',
-                off: 'Não',
-              }}
-            />
-          </div>
+          {
+            showSwitch &&
+            <div className={theme.inputGroup}>
+              <p className={theme.switchLabel}>Entregar no mesmo endereço?</p>
+              <Switch
+                checked={sameAddressForShipping}
+                onChange={this.handleSameAddressChange}
+                strings={{
+                  on: 'Sim',
+                  off: 'Não',
+                }}
+              />
+            </div>
+          }
         </div>
         <footer className={theme.footer}>
           <NavigationBar
@@ -282,6 +297,8 @@ class BillingPage extends Component {
 }
 
 BillingPage.propTypes = {
+  antifraude: PropTypes.bool.isRequired,
+  cartItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   theme: PropTypes.shape({
     addressForm: PropTypes.string,
     content: PropTypes.string,
