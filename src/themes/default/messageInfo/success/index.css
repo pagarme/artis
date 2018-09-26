@@ -21,7 +21,7 @@
 }
 
 .icon {
-  fill: var(--color-success);
+  fill: var(--checkout-primary-color);
   width: 43px;
 }
 
@@ -53,7 +53,7 @@
 
 .infoValue {
   font-size: 16px;
-  color: var(--color-white);
+  color: var(--text-color);
   margin: 0;
 }
 

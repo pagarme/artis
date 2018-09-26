@@ -55,7 +55,7 @@
 
 .subtitle,
 .question {
-  color: var(--color-white);
+  color: var(--text-color);
 }
 
 .questionList {
@@ -65,7 +65,7 @@
 
 .questionTitle {
   font-size: 14px;
-  color: #a7a7a7;
+  color: var(--text-color);
   margin: 0;
 }
 

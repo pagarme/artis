@@ -7,7 +7,7 @@
   --progress-linear-fill-height: 3px;
 
   --progress-linear-fill-enabled: linear-gradient(to left, var(--checkout-secondary-color), var(--checkout-primary-color));
-  --progress-linear-back-enabled: var(--color-grey-64);
+  --progress-linear-back-enabled: var(--steps-line-color);
 }
 
 .linearProgress,

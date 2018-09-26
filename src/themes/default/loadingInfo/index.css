@@ -97,7 +97,7 @@
 }
 
 .subtitle {
-  color: var(--color-white);
+  color: var(--text-color);
   font-size: 16px;
   letter-spacing: 0.03em;
   margin-bottom: 34px;

@@ -22,7 +22,7 @@
   width: 700px;
   max-height: 578px;
   min-height: 578px;
-  background: var(--color-grey-83);
+  background: var(--checkout-background-color);
   border-radius: 4px;
   z-index: 9999;
   box-shadow: 0 0 13px -2px #757575;
@@ -52,7 +52,7 @@
 
 .content {
   justify-content: center;
-  background: var(--color-grey-83);
+  background: var(--checkout-background-color);
   display: flex;
   flex: 1;
 }

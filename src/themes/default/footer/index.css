@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: space-between;
   min-height: 40px;
-  background-color: #242424;
+  background-color: var(--header-footer-color);
 }
 
 .safe {
@@ -28,7 +28,7 @@
 }
 
 .safeText {
-  color: var(--color-grey-39);
+  color: var(--footer-bold-color);
   font-weight: bold;
 }
 
@@ -41,6 +41,6 @@
 }
 
 .companyName {
-  color: var(--color-white);
+  color: var(--footer-bold-color);
   font-weight: bold;
 }

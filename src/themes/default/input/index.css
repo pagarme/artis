@@ -6,13 +6,10 @@
   --input-font-family: var(--primary-font-family);
   --input-container-letter-spacing: var(--letter-spacing);
 
-  --input-color: var(--color-white);
-
   --input-textarea-border-color: var(--color-grey-53);
   --input-textarea-border-radius: 0;
   --input-textarea-border-style: solid;
   --input-textarea-border-width: 0 0 2px 0;
-  --input-textarea-caret-default-color: var(--color-white);
   --input-textarea-height: calc(100% - 25px);
   --input-textarea-placeholder-opacity: 0;
 
@@ -21,9 +18,9 @@
   --input-textarea-hover-border-color: var(--color-grey-33);
 
   --input-textarea-focus-transition-time: 100ms;
-  --input-textarea-focus-placeholder-color: var(--color-grey-11);
+  --input-textarea-focus-placeholder-color: var(--input-focused-color);
   --input-textarea-focus-placeholder-opacity: 1;
-  --input-textarea-focus-border-color: var(--color-grey-11);
+  --input-textarea-focus-border-color: var(--input-focused-color);
 
   --input-font-size: var(--font-size-medium);
 
@@ -38,7 +35,7 @@
   --input-label-top: 20px;
   --input-label-transition-time: 0.1s;
 
-  --input-label-color-focus: var(--color-grey-11);
+  --input-label-color-focus: var(--input-focused-color);
 
   --input-multiline-content-present-top: 0;
   --input-multiline-expander-min-height: 25px;
@@ -53,7 +50,7 @@
 
   --input-container-textarea-padding-top: 25px;
 
-  --input-icon-active-color: var(--color-success);
+  --input-icon-active-color: var(--checkout-primary-color);
   --input-icon-inactive-color: var(--color-error);
   --input-icon-margin: var(--spacing-small);
   --input-icon-padding: 22px;
@@ -98,7 +95,7 @@
   border-style: var(--input-textarea-border-style);
   border-width: var(--input-textarea-border-width);
   color: var(--input-color);
-  caret-color: var(--input-textarea-caret-default-color);
+  caret-color: var(--input-color);
   display: block;
   font-size: var(--input-font-size);
   min-width: 100%;

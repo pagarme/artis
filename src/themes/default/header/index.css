@@ -11,7 +11,7 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 110px;
-  background: var(--color-grey-86);
+  background: var(--header-footer-color);
   width: 100%;
   border-radius: 4px;
 }
