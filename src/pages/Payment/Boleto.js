@@ -25,7 +25,7 @@ import {
   updateFinalAmount,
 } from '../../actions'
 import { formatToBRL } from './../../utils/masks/'
-import BoletoDark from '../../../src/images/boleto-dark.svg'
+import BoletoIcon from '../../components/Svg/Boleto'
 
 const consumeTheme = ThemeConsumer('UIBoletoPage')
 
@@ -158,7 +158,17 @@ class Boleto extends React.PureComponent {
           }
         </header>
         <div className={theme.content}>
-          <BoletoDark className={theme.icon} />
+          <BoletoIcon
+            width={126}
+            height={90}
+            viewBox={[50, 40]}
+            fill={this.props.checkoutColors.textColor}
+            gradient={{
+              initial: this.props.checkoutColors.primaryColor,
+              final: this.props.checkoutColors.secondaryColor,
+            }}
+            className={theme.icon}
+          />
           <h3 className={theme.amountTitle}>
             {this.getValueToPayText(transaction)}
           </h3>
@@ -196,6 +206,7 @@ Boleto.propTypes = {
     warning: PropTypes.string,
     wrapper: PropTypes.string,
   }).isRequired,
+  checkoutColors: PropTypes.shape().isRequired,
   callbacks: PropTypes.shape({
     onEnter: PropTypes.func,
     onExit: PropTypes.func,

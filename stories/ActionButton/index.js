@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react'
 
 import { ActionButton } from '../../src/components'
 import style from './style.css'
-import BoletoIcon from '../../src/images/boleto.svg'
-import CreditCardIcon from '../../src/images/credit-card.svg'
+import BoletoIcon from '../../src/components/Svg/Boleto'
+import CreditCardIcon from '../../src/components/Svg/CreditCard'
 import TwoCreditCards from '../../src/images/two-credit-cards.svg'
 import CradiCardMoreBoleto from '../../src/images/credit-card-more-boleto.svg'
 

@@ -20,8 +20,8 @@ import {
   NavigationBar,
 } from '../../components'
 
-import BoletoIcon from '../../images/boleto.svg'
-import CreditCardIcon from '../../images/credit-card.svg'
+import BoletoIcon from '../../components/Svg/Boleto'
+import CreditCardIcon from '../../components/Svg/CreditCard'
 import TwoCreditCards from '../../images/two-credit-cards.svg'
 import CradiCardMoreBoleto from '../../images/credit-card-more-boleto.svg'
 
@@ -29,7 +29,7 @@ import { updateFinalAmount } from '../../actions'
 
 const consumeTheme = ThemeConsumer('UIPaymentOptionsPage')
 
-const allowedOptions = [
+const allowedOptions = props => [
   {
     paymentType: ['creditcard', 'creditcard'],
     title: '2 Cartões',
@@ -45,13 +45,29 @@ const allowedOptions = [
   {
     paymentType: 'creditcard',
     title: 'Cartão de crédito',
-    icon: <CreditCardIcon />,
+    icon: <CreditCardIcon
+      width={51}
+      height={36}
+      viewBox={[51, 36]}
+      gradient={{
+        initial: props.checkoutColors.primaryColor,
+        final: props.checkoutColors.secondaryColor,
+      }}
+    />,
     transitionTo: 'SINGLE_CREDITCARD',
   },
   {
     paymentType: 'boleto',
     title: 'Boleto',
-    icon: <BoletoIcon />,
+    icon: <BoletoIcon
+      width={51}
+      height={36}
+      viewBox={[51, 36]}
+      gradient={{
+        initial: props.checkoutColors.primaryColor,
+        final: props.checkoutColors.secondaryColor,
+      }}
+    />,
     transitionTo: 'SINGLE_BOLETO',
   },
 ]
@@ -147,7 +163,7 @@ class PaymentOptionsPage extends React.Component {
         )
       },
       [],
-      allowedOptions
+      allowedOptions(this.props)
     )
 
     return (

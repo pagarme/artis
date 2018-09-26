@@ -12,6 +12,7 @@ const configs = {
   themeBase: 'dark',
   primaryColor: '#7ad499',
   secondaryColor: '#46b67c',
+  headerFooterColor: 'red',
   backgroundColor: '#2b2b2b',
   postback: 'http://pagar.me',
   orderUrl: 'http://www.google.com',

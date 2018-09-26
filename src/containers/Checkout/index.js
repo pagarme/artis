@@ -607,6 +607,7 @@ class Checkout extends React.Component {
         <State value="payment.selection">
           <PaymentOptionsPage
             callbacks={selectionCallbacks}
+            checkoutColors={this.props.checkoutColors}
             enableCart={enableCart}
             handlePreviousButton={this.navigatePreviousPage}
             handlePageTransition={this.handlePageTransition}
@@ -628,6 +629,7 @@ class Checkout extends React.Component {
         <State value="payment.singleBoleto">
           <BoletoPage
             callbacks={singleBoletoCallbacks}
+            checkoutColors={this.props.checkoutColors}
             enableCart={enableCart}
             handlePreviousButton={this.navigatePreviousPage}
             handleSubmit={this.handleFormSubmit}
@@ -745,6 +747,7 @@ Checkout.propTypes = {
   acquirerName: PropTypes.string.isRequired,
   apiData: PropTypes.shape().isRequired,
   apiErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  checkoutColors: PropTypes.shape().isRequired,
   creditCard: PropTypes.shape({
     cardId: PropTypes.string,
   }),
