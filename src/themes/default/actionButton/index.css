@@ -17,8 +17,7 @@
 .wrapper button {
   width: 205px;
   height: 76px;
-  background: var(--color-black);
-  border: 2px solid #4b4b4b;
+  border: 2px solid var(--action-button-border);
   border-radius: 5px;
   box-shadow: 0 2px 11px 4px rgba(0, 0, 0, 0.26);
   padding: 18px;
@@ -31,11 +30,11 @@
 .wrapper button:active,
 .wrapper button:hover,
 .wrapper button:focus {
-  background: var(--color-black);
+  background: var(--action-button-background);
 }
 
 .wrapper button:hover {
-  border-color: var(--color-grey-33);
+  border-color: var(--action-button-hover-border);
 }
 
 .wrapper button:focus {
@@ -48,6 +47,8 @@
   max-height: 51px;
   margin-left: 0;
   margin-right: 10px;
+  fill: var(--action-button-icon-fill);
+  color: var(--action-button-icon-fill);
 }
 
 .textWrapper {
@@ -60,15 +61,15 @@
 }
 
 .title {
-  color: var(--color-white);
-  font-weight: 900;
+  color: var(--action-button-title-color);
+  font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 0;
   margin-top: 5px;
 }
 
 .subtitle {
-  color: #a7a7a7;
+  color: var(--action-button-subtitle-color);
   margin-bottom: 3px;
   margin-top: 1px;
 }

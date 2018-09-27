@@ -15,7 +15,7 @@
   font-family: var(--primary-font-family);
   font-weight: 900;
   font-size: var(--font-size-large);
-  color: var(--color-title);
+  color: var(--checkout-primary-color);
   letter-spacing: 0.02em;
   align-items: center;
   display: flex;

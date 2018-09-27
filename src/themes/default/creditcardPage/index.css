@@ -54,7 +54,7 @@
 }
 
 .title {
-  color: var(--color-title);
+  color: var(--checkout-primary-color);
   font-size: var(--font-size-large);
   font-family: var(--primary-font-family);
   font-weight: 900;
@@ -63,7 +63,7 @@
 }
 
 .subtitle {
-  color: var(--color-white);
+  color: var(--text-color);
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.04em;

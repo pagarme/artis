@@ -15,6 +15,7 @@ const App = ({
   apiErrors,
   store,
   acquirerName,
+  checkoutColors,
   clientTarget,
   clientThemeBase,
   form,
@@ -32,6 +33,7 @@ const App = ({
             apiData={apiData}
             apiErrors={apiErrors}
             base={clientThemeBase}
+            checkoutColors={checkoutColors}
             targetElement={clientTarget}
             form={form}
           />
@@ -45,6 +47,7 @@ App.propTypes = {
   acquirerName: PropTypes.string.isRequired,
   apiData: PropTypes.shape().isRequired,
   apiErrors: PropTypes.arrayOf(PropTypes.string),
+  checkoutColors: PropTypes.shape().isRequired,
   clientTarget: PropTypes.shape().isRequired,
   clientThemeBase: PropTypes.string.isRequired,
   store: PropTypes.shape().isRequired,

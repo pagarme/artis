@@ -3,7 +3,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
 import moment from 'moment'
-import Colr from 'colr'
 import {
   always,
   applySpec,
@@ -22,10 +21,10 @@ import createStore from './store'
 
 import apiValidation from './utils/validations/apiValidation'
 import createElement from './utils/helpers/createElement'
-import DEFAULT_COLORS from './utils/data/colors'
 import getStrategyName from './utils/strategies/getStrategyName'
-import setColors from './utils/helpers/setColors'
+import getColors from './utils/helpers/getColors'
 import setTheme from './utils/helpers/setTheme'
+import setColors from './utils/helpers/setColors'
 import getParentElement from './utils/helpers/getParentElement'
 
 moment.locale('pt-br')
@@ -48,7 +47,7 @@ function createFormListener (button) {
   return form
 }
 
-const openCheckout = (apiData, clientThemeBase, form) => {
+const openCheckout = (apiData, clientThemeBase, form, colors) => {
   const {
     configs = {},
     key,
@@ -80,6 +79,7 @@ const openCheckout = (apiData, clientThemeBase, form) => {
       acquirerName={acquirerName}
       apiData={apiData}
       apiErrors={apiErrors}
+      checkoutColors={colors}
       clientTarget={clientTarget}
       clientThemeBase={clientThemeBase}
       form={form}
@@ -97,23 +97,21 @@ const preRender = (apiData, form = null) => {
     primaryColor,
     secondaryColor,
     backgroundColor,
+    headerFooterColor,
   } = configs
 
   const clientThemeBase = themeBase || setTheme(primaryColor) || 'dark'
 
-  const defaultPrimaryColor = DEFAULT_COLORS[clientThemeBase].primary
-  const defaultSecondaryColor = DEFAULT_COLORS[clientThemeBase].secondary
-  const defaulBackgroundColor = DEFAULT_COLORS[clientThemeBase].backgroundColor
-
-  const bColor = backgroundColor || defaulBackgroundColor
-  const pColor = primaryColor || defaultPrimaryColor
-  const sColor = secondaryColor || (
-    pColor === defaultPrimaryColor
-      ? defaultSecondaryColor
-      : Colr.fromHex(pColor).darken(30).toHex()
+  const colors = getColors(
+    clientThemeBase,
+    themeBase,
+    primaryColor,
+    secondaryColor,
+    backgroundColor,
+    headerFooterColor
   )
 
-  setColors(pColor, sColor, bColor)
+  setColors(colors)
 
   return {
     apiData: {
@@ -140,7 +138,7 @@ const preRender = (apiData, form = null) => {
       return this
     },
     open: function open () {
-      openCheckout(this.apiData, clientThemeBase, form)
+      openCheckout(this.apiData, clientThemeBase, form, colors)
     },
   }
 }
@@ -152,6 +150,7 @@ const parseToApiData = applySpec({
     primaryColor: prop('primaryColor'),
     backgroundColor: prop('backgroundColor'),
     secondaryColor: prop('secondaryColor'),
+    headerFooterColor: prop('headerFooterColor'),
     themeBase: prop('themeBase'),
     createTransaction: prop('createTransaction'),
   }),

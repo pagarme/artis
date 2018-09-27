@@ -44,7 +44,7 @@
 
 .subtitle,
 .question {
-  color: var(--color-white);
+  color: var(--text-color);
 }
 
 .line {
@@ -64,13 +64,13 @@
 
 .infoTitle {
   font-size: 18px;
-  color: #a7a7a7;
+  color: var(--text-color);
   margin: 0;
 }
 
 .infoSubtitle {
   font-size: 14px;
-  color: var(--color-white);
+  color: var(--text-color);
 }
 
 .wrapper button {

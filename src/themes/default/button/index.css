@@ -64,8 +64,8 @@
 }
 
 .button:disabled {
-  background: #484848;
-  color: #909090;
+  background: var(--button-disabled-background-color);
+  color: var(--button-disabled-color);
   cursor: not-allowed;
 }
 
@@ -89,8 +89,8 @@
 .outline,
 .outline:active,
 .outline:focus {
-  color: var(--color-white);
-  box-shadow: inset 0 0 0 2px var(--color-white);
+  color: var(--button-outline-color);
+  box-shadow: inset 0 0 0 2px var(--button-outline-box-shadow);
   background: transparent;
 }
 
@@ -99,12 +99,13 @@
 }
 
 .outline:hover svg {
-  fill: var(--color-black);
+  fill: var(--button-outline-hover-color);
 }
 
 .outline:hover {
   background: var(--checkout-primary-color);
-  color: var(--color-black);
+  color: var(--button-outline-hover-color);
+  box-shadow: inset 0 0 0 2px transparent;
 }
 
 /*

@@ -12,6 +12,7 @@ const simpleParameters = `<form action="/confirmacao" method="POST">
     data-primary-color="#7ad499"
     data-secondary-color="#46b67c"
     data-background-color="#2b2b2b"
+    data-header-footer-color="#2b2b2b"
     data-amount="2000"
     data-payment-method="creditcard,boleto">
     Pagar R$ 2.000,00

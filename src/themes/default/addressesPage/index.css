@@ -27,7 +27,7 @@
   font-family: var(--primary-font-family);
   font-weight: 900;
   font-size: var(--font-size-large);
-  color: var(--color-title);
+  color: var(--checkout-primary-color);
   text-align: center;
   letter-spacing: 0.02em;
   display: flex;
@@ -80,7 +80,7 @@
   font-family: var(--primary-font-family);
   font-weight: 900;
   font-style: italic;
-  color: var(--color-white);
+  color: var(--addresses-switch-color);
   font-size: 13px;
 }
 

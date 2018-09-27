@@ -10,7 +10,7 @@
   background-color: var(--color-grey-74);
   padding: 21px;
   border: 2px solid var(--color-grey-77);
-  box-shadow: inset 0 0 1px 1px var(--color-grey-83);
+  box-shadow: inset 0 0 1px 1px var(--checkout-background-color);
 }
 
 .emailFormTitle {
