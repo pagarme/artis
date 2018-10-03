@@ -40,7 +40,7 @@ import {
   addCreditCard,
   addPageInfo,
   updateFinalAmount,
-} from '../../actions'
+} from '../../redux/actions'
 
 import { NavigationBar, Form } from '../../components'
 

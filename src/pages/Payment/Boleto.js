@@ -23,7 +23,7 @@ import { NavigationBar } from '../../components'
 import {
   addPageInfo,
   updateFinalAmount,
-} from '../../actions'
+} from '../../redux/actions'
 import { formatToBRL } from './../../utils/masks/'
 import BoletoIcon from '../../components/Svg/Boleto'
 

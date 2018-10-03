@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 
 import { formatToBRL } from '../../utils/masks/'
 import Cart from './index'
-import createStore from '../../store'
+import createStore from '../../redux/store'
 
 const store = createStore({
   transaction: {

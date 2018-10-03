@@ -32,7 +32,7 @@ import {
   maxLength,
   required,
 } from '../utils/validations'
-import { addPageInfo } from '../actions'
+import { addPageInfo } from '../redux/actions'
 
 const consumeTheme = ThemeConsumer('UICustomerPage')
 

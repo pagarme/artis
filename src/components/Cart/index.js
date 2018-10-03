@@ -20,7 +20,7 @@ import {
 } from 'ramda'
 import { ThemeConsumer } from 'former-kit'
 
-import { toggleCart } from '../../actions'
+import { toggleCart } from '../../redux/actions'
 import { formatToBRL } from '../../utils/masks/'
 import { Button } from '../'
 

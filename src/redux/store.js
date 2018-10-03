@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import { prop } from 'ramda'
 import reducers from './reducers'
-import calcAmount from './utils/calculations/calcAmount'
+import calcAmount from '../utils/calculations/calcAmount'
 
 const middlewares = []
 
