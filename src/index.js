@@ -17,7 +17,7 @@ import {
 import 'moment/locale/pt-br'
 
 import App from './App'
-import createStore from './store'
+import createStore from './redux/store'
 
 import apiValidation from './utils/validations/apiValidation'
 import createElement from './utils/helpers/createElement'

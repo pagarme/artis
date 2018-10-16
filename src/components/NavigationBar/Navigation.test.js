@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 
 import NavigationBar from './index'
 
-import createStore from '../../store'
+import createStore from '../../redux/store'
 
 const store = createStore({
   transaction: {

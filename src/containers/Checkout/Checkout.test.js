@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Checkout from './'
-import createStore from '../../store'
+import createStore from '../../redux/store'
 
 const store = createStore({
   transaction: {

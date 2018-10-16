@@ -5,7 +5,7 @@ import Error from '../../src/components/MessageInfo/Error'
 import Analysis from '../../src/components/MessageInfo/Analysis'
 import SuccessInfo from '../../src/components/MessageInfo/Success'
 import Boleto from '../../src/pages/Payment/Boleto'
-import createStore from '../../src/store'
+import createStore from '../../src/redux/store'
 import style from './style.css'
 
 const creditCard = {

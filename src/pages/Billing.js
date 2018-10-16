@@ -18,7 +18,7 @@ import {
 import options from '../utils/data/states'
 import { removeMask } from '../utils/masks/'
 import getAddress from '../utils/helpers/getAddress'
-import { addPageInfo, toggleSameAddressForShipping } from '../actions'
+import { addPageInfo, toggleSameAddressForShipping } from '../redux/actions'
 import {
   isFormValid,
   isNumber,

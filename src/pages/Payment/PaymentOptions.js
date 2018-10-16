@@ -25,7 +25,7 @@ import CreditCardIcon from '../../components/Svg/CreditCard'
 import TwoCreditCards from '../../images/two-credit-cards.svg'
 import CradiCardMoreBoleto from '../../images/credit-card-more-boleto.svg'
 
-import { updateFinalAmount } from '../../actions'
+import { updateFinalAmount } from '../../redux/actions'
 
 const consumeTheme = ThemeConsumer('UIPaymentOptionsPage')
 

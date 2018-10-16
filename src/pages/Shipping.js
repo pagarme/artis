@@ -16,7 +16,7 @@ import {
 import options from '../utils/data/states'
 import { removeMask } from '../utils/masks/'
 import getAddress from '../utils/helpers/getAddress'
-import { addPageInfo } from '../actions'
+import { addPageInfo } from '../redux/actions'
 import {
   isFormValid,
   isNumber,

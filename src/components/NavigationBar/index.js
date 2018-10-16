@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { ThemeConsumer } from 'former-kit'
 
-import { toggleCart } from './../../actions'
+import { toggleCart } from './../../redux/actions'
 
 import NavigateBack from './../../images/navigate_back.svg'
 import NavigateNext from './../../images/navigate_next.svg'

@@ -40,7 +40,7 @@ import {
   addPageInfo,
   addTransactionValues,
   updateCardId,
-} from '../../actions'
+} from '../../redux/actions'
 import strategies from '../../utils/strategies'
 import getErrorMessage from '../../utils/data/errorMessages'
 import {
