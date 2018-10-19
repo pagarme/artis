@@ -18,6 +18,9 @@ class Analysis extends React.Component {
     const {
       closeCheckout,
       theme,
+      subtitle,
+      title,
+      text,
     } = this.props
 
     return (
@@ -26,16 +29,18 @@ class Analysis extends React.Component {
           <AnalysisImage
             className={theme.icon}
           />
-          <h1 className={theme.title}>Pagamento em análise</h1>
-          <h2 className={theme.subtitle}>Aguardando confirmação</h2>
+          <h1 className={theme.title}>
+            { title }
+          </h1>
+          <h2 className={theme.subtitle}>
+            { subtitle }
+          </h2>
           <hr className={theme.line} />
           <h3 className={theme.infoTitle}>
             O que acontece agora?
           </h3>
           <p className={theme.infoSubtitle}>
-            Em breve você recebrá um e-mail
-            dizendo se deu tudo certo com seu pagamento ou não.
-            Caso o pagamento não seja aprovado revise seus dados e tente novamente. { /* eslint-disable-line max-len */ }
+            { text }
           </p>
           <Button
             fill="outline"
@@ -57,6 +62,17 @@ Analysis.propTypes = {
     question: PropTypes.string,
   }).isRequired,
   closeCheckout: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  text: PropTypes.string,
+}
+
+Analysis.defaultProps = {
+  title: 'Pagamento em análise',
+  subtitle: 'Aguardando confirmação',
+  text: `Em breve você recebrá um e-mail
+  dizendo se deu tudo certo com seu pagamento ou não.
+  Caso o pagamento não seja aprovado revise seus dados e tente novamente.`,
 }
 
 export default consumeTheme(Analysis)

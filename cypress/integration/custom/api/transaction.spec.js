@@ -324,26 +324,6 @@ describe('Custom', () => {
               expect(elem[0].innerText).contains('50,00')
             })
           })
-
-          it('and showing the expiration date', () => {
-            cy.visit('/')
-
-            cy.get('#btn-open-textarea').click()
-            cy.get('#textarea-code').type(api)
-            cy.get('#btn-open-checkout').click()
-            cy.wait(300)
-
-            cy.get('.actionButton__textWrapper:last').click()
-            cy.get('[type="submit"]:last').click()
-            cy.get('[type="submit"]:last').click()
-
-            cy.wait(300)
-            cy.get('.success__content > .success__infoValue:nth-child(4)').should('exist')
-
-            cy.get('.success__content > .success__infoValue:nth-child(4)').then((elem) => {
-              expect(elem[0].innerText).contains('30/11/2018')
-            })
-          })
         })
 
         describe('with a credit card transaction', () => {

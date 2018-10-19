@@ -61,7 +61,7 @@ describe('Custom', () => {
 
           cy.wait(400)
 
-          cy.get('.success__footer > button:last').click()
+          cy.get('.button__outline:last').click()
 
           cy.get('.paymentoptionsPage__optionsContainer').should('not.exist')
         })

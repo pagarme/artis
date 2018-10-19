@@ -20,6 +20,7 @@
   font-family: var(--primary-font-family);
   justify-content: center;
   text-align: center;
+  padding-top: 20px;
 }
 
 .title {
