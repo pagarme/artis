@@ -53,7 +53,6 @@ const parseBoletoData = applySpec({
 
 const parseToPayload = applySpec({
   encryption_key: prop('key'),
-  postback_url: prop('postback'),
   capture: always(true),
   amount: prop('amount'),
   payment_method: pipe(

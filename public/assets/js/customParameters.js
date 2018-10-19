@@ -14,7 +14,6 @@ const configs = {
   secondaryColor: '#46b67c',
   headerFooterColor: 'red',
   backgroundColor: '#2b2b2b',
-  postback: 'http://pagar.me',
   orderUrl: 'http://www.google.com',
   enableCart: true,
   createTransaction: true,
