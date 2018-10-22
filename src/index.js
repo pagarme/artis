@@ -26,6 +26,7 @@ import getColors from './utils/helpers/getColors'
 import setTheme from './utils/helpers/setTheme'
 import setColors from './utils/helpers/setColors'
 import getParentElement from './utils/helpers/getParentElement'
+import { insertRelativePosition } from './utils/helpers/bodyCss'
 
 moment.locale('pt-br')
 
@@ -73,6 +74,8 @@ const openCheckout = (apiData, clientThemeBase, form, colors) => {
   )(acquirerName)
 
   const store = createStore(apiData)
+
+  insertRelativePosition()
 
   ReactDOM.render(
     <App
