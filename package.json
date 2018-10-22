@@ -76,6 +76,7 @@
     "html-webpack-plugin": "2.30.1",
     "husky": "0.14.3",
     "jest": "22.1.4",
+    "npm-check-updates": "2.14.2",
     "nyc": "11.6.0",
     "postcss": "5.0.0",
     "postcss-cssnext": "3.1.0",
@@ -90,7 +91,7 @@
     "redux-logger": "3.0.6",
     "request": "2.85.0",
     "shortid": "2.2.8",
-    "start-server-and-test": "^1.5.0",
+    "start-server-and-test": "1.5.0",
     "style-loader": "0.19.1",
     "stylelint": "8.4.0",
     "stylelint-config-pagarme-react": "1.2.0",
@@ -102,7 +103,8 @@
     "webpack-dev-server": "2.11.1"
   },
   "scripts": {
-    "precommit": "yarn lint && jest",
+    "precommit": "lint && jest",
+    "check-dependencies": "ncu",
     "build": "node scripts/build.js",
     "coverage": "nyc --reporter=html --reporter=text --lines 300 npm run test-coverage",
     "deploy-storybook": "storybook-to-ghpages",
