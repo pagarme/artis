@@ -9,7 +9,14 @@ Veja online os componentes desenvolvidos no nosso [Storybook](https://pagarme.gi
 
 ## Rodando o projeto
 
-Na pasta [webapp](webapp) você pode ver mais detalhes sobre como rodar o projeto.
+Para executá-lo, basta instalar as dependências do projeto e rodar o comando `start` usando seu gerenciador de dependências.
+
+Ex:
+```bash
+yarn start
+
+npm start
+```
 
 ## Implementando o modal de checkout
 
