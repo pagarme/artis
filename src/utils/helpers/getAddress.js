@@ -1,4 +1,4 @@
-import cep from 'cep-promise/dist/cep-promise-browser.min'
+import cep from 'cep-promise/dist/cep-promise.min'
 
 const getAddress = zipcode =>
   cep(zipcode)
