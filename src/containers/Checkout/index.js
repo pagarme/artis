@@ -48,6 +48,7 @@ import {
   isFormValid,
 } from '../../utils/validations'
 import calcAmount from '../../utils/calculations/calcAmount'
+import { insertStaticPosition } from '../../utils/helpers/bodyCss'
 
 import {
   AnalysisInfo,
@@ -492,6 +493,7 @@ class Checkout extends React.Component {
         targetElement
       )
       if (onClose) {
+        insertStaticPosition()
         onClose()
       }
     }, 500)
