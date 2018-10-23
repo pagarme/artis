@@ -1,8 +1,7 @@
 import React from 'react'
 
 import { storiesOf } from '@storybook/react'
-import CloseIcon from 'react-icons/lib/io/android-close'
-import BackIcon from 'react-icons/lib/io/android-arrow-back'
+import { IoIosCloseCircle, IoIosArrowBack } from 'react-icons/io'
 
 import { Button } from '../../src/components'
 import NavigateNext from './../../src/images/navigate_next.svg'
@@ -77,8 +76,8 @@ storiesOf('Buttons', module)
 
       <div>
         <h2>Clean buttons for icons</h2>
-        <Button fill="clean" icon={<BackIcon size={30} />} />
-        <Button fill="clean" icon={<CloseIcon size={30} />} />
+        <Button fill="clean" icon={<IoIosArrowBack size={30} />} />
+        <Button fill="clean" icon={<IoIosCloseCircle size={30} />} />
       </div>
     </div>
   ))
