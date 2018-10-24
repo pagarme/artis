@@ -59,6 +59,7 @@ describe('Custom', () => {
           cy.get('[type="submit"]:last').click()
           cy.get('.navigation-bar__buttonContainer > button:first').click()
 
+          cy.wait(300)
           cy.get('.addressesPage__title').should('exist')
           cy.get('.addressesPage__title').then((elem) => {
             expect(elem[0].innerText).to.eq('Qual é seu endereço de cobrança?')

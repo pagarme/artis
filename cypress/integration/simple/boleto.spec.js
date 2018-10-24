@@ -32,7 +32,7 @@ describe('Pagarme', () => {
         .contains('Aguardando pagamento')
 
       cy.get('h2')
-        .contains(' Seu boleto será gerado em breve')
+        .contains('Seu boleto será gerado em breve')
 
       cy.get('.analysis__infoSubtitle')
         .contains('Em breve o lojista lhe enviará o boleto bancário.')

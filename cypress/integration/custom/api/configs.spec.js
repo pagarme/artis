@@ -134,6 +134,7 @@ describe('Custom', () => {
 
           cy.get('.actionButton__wrapper:first button').click()
           cy.get('[type="submit"]:last').click()
+          cy.wait(300)
           cy.get('.creditcardPage__paymentCardContainer p').should('exist')
           cy.get('.creditcardPage__paymentCardContainer p').then(
             (elem) => {
