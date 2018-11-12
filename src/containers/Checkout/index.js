@@ -90,6 +90,25 @@ const isTransactionSuccess = status =>
 const isTransactionAnalysis = status =>
   status === 'processing' || status === 'pending_review'
 
+const getBoletoInformations = (thisOfClass) => {
+  const choosedPaymentType = path([
+    'props',
+    'pageInfo',
+    'payment',
+    'type',
+  ], thisOfClass)
+
+  if (choosedPaymentType === 'boleto') {
+    return {
+      title: 'Aguardando pagamento',
+      subtitle: 'Seu boleto será gerado em breve',
+      text: 'Em breve o lojista lhe enviará o boleto bancário.',
+    }
+  }
+
+  return {}
+}
+
 class Checkout extends React.Component {
   state = {
     closingEffect: false,
@@ -127,8 +146,6 @@ class Checkout extends React.Component {
 
     const {
       status,
-      boleto_barcode: boletoBarcode,
-      boleto_url: boletoUrl,
       errors,
     } = response
 
@@ -136,6 +153,13 @@ class Checkout extends React.Component {
       response,
       creditCard
     )
+
+    const choosedPaymentType = path([
+      'props',
+      'pageInfo',
+      'payment',
+      'type',
+    ], this)
 
     if (isOnlyCreationOfCardId(status, errors)) {
       if (onSuccess) {
@@ -146,23 +170,20 @@ class Checkout extends React.Component {
     }
 
     if (isTransactionSuccess(status)) {
-      const boleto = {
-        boletoUrl,
-        boletoBarcode,
-      }
-
-      const successState = boletoBarcode || boletoUrl
-        ? boleto
-        : {}
-
       if (onSuccess) {
         this.submitForm()
         onSuccess(callbackPayload)
       }
 
-      return this.setState({
-        ...successState,
-      }, transition('TRANSACTION_SUCCESS'))
+      if (choosedPaymentType === 'boleto') {
+        if (onSuccess) {
+          onSuccess(callbackPayload)
+        }
+
+        return transition('TRANSACTION_ANALYSIS')
+      }
+
+      return transition('TRANSACTION_SUCCESS')
     }
 
     if (isTransactionAnalysis(status)) {
@@ -518,7 +539,6 @@ class Checkout extends React.Component {
     } = apiData
 
     const {
-      postback,
       createTransaction,
     } = configs
 
@@ -536,7 +556,6 @@ class Checkout extends React.Component {
       items,
       key,
       token,
-      postback,
       amount: finalAmount,
     }
 
@@ -593,6 +612,7 @@ class Checkout extends React.Component {
     const selectionCallbacks = prop('selection', paymentCallbacks)
     const singleCreditcardCallbacks = prop('singleCreditcard', paymentCallbacks)
     const singleBoletoCallbacks = prop('singleBoleto', paymentCallbacks)
+    const boletoTexts = getBoletoInformations(this)
 
     return (
       <React.Fragment>
@@ -678,6 +698,9 @@ class Checkout extends React.Component {
         </State>
         <State value="confirmation.analysis">
           <AnalysisInfo
+            title={boletoTexts.title}
+            subtitle={boletoTexts.subtitle}
+            text={boletoTexts.text}
             closeCheckout={this.close}
           />
         </State>
