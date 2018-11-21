@@ -176,10 +176,6 @@ class Checkout extends React.Component {
       }
 
       if (choosedPaymentType === 'boleto') {
-        if (onSuccess) {
-          onSuccess(callbackPayload)
-        }
-
         return transition('TRANSACTION_ANALYSIS')
       }
 
