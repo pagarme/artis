@@ -1,4 +1,5 @@
 /* eslint-disable */
+const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD')
 
 const mundipaggApi = `const configs = {
   token: 'SOME_TOKEN_HERE',
@@ -113,7 +114,7 @@ const transaction = {
       subtitle: '10% de desconto :)',
       softDescriptor: 'Company name',
       instructions: 'Use this field to add instructions',
-      expirationAt: '2018-11-30',
+      expirationAt: '${tomorrow}',
       discount: {
         type: 'percentage',
         value: 25,

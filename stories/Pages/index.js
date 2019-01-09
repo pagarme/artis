@@ -6,6 +6,7 @@ import Analysis from '../../src/components/MessageInfo/Analysis'
 import SuccessInfo from '../../src/components/MessageInfo/Success'
 import Boleto from '../../src/pages/Payment/Boleto'
 import createStore from '../../src/redux/store'
+import { tomorrow, formatYYYYMMDD } from '../../src/utils/helpers/date'
 import style from './style.css'
 
 const creditCard = {
@@ -18,7 +19,7 @@ const boleto = {
   barcode: 12345678901234567890,
   name: 'meuboleto',
   url,
-  expirationAt: '2018-11-30',
+  expirationAt: formatYYYYMMDD(tomorrow),
 }
 
 const amount = 15000
