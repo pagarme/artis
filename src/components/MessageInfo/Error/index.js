@@ -9,17 +9,33 @@ import { Button } from '../..'
 
 const consumeTheme = ThemeConsumer('UIErrorMessageInfo')
 
-const questions = [
-  'O cartão possui saldo para o valor total da compra?',
-  'Você digitou corretamente os dados do cartão?',
-  'O cartão está dentro do prazo de validade?',
-  'O cartão está desbloqueado?',
-]
-
 class Error extends React.Component {
   componentDidMount () {
     ReactGA.pageview('/error')
   }
+
+  getQuestions = (errors) => {
+    const questions = {
+      creditCard: [
+        'O cartão possui saldo para o valor total da compra?',
+        'Você digitou corretamente os dados do cartão?',
+        'O cartão está dentro do prazo de validade?',
+        'O cartão está desbloqueado?',
+      ],
+      boleto: [
+        'Houve um erro desconhecido ao criar a transação com boleto',
+        'Entre em contato com o estabelecimento',
+      ],
+    }
+
+    if (this.checkForBoletoError(errors)) {
+      return questions.boleto
+    }
+
+    return questions.creditCard
+  }
+
+  checkForBoletoError = errors => JSON.stringify(errors).includes('boleto')
 
   checkPayment = () => {
     ReactGA.event({
@@ -30,16 +46,17 @@ class Error extends React.Component {
     this.props.handlePreviousButton()()
   }
 
-  render () {
-    const { theme } = this.props
+  makeQuestionsList = (arr, theme) => (
+    arr.map(item => (
+      <li className={theme.question} key={item}>
+        { item }
+      </li>
+    ))
+  )
 
-    const makeQuestionsList = arr => (
-      arr.map(item => (
-        <li className={theme.question} key={item}>
-          { item }
-        </li>
-      ))
-    )
+  render () {
+    const { theme, errors = [] } = this.props
+    const questions = this.getQuestions(errors)
 
     return (
       <div className={theme.wrapper}>
@@ -55,7 +72,7 @@ class Error extends React.Component {
             O que pode ter acontecido?
           </h3>
           <ul className={theme.questionList}>
-            {makeQuestionsList(questions)}
+            {this.makeQuestionsList(questions, theme)}
           </ul>
         </div>
         <footer className={theme.footer}>
@@ -75,6 +92,9 @@ class Error extends React.Component {
 
 Error.propTypes = {
   handlePreviousButton: PropTypes.func.isRequired,
+  errors: PropTypes.arrayOf(
+    PropTypes.object.isRequired,
+  ).isRequired,
   theme: PropTypes.shape({
     content: PropTypes.string,
     footer: PropTypes.string,

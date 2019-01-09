@@ -193,8 +193,7 @@ class Checkout extends React.Component {
     }
 
     return this.setState({
-      transactionError: true,
-      ...errorMessage,
+      transactionErrors: errors,
     }, transition('TRANSACTION_FAILURE'))
   }
 
@@ -611,6 +610,7 @@ class Checkout extends React.Component {
     const singleCreditcardCallbacks = prop('singleCreditcard', paymentCallbacks)
     const singleBoletoCallbacks = prop('singleBoleto', paymentCallbacks)
     const boletoTexts = getBoletoInformations(this)
+    const { transactionErrors } = this.state
 
     return (
       <React.Fragment>
@@ -691,6 +691,7 @@ class Checkout extends React.Component {
         </State>
         <State value="confirmation.failure">
           <ErrorInfo
+            errors={transactionErrors}
             handlePreviousButton={this.navigatePreviousPage}
           />
         </State>
