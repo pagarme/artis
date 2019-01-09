@@ -1,3 +1,5 @@
+import { tomorrow, formatYYYYMMDD } from '../../../../src/utils/helpers/date'
+
 describe('Custom', () => {
   describe('API', () => {
     describe('Minimal', () => {
@@ -19,8 +21,6 @@ describe('Custom', () => {
             expect(err.message).contains('configs')
             expect(err.message).contains('undefined')
 
-            done()
-
             return false
           })
         })
@@ -41,8 +41,6 @@ describe('Custom', () => {
           cy.on('uncaught:exception', (err) => {
             expect(err.message).contains('reduce')
             expect(err.message).contains('undefined')
-
-            done()
 
             return false
           })
@@ -67,8 +65,6 @@ describe('Custom', () => {
           cy.on('uncaught:exception', (err) => {
             expect(err.message).contains('reduce')
             expect(err.message).contains('undefined')
-
-            done()
 
             return false
           })
@@ -107,8 +103,6 @@ describe('Custom', () => {
             expect(err.message).contains('reduce')
             expect(err.message).contains('undefined')
 
-            done()
-
             return false
           })
         })
@@ -139,8 +133,6 @@ describe('Custom', () => {
           cy.on('uncaught:exception', (err) => {
             expect(err.message).contains('reduce')
             expect(err.message).contains('undefined')
-
-            done()
 
             return false
           })
@@ -175,8 +167,6 @@ describe('Custom', () => {
             expect(err.message).contains('reduce')
             expect(err.message).contains('undefined')
 
-            done()
-
             return false
           })
         })
@@ -210,8 +200,6 @@ describe('Custom', () => {
           cy.on('uncaught:exception', (err) => {
             expect(err.message).contains('reduce')
             expect(err.message).contains('undefined')
-
-            done()
 
             return false
           })
@@ -280,10 +268,7 @@ describe('Custom', () => {
           cy.get('#btn-open-checkout').click()
 
           cy.on('uncaught:exception', (err) => {
-            expect(err.message).contains('reduce')
-            expect(err.message).contains('undefined')
-
-            done()
+            expect(err.message).contains('The "key" parameter is required')
 
             return false
           })
@@ -302,7 +287,7 @@ describe('Custom', () => {
                   subtitle: '10% de desconto :)',
                   softDescriptor: 'Company name',
                   instructions: 'Use this field to add instructions',
-                  expirationAt: '2018-11-30',
+                  expirationAt: '${formatYYYYMMDD(tomorrow)}',
                   discount: {
                     type: 'percentage',
                     value: 25,
@@ -338,8 +323,6 @@ describe('Custom', () => {
           cy.on('uncaught:exception', (err) => {
             expect(err.message).contains('The "key" parameter is required')
 
-            done()
-
             return false
           })
         })
@@ -358,7 +341,7 @@ describe('Custom', () => {
                   subtitle: '10% de desconto :)',
                   softDescriptor: 'Company name',
                   instructions: 'Use this field to add instructions',
-                  expirationAt: '2018-11-30',
+                  expirationAt: '${formatYYYYMMDD(tomorrow)}',
                   discount: {
                     type: 'percentage',
                     value: 25,
@@ -394,8 +377,6 @@ describe('Custom', () => {
 
           cy.on('uncaught:exception', (err) => {
             expect(err.message).contains('The "amount" parameter should be Number')
-
-            done()
 
             return false
           })

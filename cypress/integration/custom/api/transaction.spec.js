@@ -1,3 +1,5 @@
+import { tomorrow, formatYYYYMMDD } from '../../../../src/utils/helpers/date'
+
 describe('Custom', () => {
   describe('API', () => {
     describe('Transaction ', () => {
@@ -159,7 +161,7 @@ describe('Custom', () => {
               paymentConfig: {
                 boleto: {
                   subtitle: '10% de desconto :)',
-                  expirationAt: '2018-11-30',
+                  expirationAt: '${formatYYYYMMDD(tomorrow)}',
                   discount: {
                     type: 'percentage',
                     value: 25,
@@ -286,7 +288,7 @@ describe('Custom', () => {
                 paymentConfig: {
                   boleto: {
                     subtitle: '10% de desconto :)',
-                    expirationAt: '2018-11-30',
+                    expirationAt: '${formatYYYYMMDD(tomorrow)}',
                     discount: {
                       value: 5000,
                     },
@@ -387,7 +389,7 @@ describe('Custom', () => {
                 paymentConfig: {
                   boleto: {
                     subtitle: '10% de desconto :)',
-                    expirationAt: '2018-11-30',
+                    expirationAt: '${formatYYYYMMDD(tomorrow)}',
                     discount: {
                       value: 5000,
                     },
