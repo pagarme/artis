@@ -341,6 +341,11 @@ class Checkout extends React.Component {
 
   navigateToPage () {
     const value = pathOr('', ['machineState', 'value'], this.props)
+    const antifraud = pathOr(
+      true,
+      ['apiData', 'configs', 'antifraud'],
+      this.props
+    )
     const page = getActiveStep(value)
     const tangible = prop('tangible')
     const cartItems = pathOr([], ['apiData', 'cart', 'items'], this.props)
@@ -350,8 +355,7 @@ class Checkout extends React.Component {
     if (
       page === 'addresses' &&
       hasRequiredPageData(page, this.props, 'billing') &&
-      !isAllItemsTangible &&
-      cartItems.length > 0
+      (!isAllItemsTangible && !antifraud)
     ) {
       const haveAddresses = propEq('page', 'addresses')
       this.setState({
@@ -599,7 +603,7 @@ class Checkout extends React.Component {
       'allowSaveCreditCard',
     ], apiData)
 
-    const antifraude = pathOr(true, ['configs', 'antifraude'], apiData)
+    const antifraud = pathOr(true, ['configs', 'antifraud'], apiData)
     const cartItems = pathOr([], ['cart', 'items'], apiData)
     const pagesCallbacks = path(['callbacks', 'pages'], apiData)
     const customerCallbacks = prop('customer')(pagesCallbacks)
@@ -639,7 +643,7 @@ class Checkout extends React.Component {
             handlePreviousButton={this.navigatePreviousPage}
             enableCart={enableCart}
             handleSubmit={this.handleBillingFormSubmit}
-            antifraude={antifraude}
+            antifraud={antifraud}
             cartItems={cartItems}
           />
         </State>
