@@ -41,6 +41,106 @@ describe('Custom', () => {
           })
         })
       })
+      describe('Document mask', () => {
+        it('should render cpf', () => {
+          const api = `
+            const key = 'ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz';
+
+            const customer = {
+              allowedDocuments: ['CPF', 'CNPJ'],
+            }
+
+            const transaction = {
+              amount: 10000,
+            }
+
+            const checkout = createCheckout({
+              customer,
+              key,
+              transaction,
+            })
+
+            checkout
+              .open()
+            `
+
+          cy.visit('/')
+
+          cy.get('#btn-open-textarea').click()
+          cy.get('#textarea-code').type(api)
+          cy.get('#btn-open-checkout').click()
+          cy.wait(300)
+
+          cy.get('input[name="documentNumber"]').type('40572916019')
+          cy.get('input[name="documentNumber"]').should('have.value', '405.729.160-19')
+        })
+
+        it('should render tiny cnpj', () => {
+          const api = `
+            const key = 'ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz';
+
+            const customer = {
+              allowedDocuments: ['CPF', 'CNPJ'],
+            }
+
+            const transaction = {
+              amount: 10000,
+            }
+
+            const checkout = createCheckout({
+              customer,
+              key,
+              transaction,
+            })
+
+            checkout
+              .open()
+            `
+
+          cy.visit('/')
+
+          cy.get('#btn-open-textarea').click()
+          cy.get('#textarea-code').type(api)
+          cy.get('#btn-open-checkout').click()
+          cy.wait(300)
+
+          cy.get('input[name="documentNumber"]').type('951691170001')
+          cy.get('input[name="documentNumber"]').should('have.value', '95.169.117/0001-__')
+        })
+
+        it('should render full cnpj', () => {
+          const api = `
+            const key = 'ek_test_sjQXl3mVUFu1QQYpiSvUBaybtXtXjz';
+
+            const customer = {
+              allowedDocuments: ['CPF', 'CNPJ'],
+            }
+
+            const transaction = {
+              amount: 10000,
+            }
+
+            const checkout = createCheckout({
+              customer,
+              key,
+              transaction,
+            })
+
+            checkout
+              .open()
+            `
+
+          cy.visit('/')
+
+          cy.get('#btn-open-textarea').click()
+          cy.get('#textarea-code').type(api)
+          cy.get('#btn-open-checkout').click()
+          cy.wait(300)
+
+          cy.get('input[name="documentNumber"]').type('659966560001{backspace}5{backspace}1')
+          cy.get('input[name="documentNumber"]').should('have.value', '65.996.656/0001-51')
+        })
+      })
     })
   })
 })
