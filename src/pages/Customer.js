@@ -4,10 +4,13 @@ import { connect } from 'react-redux'
 import {
   allPass,
   always,
+  anyPass,
   dissoc,
   cond,
   contains,
+  equals,
   isEmpty,
+  match,
   merge,
   path,
   pipe,
@@ -93,7 +96,10 @@ class CustomerPage extends Component {
 
     const documentConfigs = getDocumentConfig(customer)
 
-    this.state = { ...customer, ...documentConfigs }
+    this.state = {
+      ...customer,
+      ...documentConfigs,
+    }
 
     this.setTextInputRef = (element) => {
       this.firstInput = element
@@ -143,28 +149,43 @@ class CustomerPage extends Component {
   }
 
   handleDocumentNumber = (event) => {
-    const { documentLabel } = this.state
-    let document = 'CPF'
-    let value = path(['target', 'value'], event)
+    const { key } = event
+    let value = clean(path(['target', 'value'], event))
+    const documentLength = value.length
+    const hasDocumentReachedLengthLimit = documentLength >= 11
 
-    if (documentLabel === 'CPF/CNPJ') {
-      const hasCPFLength = clean(value).length >= 11
+    const pressedNumber = match(/[0-9]/)
+    const pressedBackspace = equals('Backspace')
+    const pressedDelete = equals('Delete')
 
-      if (hasCPFLength) {
-        this.changePress += 1
-      } else {
-        this.changePress = 0
-      }
+    const shouldUpdate = anyPass([
+      pressedNumber,
+      pressedBackspace,
+      pressedDelete,
+    ])
 
-      if (hasCPFLength && this.changePress > 1) {
-        document = 'CNPJ'
-        value = `${value}${event.key}`
-      }
+    if (!shouldUpdate(key)) {
+      return
     }
+
+    if (hasDocumentReachedLengthLimit) {
+      this.changePress += 1
+    } else {
+      this.changePress = 0
+    }
+
+    if (this.changePress > 1 && documentLength === 11) {
+      value = `${value}${key}`
+    }
+
+    const document = this.changePress > 1 ? 'CNPJ' : 'CPF'
 
     this.setState({
       document,
-      documentNumber: value, // eslint-disable-line react/no-unused-state
+    }, () => {
+      this.setState({
+        documentNumber: value,
+      })
     })
   }
 
@@ -174,14 +195,32 @@ class CustomerPage extends Component {
       customer,
       enableCart,
     } = this.props
-
-    const { document, documentLabel } = this.state
+    const {
+      document,
+      documentNumber,
+      email,
+      name,
+      phoneNumber,
+      documentLabel,
+    } = this.state
 
     const { mask, validation } = documentValidationsAndMasks[document]
 
+    const defaultCustomerData = merge(defaultCustomerInfo, customer)
+    const defaulFormData = merge(
+      defaultCustomerData,
+      {
+        document,
+        documentNumber,
+        email,
+        name,
+        phoneNumber,
+      }
+    )
+
     return (
       <Form
-        data={merge(defaultCustomerInfo, customer)}
+        data={defaulFormData}
         className={theme.customerForm}
         onChange={this.handleChangeForm}
         onSubmit={this.handleFormSubmit}
