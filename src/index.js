@@ -179,21 +179,23 @@ function createButtonListener (buttons) {
   })
 }
 
-const checkoutFormButtons = document.querySelectorAll('.checkout-button')
-const isSimpleIntegration = checkoutFormButtons.length
-
-if (isSimpleIntegration) {
-  createButtonListener(checkoutFormButtons)
-}
-
 window.createPanelEnvironment = (buttons) => {
   createButtonListener(buttons)
 }
 
-window.createCheckout = (data) => {
+window.createCheckout = (data, isSimpleIntegration = false) => {
   const apiData = isSimpleIntegration
     ? parseToApiData(data.dataset)
     : data
 
   return preRender(apiData)
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const checkoutFormButtons = document.querySelectorAll('.checkout-button')
+  const isSimpleIntegration = checkoutFormButtons.length
+
+  if (isSimpleIntegration) {
+    createButtonListener(checkoutFormButtons, true)
+  }
+})
