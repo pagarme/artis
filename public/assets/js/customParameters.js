@@ -19,7 +19,7 @@ const configs = {
   enableCart: true,
   createTransaction: true,
   allowSaveCreditCard: true,
-  antifraude: false,
+  antifraud: false,
   postback: 'http://pagar.me',
 }
 

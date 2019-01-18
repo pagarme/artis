@@ -20,8 +20,18 @@ function fillAddressPage (zipcode = '03675030', number = '123') {
   cy.get('input[name="number"]').type(number)
 }
 
+function cyGet (query, options) {
+  const newOptions = {
+    timeout: 950,
+    ...options,
+  }
+
+  return cy.get(query, newOptions)
+}
+
 export {
   fillAddressPage,
   fillCustomerPage,
   openCustomWithParams,
+  cyGet,
 }

@@ -171,7 +171,7 @@ class BillingPage extends Component {
     } = this.state
 
     const {
-      antifraude,
+      antifraud,
       cartItems,
       theme,
       enableCart,
@@ -179,7 +179,7 @@ class BillingPage extends Component {
       sameAddressForShipping,
     } = this.props
 
-    const showSwitch = antifraude && (isAllItemsTangible(cartItems) || cartItems.length === 0) //eslint-disable-line
+    const showSwitch = antifraud || isAllItemsTangible(cartItems)
 
     return (
       <Form
@@ -297,7 +297,7 @@ class BillingPage extends Component {
 }
 
 BillingPage.propTypes = {
-  antifraude: PropTypes.bool.isRequired,
+  antifraud: PropTypes.bool.isRequired,
   cartItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   theme: PropTypes.shape({
     addressForm: PropTypes.string,
