@@ -32,7 +32,7 @@ moment.locale('pt-br')
 
 const isDevelopment = () => process.env.NODE_ENV === 'development'
 
-ReactGA.initialize('UA-113290482-1', {
+ReactGA.initialize('UA-44419105-12', {
   debug: isDevelopment(),
 })
 
