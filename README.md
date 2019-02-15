@@ -188,8 +188,3 @@ Para mais informações sobre como contribuir, [clique aqui](./.github/CONTRIBUT
 ## Licença
 
 Este projeto está licenciado sob a [Licença MIT](./LICENSE), ou seja, você pode usá-lo da forma que preferir, incluindo suas próprias modificações em versões próprias.
-
-## Equipe
-
-| [<img src="https://avatars2.githubusercontent.com/u/12722087?v=4&s=115"><br><sub>Ieda Otero<br>Business Leader</sub>](https://github.com/IedaOtero) | [<img src="https://avatars1.githubusercontent.com/u/37185254?s=115&v=4"><br><sub>Karoline Morone<br>People Leader</sub>](https://github.com/morokaro) | [<img src="https://avatars0.githubusercontent.com/u/19213244?v=3&s=115"><br><sub>Thiago Medeiros<br>Developer</sub>](https://github.com/thiagommedeiros) | [<img src="https://avatars0.githubusercontent.com/u/10222646?v=3&s=115"><br><sub>Augusto Amaral<br>Developer</sub>](https://github.com/augusto-jm-amaral) | [<img src="https://avatars0.githubusercontent.com/u/14620121?v=3&s=115"><br><sub>Vitor Capretz<br>Developer</sub>](https://github.com/vcapretz) | [<img src="https://avatars1.githubusercontent.com/u/4103305?s=115&v=4"><br><sub>Allan Ramos<br>Developer</sub>](https://github.com/allangrds) |
-| :---: |  :---: |  :---: | :---: | :---: | :---: |
