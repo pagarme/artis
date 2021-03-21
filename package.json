@@ -99,7 +99,7 @@
     "webpack-dev-server": "2.11.1"
   },
   "scripts": {
-    "precommit": "npm run lint && jest",
+    "prepare": "husky install",
     "check-dependencies": "ncu",
     "build": "node scripts/build.js",
     "coverage": "nyc --reporter=html --reporter=text --lines 300 npm run test-coverage",
