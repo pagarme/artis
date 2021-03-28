@@ -1,7 +1,6 @@
 import {
   always,
   applySpec,
-  assoc,
   concat,
   cond,
   defaultTo,
@@ -12,7 +11,6 @@ import {
   map,
   merge,
   of,
-  omit,
   path,
   pathOr,
   pipe,
@@ -23,7 +21,6 @@ import {
   toString,
   values,
 } from 'ramda'
-import pagarme from 'pagarme'
 
 import { formatToBRL, removeMask } from '../masks'
 import getCheckoutVersion from '../helpers/getCheckoutVersion'
@@ -255,28 +252,6 @@ const request = (data) => {
     getPaymentMethodData,
   )(data)
   const fullPayload = merge(paymentData, commonPayload)
-
-  if (propOr(true, 'createTransaction', data) === false) {
-    if (commonPayload.payment_method === 'credit_card') {
-      return pagarme.client
-        .connect({ encryption_key: commonPayload.encryption_key })
-        .then(client => client.security.encrypt(paymentData))
-        .then(cardHash => (
-          assoc(
-            'card_hash',
-            cardHash,
-            omit([
-              'card_cvv',
-              'card_expiration_date',
-              'card_holder_name',
-              'card_number',
-            ], fullPayload)
-          )
-        ))
-    }
-
-    return Promise.resolve(fullPayload)
-  }
 
   const url = URLS.pagarme.transaction
 
