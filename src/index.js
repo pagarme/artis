@@ -2,7 +2,6 @@ import '@babel/polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
-import moment from 'moment'
 import {
   always,
   applySpec,
@@ -14,7 +13,6 @@ import {
   pipe,
   split,
 } from 'ramda'
-import 'moment/locale/pt-br'
 
 import App from './App'
 import createStore from './redux/store'
@@ -27,8 +25,6 @@ import setTheme from './utils/helpers/setTheme'
 import setColors from './utils/helpers/setColors'
 import getParentElement from './utils/helpers/getParentElement'
 import { insertRelativePosition } from './utils/helpers/bodyCss'
-
-moment.locale('pt-br')
 
 const isDevelopment = () => process.env.NODE_ENV === 'development'
 

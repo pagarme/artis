@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { ThemeConsumer } from 'former-kit'
 import ReactGA from 'react-ga'
 import copy from 'copy-to-clipboard'
@@ -21,8 +21,8 @@ const openLink = url => window.open(url, '_blank')
 
 const formatExpirationAt = value => (
   value
-    ? moment(value).format('L')
-    : moment().add(1, 'days').format('L')
+    ? dayjs(value).format('L')
+    : dayjs(value).add(1, 'days').format('L')
 )
 
 const handleBarcodeCopy = barcode => (
