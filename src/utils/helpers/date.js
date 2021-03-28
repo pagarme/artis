@@ -1,7 +1,7 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 
-const today = moment()
-const tomorrow = moment().add(1, 'days')
+const today = dayjs()
+const tomorrow = dayjs().add(1, 'days')
 const formatYYYYMMDD = date => date.format('YYYY-MM-DD')
 
 export {

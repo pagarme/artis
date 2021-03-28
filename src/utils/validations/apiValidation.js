@@ -1,9 +1,9 @@
 import { pathOr } from 'ramda'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 const verifyBoletoExpiration = (dateFromApi) => {
-  const expirationAt = moment(dateFromApi)
-  const actualDate = moment()
+  const expirationAt = dayjs(dateFromApi)
+  const actualDate = dayjs()
 
   return expirationAt.diff(actualDate) > 0
 }
