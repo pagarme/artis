@@ -57,7 +57,7 @@ module.exports = {
   devtool: 'source-map',
   target: 'web',
   entry: [
-    require.resolve('./polyfills.js'),
+    'whatwg-fetch',
     paths.appIndexJs,
   ],
   output: {
