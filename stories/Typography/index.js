@@ -17,19 +17,19 @@ storiesOf('Typography', module)
       <div>
         <span>h1</span>
         <h1>
-          Avenir 28
+         Roboto, sans-serif 28
         </h1>
       </div>
       <div>
         <span>h2</span>
         <h2>
-          Avenir 24
+          Roboto, sans-serif 24
         </h2>
       </div>
       <div>
         <span>h3</span>
         <h3>
-          Avenir 18
+         Roboto, sans-serif 18
         </h3>
       </div>
       <hr />
@@ -37,13 +37,13 @@ storiesOf('Typography', module)
         <span>body</span>
         <div>
           <div>
-            Avenir 16 normal
+            Roboto, sans-serif 16 normal
           </div>
           <div>
-            <i>Avenir 16 italic</i>
+            <i>Roboto, sans-serif 16 italic</i>
           </div>
           <div>
-            <b>Avenir 16 bold</b>
+            <b>Roboto, sans-serif 16 bold</b>
           </div>
         </div>
       </div>
