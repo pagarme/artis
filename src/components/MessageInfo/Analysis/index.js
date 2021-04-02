@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ThemeConsumer } from 'former-kit'
 import ReactGA from 'react-ga'
 
 import { Button } from '../..'
+import ThemeConsumer from '../../../former-kit/ThemeConsumer'
 
 import AnalysisImage from '../../../images/confirmacao_analise.svg'
 

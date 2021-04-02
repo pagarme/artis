@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { isNil } from 'ramda'
-import { ThemeConsumer } from 'former-kit'
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 
 const consumeTheme = ThemeConsumer('UIButton')
 

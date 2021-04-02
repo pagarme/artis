@@ -21,12 +21,10 @@ import {
   values,
 } from 'ramda'
 
-import {
-  Dropdown,
-  FormInput,
-  Switch,
-  ThemeConsumer,
-} from 'former-kit'
+import Dropdown from '../../former-kit/Dropdown'
+import FormInput from '../../former-kit/FormInput'
+import Switch from '../../former-kit/Switch'
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 
 import {
   isFormValid,

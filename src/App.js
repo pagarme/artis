@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
-import { ThemeProvider } from 'former-kit'
 
+import ThemeProvider from './former-kit/ThemeProvider'
 import Checkout from './containers/Checkout'
 import ErrorPage from './pages/Error'
 import NormalizeCSS from './components/NormalizeCSS'

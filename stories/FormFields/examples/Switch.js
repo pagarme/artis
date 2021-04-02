@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 import React from 'react'
-import { Switch } from 'former-kit'
+import Switch from '../../../src/former-kit/Switch'
+
 
 class SwitchState extends React.Component {
   constructor (props) {

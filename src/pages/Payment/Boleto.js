@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ThemeConsumer } from 'former-kit'
 import ReactGA from 'react-ga'
 
 import {
@@ -19,6 +18,7 @@ import {
   prop,
 } from 'ramda'
 
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 import { NavigationBar } from '../../components'
 import {
   addPageInfo,

@@ -1,6 +1,7 @@
 {
   "presets": [
     ["env", {
+      "modules": false,
       "targets": {
         "browsers": ["Chrome >= 40", "ie >= 10", "Firefox >= 50", "safari >= 7"],
         "include": [

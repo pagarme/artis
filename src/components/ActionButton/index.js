@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ThemeConsumer } from 'former-kit'
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 
 import { Button } from '../'
 

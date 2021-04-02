@@ -18,7 +18,7 @@ import {
   prop,
   propOr,
 } from 'ramda'
-import { ThemeConsumer } from 'former-kit'
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 
 import { toggleCart } from '../../redux/actions'
 import { formatToBRL } from '../../utils/masks/'

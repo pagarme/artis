@@ -1,7 +1,8 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
 import FaAndroid from 'react-icons/lib/fa/android'
-import { FormInput } from 'former-kit'
+
+import FormInput from '../../../src/former-kit/FormInput'
 
 class InputState extends React.Component {
   constructor (props) {

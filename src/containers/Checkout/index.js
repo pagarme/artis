@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { ThemeConsumer } from 'former-kit'
 import { connect } from 'react-redux'
 import { State, withStatechart } from 'react-automata'
 import ReactGA from 'react-ga'
@@ -35,6 +34,7 @@ import {
   type,
 } from 'ramda'
 
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 import {
   addInstallments,
   addPageInfo,

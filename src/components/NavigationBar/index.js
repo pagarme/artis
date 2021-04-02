@@ -2,9 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { ThemeConsumer } from 'former-kit'
 
 import { toggleCart } from './../../redux/actions'
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 
 import NavigateBack from './../../images/navigate_back.svg'
 import NavigateNext from './../../images/navigate_next.svg'

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { ThemeConsumer } from 'former-kit'
 
 import InfoIcon from '../../images/info.svg'
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 
 const consumeTheme = ThemeConsumer('UITooltip')
 
