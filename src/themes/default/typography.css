@@ -1,8 +1,7 @@
-@import "./webfonts/avenir/index.css";
 @import "./spacing.css";
 
 :root {
-  --primary-font-family: "Avenir";
+  --primary-font-family: Roboto, sans-serif;
   --title-font-bold: bold;
   --title-font-normal: normal;
 
