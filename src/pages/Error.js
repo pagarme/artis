@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Grid,
-  Row,
-  Col,
-  ThemeConsumer,
-} from 'former-kit'
+
+import Grid from '../former-kit/Grid'
+import Row from '../former-kit/Row'
+import Col from '../former-kit/Col'
+import ThemeConsumer from '../former-kit/ThemeConsumer'
 
 import SadEmoji from './../images/sad.svg'
 

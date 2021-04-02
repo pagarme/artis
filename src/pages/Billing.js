@@ -9,11 +9,10 @@ import {
   omit,
   prop,
 } from 'ramda'
-import {
-  FormInput,
-  Switch,
-  ThemeConsumer,
-} from 'former-kit'
+
+import ThemeConsumer from '../former-kit/ThemeConsumer'
+import Switch from '../former-kit/Switch'
+import FormInput from '../former-kit/FormInput'
 
 import options from '../utils/data/states'
 import { removeMask } from '../utils/masks/'

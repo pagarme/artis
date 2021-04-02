@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Autocomplete from 'react-autocomplete'
 import { prop } from 'ramda'
-import { ThemeConsumer } from 'former-kit'
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 
 const consumeTheme = ThemeConsumer('UIAutocomplete')
 

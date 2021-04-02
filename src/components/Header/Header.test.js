@@ -1,10 +1,10 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { LinearProgress } from 'former-kit'
 
 import Header from './index'
 import { ProgressBar } from '..'
 import steps from '../../containers/Checkout/steps'
+import LinearProgress from '../../former-kit/LinearProgress'
 
 describe('Header', () => {
   it('should mount', () => {

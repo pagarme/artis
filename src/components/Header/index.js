@@ -1,5 +1,4 @@
 import React from 'react'
-import { ThemeConsumer } from 'former-kit'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import {
@@ -8,6 +7,7 @@ import {
 } from 'ramda'
 import { ProgressBar } from '..'
 
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 import BackIcon from '../../images/navigate_back.svg'
 import CloseIcon from '../../images/closeX.svg'
 

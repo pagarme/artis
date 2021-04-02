@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import {
-  Grid,
-  Row,
-  Col,
-  ThemeConsumer,
-} from 'former-kit'
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
+import Grid from '../../former-kit/Grid'
+import Row from '../../former-kit/Row'
+import Col from '../../former-kit/Col'
 
 const consumeTheme = ThemeConsumer('UILoadingInfo')
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf, addDecorator } from '@storybook/react'
-import { ThemeProvider } from 'former-kit'
+import ThemeProvider from './former-kit/ThemeProvider'
 
 import defaultTheme from '../src/themes/default'
 import setColors from '../src/utils/helpers/setColors'

@@ -19,10 +19,8 @@ import {
   replace,
 } from 'ramda'
 
-import {
-  FormInput,
-  ThemeConsumer,
-} from 'former-kit'
+import ThemeConsumer from '../former-kit/ThemeConsumer'
+import FormInput from '../former-kit/FormInput'
 
 import { NavigationBar, Form } from '../components'
 

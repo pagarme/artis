@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import dayjs from 'dayjs'
-import { ThemeConsumer } from 'former-kit'
 import ReactGA from 'react-ga'
 import copy from 'copy-to-clipboard'
 import { propOr } from 'ramda'
 import classNames from 'classnames'
 
+import ThemeConsumer from '../../../former-kit/ThemeConsumer'
 import { ActionButton, Button } from './../../'
 import { formatToBRL } from '../../../utils/masks/'
 import SuccessIcon from '../../../images/confirmacao_sucesso.svg'

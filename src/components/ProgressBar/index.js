@@ -14,10 +14,9 @@ import {
   propEq,
 } from 'ramda'
 import classNames from 'classnames'
-import {
-  LinearProgress,
-  ThemeConsumer,
-} from 'former-kit'
+
+import LinearProgress from '../../former-kit/LinearProgress'
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 
 const consumeTheme = ThemeConsumer('UIProgressBar')
 

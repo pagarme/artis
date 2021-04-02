@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { ThemeConsumer } from 'former-kit'
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 
 const consumeTheme = ThemeConsumer('UINormalizeCSS')
 

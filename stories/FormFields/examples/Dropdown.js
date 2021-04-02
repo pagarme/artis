@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown } from 'former-kit'
+import Dropdown from '../../../src/former-kit/Dropdown'
 import { Autocomplete } from '../../../src/components'
 
 const defaultOptions = [

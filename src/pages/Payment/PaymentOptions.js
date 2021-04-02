@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { ThemeConsumer } from 'former-kit'
 import ReactGA from 'react-ga'
 
 import {
@@ -19,6 +18,7 @@ import {
   ActionButton,
   NavigationBar,
 } from '../../components'
+import ThemeConsumer from '../../former-kit/ThemeConsumer'
 
 import BoletoIcon from '../../components/Svg/Boleto'
 import CreditCardIcon from '../../components/Svg/CreditCard'
