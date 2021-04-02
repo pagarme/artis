@@ -15,7 +15,7 @@ const env = getClientEnvironment(publicUrl)
 module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
-    require.resolve('./polyfills.js'),
+    'whatwg-fetch',
     require.resolve('react-dev-utils/webpackHotDevClient'),
     paths.appIndexJs,
   ],
