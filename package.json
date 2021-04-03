@@ -20,7 +20,6 @@
     "fs-extra": "7.0.1",
     "prop-types": "15.7.2",
     "ramda": "0.26.1",
-    "raven-js": "3.27.2",
     "react": "16.2.0",
     "react-autocomplete": "1.8.1",
     "react-automata": "2.0.0",

@@ -1,11 +1,4 @@
-import Raven from 'raven-js'
-
-Raven
-  .config(process.env.SENTRY_URL)
-  .install()
-
-
-const report = (error, info) =>
-  Raven.captureException(error, { extra: info })
+/* eslint-disable no-console */
+const report = (error, info) => console.error(error, info)
 
 export default report
